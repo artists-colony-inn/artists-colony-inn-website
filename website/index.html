@@ -3,117 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Artists' Colony Inn — Boutique Guesthouse in Tzfat, Israel</title>
-  <meta name="description" content="A refined boutique guesthouse in the heart of Tzfat's Artists' Quarter. Five uniquely appointed rooms in one of Israel's most spiritual cities.">
+  <title>Artists' Colony Inn — Boutique Guesthouse in Tzfat</title>
+  <meta name="description" content="A small boutique inn in the Old City of Safed. Five individually appointed rooms, breakfast included, in the heart of the Artists' Quarter.">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" type="image/png" href="images/favicon.png">
 </head>
 <body>
 
 <header>
   <div class="header-inner">
-    <a class="logo" href="index.html">
-      <img src="images/logo.png" alt="Artists' Colony Inn">
-    </a>
-    <button class="nav-toggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <a class="logo" href="index.html"><img src="images/logo.png" alt="Artists' Colony Inn"></a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     <nav>
       <ul>
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><a href="booking.html" class="nav-book">Book Now</a></li>
+        <li><a href="booking.html">Book</a></li>
+        <li><a href="tel:+972586200779" class="nav-phone">+972-58-620-0779</a></li>
       </ul>
     </nav>
   </div>
 </header>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <p class="hero-eyebrow">Tzfat, Israel &nbsp;·&nbsp; Artists' Quarter</p>
-    <h1>A place to rest,<br><em>breathe, and be inspired</em></h1>
-    <div class="hero-divider"></div>
-    <p>Five beautifully appointed rooms in a historic building at the heart of Tzfat's legendary Artists' Colony — where stone alleyways, mystical air, and creative spirit have drawn seekers for centuries.</p>
-    <a href="booking.html" class="btn btn-primary">Check Availability</a>
+<div class="hero">
+  <img class="hero-img" src="images/hero.jpg" alt="View from the Artists' Colony Inn terrace, Tzfat">
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <h1>Quiet. Private.<br>In the heart of Tzfat.</h1>
+    <p>Boutique accommodation in Safed's Old City, in the Artists' Quarter.</p>
+    <div class="hero-actions">
+      <a href="booking.html" class="btn btn-gold">Book a Room</a>
+      <a href="tel:+972586200779" class="btn btn-outline-white">Call Us</a>
+    </div>
   </div>
-</section>
+</div>
 
-<!-- INFO STRIP -->
-<div class="info-strip">
-  <div class="info-strip-inner">
-    <span class="info-item">&#10022; &nbsp; Boutique &amp; family-run</span>
-    <span class="info-item">&#10022; &nbsp; Kosher breakfast available</span>
-    <span class="info-item">&#10022; &nbsp; Free parking</span>
-    <span class="info-item">&#10022; &nbsp; <a href="tel:+972586200779">+972-58-620-0779</a></span>
-  </div>
+<!-- TAGLINE -->
+<div class="tagline-strip">
+  <h2>A small adult-focused boutique inn in the Old City of Safed.</h2>
+  <p>Five suites and a calm stay with breakfast included. Shabbat atmosphere throughout.</p>
 </div>
 
 <!-- ROOMS -->
 <section>
   <div class="container">
-    <div class="section-heading">
-      <span class="eyebrow">Accommodations</span>
-      <h2>Our Five Rooms</h2>
-      <p>Each room is individually named and appointed, offering a distinct character while sharing the inn's warmth and attention to detail.</p>
-      <div class="divider"></div>
-    </div>
+    <span class="section-label">Accommodations</span>
+    <h2 class="section-title">Explore the Suites</h2>
+    <div class="section-rule"></div>
 
     <div class="rooms-grid">
 
-      <!-- Tzviya -->
       <div class="room-card">
-        <div class="placeholder-img" style="height:210px">Photo — Tzviya Room</div>
+        <img src="images/tzviya.jpg" alt="Tzviya Suite">
         <div class="room-card-body">
           <h3>Tzviya</h3>
-          <p class="room-rate">From ₪XXX / night</p>
-          <p>A serene room with warm light and views over the old city rooftops. Ideal for couples seeking quiet and comfort.</p>
-          <a href="rooms/tzviya.html" class="btn btn-outline">View Room &amp; Availability</a>
+          <p class="tagline">Quiet room, large shower</p>
+          <p class="rate">From ₪600 / night</p>
+          <a href="rooms/tzviya.html" class="btn btn-outline">View &amp; Book</a>
         </div>
       </div>
 
-      <!-- Aryeh -->
       <div class="room-card">
-        <div class="placeholder-img" style="height:210px">Photo — Aryeh Room</div>
+        <img src="images/aryeh.jpg" alt="Aryeh Suite">
         <div class="room-card-body">
           <h3>Aryeh</h3>
-          <p class="room-rate">From ₪XXX / night</p>
-          <p>Spacious and full of character, with exposed stone walls that speak to Tzfat's ancient history.</p>
-          <a href="rooms/aryeh.html" class="btn btn-outline">View Room &amp; Availability</a>
+          <p class="tagline">Private jacuzzi, intimate layout</p>
+          <p class="rate">From ₪600 / night</p>
+          <a href="rooms/aryeh.html" class="btn btn-outline">View &amp; Book</a>
         </div>
       </div>
 
-      <!-- Liana -->
       <div class="room-card">
-        <div class="placeholder-img" style="height:210px">Photo — Liana Room</div>
+        <img src="images/liana.jpg" alt="Liana Suite">
         <div class="room-card-body">
           <h3>Liana</h3>
-          <p class="room-rate">From ₪XXX / night</p>
-          <p>Light-filled and airy, with a gentle aesthetic that invites rest and reflection.</p>
-          <a href="rooms/liana.html" class="btn btn-outline">View Room &amp; Availability</a>
+          <p class="tagline">Large jacuzzi, mountain view</p>
+          <p class="rate">From ₪750 / night</p>
+          <a href="rooms/liana.html" class="btn btn-outline">View &amp; Book</a>
         </div>
       </div>
 
-      <!-- Avital -->
       <div class="room-card">
-        <div class="placeholder-img" style="height:210px">Photo — Avital Room</div>
+        <img src="images/avital.jpg" alt="Avital Suite">
         <div class="room-card-body">
           <h3>Avital</h3>
-          <p class="room-rate">From ₪XXX / night</p>
-          <p>A cosy retreat with thoughtful details and a peaceful atmosphere well-suited to the spirit of Tzfat.</p>
-          <a href="rooms/avital.html" class="btn btn-outline">View Room &amp; Availability</a>
+          <p class="tagline">Large jacuzzi, private garden</p>
+          <p class="rate">From ₪750 / night</p>
+          <a href="rooms/avital.html" class="btn btn-outline">View &amp; Book</a>
         </div>
       </div>
 
-      <!-- Orly -->
       <div class="room-card">
-        <div class="placeholder-img" style="height:210px">Photo — Orly Room</div>
+        <img src="images/orly.jpg" alt="Orly Suite">
         <div class="room-card-body">
           <h3>Orly</h3>
-          <p class="room-rate">From ₪XXX / night</p>
-          <p>Welcoming and warm, with the inn's signature blend of simplicity and refinement.</p>
-          <a href="rooms/orly.html" class="btn btn-outline">View Room &amp; Availability</a>
+          <p class="tagline">Large jacuzzi, Galilee view</p>
+          <p class="rate">From ₪750 / night</p>
+          <a href="rooms/orly.html" class="btn btn-outline">View &amp; Book</a>
         </div>
       </div>
 
@@ -122,48 +109,55 @@
 </section>
 
 <!-- ABOUT TEASER -->
-<section class="alt">
+<section class="bg-warm">
   <div class="container">
-    <div class="about-grid">
-      <div class="placeholder-img" style="height:380px;border-radius:4px">Photo — Inn Exterior or Common Area</div>
-      <div class="about-text">
-        <span class="eyebrow" style="font-family:var(--font-ui);font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--olive);display:block;margin-bottom:0.6rem;">Our Story</span>
-        <h2>A home in the heart of Tzfat</h2>
-        <p>The Artists' Colony Inn sits within the historic Artists' Quarter of Tzfat — a city perched high in the Galilee that has drawn mystics, scholars, and artists for generations.</p>
-        <p>Run by Shlomo and Leah, the inn is a place of genuine hospitality in one of Israel's most remarkable cities. Every guest is welcomed as family.</p>
+    <div class="intro-split">
+      <img src="images/entrance.jpg" alt="Artists' Colony Inn entrance, Tzfat">
+      <div class="intro-text">
+        <span class="section-label" style="text-align:left">The Inn</span>
+        <h2>In the Artists' Quarter of Tzfat's Old City</h2>
+        <p>The mystical alleyways of the Artists' Colony have drawn visitors for centuries. Cool mountain air, golden light, and the quiet that only Tzfat can offer — all just steps from the galleries and the ancient synagogues.</p>
+        <p>A perfect adult escape: boutique comfort, Shabbat atmosphere, and the spiritual depth of the highest city in Israel.</p>
+        <p>From Sunday to Friday, a chef-prepared breakfast is offered to our guests as a courtesy.</p>
         <a href="about.html" class="btn btn-outline" style="margin-top:0.75rem">About the Inn</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TZFAT TEASER -->
-<section>
+<!-- SHABBAT NOTE -->
+<section class="bg-stone">
+  <div class="container" style="text-align:center;max-width:640px">
+    <span class="section-label">Shabbat at the Inn</span>
+    <h2 class="section-title" style="font-size:1.7rem">Late checkout after Havdalah</h2>
+    <div class="section-rule"></div>
+    <p style="color:var(--text-mid);font-weight:300;font-size:1rem">Quiet atmosphere is maintained throughout Shabbat. Guests who arrive for Shabbat are welcomed with a warm and restful experience in the spirit of the city.</p>
+  </div>
+</section>
+
+<!-- WHATSAPP CTA -->
+<section style="padding:3rem 0;text-align:center;border-top:1px solid var(--border)">
   <div class="container">
-    <div class="section-heading">
-      <span class="eyebrow">The City</span>
-      <h2>Why Tzfat?</h2>
-      <p>At 900 metres above sea level, Tzfat is the highest city in Israel — and one of its most ancient. The air is clear, the alleyways are blue, and the atmosphere is unlike anywhere else in the world.</p>
-      <div class="divider"></div>
-    </div>
-    <div style="text-align:center;margin-top:1rem">
-      <a href="contact.html" class="btn btn-outline">Find Us</a>
-    </div>
+    <p style="font-family:var(--sans);font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:1rem">Check availability or ask anything</p>
+    <a href="https://wa.me/972586200779" class="wa-btn" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Message us on WhatsApp
+    </a>
   </div>
 </section>
 
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <img src="images/logo.png" alt="Artists' Colony Inn" style="height:48px;margin-bottom:1rem;opacity:0.85">
-      <p>A boutique guesthouse in the Artists' Quarter of Tzfat, Israel. Five rooms. Family-run. Genuinely welcoming.</p>
+      <img src="images/logo.png" alt="Artists' Colony Inn">
+      <p>A boutique guesthouse in the Artists' Quarter of Tzfat. Five suites. Breakfast included. Family-run.</p>
     </div>
     <div>
-      <h4>Navigate</h4>
+      <h4>Pages</h4>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="booking.html">Book Now</a></li>
+        <li><a href="booking.html">Book a Room</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </div>
@@ -172,7 +166,7 @@
       <ul>
         <li><a href="tel:+972586200779">+972-58-620-0779</a></li>
         <li><a href="mailto:ACI.safed@gmail.com">ACI.safed@gmail.com</a></li>
-        <li>Artists' Quarter<br>Tzfat, Israel</li>
+        <li>Simtat Yud Zayin 9<br>Safed, Israel 1323100</li>
       </ul>
     </div>
   </div>

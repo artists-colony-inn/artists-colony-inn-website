@@ -3,242 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orly Room — Artists' Colony Inn, Tzfat</title>
-  <meta name="description" content="The Orly room at the Artists' Colony Inn, Tzfat. View availability and book your stay.">
+  <title>Orly Suite &mdash; Artists' Colony Inn, Tzfat</title>
+  <meta name="description" content="Large jacuzzi, Galilee view at the Artists' Colony Inn, Tzfat.">
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="icon" type="image/png" href="../images/favicon.png">
-  <style>
-    .calendar-section { margin-top: 1.5rem; }
-    .calendar-section h4 {
-      font-family: var(--font-ui);
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--olive);
-      margin-bottom: 1rem;
-    }
-    #calendar-container {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--bg);
-    }
-    .cal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 1rem;
-      background: var(--bg-alt);
-      border-bottom: 1px solid var(--border);
-    }
-    .cal-header button {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      padding: 0.2rem 0.6rem;
-      cursor: pointer;
-      font-size: 0.85rem;
-      color: var(--text);
-      transition: background 0.15s;
-    }
-    .cal-header button:hover { background: var(--border); }
-    .cal-month-label {
-      font-family: var(--font-ui);
-      font-size: 0.82rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text);
-    }
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-    }
-    .cal-dow {
-      text-align: center;
-      font-family: var(--font-ui);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      padding: 0.5rem 0;
-      border-bottom: 1px solid var(--border-light);
-    }
-    .cal-day {
-      text-align: center;
-      padding: 0.55rem 0.25rem;
-      font-family: var(--font-ui);
-      font-size: 0.78rem;
-      border-bottom: 1px solid var(--border-light);
-      border-right: 1px solid var(--border-light);
-      min-height: 48px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-      cursor: default;
-    }
-    .cal-day:nth-child(7n) { border-right: none; }
-    .cal-day.empty { background: var(--bg-alt); }
-    .cal-day.past  { background: var(--bg-alt); color: var(--text-muted); }
-    .cal-day.available { background: var(--white); color: var(--text); }
-    .cal-day.blocked {
-      background: #f5eded;
-      color: #c08080;
-      text-decoration: line-through;
-    }
-    .cal-day.selected {
-      background: var(--gold);
-      color: var(--white);
-    }
-    .cal-day.in-range {
-      background: #fdf3cc;
-      color: var(--text);
-    }
-    .cal-price {
-      font-size: 0.6rem;
-      color: var(--olive);
-      line-height: 1;
-    }
-    .cal-day.selected .cal-price { color: rgba(255,255,255,0.8); }
-    .cal-loading {
-      padding: 2rem;
-      text-align: center;
-      font-family: var(--font-ui);
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-    }
-    .cal-legend {
-      display: flex;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-      padding: 0.75rem 1rem;
-      border-top: 1px solid var(--border-light);
-      font-family: var(--font-ui);
-      font-size: 0.68rem;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-    }
-    .legend-item { display: flex; align-items: center; gap: 0.4rem; }
-    .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
-    .selection-summary {
-      padding: 1rem;
-      border-top: 1px solid var(--border);
-      font-family: var(--font-ui);
-      font-size: 0.82rem;
-      color: var(--text-light);
-      line-height: 1.6;
-      display: none;
-    }
-    .selection-summary.visible { display: block; }
-    .selection-summary strong { color: var(--text); }
-  </style>
 </head>
 <body>
 
 <header>
   <div class="header-inner">
-    <a class="logo" href="../index.html">
-      <img src="../images/logo.png" alt="Artists' Colony Inn">
-    </a>
-    <button class="nav-toggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <a class="logo" href="../index.html"><img src="../images/logo.png" alt="Artists' Colony Inn"></a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     <nav>
       <ul>
         <li><a href="../index.html">Home</a></li>
         <li><a href="../about.html">About</a></li>
         <li><a href="../contact.html">Contact</a></li>
-        <li><a href="../booking.html" class="nav-book">Book Now</a></li>
+        <li><a href="../booking.html">Book</a></li>
+        <li><a href="tel:+972586200779" class="nav-phone">+972-58-620-0779</a></li>
       </ul>
     </nav>
   </div>
 </header>
 
-<!-- ROOM HERO IMAGE -->
-<div class="room-hero">
-  <div class="placeholder-img" style="height:420px">Photo — Orly Room</div>
-</div>
+<img class="room-hero-img" src="../images/orly.jpg" alt="Orly Suite &mdash; Artists' Colony Inn">
 
-<!-- ROOM DETAIL -->
 <section>
   <div class="container">
-    <div class="room-detail">
-      <div class="room-main">
-        <p class="room-subtitle">Artists' Colony Inn &nbsp;·&nbsp; Tzfat</p>
+    <div class="room-layout">
+      <div>
+        <p class="room-sub">Artists' Colony Inn &nbsp;&middot;&nbsp; Tzfat</p>
         <h1>Orly</h1>
-        <p>Welcoming and warm, Orly embodies the inn's signature blend of simplicity and refinement. A beautifully appointed room that provides everything needed for a comfortable and memorable stay.</p>
-        <p>All rooms include private bathroom, air conditioning, heating, Wi-Fi, and daily housekeeping. Kosher breakfast is available on request.</p>
-
-        <div class="amenities-list" style="margin-top:1.5rem">
-          <span class="amenity-tag">Private bathroom</span>
-          <span class="amenity-tag">Air conditioning</span>
-          <span class="amenity-tag">Heating</span>
-          <span class="amenity-tag">Wi-Fi</span>
-          <span class="amenity-tag">Daily housekeeping</span>
-          <span class="amenity-tag">Kosher breakfast available</span>
-        </div>
-
-        <!-- ADDITIONAL PHOTOS -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem">
-          <div class="placeholder-img" style="height:180px;border-radius:4px">Photo — Orly Detail</div>
-          <div class="placeholder-img" style="height:180px;border-radius:4px">Photo — Orly Bathroom</div>
+        <p>Orly offers a large jacuzzi and views over the Galilee. The room's terracotta arch headboard and generous proportions create a warm, enveloping atmosphere.</p><p>A suite that balances restful comfort with the distinctive character of Tzfat's ancient architecture.</p>
+        <div class="amenity-list">
+          <span class="amenity">Private bathroom</span>
+          <span class="amenity">Jacuzzi</span>
+          <span class="amenity">Air conditioning</span>
+          <span class="amenity">Heating</span>
+          <span class="amenity">Wi-Fi</span>
+          <span class="amenity">Breakfast included</span>
+          <span class="amenity">Daily housekeeping</span>
         </div>
       </div>
 
-      <!-- BOOKING SIDEBAR -->
-      <div class="booking-sidebar">
+      <div class="sidebar">
         <h3>Orly</h3>
-        <p class="rate-display">From ₪XXX / night</p>
-
-        <div class="calendar-section">
-          <h4>Check Availability</h4>
-          <div id="calendar-container">
-            <div class="cal-loading">Loading availability...</div>
-          </div>
-          <div class="selection-summary" id="selection-summary"></div>
+        <p class="rate">From &#8362;750 / night</p>
+        <p style="font-family:var(--sans);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--olive);margin-bottom:0.75rem">Check Availability</p>
+        <div id="cal-wrap" class="cal-wrap">
+          <div class="cal-loading">Loading...</div>
         </div>
-
-        <div style="margin-top:1.25rem">
-          <a href="../booking.html" class="btn btn-primary" id="book-btn" style="width:100%;text-align:center;display:block">Select dates above to book</a>
+        <div class="sel-summary" id="sel-summary"></div>
+        <div style="margin-top:1.1rem">
+          <a class="btn btn-gold" id="book-btn" href="../booking.html" style="display:block;text-align:center;width:100%">Select dates to book</a>
         </div>
-
-        <p style="font-family:var(--font-ui);font-size:0.72rem;color:var(--text-muted);margin-top:1rem;text-align:center;line-height:1.6">
-          Questions? <a href="../contact.html">Contact us</a> or call<br>
-          <a href="tel:+972586200779">+972-58-620-0779</a>
+        <p style="font-family:var(--sans);font-size:0.7rem;color:var(--text-light);margin-top:1rem;text-align:center;line-height:1.6">
+          Or <a href="https://wa.me/972586200779" target="_blank">WhatsApp us</a> &nbsp;&middot;&nbsp; <a href="tel:+972586200779">+972-58-620-0779</a>
         </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- OTHER ROOMS -->
-<section class="alt">
+<section class="bg-warm" style="padding:2.5rem 0;text-align:center">
   <div class="container">
-    <div class="section-heading">
-      <span class="eyebrow">Explore</span>
-      <h2>Other Rooms</h2>
-      <div class="divider"></div>
-    </div>
-    <div style="text-align:center">
-      <a href="../index.html#rooms" class="btn btn-outline">View All Rooms</a>
-    </div>
+    <a href="../index.html" class="btn btn-outline">&larr; All Rooms</a>
   </div>
 </section>
 
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <img src="../images/logo.png" alt="Artists' Colony Inn" style="height:48px;margin-bottom:1rem;opacity:0.85">
-      <p>A boutique guesthouse in the Artists' Quarter of Tzfat, Israel. Five rooms. Family-run. Genuinely welcoming.</p>
+      <img src="../images/logo.png" alt="Artists' Colony Inn">
+      <p>A boutique guesthouse in the Artists' Quarter of Tzfat. Five suites. Breakfast included. Family-run.</p>
     </div>
     <div>
-      <h4>Navigate</h4>
+      <h4>Pages</h4>
       <ul>
         <li><a href="../index.html">Home</a></li>
         <li><a href="../about.html">About</a></li>
-        <li><a href="../booking.html">Book Now</a></li>
+        <li><a href="../booking.html">Book a Room</a></li>
         <li><a href="../contact.html">Contact</a></li>
       </ul>
     </div>
@@ -247,187 +90,111 @@
       <ul>
         <li><a href="tel:+972586200779">+972-58-620-0779</a></li>
         <li><a href="mailto:ACI.safed@gmail.com">ACI.safed@gmail.com</a></li>
-        <li>Artists' Quarter<br>Tzfat, Israel</li>
+        <li>Simtat Yud Zayin 9<br>Safed, Israel 1323100</li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; 2026 Artists' Colony Inn &nbsp;·&nbsp; Tzfat, Israel</p>
+    <p>&copy; 2026 Artists' Colony Inn &nbsp;&middot;&nbsp; Tzfat, Israel</p>
   </div>
 </footer>
 
 <script src="../js/main.js"></script>
 <script>
-const ROOM_NAME   = 'Orly';
-const API_URL     = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
+const ROOM_NAME = 'Orly';
+const API_URL   = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
+let availData = [], checkin = null, checkout = null, curYear, curMonth;
 
-let availData    = [];
-let checkinDate  = null;
-let checkoutDate = null;
-let currentYear, currentMonth;
-
-async function loadAvailability() {
+async function loadCal() {
   try {
     const res  = await fetch(API_URL + '?room=' + encodeURIComponent(ROOM_NAME));
     const data = await res.json();
     availData  = data.dates || [];
-    const today = new Date();
-    currentYear  = today.getFullYear();
-    currentMonth = today.getMonth();
-    renderCalendar();
+    const now  = new Date();
+    curYear = now.getFullYear(); curMonth = now.getMonth();
+    renderCal();
   } catch(e) {
-    document.getElementById('calendar-container').innerHTML =
-      '<div class="cal-loading">Unable to load availability. Please <a href="../contact.html">contact us</a>.</div>';
+    document.getElementById('cal-wrap').innerHTML = '<div class="cal-loading">Unable to load. <a href="../contact.html">Contact us</a>.</div>';
   }
 }
 
-function renderCalendar() {
-  const container = document.getElementById('calendar-container');
-  const year  = currentYear;
-  const month = currentMonth;
-
-  const monthNames = ['January','February','March','April','May','June',
-                      'July','August','September','October','November','December'];
-  const dow = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const today = new Date();
-  today.setHours(0,0,0,0);
-
-  // Build date lookup
+function renderCal() {
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dow    = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  const first  = new Date(curYear, curMonth, 1).getDay();
+  const total  = new Date(curYear, curMonth + 1, 0).getDate();
+  const today  = new Date(); today.setHours(0,0,0,0);
   const lookup = {};
-  availData.forEach(d => { lookup[d.date] = d; });
+  availData.forEach(d => lookup[d.date] = d);
 
-  let html = '<div class="cal-header">';
-  html += '<button onclick="prevMonth()">&#8592;</button>';
-  html += '<span class="cal-month-label">' + monthNames[month] + ' ' + year + '</span>';
-  html += '<button onclick="nextMonth()">&#8594;</button>';
-  html += '</div>';
-  html += '<div class="cal-grid">';
-
-  dow.forEach(d => { html += '<div class="cal-dow">' + d + '</div>'; });
-
-  for (let i = 0; i < firstDay; i++) {
-    html += '<div class="cal-day empty"></div>';
-  }
-
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dateStr = year + '-' + String(month+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-    const dt = new Date(year, month, d);
-    dt.setHours(0,0,0,0);
-
-    let cls = 'cal-day';
-    let priceHtml = '';
-
-    if (dt < today) {
-      cls += ' past';
-    } else {
-      const info = lookup[dateStr];
-      if (info && info.blocked) {
-        cls += ' blocked';
-      } else {
+  let h = '<div class="cal-nav"><button onclick="prevM()">&#8592;</button><span>' + months[curMonth] + ' ' + curYear + '</span><button onclick="nextM()">&#8594;</button></div>';
+  h += '<div class="cal-grid">';
+  dow.forEach(d => h += '<div class="cal-dow">' + d + '</div>');
+  for (let i = 0; i < first; i++) h += '<div class="cal-day empty"></div>';
+  for (let d = 1; d <= total; d++) {
+    const ds = curYear + '-' + String(curMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    const dt = new Date(curYear, curMonth, d); dt.setHours(0,0,0,0);
+    let cls = 'cal-day', priceH = '';
+    if (dt < today) { cls += ' past'; }
+    else {
+      const info = lookup[ds];
+      if (info && info.blocked) { cls += ' blocked'; }
+      else {
         cls += ' available';
-        if (info && info.price) {
-          priceHtml = '<span class="cal-price">₪' + info.price + '</span>';
-        }
+        if (info && info.price) priceH = '<span class="cal-price">&#8362;' + info.price + '</span>';
       }
-
-      // Selection highlight
-      if (checkinDate && checkoutDate) {
-        if (dateStr === checkinDate || dateStr === checkoutDate) cls += ' selected';
-        else if (dateStr > checkinDate && dateStr < checkoutDate) cls += ' in-range';
-      } else if (checkinDate && dateStr === checkinDate) {
-        cls += ' selected';
-      }
+      if (checkin && checkout && (ds === checkin || ds === checkout)) cls += ' selected';
+      else if (checkin && checkout && ds > checkin && ds < checkout) cls += ' in-range';
+      else if (checkin && !checkout && ds === checkin) cls += ' selected';
     }
-
-    html += '<div class="' + cls + '" onclick="selectDate(\'' + dateStr + '\')">';
-    html += '<span>' + d + '</span>' + priceHtml;
-    html += '</div>';
+    h += '<div class="' + cls + '" onclick="pick('' + ds + '')">' + d + priceH + '</div>';
   }
-
-  html += '</div>';
-  html += '<div class="cal-legend">';
-  html += '<span class="legend-item"><span class="legend-dot" style="background:var(--white);border:1px solid var(--border)"></span>Available</span>';
-  html += '<span class="legend-item"><span class="legend-dot" style="background:#f5eded;border:1px solid #e8c8c8"></span>Unavailable</span>';
-  html += '<span class="legend-item"><span class="legend-dot" style="background:var(--gold)"></span>Selected</span>';
-  html += '</div>';
-
-  container.innerHTML = html;
+  h += '</div><div class="cal-legend"><span class="leg"><span class="leg-dot" style="background:#fff;border:1px solid #ddd"></span>Available</span><span class="leg"><span class="leg-dot" style="background:#f5f0ee;border:1px solid #ddd"></span>Booked</span><span class="leg"><span class="leg-dot" style="background:var(--gold)"></span>Selected</span></div>';
+  document.getElementById('cal-wrap').innerHTML = h;
   updateSummary();
 }
 
-function selectDate(dateStr) {
-  const dt = new Date(dateStr);
+function pick(ds) {
+  const dt = new Date(ds); dt.setHours(0,0,0,0);
   const today = new Date(); today.setHours(0,0,0,0);
   if (dt < today) return;
-
-  const info = availData.find(d => d.date === dateStr);
+  const info = availData.find(d => d.date === ds);
   if (info && info.blocked) return;
-
-  if (!checkinDate || (checkinDate && checkoutDate)) {
-    checkinDate  = dateStr;
-    checkoutDate = null;
-  } else {
-    if (dateStr <= checkinDate) {
-      checkinDate = dateStr;
-      checkoutDate = null;
-    } else {
-      // Check no blocked dates in range
-      const blocked = availData.filter(d => d.blocked && d.date > checkinDate && d.date < dateStr);
-      if (blocked.length > 0) {
-        checkinDate  = dateStr;
-        checkoutDate = null;
-      } else {
-        checkoutDate = dateStr;
-      }
+  if (!checkin || (checkin && checkout)) { checkin = ds; checkout = null; }
+  else {
+    if (ds <= checkin) { checkin = ds; checkout = null; }
+    else {
+      const blocked = availData.filter(d => d.blocked && d.date > checkin && d.date < ds);
+      if (blocked.length > 0) { checkin = ds; checkout = null; }
+      else checkout = ds;
     }
   }
-  renderCalendar();
+  renderCal();
 }
 
 function updateSummary() {
-  const summary = document.getElementById('selection-summary');
-  const bookBtn = document.getElementById('book-btn');
-
-  if (checkinDate && checkoutDate) {
-    const ci = new Date(checkinDate);
-    const co = new Date(checkoutDate);
-    const nights = Math.round((co - ci) / (1000*60*60*24));
-    const fmtDate = (d) => {
-      const parts = d.split('-');
-      return parts[2] + '/' + parts[1] + '/' + parts[0];
-    };
-    summary.innerHTML = '<strong>' + fmtDate(checkinDate) + ' &rarr; ' + fmtDate(checkoutDate) + '</strong> &nbsp;·&nbsp; ' + nights + ' night' + (nights > 1 ? 's' : '');
-    summary.classList.add('visible');
-    bookBtn.href = '../booking.html?room=' + encodeURIComponent(ROOM_NAME) + '&checkin=' + checkinDate + '&checkout=' + checkoutDate;
-    bookBtn.textContent = 'Book ' + ROOM_NAME + ' — ' + nights + ' night' + (nights > 1 ? 's' : '');
-  } else if (checkinDate) {
-    summary.innerHTML = 'Select a check-out date';
-    summary.classList.add('visible');
-    bookBtn.href = '../booking.html';
-    bookBtn.textContent = 'Select check-out date';
+  const s = document.getElementById('sel-summary');
+  const b = document.getElementById('book-btn');
+  const fmt = ds => { const p = ds.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; };
+  if (checkin && checkout) {
+    const n = Math.round((new Date(checkout) - new Date(checkin)) / 86400000);
+    s.innerHTML = '<strong>' + fmt(checkin) + ' &rarr; ' + fmt(checkout) + '</strong> &nbsp;&middot;&nbsp; ' + n + ' night' + (n>1?'s':'');
+    s.classList.add('show');
+    b.href = '../booking.html?room=' + encodeURIComponent(ROOM_NAME) + '&checkin=' + checkin + '&checkout=' + checkout;
+    b.textContent = 'Book Orly — ' + n + ' night' + (n>1?'s':'');
+  } else if (checkin) {
+    s.innerHTML = 'Select a check-out date'; s.classList.add('show');
+    b.href = '../booking.html'; b.textContent = 'Select check-out date';
   } else {
-    summary.classList.remove('visible');
-    bookBtn.href = '../booking.html';
-    bookBtn.textContent = 'Select dates above to book';
+    s.classList.remove('show');
+    b.href = '../booking.html'; b.textContent = 'Select dates to book';
   }
 }
 
-function prevMonth() {
-  currentMonth--;
-  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-  renderCalendar();
-}
+function prevM() { curMonth--; if (curMonth < 0) { curMonth = 11; curYear--; } renderCal(); }
+function nextM() { curMonth++; if (curMonth > 11) { curMonth = 0; curYear++; } renderCal(); }
 
-function nextMonth() {
-  currentMonth++;
-  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-  renderCalendar();
-}
-
-loadAvailability();
+loadCal();
 </script>
 </body>
 </html>
