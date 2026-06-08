@@ -8,30 +8,10 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <a class="logo" href="/index.html">
-      <img src="/images/logo.svg" alt="Artists' Colony Inn">
-    </a>
-    <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
-      <span></span><span></span><span></span>
-    </button>
-    <nav>
-      <ul id="nav-menu">
-        <li><a href="/index.html">Home</a></li>
-        <li><a href="/shabbat.html">Shabbat</a></li>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/contact.html">Contact</a></li>
-        <li><a href="/booking.html">Book</a></li>
-        <li><a href="tel:+972586200779" class="nav-phone">+972-58-620-0779</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+<script src="/components/header.js"></script>
 <main>
 
-<img class="room-hero-img" src="/images/orly.jpg" alt="Orly Suite &mdash; Artists' Colony Inn">
-
+<img class="room-hero-img" src="/images/orly.jpg" alt="Orly Suite">
 <section>
   <div class="container">
     <div class="room-layout">
@@ -53,9 +33,7 @@
         <h3>Orly</h3>
         <p class="rate">From &#8362;750 / night</p>
         <p style="font-family:var(--sans);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--olive);margin-bottom:0.75rem">Check Availability</p>
-        <div id="cal-wrap" class="cal-wrap">
-          <div class="cal-loading">Loading...</div>
-        </div>
+        <div id="cal-wrap" class="cal-wrap"><div class="cal-loading">Loading...</div></div>
         <div class="sel-summary" id="sel-summary"></div>
         <div style="margin-top:1.1rem">
           <a class="btn btn-gold" id="book-btn" href="/booking.html" style="display:block;text-align:center;width:100%">Select dates to book</a>
@@ -67,11 +45,8 @@
     </div>
   </div>
 </section>
-
 <section class="bg-warm" style="padding:2.5rem 0;text-align:center">
-  <div class="container">
-    <a href="/index.html" class="btn btn-outline">&larr; All Rooms</a>
-  </div>
+  <div class="container"><a href="/index.html" class="btn btn-outline">&larr; All Rooms</a></div>
 </section>
 
 </main>
@@ -103,15 +78,11 @@
     <p>&copy; 2026 Artists' Colony Inn &nbsp;&middot;&nbsp; Tzfat, Israel</p>
   </div>
 </footer>
-<script src="/components/header.js"></script>
 <script src="/components/footer.js"></script>
-<script src="/js/main.js"></script>
 <script>
-
-const ROOM_NAME = 'Orly';
-const API_URL   = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
+var ROOM_NAME = 'Orly';
+var API_URL = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
 var availData = [], checkin = null, checkout = null, curYear, curMonth;
-
 function loadCal() {
   fetch(API_URL + '?room=' + encodeURIComponent(ROOM_NAME))
     .then(function(r) { return r.json(); })
@@ -125,85 +96,70 @@ function loadCal() {
       document.getElementById('cal-wrap').innerHTML = '<div class="cal-loading">Unable to load. <a href="/contact.html">Contact us</a>.</div>';
     });
 }
-
 function renderCal() {
-  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var dow = ['Su','Mo','Tu','We','Th','Fr','Sa'];
-  var first = new Date(curYear, curMonth, 1).getDay();
-  var total = new Date(curYear, curMonth + 1, 0).getDate();
-  var today = new Date(); today.setHours(0,0,0,0);
-  var lookup = {};
-  availData.forEach(function(d) { lookup[d.date] = d; });
-
-  var h = '<div class="cal-nav"><button onclick="prevM()">&#8592;</button><span>' + months[curMonth] + ' ' + curYear + '</span><button onclick="nextM()">&#8594;</button></div>';
-  h += '<div class="cal-grid">';
-  dow.forEach(function(d) { h += '<div class="cal-dow">' + d + '</div>'; });
-  for (var i = 0; i < first; i++) h += '<div class="cal-day empty"></div>';
-  for (var d = 1; d <= total; d++) {
-    var ds = curYear + '-' + String(curMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-    var dt = new Date(curYear, curMonth, d); dt.setHours(0,0,0,0);
-    var cls = 'cal-day', priceH = '';
-    if (dt < today) { cls += ' past'; }
-    else {
-      var info = lookup[ds];
-      if (info && info.blocked) { cls += ' blocked'; }
-      else {
-        cls += ' available';
-        if (info && info.price) priceH = '<span class="cal-price">&#8362;' + info.price + '</span>';
-      }
-      if (checkin && checkout && (ds === checkin || ds === checkout)) cls += ' selected';
-      else if (checkin && checkout && ds > checkin && ds < checkout) cls += ' in-range';
-      else if (checkin && !checkout && ds === checkin) cls += ' selected';
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var dow=['Su','Mo','Tu','We','Th','Fr','Sa'];
+  var first=new Date(curYear,curMonth,1).getDay(), total=new Date(curYear,curMonth+1,0).getDate();
+  var today=new Date(); today.setHours(0,0,0,0);
+  var lookup={};
+  availData.forEach(function(d){lookup[d.date]=d;});
+  var h='<div class="cal-nav"><button onclick="prevM()">&#8592;</button><span>'+months[curMonth]+' '+curYear+'</span><button onclick="nextM()">&#8594;</button></div><div class="cal-grid">';
+  dow.forEach(function(d){h+='<div class="cal-dow">'+d+'</div>';});
+  for(var i=0;i<first;i++) h+='<div class="cal-day empty"></div>';
+  for(var d=1;d<=total;d++){
+    var ds=curYear+'-'+String(curMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    var dt=new Date(curYear,curMonth,d); dt.setHours(0,0,0,0);
+    var cls='cal-day',priceH='';
+    if(dt<today){cls+=' past';}
+    else{
+      var info=lookup[ds];
+      if(info&&info.blocked){cls+=' blocked';}
+      else{cls+=' available';if(info&&info.price)priceH='<span class="cal-price">&#8362;'+info.price+'</span>';}
+      if(checkin&&checkout&&(ds===checkin||ds===checkout))cls+=' selected';
+      else if(checkin&&checkout&&ds>checkin&&ds<checkout)cls+=' in-range';
+      else if(checkin&&!checkout&&ds===checkin)cls+=' selected';
     }
-    h += '<div class="' + cls + '" onclick="pick('' + ds + '')">' + d + priceH + '</div>';
+    h+='<div class="'+cls+'" onclick="pick(''+ds+'')">'+d+priceH+'</div>';
   }
-  h += '</div><div class="cal-legend"><span class="leg"><span class="leg-dot" style="background:#fff;border:1px solid #ddd"></span>Available</span><span class="leg"><span class="leg-dot" style="background:#f5f0ee;border:1px solid #ddd"></span>Booked</span><span class="leg"><span class="leg-dot" style="background:var(--gold)"></span>Selected</span></div>';
-  document.getElementById('cal-wrap').innerHTML = h;
+  h+='</div><div class="cal-legend"><span class="leg"><span class="leg-dot" style="background:#fff;border:1px solid #ddd"></span>Available</span><span class="leg"><span class="leg-dot" style="background:#f5f0ee;border:1px solid #ddd"></span>Booked</span><span class="leg"><span class="leg-dot" style="background:var(--gold)"></span>Selected</span></div>';
+  document.getElementById('cal-wrap').innerHTML=h;
   updateSummary();
 }
-
-function pick(ds) {
-  var dt = new Date(ds); dt.setHours(0,0,0,0);
-  var today = new Date(); today.setHours(0,0,0,0);
-  if (dt < today) return;
-  var info = availData.find(function(d) { return d.date === ds; });
-  if (info && info.blocked) return;
-  if (!checkin || (checkin && checkout)) { checkin = ds; checkout = null; }
-  else {
-    if (ds <= checkin) { checkin = ds; checkout = null; }
-    else {
-      var blocked = availData.filter(function(d) { return d.blocked && d.date > checkin && d.date < ds; });
-      if (blocked.length > 0) { checkin = ds; checkout = null; }
-      else checkout = ds;
+function pick(ds){
+  var dt=new Date(ds); dt.setHours(0,0,0,0);
+  var today=new Date(); today.setHours(0,0,0,0);
+  if(dt<today)return;
+  var info=availData.find(function(d){return d.date===ds;});
+  if(info&&info.blocked)return;
+  if(!checkin||(checkin&&checkout)){checkin=ds;checkout=null;}
+  else{
+    if(ds<=checkin){checkin=ds;checkout=null;}
+    else{
+      var blocked=availData.filter(function(d){return d.blocked&&d.date>checkin&&d.date<ds;});
+      if(blocked.length>0){checkin=ds;checkout=null;}else checkout=ds;
     }
   }
   renderCal();
 }
-
-function updateSummary() {
-  var s = document.getElementById('sel-summary');
-  var b = document.getElementById('book-btn');
-  var fmt = function(ds) { var p = ds.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; };
-  if (checkin && checkout) {
-    var n = Math.round((new Date(checkout) - new Date(checkin)) / 86400000);
-    s.innerHTML = '<strong>' + fmt(checkin) + ' &rarr; ' + fmt(checkout) + '</strong> &nbsp;&middot;&nbsp; ' + n + ' night' + (n>1?'s':'');
+function updateSummary(){
+  var s=document.getElementById('sel-summary'),b=document.getElementById('book-btn');
+  var fmt=function(ds){var p=ds.split('-');return p[2]+'/'+p[1]+'/'+p[0];};
+  if(checkin&&checkout){
+    var n=Math.round((new Date(checkout)-new Date(checkin))/86400000);
+    s.innerHTML='<strong>'+fmt(checkin)+' &rarr; '+fmt(checkout)+'</strong> &nbsp;&middot;&nbsp; '+n+' night'+(n>1?'s':'');
     s.classList.add('show');
-    b.href = '/booking.html?room=' + encodeURIComponent(ROOM_NAME) + '&checkin=' + checkin + '&checkout=' + checkout;
-    b.textContent = 'Book Orly — ' + n + ' night' + (n>1?'s':'');
-  } else if (checkin) {
-    s.innerHTML = 'Select a check-out date'; s.classList.add('show');
-    b.href = '/booking.html'; b.textContent = 'Select check-out date';
-  } else {
-    s.classList.remove('show');
-    b.href = '/booking.html'; b.textContent = 'Select dates to book';
+    b.href='/booking.html?room='+encodeURIComponent(ROOM_NAME)+'&checkin='+checkin+'&checkout='+checkout;
+    b.textContent='Book Orly — '+n+' night'+(n>1?'s':'');
+  }else if(checkin){
+    s.innerHTML='Select a check-out date';s.classList.add('show');
+    b.href='/booking.html';b.textContent='Select check-out date';
+  }else{
+    s.classList.remove('show');b.href='/booking.html';b.textContent='Select dates to book';
   }
 }
-
-function prevM() { curMonth--; if (curMonth < 0) { curMonth = 11; curYear--; } renderCal(); }
-function nextM() { curMonth++; if (curMonth > 11) { curMonth = 0; curYear++; } renderCal(); }
-
+function prevM(){curMonth--;if(curMonth<0){curMonth=11;curYear--;}renderCal();}
+function nextM(){curMonth++;if(curMonth>11){curMonth=0;curYear++;}renderCal();}
 loadCal();
-
 </script>
 </body>
 </html>

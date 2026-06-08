@@ -8,26 +8,7 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <a class="logo" href="/index.html">
-      <img src="/images/logo.svg" alt="Artists' Colony Inn">
-    </a>
-    <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
-      <span></span><span></span><span></span>
-    </button>
-    <nav>
-      <ul id="nav-menu">
-        <li><a href="/index.html">Home</a></li>
-        <li><a href="/shabbat.html">Shabbat</a></li>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/contact.html">Contact</a></li>
-        <li><a href="/booking.html">Book</a></li>
-        <li><a href="tel:+972586200779" class="nav-phone">+972-58-620-0779</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+<script src="/components/header.js"></script>
 <main>
 
 <section style="padding-top:5rem">
@@ -36,80 +17,30 @@
     <h2 class="section-title">Book a Room</h2>
     <div class="section-rule"></div>
     <p style="text-align:center;color:var(--text-light);font-weight:300;max-width:480px;margin:0 auto 2.5rem">To check availability for a specific room first, visit the individual room pages. Otherwise fill in the form below and we will confirm shortly.</p>
-
     <div class="booking-form">
       <div class="form-row">
-        <div class="form-field">
-          <label>Room <span class="req">*</span></label>
-          <select id="room">
-            <option value="">Select a room</option>
-            <option value="Tzviya">Tzviya &mdash; from &#8362;600</option>
-            <option value="Aryeh">Aryeh &mdash; from &#8362;600</option>
-            <option value="Liana">Liana &mdash; from &#8362;750</option>
-            <option value="Avital">Avital &mdash; from &#8362;750</option>
-            <option value="Orly">Orly &mdash; from &#8362;750</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label>Guests <span class="req">*</span></label>
-          <select id="guests">
-            <option value="1">1 guest</option>
-            <option value="2" selected>2 guests</option>
-            <option value="3">3 guests</option>
-            <option value="4">4 guests</option>
-          </select>
-        </div>
+        <div class="form-field"><label>Room <span class="req">*</span></label><select id="room"><option value="">Select a room</option><option value="Tzviya">Tzviya &mdash; from &#8362;600</option><option value="Aryeh">Aryeh &mdash; from &#8362;600</option><option value="Liana">Liana &mdash; from &#8362;750</option><option value="Avital">Avital &mdash; from &#8362;750</option><option value="Orly">Orly &mdash; from &#8362;750</option></select></div>
+        <div class="form-field"><label>Guests <span class="req">*</span></label><select id="guests"><option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></div>
       </div>
       <div class="form-row">
-        <div class="form-field">
-          <label>Check-in <span class="req">*</span></label>
-          <input type="date" id="checkin">
-        </div>
-        <div class="form-field">
-          <label>Check-out <span class="req">*</span></label>
-          <input type="date" id="checkout">
-        </div>
+        <div class="form-field"><label>Check-in <span class="req">*</span></label><input type="date" id="checkin"></div>
+        <div class="form-field"><label>Check-out <span class="req">*</span></label><input type="date" id="checkout"></div>
       </div>
-      <div class="form-field">
-        <label>Full name <span class="req">*</span></label>
-        <input type="text" id="name" placeholder="As it appears on your ID or passport" autocomplete="name">
+      <div class="form-field"><label>Full name <span class="req">*</span></label><input type="text" id="name" placeholder="As it appears on your ID or passport" autocomplete="name"></div>
+      <div class="form-row">
+        <div class="form-field"><label>Email <span class="req">*</span></label><input type="email" id="email" placeholder="your@email.com" autocomplete="email"></div>
+        <div class="form-field"><label>Phone <span class="req">*</span></label><input type="text" id="phone" placeholder="+972..." autocomplete="off"></div>
       </div>
       <div class="form-row">
-        <div class="form-field">
-          <label>Email <span class="req">*</span></label>
-          <input type="email" id="email" placeholder="your@email.com" autocomplete="email">
-        </div>
-        <div class="form-field">
-          <label>Phone <span class="req">*</span></label>
-          <input type="text" id="phone" placeholder="+972..." autocomplete="off">
-        </div>
+        <div class="form-field"><label>Nationality</label><input type="text" id="nationality" placeholder="e.g. Israeli, US, French"></div>
+        <div class="form-field"><label>ID / Passport</label><input type="text" id="id_number" placeholder="For VAT exemption"></div>
       </div>
-      <div class="form-row">
-        <div class="form-field">
-          <label>Nationality</label>
-          <input type="text" id="nationality" placeholder="e.g. Israeli, US, French">
-        </div>
-        <div class="form-field">
-          <label>ID / Passport</label>
-          <input type="text" id="id_number" placeholder="For VAT exemption">
-        </div>
-      </div>
-      <div class="form-field">
-        <label>Special requests</label>
-        <textarea id="requests" rows="3" placeholder="Dietary needs, accessibility, arrival time, etc."></textarea>
-      </div>
+      <div class="form-field"><label>Special requests</label><textarea id="requests" rows="3" placeholder="Dietary needs, accessibility, arrival time, etc."></textarea></div>
       <div class="hp"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
-      <div class="pay-note">
-        We process payments manually using a card reader. Please send your payment details via WhatsApp to <strong>+972-58-620-0779</strong> or call us after submitting. We also accept BIT and bank transfers.
-      </div>
+      <div class="pay-note">We process payments manually using a card reader. Please send your payment details via WhatsApp to <strong>+972-58-620-0779</strong> or call us after submitting. We also accept BIT and bank transfers.</div>
       <button class="btn btn-gold" id="submit-btn" onclick="submitBooking()" style="width:100%">Submit Booking Request</button>
-      <div class="form-msg success" id="msg-ok">
-        <strong>Your request has been received.</strong><br>
-        We have reserved your dates and will be in touch shortly. To complete your reservation please send payment details via WhatsApp to <strong>+972-58-620-0779</strong>. Your booking is not confirmed until payment is received.
-      </div>
-      <div class="form-msg error" id="msg-err">
-        Something went wrong. Please try again or contact us at <strong>+972-58-620-0779</strong>.
-      </div>
+      <div class="form-msg success" id="msg-ok"><strong>Your request has been received.</strong><br>We have reserved your dates and will be in touch shortly. To complete your reservation please send payment details via WhatsApp to <strong>+972-58-620-0779</strong>. Your booking is not confirmed until payment is received.</div>
+      <div class="form-msg error" id="msg-err">Something went wrong. Please try again or contact us at <strong>+972-58-620-0779</strong>.</div>
     </div>
   </div>
 </section>
@@ -143,9 +74,7 @@
     <p>&copy; 2026 Artists' Colony Inn &nbsp;&middot;&nbsp; Tzfat, Israel</p>
   </div>
 </footer>
-<script src="/components/header.js"></script>
 <script src="/components/footer.js"></script>
-<script src="/js/main.js"></script>
 <script>
 const BOOKING_API = 'https://script.google.com/macros/s/AKfycbz3m9Qx5tvtYdYogVHTROtbsIiXFqS_27U70LfmTSOINwJVe2yv-w9SIECQQ-XFETq9/exec';
 window.addEventListener('DOMContentLoaded', function() {
@@ -156,30 +85,11 @@ window.addEventListener('DOMContentLoaded', function() {
   if (p.get('guests'))   document.getElementById('guests').value   = p.get('guests');
 });
 function submitBooking() {
-  var room = document.getElementById('room').value.trim();
-  var checkin = document.getElementById('checkin').value;
-  var checkout = document.getElementById('checkout').value;
-  var name = document.getElementById('name').value.trim();
-  var email = document.getElementById('email').value.trim();
-  var phone = document.getElementById('phone').value.trim();
-  if (!room || !checkin || !checkout || !name || !email || !phone) { alert('Please fill in all required fields.'); return; }
-  var btn = document.getElementById('submit-btn');
-  btn.disabled = true; btn.textContent = 'Sending...';
-  var params = new URLSearchParams({
-    action:'booking', name:name, email:email, phone:phone, room:room, checkin:checkin, checkout:checkout,
-    guests: document.getElementById('guests').value,
-    nationality: document.getElementById('nationality').value.trim(),
-    id_number: document.getElementById('id_number').value.trim(),
-    requests: document.getElementById('requests').value.trim(),
-    website: document.getElementById('website').value
-  });
-  fetch(BOOKING_API + '?' + params.toString())
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (data.success) { document.querySelector('.booking-form').style.display='none'; document.getElementById('msg-ok').style.display='block'; }
-      else { btn.disabled=false; btn.textContent='Submit Booking Request'; document.getElementById('msg-err').style.display='block'; }
-    })
-    .catch(function() { btn.disabled=false; btn.textContent='Submit Booking Request'; document.getElementById('msg-err').style.display='block'; });
+  var room=document.getElementById('room').value.trim(), checkin=document.getElementById('checkin').value, checkout=document.getElementById('checkout').value, name=document.getElementById('name').value.trim(), email=document.getElementById('email').value.trim(), phone=document.getElementById('phone').value.trim();
+  if (!room||!checkin||!checkout||!name||!email||!phone) { alert('Please fill in all required fields.'); return; }
+  var btn=document.getElementById('submit-btn'); btn.disabled=true; btn.textContent='Sending...';
+  var params=new URLSearchParams({action:'booking',name:name,email:email,phone:phone,room:room,checkin:checkin,checkout:checkout,guests:document.getElementById('guests').value,nationality:document.getElementById('nationality').value.trim(),id_number:document.getElementById('id_number').value.trim(),requests:document.getElementById('requests').value.trim(),website:document.getElementById('website').value});
+  fetch(BOOKING_API+'?'+params.toString()).then(function(r){return r.json();}).then(function(data){if(data.success){document.querySelector('.booking-form').style.display='none';document.getElementById('msg-ok').style.display='block';}else{btn.disabled=false;btn.textContent='Submit Booking Request';document.getElementById('msg-err').style.display='block';}}).catch(function(){btn.disabled=false;btn.textContent='Submit Booking Request';document.getElementById('msg-err').style.display='block';});
 }
 </script>
 </body>
