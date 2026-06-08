@@ -1,8 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tzviya Suite &mdash; Artists' Colony Inn, Tzfat</title>
+  <meta name="description" content="Quiet room, large shower at the Artists' Colony Inn, Tzfat.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<script src="/components/header.js"></script>
+<main>
+
+<img class="room-hero-img" src="/images/tzviya.jpg" alt="Tzviya Suite">
+<section>
+  <div class="container">
+    <div class="room-layout">
+      <div>
+        <p class="room-sub">Artists' Colony Inn &nbsp;&middot;&nbsp; Tzfat</p>
+        <h1>Tzviya</h1>
+        <p>A serene suite with a vaulted stone ceiling and warm lamplight. Tzviya is an intimate, beautifully appointed room featuring a large shower and a quiet atmosphere perfectly suited to Tzfat's meditative character.</p><p>The room's graceful ironwork mirror and soft green alcove give it a distinctive character &mdash; restful, private, and genuinely beautiful.</p>
+        <div class="amenity-list">
+          <span class="amenity">Private bathroom</span>
+          <span class="amenity">Jacuzzi</span>
+          <span class="amenity">Air conditioning</span>
+          <span class="amenity">Heating</span>
+          <span class="amenity">Wi-Fi</span>
+          <span class="amenity">Breakfast included</span>
+          <span class="amenity">Daily housekeeping</span>
+        </div>
+      </div>
+      <div class="sidebar">
+        <h3>Tzviya</h3>
+        <p class="rate">From &#8362;600 / night</p>
+        <p style="font-family:var(--sans);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--olive);margin-bottom:0.75rem">Check Availability</p>
+        <div id="cal-wrap" class="cal-wrap"><div class="cal-loading">Loading...</div></div>
+        <div class="sel-summary" id="sel-summary"></div>
+        <div style="margin-top:1.1rem">
+          <a class="btn btn-gold" id="book-btn" href="/booking.html" style="display:block;text-align:center;width:100%">Select dates to book</a>
+        </div>
+        <p style="font-family:var(--sans);font-size:0.7rem;color:var(--text-light);margin-top:1rem;text-align:center;line-height:1.6">
+          Or <a href="https://wa.me/972586200779" target="_blank">WhatsApp us</a> &nbsp;&middot;&nbsp; <a href="tel:+972586200779">+972-58-620-0779</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-warm" style="padding:2.5rem 0;text-align:center">
+  <div class="container"><a href="/index.html" class="btn btn-outline">&larr; All Rooms</a></div>
+</section>
+
+</main>
+<script src="/components/footer.js"></script>
 <script>
-var ROOM_NAME = 'Tzviya';
-var API_URL = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
-var availData = [], checkin = null, checkout = null, curYear, curMonth;
-var maxGuests = 2, surcharge = {}, guestCount = 2;
+var ROOM_NAME  = 'Tzviya';
+var API_URL    = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
+var availData  = [];
+var checkin    = null;
+var checkout   = null;
+var curYear, curMonth;
+var maxGuests  = 2;
+var surcharge  = {};
+var guestCount = 2;
 
 function loadCal() {
   fetch(API_URL + '?room=' + encodeURIComponent(ROOM_NAME))
@@ -12,7 +70,8 @@ function loadCal() {
       surcharge = data.surcharge || {};
       availData = data.dates || [];
       var now = new Date();
-      curYear = now.getFullYear(); curMonth = now.getMonth();
+      curYear  = now.getFullYear();
+      curMonth = now.getMonth();
       renderCal();
     })
     .catch(function() {
@@ -20,151 +79,202 @@ function loadCal() {
     });
 }
 
+function fmtKey(d) {
+  return d.getFullYear() + '-'
+    + String(d.getMonth() + 1).padStart(2, '0') + '-'
+    + String(d.getDate()).padStart(2, '0');
+}
+
+function fmtDisplay(ds) {
+  var p = ds.split('-');
+  return p[2] + '/' + p[1] + '/' + p[0];
+}
+
+function getInfo(ds) {
+  for (var i = 0; i < availData.length; i++) {
+    if (availData[i].date === ds) return availData[i];
+  }
+  return null;
+}
+
 function getState(ds) {
-  var today = new Date(); today.setHours(0,0,0,0);
-  var dt = new Date(ds); dt.setHours(0,0,0,0);
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var dt = new Date(ds); dt.setHours(0, 0, 0, 0);
   if (dt < today) return 'past';
-  var info = availData.find(function(d) { return d.date === ds; });
+  var info = getInfo(ds);
   if (!info) return 'no-data';
   if (info.blocked) return 'blocked';
-  if (dt.getDay() === 6) return 'checkout-only'; // Saturday
+  if (dt.getDay() === 6) return 'checkout-only';
   return 'available';
 }
 
-function hasBlockedBetween(start, end) {
-  var d = new Date(start);
+function hasBlockedBetween(startDs, endDs) {
+  var d = new Date(startDs);
   d.setDate(d.getDate() + 1);
-  while (d < new Date(end)) {
-    var ds = fmtKey(d);
-    var s = getState(ds);
+  var end = new Date(endDs);
+  while (d < end) {
+    var s = getState(fmtKey(d));
     if (s === 'blocked' || s === 'no-data') return true;
     d.setDate(d.getDate() + 1);
   }
   return false;
 }
 
-function fmtKey(d) {
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-}
-
-function fmtDisplay(ds) {
-  var p = ds.split('-'); return p[2]+'/'+p[1]+'/'+p[0];
-}
-
 function renderCal() {
-  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var dow=['Su','Mo','Tu','We','Th','Fr','Sa'];
-  var first=new Date(curYear,curMonth,1).getDay(), total=new Date(curYear,curMonth+1,0).getDate();
-  var today=new Date(); today.setHours(0,0,0,0);
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var dow    = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  var first  = new Date(curYear, curMonth, 1).getDay();
+  var total  = new Date(curYear, curMonth + 1, 0).getDate();
 
-  var h='<div class="cal-nav"><button onclick="prevM()">&#8592;</button><span>'+months[curMonth]+' '+curYear+'</span><button onclick="nextM()">&#8594;</button></div><div class="cal-grid">';
-  dow.forEach(function(d){h+='<div class="cal-dow">'+d+'</div>';});
-  for(var i=0;i<first;i++) h+='<div class="cal-day empty"></div>';
+  var h = '<div class="cal-nav">'
+    + '<button onclick="prevM()">&#8592;</button>'
+    + '<span>' + months[curMonth] + ' ' + curYear + '</span>'
+    + '<button onclick="nextM()">&#8594;</button>'
+    + '</div>'
+    + '<div class="cal-grid">';
 
-  for(var d=1;d<=total;d++){
-    var ds=curYear+'-'+String(curMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-    var state=getState(ds);
-    var info=availData.find(function(x){return x.date===ds;});
-    var cls='cal-day', priceH='';
-
-    if(state==='past'||state==='no-data') { cls+=' past'; }
-    else if(state==='blocked') { cls+=' blocked'; }
-    else if(state==='checkout-only') {
-      cls+=' blocked';
-      if(checkin&&!checkout) cls+=' available'; // selectable as checkout
-    }
-    else { cls+=' available'; }
-
-    if(info&&info.price&&state!=='past'&&state!=='blocked')
-      priceH='<span class="cal-price">&#8362;'+info.price+'</span>';
-
-    if(checkin&&checkout&&(ds===checkin||ds===checkout)) cls+=' selected';
-    else if(checkin&&checkout&&ds>checkin&&ds<checkout) cls+=' in-range';
-    else if(checkin&&!checkout&&ds===checkin) cls+=' selected';
-
-    var clickable = (state==='available') || (state==='checkout-only'&&checkin&&!checkout);
-    h+='<div class="'+cls+'"'+(clickable?' onclick="pick(\''+ds+\'\')"':'')+'>'+d+priceH+'</div>';
+  for (var di = 0; di < dow.length; di++) {
+    h += '<div class="cal-dow">' + dow[di] + '</div>';
+  }
+  for (var i = 0; i < first; i++) {
+    h += '<div class="cal-day empty"></div>';
   }
 
-  h+='</div>';
+  for (var d = 1; d <= total; d++) {
+    var ds    = curYear + '-' + String(curMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+    var state = getState(ds);
+    var info  = getInfo(ds);
+    var cls   = 'cal-day';
+    var priceH = '';
 
-  // Guest selector
-  if(maxGuests > 2) {
-    h+='<div style="margin-top:1rem;display:flex;align-items:center;gap:0.75rem;font-family:var(--sans);font-size:0.82rem;color:var(--text)">';
-    h+='<label style="font-weight:500">Guests:</label><select id="guest-sel" onchange="guestCount=parseInt(this.value);renderCal()" style="padding:4px 8px;border:1px solid var(--border);font-size:0.82rem;">';
-    for(var g=1;g<=maxGuests;g++){
-      var lbl = g===3?'3 (+25%)':g===4?'4 (+50%)':''+g;
-      h+='<option value="'+g+'"'+(g===guestCount?' selected':'')+'>'+lbl+'</option>';
+    if (state === 'past' || state === 'no-data') {
+      cls += ' past';
+    } else if (state === 'blocked') {
+      cls += ' blocked';
+    } else if (state === 'checkout-only') {
+      cls += (checkin && !checkout) ? ' available' : ' blocked';
+    } else {
+      cls += ' available';
     }
-    h+='</select></div>';
+
+    if (info && info.price && state !== 'past') {
+      priceH = '<span class="cal-price">&#8362;' + info.price + '</span>';
+    }
+
+    if (checkin && checkout && (ds === checkin || ds === checkout)) {
+      cls += ' selected';
+    } else if (checkin && checkout && ds > checkin && ds < checkout) {
+      cls += ' in-range';
+    } else if (checkin && !checkout && ds === checkin) {
+      cls += ' selected';
+    }
+
+    var clickable = (state === 'available') || (state === 'checkout-only' && checkin && !checkout);
+    if (clickable) {
+      h += '<div class="' + cls + '" onclick="pick(\'' + ds + '\')">' + d + priceH + '</div>';
+    } else {
+      h += '<div class="' + cls + '">' + d + priceH + '</div>';
+    }
   }
 
-  // Price breakdown
-  if(checkin&&checkout){
-    var nights=Math.round((new Date(checkout)-new Date(checkin))/86400000);
-    var total=0;
-    var d2=new Date(checkin);
-    while(d2<new Date(checkout)){
-      var inf=availData.find(function(x){return x.date===fmtKey(d2);});
-      if(inf) total+=inf.price;
-      d2.setDate(d2.getDate()+1);
+  h += '</div>';
+
+  if (maxGuests > 2) {
+    h += '<div style="margin-top:1rem;display:flex;align-items:center;gap:0.75rem;font-family:var(--sans);font-size:0.82rem;color:var(--text)">';
+    h += '<label style="font-weight:500">Guests:</label>';
+    h += '<select id="guest-sel" onchange="guestCount=parseInt(this.value);renderCal()" style="padding:4px 8px;border:1px solid var(--border);font-size:0.82rem;">';
+    for (var g = 1; g <= maxGuests; g++) {
+      var glbl = g === 3 ? '3 (+25%)' : g === 4 ? '4 (+50%)' : String(g);
+      var sel  = g === guestCount ? ' selected' : '';
+      h += '<option value="' + g + '"' + sel + '>' + glbl + '</option>';
     }
-    var surchargePct=surcharge[guestCount]||0;
-    var adjusted=Math.round(total*(1+surchargePct));
-    var vat=Math.round(adjusted*0.18);
-    var inclVAT=adjusted+vat;
-    h+='<div style="margin-top:1rem;padding:0.85rem;background:var(--bg-warm);border:1px solid var(--border);font-family:var(--sans);font-size:0.78rem;color:var(--text-mid);line-height:1.9">';
-    h+='<div>'+nights+' night'+(nights>1?'s':'')+'</div>';
-    h+='<div style="display:flex;justify-content:space-between"><span>Total before VAT</span><span>&#8362;'+adjusted.toLocaleString()+'</span></div>';
-    h+='<div style="display:flex;justify-content:space-between"><span>VAT (18%)</span><span>&#8362;'+vat.toLocaleString()+'</span></div>';
-    h+='<div style="display:flex;justify-content:space-between;font-weight:600;border-top:1px solid var(--border);margin-top:4px;padding-top:4px"><span>Total incl. VAT</span><span>&#8362;'+inclVAT.toLocaleString()+'</span></div>';
-    h+='<div style="margin-top:6px;font-size:0.7rem;color:var(--text-light)">Foreign tourists with a valid passport and B2 visa are exempt from VAT. Please mention this when submitting your booking request.</div>';
-    h+='</div>';
+    h += '</select></div>';
   }
 
-  h+='<div class="cal-legend"><span class="leg"><span class="leg-dot" style="background:#fff;border:1px solid #ddd"></span>Available</span><span class="leg"><span class="leg-dot" style="background:#f5f0ee;border:1px solid #ddd"></span>Unavailable / Check-out only</span><span class="leg"><span class="leg-dot" style="background:var(--gold)"></span>Selected</span></div>';
+  if (checkin && checkout) {
+    var nights    = Math.round((new Date(checkout) - new Date(checkin)) / 86400000);
+    var baseTotal = 0;
+    var dc = new Date(checkin);
+    while (dc < new Date(checkout)) {
+      var inf = getInfo(fmtKey(dc));
+      if (inf) baseTotal += inf.price;
+      dc.setDate(dc.getDate() + 1);
+    }
+    var surchargePct = surcharge[String(guestCount)] || surcharge[guestCount] || 0;
+    var adjusted     = Math.round(baseTotal * (1 + surchargePct));
+    var vat          = Math.round(adjusted * 0.18);
+    var inclVAT      = adjusted + vat;
 
-  document.getElementById('cal-wrap').innerHTML=h;
+    h += '<div style="margin-top:1rem;padding:0.85rem;background:var(--bg-warm);border:1px solid var(--border);font-family:var(--sans);font-size:0.78rem;color:var(--text-mid);line-height:1.9">';
+    h += '<div>' + nights + ' night' + (nights > 1 ? 's' : '') + '</div>';
+    h += '<div style="display:flex;justify-content:space-between"><span>Total before VAT</span><span>&#8362;' + adjusted.toLocaleString() + '</span></div>';
+    h += '<div style="display:flex;justify-content:space-between"><span>VAT (18%)</span><span>&#8362;' + vat.toLocaleString() + '</span></div>';
+    h += '<div style="display:flex;justify-content:space-between;font-weight:600;border-top:1px solid var(--border);margin-top:4px;padding-top:4px"><span>Total incl. VAT</span><span>&#8362;' + inclVAT.toLocaleString() + '</span></div>';
+    h += '<div style="margin-top:6px;font-size:0.7rem;color:var(--text-light)">Foreign tourists with a valid passport and B2 visa are exempt from VAT. Please mention this when submitting your booking request.</div>';
+    h += '</div>';
+  }
+
+  h += '<div class="cal-legend">';
+  h += '<span class="leg"><span class="leg-dot" style="background:#fff;border:1px solid #ddd"></span>Available</span>';
+  h += '<span class="leg"><span class="leg-dot" style="background:#f5f0ee;border:1px solid #ddd"></span>Unavailable</span>';
+  h += '<span class="leg"><span class="leg-dot" style="background:var(--gold)"></span>Selected</span>';
+  h += '</div>';
+
+  document.getElementById('cal-wrap').innerHTML = h;
   updateSummary();
 }
 
-function pick(ds){
-  var state=getState(ds);
-  if(!checkin||(checkin&&checkout)){
-    if(state!=='available') return;
-    checkin=ds; checkout=null;
+function pick(ds) {
+  var state = getState(ds);
+  if (checkin && checkout) {
+    checkin = null; checkout = null;
+    renderCal();
+    return;
+  }
+  if (!checkin) {
+    if (state !== 'available') return;
+    checkin = ds; checkout = null;
   } else {
-    if(ds<=checkin){
-      checkin=state==='available'?ds:null; checkout=null;
+    if (ds <= checkin) {
+      checkin = (state === 'available') ? ds : null;
+      checkout = null;
     } else {
-      if(hasBlockedBetween(checkin,ds)){
-        checkin=null; checkout=null;
+      if (hasBlockedBetween(checkin, ds)) {
+        checkin = null; checkout = null;
         alert('Your selected range includes unavailable dates. Please choose different dates.');
       } else {
-        checkout=ds;
+        checkout = ds;
       }
     }
   }
   renderCal();
 }
 
-function updateSummary(){
-  var s=document.getElementById('sel-summary'),b=document.getElementById('book-btn');
-  if(checkin&&checkout){
-    var n=Math.round((new Date(checkout)-new Date(checkin))/86400000);
-    s.innerHTML='<strong>'+fmtDisplay(checkin)+' &rarr; '+fmtDisplay(checkout)+'</strong> &nbsp;&middot;&nbsp; '+n+' night'+(n>1?'s':'');
+function updateSummary() {
+  var s = document.getElementById('sel-summary');
+  var b = document.getElementById('book-btn');
+  if (checkin && checkout) {
+    var n = Math.round((new Date(checkout) - new Date(checkin)) / 86400000);
+    s.innerHTML = '<strong>' + fmtDisplay(checkin) + ' &rarr; ' + fmtDisplay(checkout) + '</strong> &nbsp;&middot;&nbsp; ' + n + ' night' + (n > 1 ? 's' : '');
     s.classList.add('show');
-    b.href='/booking.html?room='+encodeURIComponent(ROOM_NAME)+'&checkin='+checkin+'&checkout='+checkout+'&guests='+guestCount;
-    b.textContent='Book Tzviya \u2014 '+n+' night'+(n>1?'s':'');
-  } else if(checkin){
-    s.innerHTML='Select a check-out date'; s.classList.add('show');
-    b.href='/booking.html'; b.textContent='Select check-out date';
+    b.href = '/booking.html?room=' + encodeURIComponent(ROOM_NAME) + '&checkin=' + checkin + '&checkout=' + checkout + '&guests=' + guestCount;
+    b.textContent = 'Book Tzviya \u2014 ' + n + ' night' + (n > 1 ? 's' : '');
+  } else if (checkin) {
+    s.innerHTML = 'Select a check-out date';
+    s.classList.add('show');
+    b.href = '/booking.html';
+    b.textContent = 'Select check-out date';
   } else {
-    s.classList.remove('show'); b.href='/booking.html'; b.textContent='Select dates to book';
+    s.classList.remove('show');
+    b.href = '/booking.html';
+    b.textContent = 'Select dates to book';
   }
 }
 
-function prevM(){curMonth--;if(curMonth<0){curMonth=11;curYear--;}renderCal();}
-function nextM(){curMonth++;if(curMonth>11){curMonth=0;curYear++;}renderCal();}
+function prevM() { curMonth--; if (curMonth < 0) { curMonth = 11; curYear--; } renderCal(); }
+function nextM() { curMonth++; if (curMonth > 11) { curMonth = 0; curYear++; } renderCal(); }
+
 loadCal();
 </script>
+</body>
+</html>
