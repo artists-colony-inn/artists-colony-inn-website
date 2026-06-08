@@ -689,7 +689,7 @@ footer a:hover { color: var(--gold-light); }
   section { padding: 3rem 0; }
 
   nav ul {
-    display: none;
+    display: none !important;
     flex-direction: column;
     position: absolute;
     top: 100%;
@@ -700,7 +700,7 @@ footer a:hover { color: var(--gold-light); }
     gap: 1.25rem;
     box-shadow: var(--shadow);
   }
-  nav ul.open { display: flex; }
+  nav ul.open { display: flex !important; }
   .nav-toggle { display: flex; }
   .footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
   .form-row { grid-template-columns: 1fr; }
