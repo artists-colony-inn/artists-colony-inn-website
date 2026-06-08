@@ -3,12 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About — Artists' Colony Inn, Tzfat</title>
+  <title>About &mdash; Artists' Colony Inn, Tzfat</title>
   <meta name="description" content="About the Artists' Colony Inn and its hosts, Shlomo and Leah, in Tzfat's Artists' Quarter.">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<script src="/components/header.js"></script>
+<header>
+  <div class="header-inner">
+    <a class="logo" href="/index.html">
+      <img src="/images/logo.svg" alt="Artists' Colony Inn">
+    </a>
+    <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul id="nav-menu">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/shabbat.html">Shabbat</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/booking.html">Book</a></li>
+        <li><a href="tel:+972586200779" class="nav-phone">+972-58-620-0779</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 <main>
 
 <section style="padding-top:5rem">
@@ -18,7 +37,7 @@
       <div class="prose">
         <span class="section-label" style="text-align:left">The Inn</span>
         <h2>A boutique inn in the Artists' Quarter of Tzfat's Old City</h2>
-        <p>The Artists' Colony Inn sits within the historic Artists' Quarter — a neighbourhood of ancient stone alleyways, blue-painted doorways, and a creative spirit that has endured for centuries.</p>
+        <p>The Artists' Colony Inn sits within the historic Artists' Quarter &mdash; a neighbourhood of ancient stone alleyways, blue-painted doorways, and a creative spirit that has endured for centuries.</p>
         <p>The inn occupies a historic building whose walls carry the memory of the city itself. Five individually appointed suites offer guests a genuine home away from home, with the care and attention that only a small, family-run property can provide.</p>
         <p>We believe that where you sleep shapes how you experience a place. At the Artists' Colony Inn, every detail is chosen with that in mind.</p>
       </div>
@@ -32,8 +51,8 @@
       <div class="prose">
         <span class="section-label" style="text-align:left">Your Hosts</span>
         <h2>Shlomo &amp; Leah</h2>
-        <p>Shlomo and Leah came to Tzfat by choice — drawn by the city's singular character, its deep spiritual roots, and its living tradition of art and learning.</p>
-        <p>Running the inn is, for them, an expression of genuine hospitality — the kind rooted in the Jewish value of <em>hachnasat orchim</em>, welcoming guests. Every visitor is received as an honoured guest.</p>
+        <p>Shlomo and Leah came to Tzfat by choice &mdash; drawn by the city's singular character, its deep spiritual roots, and its living tradition of art and learning.</p>
+        <p>Running the inn is, for them, an expression of genuine hospitality &mdash; the kind rooted in the Jewish value of <em>hachnasat orchim</em>, welcoming guests. Every visitor is received as an honoured guest.</p>
         <p>From Sunday to Friday, a chef-prepared breakfast is offered to all guests as a courtesy. On Shabbat, a quiet and restful atmosphere is maintained throughout.</p>
       </div>
       <img src="/images/hero.jpg" alt="View from the inn terrace, Tzfat" style="height:360px;object-fit:cover">
@@ -44,15 +63,44 @@
 <section>
   <div class="container" style="max-width:680px;text-align:center">
     <span class="section-label">The City</span>
-    <h2 class="section-title">Tzfat — a city unlike any other</h2>
+    <h2 class="section-title">Tzfat &mdash; a city unlike any other</h2>
     <div class="section-rule"></div>
     <p style="color:var(--text-mid);font-weight:300;margin-bottom:1rem">At 900 metres above sea level in the Galilee, Tzfat is Israel's highest city and one of the four holy cities of Judaism. It has been a centre of Kabbalistic learning since the 16th century.</p>
-    <p style="color:var(--text-mid);font-weight:300;margin-bottom:1rem">The old city is compact and walkable — stone staircases, arched passages, and views over the Galilee that stretch to the Golan Heights on a clear day. The Artists' Quarter is home to dozens of galleries, studios, and ateliers. Ancient synagogues are within walking distance of the inn.</p>
+    <p style="color:var(--text-mid);font-weight:300;margin-bottom:1rem">The old city is compact and walkable &mdash; stone staircases, arched passages, and views over the Galilee that stretch to the Golan Heights on a clear day. The Artists' Quarter is home to dozens of galleries, studios, and ateliers. Ancient synagogues are within walking distance of the inn.</p>
     <p style="color:var(--text-mid);font-weight:300">Guests often say they arrived for a night and stayed for three.</p>
   </div>
 </section>
 
 </main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/images/logo.svg" alt="Artists' Colony Inn">
+      <p>A boutique guesthouse in the Artists' Quarter of Tzfat. Five suites. Breakfast included. Family-run.</p>
+    </div>
+    <div>
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/booking.html">Book a Room</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+972586200779">+972-58-620-0779</a></li>
+        <li><a href="mailto:ACI.safed@gmail.com">ACI.safed@gmail.com</a></li>
+        <li>Simtat Yud Zayin 9<br>Safed, Israel 1323100</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Artists' Colony Inn &nbsp;&middot;&nbsp; Tzfat, Israel</p>
+  </div>
+</footer>
+<script src="/components/header.js"></script>
 <script src="/components/footer.js"></script>
 <script src="/js/main.js"></script>
 </body>

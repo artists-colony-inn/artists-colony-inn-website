@@ -3,12 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book a Room — Artists' Colony Inn, Tzfat</title>
+  <title>Book a Room &mdash; Artists' Colony Inn, Tzfat</title>
   <meta name="description" content="Book your stay at the Artists' Colony Inn in Tzfat, Israel.">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<script src="/components/header.js"></script>
+<header>
+  <div class="header-inner">
+    <a class="logo" href="/index.html">
+      <img src="/images/logo.svg" alt="Artists' Colony Inn">
+    </a>
+    <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul id="nav-menu">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/shabbat.html">Shabbat</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/booking.html">Book</a></li>
+        <li><a href="tel:+972586200779" class="nav-phone">+972-58-620-0779</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 <main>
 
 <section style="padding-top:5rem">
@@ -24,11 +43,11 @@
           <label>Room <span class="req">*</span></label>
           <select id="room">
             <option value="">Select a room</option>
-            <option value="Tzviya">Tzviya — from &#8362;600</option>
-            <option value="Aryeh">Aryeh — from &#8362;600</option>
-            <option value="Liana">Liana — from &#8362;750</option>
-            <option value="Avital">Avital — from &#8362;750</option>
-            <option value="Orly">Orly — from &#8362;750</option>
+            <option value="Tzviya">Tzviya &mdash; from &#8362;600</option>
+            <option value="Aryeh">Aryeh &mdash; from &#8362;600</option>
+            <option value="Liana">Liana &mdash; from &#8362;750</option>
+            <option value="Avital">Avital &mdash; from &#8362;750</option>
+            <option value="Orly">Orly &mdash; from &#8362;750</option>
           </select>
         </div>
         <div class="form-field">
@@ -96,43 +115,71 @@
 </section>
 
 </main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/images/logo.svg" alt="Artists' Colony Inn">
+      <p>A boutique guesthouse in the Artists' Quarter of Tzfat. Five suites. Breakfast included. Family-run.</p>
+    </div>
+    <div>
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/booking.html">Book a Room</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+972586200779">+972-58-620-0779</a></li>
+        <li><a href="mailto:ACI.safed@gmail.com">ACI.safed@gmail.com</a></li>
+        <li>Simtat Yud Zayin 9<br>Safed, Israel 1323100</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Artists' Colony Inn &nbsp;&middot;&nbsp; Tzfat, Israel</p>
+  </div>
+</footer>
+<script src="/components/header.js"></script>
 <script src="/components/footer.js"></script>
 <script src="/js/main.js"></script>
 <script>
 const BOOKING_API = 'https://script.google.com/macros/s/AKfycbz3m9Qx5tvtYdYogVHTROtbsIiXFqS_27U70LfmTSOINwJVe2yv-w9SIECQQ-XFETq9/exec';
-
-window.addEventListener('DOMContentLoaded', () => {
-  const p = new URLSearchParams(window.location.search);
+window.addEventListener('DOMContentLoaded', function() {
+  var p = new URLSearchParams(window.location.search);
   if (p.get('room'))     document.getElementById('room').value     = p.get('room');
   if (p.get('checkin'))  document.getElementById('checkin').value  = p.get('checkin');
   if (p.get('checkout')) document.getElementById('checkout').value = p.get('checkout');
   if (p.get('guests'))   document.getElementById('guests').value   = p.get('guests');
 });
-
 function submitBooking() {
-  const room = document.getElementById('room').value.trim();
-  const checkin = document.getElementById('checkin').value;
-  const checkout = document.getElementById('checkout').value;
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const phone = document.getElementById('phone').value.trim();
+  var room = document.getElementById('room').value.trim();
+  var checkin = document.getElementById('checkin').value;
+  var checkout = document.getElementById('checkout').value;
+  var name = document.getElementById('name').value.trim();
+  var email = document.getElementById('email').value.trim();
+  var phone = document.getElementById('phone').value.trim();
   if (!room || !checkin || !checkout || !name || !email || !phone) { alert('Please fill in all required fields.'); return; }
-  const btn = document.getElementById('submit-btn');
+  var btn = document.getElementById('submit-btn');
   btn.disabled = true; btn.textContent = 'Sending...';
-  const params = new URLSearchParams({ action:'booking', name, email, phone, room, checkin, checkout,
+  var params = new URLSearchParams({
+    action:'booking', name:name, email:email, phone:phone, room:room, checkin:checkin, checkout:checkout,
     guests: document.getElementById('guests').value,
     nationality: document.getElementById('nationality').value.trim(),
     id_number: document.getElementById('id_number').value.trim(),
     requests: document.getElementById('requests').value.trim(),
-    website: document.getElementById('website').value,
+    website: document.getElementById('website').value
   });
   fetch(BOOKING_API + '?' + params.toString())
-    .then(r => r.json())
-    .then(data => {
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
       if (data.success) { document.querySelector('.booking-form').style.display='none'; document.getElementById('msg-ok').style.display='block'; }
       else { btn.disabled=false; btn.textContent='Submit Booking Request'; document.getElementById('msg-err').style.display='block'; }
     })
-    .catch(() => { btn.disabled=false; btn.textContent='Submit Booking Request'; document.getElementById('msg-err').style.display='block'; });
+    .catch(function() { btn.disabled=false; btn.textContent='Submit Booking Request'; document.getElementById('msg-err').style.display='block'; });
 }
 </script>
 </body>

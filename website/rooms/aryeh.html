@@ -8,7 +8,26 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<script src="/components/header.js"></script>
+<header>
+  <div class="header-inner">
+    <a class="logo" href="/index.html">
+      <img src="/images/logo.svg" alt="Artists' Colony Inn">
+    </a>
+    <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul id="nav-menu">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/shabbat.html">Shabbat</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/booking.html">Book</a></li>
+        <li><a href="tel:+972586200779" class="nav-phone">+972-58-620-0779</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 <main>
 
 <img class="room-hero-img" src="/images/aryeh.jpg" alt="Aryeh Suite &mdash; Artists' Colony Inn">
@@ -30,7 +49,6 @@
           <span class="amenity">Daily housekeeping</span>
         </div>
       </div>
-
       <div class="sidebar">
         <h3>Aryeh</h3>
         <p class="rate">From &#8362;600 / night</p>
@@ -57,46 +75,77 @@
 </section>
 
 </main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/images/logo.svg" alt="Artists' Colony Inn">
+      <p>A boutique guesthouse in the Artists' Quarter of Tzfat. Five suites. Breakfast included. Family-run.</p>
+    </div>
+    <div>
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/booking.html">Book a Room</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+972586200779">+972-58-620-0779</a></li>
+        <li><a href="mailto:ACI.safed@gmail.com">ACI.safed@gmail.com</a></li>
+        <li>Simtat Yud Zayin 9<br>Safed, Israel 1323100</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Artists' Colony Inn &nbsp;&middot;&nbsp; Tzfat, Israel</p>
+  </div>
+</footer>
+<script src="/components/header.js"></script>
 <script src="/components/footer.js"></script>
 <script src="/js/main.js"></script>
 <script>
+
 const ROOM_NAME = 'Aryeh';
 const API_URL   = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
-let availData = [], checkin = null, checkout = null, curYear, curMonth;
+var availData = [], checkin = null, checkout = null, curYear, curMonth;
 
-async function loadCal() {
-  try {
-    const res  = await fetch(API_URL + '?room=' + encodeURIComponent(ROOM_NAME));
-    const data = await res.json();
-    availData  = data.dates || [];
-    const now  = new Date();
-    curYear = now.getFullYear(); curMonth = now.getMonth();
-    renderCal();
-  } catch(e) {
-    document.getElementById('cal-wrap').innerHTML = '<div class="cal-loading">Unable to load. <a href="/contact.html">Contact us</a>.</div>';
-  }
+function loadCal() {
+  fetch(API_URL + '?room=' + encodeURIComponent(ROOM_NAME))
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      availData = data.dates || [];
+      var now = new Date();
+      curYear = now.getFullYear(); curMonth = now.getMonth();
+      renderCal();
+    })
+    .catch(function() {
+      document.getElementById('cal-wrap').innerHTML = '<div class="cal-loading">Unable to load. <a href="/contact.html">Contact us</a>.</div>';
+    });
 }
 
 function renderCal() {
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const dow    = ['Su','Mo','Tu','We','Th','Fr','Sa'];
-  const first  = new Date(curYear, curMonth, 1).getDay();
-  const total  = new Date(curYear, curMonth + 1, 0).getDate();
-  const today  = new Date(); today.setHours(0,0,0,0);
-  const lookup = {};
-  availData.forEach(d => lookup[d.date] = d);
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var dow = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  var first = new Date(curYear, curMonth, 1).getDay();
+  var total = new Date(curYear, curMonth + 1, 0).getDate();
+  var today = new Date(); today.setHours(0,0,0,0);
+  var lookup = {};
+  availData.forEach(function(d) { lookup[d.date] = d; });
 
-  let h = '<div class="cal-nav"><button onclick="prevM()">&#8592;</button><span>' + months[curMonth] + ' ' + curYear + '</span><button onclick="nextM()">&#8594;</button></div>';
+  var h = '<div class="cal-nav"><button onclick="prevM()">&#8592;</button><span>' + months[curMonth] + ' ' + curYear + '</span><button onclick="nextM()">&#8594;</button></div>';
   h += '<div class="cal-grid">';
-  dow.forEach(d => h += '<div class="cal-dow">' + d + '</div>');
-  for (let i = 0; i < first; i++) h += '<div class="cal-day empty"></div>';
-  for (let d = 1; d <= total; d++) {
-    const ds = curYear + '-' + String(curMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-    const dt = new Date(curYear, curMonth, d); dt.setHours(0,0,0,0);
-    let cls = 'cal-day', priceH = '';
+  dow.forEach(function(d) { h += '<div class="cal-dow">' + d + '</div>'; });
+  for (var i = 0; i < first; i++) h += '<div class="cal-day empty"></div>';
+  for (var d = 1; d <= total; d++) {
+    var ds = curYear + '-' + String(curMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    var dt = new Date(curYear, curMonth, d); dt.setHours(0,0,0,0);
+    var cls = 'cal-day', priceH = '';
     if (dt < today) { cls += ' past'; }
     else {
-      const info = lookup[ds];
+      var info = lookup[ds];
       if (info && info.blocked) { cls += ' blocked'; }
       else {
         cls += ' available';
@@ -114,16 +163,16 @@ function renderCal() {
 }
 
 function pick(ds) {
-  const dt = new Date(ds); dt.setHours(0,0,0,0);
-  const today = new Date(); today.setHours(0,0,0,0);
+  var dt = new Date(ds); dt.setHours(0,0,0,0);
+  var today = new Date(); today.setHours(0,0,0,0);
   if (dt < today) return;
-  const info = availData.find(d => d.date === ds);
+  var info = availData.find(function(d) { return d.date === ds; });
   if (info && info.blocked) return;
   if (!checkin || (checkin && checkout)) { checkin = ds; checkout = null; }
   else {
     if (ds <= checkin) { checkin = ds; checkout = null; }
     else {
-      const blocked = availData.filter(d => d.blocked && d.date > checkin && d.date < ds);
+      var blocked = availData.filter(function(d) { return d.blocked && d.date > checkin && d.date < ds; });
       if (blocked.length > 0) { checkin = ds; checkout = null; }
       else checkout = ds;
     }
@@ -132,11 +181,11 @@ function pick(ds) {
 }
 
 function updateSummary() {
-  const s = document.getElementById('sel-summary');
-  const b = document.getElementById('book-btn');
-  const fmt = ds => { const p = ds.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; };
+  var s = document.getElementById('sel-summary');
+  var b = document.getElementById('book-btn');
+  var fmt = function(ds) { var p = ds.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; };
   if (checkin && checkout) {
-    const n = Math.round((new Date(checkout) - new Date(checkin)) / 86400000);
+    var n = Math.round((new Date(checkout) - new Date(checkin)) / 86400000);
     s.innerHTML = '<strong>' + fmt(checkin) + ' &rarr; ' + fmt(checkout) + '</strong> &nbsp;&middot;&nbsp; ' + n + ' night' + (n>1?'s':'');
     s.classList.add('show');
     b.href = '/booking.html?room=' + encodeURIComponent(ROOM_NAME) + '&checkin=' + checkin + '&checkout=' + checkout;
@@ -154,6 +203,7 @@ function prevM() { curMonth--; if (curMonth < 0) { curMonth = 11; curYear--; } r
 function nextM() { curMonth++; if (curMonth > 11) { curMonth = 0; curYear++; } renderCal(); }
 
 loadCal();
+
 </script>
 </body>
 </html>
