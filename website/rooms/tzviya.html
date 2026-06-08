@@ -83,7 +83,7 @@ function renderCal() {
     else if(checkin&&!checkout&&ds===checkin) cls+=' selected';
 
     var clickable = (state==='available') || (state==='checkout-only'&&checkin&&!checkout);
-    h+='<div class="'+cls+'"'+(clickable?' onclick="pick(\''+ds+'\')"':'')+'>'+d+priceH+'</div>';
+    h+='<div class="'+cls+'"'+(clickable?' onclick="pick(\''+ds+\'\')"':'')+'>'+d+priceH+'</div>';
   }
 
   h+='</div>';
