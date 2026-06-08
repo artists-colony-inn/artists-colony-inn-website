@@ -702,6 +702,61 @@ footer a:hover { color: var(--gold-light); }
 }
 .wa-btn:hover { background: #1dbd5a; color: var(--white) !important; }
 
+/* ── AVAILABILITY CALENDAR ── */
+#availability-calendar { max-width: 100%; user-select: none; }
+
+.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.cal-month-label { font-size: 1rem; font-weight: 500; color: var(--text); letter-spacing: 0.05em; font-family: var(--sans); }
+.cal-nav { background: none; border: 1px solid var(--border); border-radius: 2px; width: 28px; height: 28px; font-size: 1rem; cursor: pointer; color: var(--text); line-height: 1; transition: background 0.15s; }
+.cal-nav:hover:not(:disabled) { background: var(--bg-alt); }
+.cal-nav:disabled { opacity: 0.3; cursor: default; }
+
+.cal-day-labels { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-bottom: 4px; }
+.cal-day-labels div { text-align: center; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-light); padding: 4px 0; font-family: var(--sans); }
+
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+
+.cal-cell { border-radius: 2px; padding: 6px 4px; min-height: 48px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; border: 1px solid transparent; }
+.cal-day-num { font-size: 0.85rem; font-weight: 400; line-height: 1; font-family: var(--sans); }
+.cal-price { font-size: 0.62rem; margin-top: 3px; font-weight: 400; font-family: var(--sans); }
+
+.cal-empty, .cal-past { background: transparent; border-color: transparent !important; }
+.cal-past .cal-day-num { color: var(--border); }
+
+.cal-available { background: var(--white); border-color: var(--border) !important; cursor: pointer; }
+.cal-available .cal-day-num { color: var(--text); }
+.cal-available .cal-price { color: var(--olive); }
+.cal-available:hover { background: var(--bg-warm); }
+
+.cal-checkout-only { background: var(--bg-stone); border-color: var(--border) !important; }
+.cal-checkout-only .cal-day-num { color: var(--text-light); }
+.cal-checkout-only.cal-selectable:hover { background: var(--bg-deep); }
+
+.cal-blocked { background: var(--bg-warm); border-color: var(--border) !important; }
+.cal-blocked .cal-day-num { color: var(--text-light); }
+
+.cal-no-data { background: var(--bg-warm); }
+.cal-no-data .cal-day-num { color: var(--border); }
+
+.cal-range-start, .cal-range-end { background: var(--gold) !important; border-color: var(--gold-dark) !important; }
+.cal-range-start .cal-day-num, .cal-range-end .cal-day-num { color: var(--white) !important; }
+.cal-range-start .cal-price, .cal-range-end .cal-price { color: rgba(255,255,255,0.8) !important; }
+
+.cal-in-range { background: #fdf3d0 !important; }
+.cal-in-range .cal-day-num { color: var(--gold-dark); }
+
+.cal-reserve-btn { display: block; margin: 1.25rem auto 0; padding: 0.75rem 1.5rem; background: var(--gold); color: var(--white); text-align: center; text-decoration: none; border-radius: 2px; font-size: 0.78rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; font-family: var(--sans); transition: background 0.2s; }
+.cal-reserve-btn:hover { background: var(--gold-dark); color: var(--white); }
+
+.cal-legend { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
+.cal-legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--text-light); font-family: var(--sans); }
+.cal-legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.cal-legend-dot.avail { background: var(--white); border: 1px solid var(--border); }
+.cal-legend-dot.checkout { background: var(--bg-stone); border: 1px solid var(--border); }
+.cal-legend-dot.blocked { background: var(--bg-warm); border: 1px solid var(--border); }
+
+.cal-error { text-align: center; color: var(--text-light); font-size: 0.9rem; padding: 2rem; font-family: var(--sans); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .rooms-grid { grid-template-columns: 1fr 1fr; }
