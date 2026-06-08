@@ -21,24 +21,26 @@ document.currentScript.insertAdjacentHTML('afterend', `
 </header>
 `);
 
-// Mobile menu toggle
-const toggleBtn = document.getElementById('nav-toggle-btn');
-const navMenu   = document.getElementById('nav-menu');
-if (toggleBtn && navMenu) {
-  toggleBtn.addEventListener('click', () => navMenu.classList.toggle('open'));
-}
+(function() {
+  var btn = document.getElementById('nav-toggle-btn');
+  var menu = document.getElementById('nav-menu');
+  if (btn && menu) {
+    btn.addEventListener('click', function() {
+      menu.classList.toggle('open');
+    });
+  }
 
-// Mark active nav link
-document.addEventListener('DOMContentLoaded', () => {
-  const path = window.location.pathname;
-  document.querySelectorAll('nav a').forEach(a => {
-    const href = a.getAttribute('href');
-    if (!href || href.startsWith('tel:')) return;
-    if (
-      (href === '/index.html' && (path === '/' || path === '/index.html')) ||
-      (href !== '/index.html' && path.startsWith(href.replace('.html', '')))
-    ) {
-      a.classList.add('active');
-    }
+  document.addEventListener('DOMContentLoaded', function() {
+    var path = window.location.pathname;
+    document.querySelectorAll('nav a').forEach(function(a) {
+      var href = a.getAttribute('href');
+      if (!href || href.startsWith('tel:')) return;
+      if (
+        (href === '/index.html' && (path === '/' || path === '/index.html')) ||
+        (href !== '/index.html' && path.startsWith(href.replace('.html', '')))
+      ) {
+        a.classList.add('active');
+      }
+    });
   });
-});
+})();
