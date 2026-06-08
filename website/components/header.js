@@ -4,7 +4,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
     <a class="logo" href="/index.html">
       <img src="/images/logo.svg" alt="Artists' Colony Inn">
     </a>
-    <button class="nav-toggle" aria-label="Menu" onclick="this.nextElementSibling.querySelector('ul').classList.toggle('open')">
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('nav ul').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
     <nav>
