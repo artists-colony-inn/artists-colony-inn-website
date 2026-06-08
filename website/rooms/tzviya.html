@@ -169,7 +169,7 @@ function renderCal() {
       cls += ' selected';
     }
 
-    var clickable = (state === 'available') || (state === 'checkout-only' && checkin && !checkout);
+    var clickable = (state === 'available') || ((state === 'checkout-only' || state === 'blocked') && checkin && !checkout);
     if (clickable) {
       h += '<div class="' + cls + '" onclick="pick(\'' + ds + '\')">' + d + priceH + '</div>';
     } else {
@@ -236,8 +236,8 @@ function pick(ds) {
     if (state !== 'available') return;
     checkin = ds; checkout = null;
   } else {
-    if (ds <= checkin) {
-      checkin = (state === 'available') ? ds : null;
+    if (new Date(ds) <= new Date(checkin)) {
+      checkin = state === 'available' ? ds : null;
       checkout = null;
     } else {
       if (hasBlockedBetween(checkin, ds)) {
