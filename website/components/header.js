@@ -4,11 +4,11 @@ document.currentScript.insertAdjacentHTML('afterend', `
     <a class="logo" href="/index.html">
       <img src="/images/logo.svg" alt="Artists' Colony Inn">
     </a>
-    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('nav ul').classList.toggle('open')">
+    <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
       <span></span><span></span><span></span>
     </button>
     <nav>
-      <ul>
+      <ul id="nav-menu">
         <li><a href="/index.html">Home</a></li>
         <li><a href="/shabbat.html">Shabbat</a></li>
         <li><a href="/about.html">About</a></li>
@@ -20,6 +20,13 @@ document.currentScript.insertAdjacentHTML('afterend', `
   </div>
 </header>
 `);
+
+// Mobile menu toggle
+const toggleBtn = document.getElementById('nav-toggle-btn');
+const navMenu   = document.getElementById('nav-menu');
+if (toggleBtn && navMenu) {
+  toggleBtn.addEventListener('click', () => navMenu.classList.toggle('open'));
+}
 
 // Mark active nav link
 document.addEventListener('DOMContentLoaded', () => {
