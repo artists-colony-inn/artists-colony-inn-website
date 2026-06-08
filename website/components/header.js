@@ -1,10 +1,15 @@
+window.toggleNav = function() {
+  var menu = document.getElementById('nav-menu');
+  if (menu) menu.classList.toggle('open');
+};
+
 document.currentScript.insertAdjacentHTML('afterend', `
 <header>
   <div class="header-inner">
     <a class="logo" href="/index.html">
       <img src="/images/logo.svg" alt="Artists' Colony Inn">
     </a>
-    <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
+    <button class="nav-toggle" aria-label="Menu" onclick="toggleNav()">
       <span></span><span></span><span></span>
     </button>
     <nav>
@@ -22,14 +27,6 @@ document.currentScript.insertAdjacentHTML('afterend', `
 `);
 
 (function() {
-  var btn = document.getElementById('nav-toggle-btn');
-  var menu = document.getElementById('nav-menu');
-  if (btn && menu) {
-    btn.addEventListener('click', function() {
-      menu.classList.toggle('open');
-    });
-  }
-
   document.addEventListener('DOMContentLoaded', function() {
     var path = window.location.pathname;
     document.querySelectorAll('nav a').forEach(function(a) {
