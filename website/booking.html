@@ -5,25 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book a Room — Artists' Colony Inn, Tzfat</title>
   <meta name="description" content="Book your stay at the Artists' Colony Inn in Tzfat, Israel.">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
-<header>
-  <div class="header-inner">
-    <a class="logo" href="index.html"><img src="images/logo.png" alt="Artists' Colony Inn"></a>
-    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="booking.html" class="active">Book</a></li>
-        <li><a href="tel:+972586200779" class="nav-phone">+972-58-620-0779</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+<script src="/components/header.js"></script>
+<main>
 
 <section style="padding-top:5rem">
   <div class="container">
@@ -55,7 +41,6 @@
           </select>
         </div>
       </div>
-
       <div class="form-row">
         <div class="form-field">
           <label>Check-in <span class="req">*</span></label>
@@ -66,12 +51,10 @@
           <input type="date" id="checkout">
         </div>
       </div>
-
       <div class="form-field">
         <label>Full name <span class="req">*</span></label>
         <input type="text" id="name" placeholder="As it appears on your ID or passport" autocomplete="name">
       </div>
-
       <div class="form-row">
         <div class="form-field">
           <label>Email <span class="req">*</span></label>
@@ -82,7 +65,6 @@
           <input type="text" id="phone" placeholder="+972..." autocomplete="off">
         </div>
       </div>
-
       <div class="form-row">
         <div class="form-field">
           <label>Nationality</label>
@@ -93,20 +75,15 @@
           <input type="text" id="id_number" placeholder="For VAT exemption">
         </div>
       </div>
-
       <div class="form-field">
         <label>Special requests</label>
         <textarea id="requests" rows="3" placeholder="Dietary needs, accessibility, arrival time, etc."></textarea>
       </div>
-
       <div class="hp"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
-
       <div class="pay-note">
         We process payments manually using a card reader. Please send your payment details via WhatsApp to <strong>+972-58-620-0779</strong> or call us after submitting. We also accept BIT and bank transfers.
       </div>
-
       <button class="btn btn-gold" id="submit-btn" onclick="submitBooking()" style="width:100%">Submit Booking Request</button>
-
       <div class="form-msg success" id="msg-ok">
         <strong>Your request has been received.</strong><br>
         We have reserved your dates and will be in touch shortly. To complete your reservation please send payment details via WhatsApp to <strong>+972-58-620-0779</strong>. Your booking is not confirmed until payment is received.
@@ -118,36 +95,9 @@
   </div>
 </section>
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <img src="images/logo.png" alt="Artists' Colony Inn">
-      <p>A boutique guesthouse in the Artists' Quarter of Tzfat. Five suites. Breakfast included. Family-run.</p>
-    </div>
-    <div>
-      <h4>Pages</h4>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="booking.html">Book a Room</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Contact</h4>
-      <ul>
-        <li><a href="tel:+972586200779">+972-58-620-0779</a></li>
-        <li><a href="mailto:ACI.safed@gmail.com">ACI.safed@gmail.com</a></li>
-        <li>Simtat Yud Zayin 9<br>Safed, Israel 1323100</li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>&copy; 2026 Artists' Colony Inn &nbsp;&middot;&nbsp; Tzfat, Israel</p>
-  </div>
-</footer>
-
-<script src="js/main.js"></script>
+</main>
+<script src="/components/footer.js"></script>
+<script src="/js/main.js"></script>
 <script>
 const BOOKING_API = 'https://script.google.com/macros/s/AKfycbz3m9Qx5tvtYdYogVHTROtbsIiXFqS_27U70LfmTSOINwJVe2yv-w9SIECQQ-XFETq9/exec';
 
@@ -160,45 +110,29 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function submitBooking() {
-  const room     = document.getElementById('room').value.trim();
-  const checkin  = document.getElementById('checkin').value;
+  const room = document.getElementById('room').value.trim();
+  const checkin = document.getElementById('checkin').value;
   const checkout = document.getElementById('checkout').value;
-  const name     = document.getElementById('name').value.trim();
-  const email    = document.getElementById('email').value.trim();
-  const phone    = document.getElementById('phone').value.trim();
-
-  if (!room || !checkin || !checkout || !name || !email || !phone) {
-    alert('Please fill in all required fields.');
-    return;
-  }
-
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  if (!room || !checkin || !checkout || !name || !email || !phone) { alert('Please fill in all required fields.'); return; }
   const btn = document.getElementById('submit-btn');
   btn.disabled = true; btn.textContent = 'Sending...';
-
-  const params = new URLSearchParams({
-    action: 'booking', name, email, phone, room, checkin, checkout,
-    guests:      document.getElementById('guests').value,
+  const params = new URLSearchParams({ action:'booking', name, email, phone, room, checkin, checkout,
+    guests: document.getElementById('guests').value,
     nationality: document.getElementById('nationality').value.trim(),
-    id_number:   document.getElementById('id_number').value.trim(),
-    requests:    document.getElementById('requests').value.trim(),
-    website:     document.getElementById('website').value,
+    id_number: document.getElementById('id_number').value.trim(),
+    requests: document.getElementById('requests').value.trim(),
+    website: document.getElementById('website').value,
   });
-
   fetch(BOOKING_API + '?' + params.toString())
     .then(r => r.json())
     .then(data => {
-      if (data.success) {
-        document.querySelector('.booking-form').style.display = 'none';
-        document.getElementById('msg-ok').style.display = 'block';
-      } else {
-        btn.disabled = false; btn.textContent = 'Submit Booking Request';
-        document.getElementById('msg-err').style.display = 'block';
-      }
+      if (data.success) { document.querySelector('.booking-form').style.display='none'; document.getElementById('msg-ok').style.display='block'; }
+      else { btn.disabled=false; btn.textContent='Submit Booking Request'; document.getElementById('msg-err').style.display='block'; }
     })
-    .catch(() => {
-      btn.disabled = false; btn.textContent = 'Submit Booking Request';
-      document.getElementById('msg-err').style.display = 'block';
-    });
+    .catch(() => { btn.disabled=false; btn.textContent='Submit Booking Request'; document.getElementById('msg-err').style.display='block'; });
 }
 </script>
 </body>
