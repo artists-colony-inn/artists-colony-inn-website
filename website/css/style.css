@@ -283,6 +283,8 @@ section.bg-stone { background: var(--bg-stone); }
 }
 
 .room-card-body { padding: 1.25rem 1.25rem 1.5rem; }
+.room-card-body a h3 { color: var(--text); }
+.room-card-body a:hover h3 { color: var(--gold); }
 
 .room-card-body h3 {
   font-family: var(--serif);
