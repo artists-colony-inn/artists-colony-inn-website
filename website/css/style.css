@@ -710,10 +710,12 @@ footer a:hover { color: var(--gold-light); }
   .hero-text h1 { font-size: 2.2rem; }
   .rooms-grid { grid-template-columns: 1fr; }
   section { padding: 3rem 0; }
+  .nav-toggle { display: flex; }
   .footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
   .form-row { grid-template-columns: 1fr; }
   .booking-form { padding: 1.5rem; }
 }
+
 
 @media (max-width: 480px) {
   .container { padding: 0 1.25rem; }
