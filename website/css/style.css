@@ -713,6 +713,7 @@ footer a:hover { color: var(--gold-light); }
   .footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
   .form-row { grid-template-columns: 1fr; }
   .booking-form { padding: 1.5rem; }
+  .nav-toggle { display: flex; }
 }
 
 @media (max-width: 480px) {
