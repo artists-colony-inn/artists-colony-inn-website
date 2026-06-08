@@ -31,7 +31,6 @@
       </div>
       <div class="sidebar">
         <h3>Aryeh</h3>
-        <p class="rate">From &#8362;600 / night</p>
         <p style="font-family:var(--sans);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--olive);margin-bottom:0.75rem">Check Availability</p>
         <div id="cal-wrap" class="cal-wrap"><div class="cal-loading">Loading...</div></div>
         <div class="sel-summary" id="sel-summary"></div>
@@ -63,7 +62,7 @@ let lastBookable = null;
 let rangeStart   = null, rangeEnd = null;
 let maxGuests    = 2;
 let surcharge    = {};
-let guestCount   = 1;
+let guestCount   = 2;
 
 fetch(API_URL + '?room=' + encodeURIComponent(ROOM))
   .then(r => r.json())

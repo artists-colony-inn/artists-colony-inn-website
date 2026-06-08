@@ -60,7 +60,7 @@ let lastBookable = null;
 let rangeStart   = null, rangeEnd = null;
 let maxGuests    = 2;
 let surcharge    = {};
-let guestCount   = 1;
+let guestCount   = 2;
 
 fetch(API_URL + '?room=' + encodeURIComponent(ROOM))
   .then(r => r.json())
