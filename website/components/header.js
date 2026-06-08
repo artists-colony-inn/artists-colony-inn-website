@@ -9,7 +9,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
     <a class="logo" href="/index.html">
       <img src="/images/logo.svg" alt="Artists' Colony Inn">
     </a>
-    <button class="nav-toggle" aria-label="Menu" onclick="toggleNav()">
+    <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
       <span></span><span></span><span></span>
     </button>
     <nav>
@@ -25,6 +25,8 @@ document.currentScript.insertAdjacentHTML('afterend', `
   </div>
 </header>
 `);
+
+document.getElementById('nav-toggle-btn').addEventListener('click', window.toggleNav);
 
 (function() {
   document.addEventListener('DOMContentLoaded', function() {
