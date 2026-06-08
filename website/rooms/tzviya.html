@@ -152,7 +152,7 @@ function renderCal() {
     } else if (state === 'blocked') {
       cls += ' blocked';
     } else if (state === 'checkout-only') {
-      cls += ' blocked';
+      cls += ' checkout-only';
     } else {
       cls += ' available';
     }
@@ -215,8 +215,9 @@ function renderCal() {
   }
 
   h += '<div class="cal-legend">';
-  h += '<span class="leg"><span class="leg-dot" style="background:#fff;border:1px solid #ddd"></span>Available</span>';
-  h += '<span class="leg"><span class="leg-dot" style="background:#f5f0ee;border:1px solid #ddd"></span>Unavailable</span>';
+  h += '<span class="leg"><span class="leg-dot" style="background:var(--white);border:1px solid var(--border)"></span>Available</span>';
+  h += '<span class="leg"><span class="leg-dot" style="background:var(--bg-stone);border:1px solid var(--border)"></span>Check-out only</span>';
+  h += '<span class="leg"><span class="leg-dot" style="background:var(--bg-warm);border:1px solid var(--border)"></span>Unavailable</span>';
   h += '<span class="leg"><span class="leg-dot" style="background:var(--gold)"></span>Selected</span>';
   h += '</div>';
 
