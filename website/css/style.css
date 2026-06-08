@@ -529,12 +529,14 @@ footer a:hover { color: var(--gold-light); }
 }
 .cal-day:nth-child(7n) { border-right: none; }
 
-.cal-day.empty, .cal-day.past { background: var(--bg-warm); color: #c0b8a8; }
-.cal-day.available { background: var(--white); cursor: pointer; }
+.cal-day.empty { background: var(--bg-warm); }
+.cal-day.past { background: var(--bg-warm); color: #c0b8a8; }
+.cal-day.available { background: var(--white); color: var(--text); cursor: pointer; }
 .cal-day.available:hover { background: #fdf6e0; }
-.cal-day.blocked { background: #f5f0ee; color: #c0a898; text-decoration: line-through; }
-.cal-day.selected { background: var(--gold); color: var(--white); }
-.cal-day.in-range { background: #fdf3d0; }
+.cal-day.blocked { background: var(--bg-warm); color: var(--text-light); }
+.cal-day.checkout-only { background: var(--bg-stone); color: var(--text-light); }
+.cal-day.selected { background: var(--gold) !important; color: var(--white) !important; }
+.cal-day.in-range { background: #fdf3d0; color: var(--text); }
 
 .cal-price { font-size: 0.58rem; color: var(--olive); line-height: 1; }
 .cal-day.selected .cal-price { color: rgba(255,255,255,0.75); }
@@ -552,7 +554,7 @@ footer a:hover { color: var(--gold-light); }
 }
 
 .leg { display: flex; align-items: center; gap: 0.35rem; }
-.leg-dot { width: 9px; height: 9px; }
+.leg-dot { width: 9px; height: 9px; border-radius: 2px; }
 
 .cal-loading {
   padding: 1.5rem;
@@ -701,31 +703,6 @@ footer a:hover { color: var(--gold-light); }
   transition: background 0.2s;
 }
 .wa-btn:hover { background: #1dbd5a; color: var(--white) !important; }
-
-/* ── AVAILABILITY CALENDAR ── */
-.cal-nav { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0.85rem; background: var(--bg-stone); border-bottom: 1px solid var(--border); }
-.cal-nav button { background: none; border: 1px solid var(--border); padding: 0.2rem 0.55rem; cursor: pointer; font-size: 0.8rem; color: var(--text); transition: background 0.15s; }
-.cal-nav button:hover { background: var(--border); }
-.cal-nav span { font-family: var(--sans); font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mid); }
-.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); }
-.cal-dow { text-align: center; font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-light); padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
-.cal-day { text-align: center; padding: 0.4rem 0.2rem; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; font-family: var(--sans); font-size: 0.76rem; border-bottom: 1px solid var(--bg-warm); border-right: 1px solid var(--bg-warm); cursor: default; }
-.cal-day:nth-child(7n) { border-right: none; }
-.cal-day.empty { background: var(--bg-warm); }
-.cal-day.past { background: var(--bg-warm); color: var(--border); }
-.cal-day.available { background: var(--white); color: var(--text); cursor: pointer; }
-.cal-day.available:hover { background: var(--bg-warm); }
-.cal-day.blocked { background: var(--bg-warm); color: var(--text-light); }
-.cal-day.selected { background: var(--gold) !important; color: var(--white) !important; }
-.cal-day.in-range { background: #fdf3d0; color: var(--text); }
-.cal-price { font-size: 0.58rem; color: var(--olive); line-height: 1; }
-.cal-day.selected .cal-price { color: rgba(255,255,255,0.8); }
-.cal-legend { display: flex; gap: 1rem; padding: 0.6rem 0.85rem; border-top: 1px solid var(--border); font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.05em; color: var(--text-light); flex-wrap: wrap; }
-.leg { display: flex; align-items: center; gap: 0.35rem; }
-.leg-dot { width: 9px; height: 9px; border-radius: 2px; }
-.cal-loading { padding: 1.5rem; text-align: center; font-family: var(--sans); font-size: 0.76rem; color: var(--text-light); letter-spacing: 0.08em; }
-.sel-summary { font-family: var(--sans); font-size: 0.78rem; color: var(--text-mid); padding: 0.75rem 0; display: none; line-height: 1.5; }
-.sel-summary.show { display: block; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
