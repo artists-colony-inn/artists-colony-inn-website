@@ -57,7 +57,11 @@ header {
 
 .logo img { height: 64px; width: auto; }
 
-nav ul { list-style: none; display: flex; align-items: center; gap: 2.5rem; }
+nav ul { list-style: none; align-items: center; gap: 2.5rem; }
+
+@media (min-width: 769px) {
+  nav ul { display: flex; }
+}
 
 nav a {
   font-family: var(--sans);
