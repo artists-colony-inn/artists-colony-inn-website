@@ -91,7 +91,7 @@ function renderCal() {
       else if(checkin&&checkout&&ds>checkin&&ds<checkout)cls+=' in-range';
       else if(checkin&&!checkout&&ds===checkin)cls+=' selected';
     }
-    h+='<div class="'+cls+'" onclick="pick(''+ds+'')">'+d+priceH+'</div>';
+    h+='<div class="'+cls+'" onclick="pick(\''+ds+'\')">'+d+priceH+'</div>';
   }
   h+='</div><div class="cal-legend"><span class="leg"><span class="leg-dot" style="background:#fff;border:1px solid #ddd"></span>Available</span><span class="leg"><span class="leg-dot" style="background:#f5f0ee;border:1px solid #ddd"></span>Booked</span><span class="leg"><span class="leg-dot" style="background:var(--gold)"></span>Selected</span></div>';
   document.getElementById('cal-wrap').innerHTML=h;
