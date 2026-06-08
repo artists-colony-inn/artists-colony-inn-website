@@ -25,6 +25,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
   </div>
   <div class="footer-bottom">
     <p>&copy; 2026 Artists' Colony Inn &nbsp;&middot;&nbsp; Tzfat, Israel</p>
+    <p style="margin-top:0.4rem;font-size:0.8em;opacity:0.7;">Some photos courtesy of <a href="https://www.facebook.com/share/1H3ZjgGxfo/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Avi Roitman</a></p>
   </div>
 </footer>
 `);
