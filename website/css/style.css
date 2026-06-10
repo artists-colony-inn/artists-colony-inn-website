@@ -24,12 +24,12 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: var(--serif);
+  font-family: var(--sans);
   background: var(--bg);
   color: var(--text);
   line-height: 1.75;
   font-size: 1.15rem;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 img { max-width: 100%; display: block; }
@@ -92,7 +92,7 @@ nav ul.open { display: flex; }
 nav a {
   font-family: var(--sans);
   font-size: 0.78rem;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-mid);
@@ -156,7 +156,7 @@ nav a:hover, nav a.active { color: var(--gold); }
 .hero-text h1 {
   font-family: var(--serif);
   font-size: 3.2rem;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.15;
   margin-bottom: 0.75rem;
   text-shadow: 0 1px 8px rgba(0,0,0,0.3);
@@ -164,7 +164,7 @@ nav a:hover, nav a.active { color: var(--gold); }
 
 .hero-text p {
   font-size: 1.1rem;
-  font-weight: 400;
+  font-weight: 300;
   opacity: 0.9;
   margin-bottom: 1.75rem;
   text-shadow: 0 1px 4px rgba(0,0,0,0.3);
@@ -177,7 +177,7 @@ nav a:hover, nav a.active { color: var(--gold); }
   display: inline-block;
   font-family: var(--sans);
   font-size: 0.76rem;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 0.8rem 2rem;
@@ -215,7 +215,7 @@ nav a:hover, nav a.active { color: var(--gold); }
 .tagline-strip h2 {
   font-family: var(--serif);
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--text);
   margin-bottom: 0.5rem;
 }
@@ -225,7 +225,7 @@ nav a:hover, nav a.active { color: var(--gold); }
   font-size: 1rem;
   max-width: 560px;
   margin: 0 auto;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 /* ── SECTION ── */
@@ -236,7 +236,7 @@ section.bg-stone { background: var(--bg-stone); }
 .section-label {
   font-family: var(--sans);
   font-size: 0.7rem;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--olive);
@@ -248,7 +248,7 @@ section.bg-stone { background: var(--bg-stone); }
 .section-title {
   font-family: var(--serif);
   font-size: 2.2rem;
-  font-weight: 400;
+  font-weight: 300;
   text-align: center;
   margin-bottom: 0.5rem;
 }
@@ -290,7 +290,7 @@ section.bg-stone { background: var(--bg-stone); }
 .room-card-body h3 {
   font-family: var(--serif);
   font-size: 1.35rem;
-  font-weight: 400;
+  font-weight: 300;
   margin-bottom: 0.2rem;
 }
 
@@ -325,14 +325,14 @@ section.bg-stone { background: var(--bg-stone); }
 .intro-text h2 {
   font-family: var(--serif);
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 300;
   margin-bottom: 1.25rem;
   line-height: 1.3;
 }
 
 .intro-text p {
   color: var(--text-mid);
-  font-weight: 400;
+  font-weight: 300;
   margin-bottom: 0.9rem;
   font-size: 1.1rem;
 }
@@ -368,7 +368,7 @@ footer {
 
 footer h4 {
   font-size: 0.68rem;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gold);
@@ -408,7 +408,7 @@ footer a:hover { color: var(--gold-light); }
 .room-layout h1 {
   font-family: var(--serif);
   font-size: 2.6rem;
-  font-weight: 400;
+  font-weight: 300;
   margin-bottom: 0.3rem;
 }
 
@@ -423,7 +423,7 @@ footer a:hover { color: var(--gold-light); }
 
 .room-layout p {
   color: var(--text-mid);
-  font-weight: 400;
+  font-weight: 300;
   margin-bottom: 0.9rem;
   font-size: 1rem;
 }
@@ -458,7 +458,7 @@ footer a:hover { color: var(--gold-light); }
 .sidebar h3 {
   font-family: var(--serif);
   font-size: 1.4rem;
-  font-weight: 400;
+  font-weight: 300;
   margin-bottom: 0.2rem;
 }
 
@@ -595,14 +595,14 @@ footer a:hover { color: var(--gold-light); }
 .prose h2 {
   font-family: var(--serif);
   font-size: 1.9rem;
-  font-weight: 400;
+  font-weight: 300;
   margin-bottom: 1.1rem;
   line-height: 1.3;
 }
 
 .prose p {
   color: var(--text-mid);
-  font-weight: 400;
+  font-weight: 300;
   margin-bottom: 0.9rem;
   font-size: 1.1rem;
 }
