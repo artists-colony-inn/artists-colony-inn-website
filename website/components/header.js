@@ -48,3 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+const favicon = document.createElement('link');
+favicon.rel = 'icon';
+favicon.type = 'image/svg+xml';
+favicon.href = '/images/logo.svg';
+document.head.appendChild(favicon);
