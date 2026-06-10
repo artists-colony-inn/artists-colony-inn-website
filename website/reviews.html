@@ -190,6 +190,10 @@
 <script>
   const API_URL = 'https://script.google.com/macros/s/AKfycbxHkrAYw1KdwXm1rXsKIicWvgkeU-RIteo05kmXoVFASXmzjAbUx5qVgu2fwpTegnclzw/exec';
 
+const PAGE_SIZE = 10;
+  let allReviews = [];
+  let shown = 0;
+
   async function loadReviews() {
     const list    = document.getElementById('reviews-list');
     const loading = document.getElementById('loading-msg');
@@ -201,9 +205,30 @@
         list.innerHTML = '<p class="state-msg">No reviews yet. Be the first!</p>';
         return;
       }
-      data.reviews.forEach(r => list.appendChild(buildCard(r)));
+      allReviews = data.reviews;
+      showMore();
     } catch(e) {
       loading.textContent = 'Unable to load reviews at this time.';
+    }
+  }
+
+  function showMore() {
+    const list = document.getElementById('reviews-list');
+    const batch = allReviews.slice(shown, shown + PAGE_SIZE);
+    batch.forEach(r => list.appendChild(buildCard(r)));
+    shown += batch.length;
+
+    const existing = document.getElementById('show-more-btn');
+    if (existing) existing.remove();
+
+    if (shown < allReviews.length) {
+      const btn = document.createElement('button');
+      btn.id = 'show-more-btn';
+      btn.className = 'btn-primary';
+      btn.style.cssText = 'display:block;margin:1.5rem auto 0;';
+      btn.textContent = 'Show more reviews';
+      btn.addEventListener('click', showMore);
+      list.appendChild(btn);
     }
   }
 
