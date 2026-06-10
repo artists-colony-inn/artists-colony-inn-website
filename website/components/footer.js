@@ -17,10 +17,9 @@ document.currentScript.insertAdjacentHTML('afterend', `
     <div>
       <h4>Contact</h4>
       <ul>
-        <li><a href="tel:+972586200779">+972-58-620-0779</a></li>
-        <li><a href="mailto:ACI.safed@gmail.com">ACI.safed@gmail.com</a></li>
-        <li>Simtat Yud Zayin 9<br>Safed, Israel 1323100</li>
-		<li><a href="https://wa.me/972586200779" target="_blank" rel="noopener">WhatsApp</a></li>
+		<li><a href="tel:+972586200779">+972-58-620-0779</a></li>
+		<li style="margin-top:0.75rem;"><a href="https://wa.me/972586200779" target="_blank" rel="noopener" class="btn btn-gold">WhatsApp Us</a></li>
+		<li style="margin-top:0.75rem;">Simtat Yud Zayin 9<br>Safed, Israel 1323100</li>		<li><a href="https://wa.me/972586200779" target="_blank" rel="noopener">WhatsApp</a></li>
       </ul>
     </div>
   </div>
