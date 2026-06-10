@@ -213,7 +213,7 @@ nav a:hover, nav a.active { color: var(--gold); }
 }
 
 .tagline-strip h2 {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 2rem;
   font-weight: 300;
   color: var(--text);
@@ -246,7 +246,7 @@ section.bg-stone { background: var(--bg-stone); }
 }
 
 .section-title {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 2.2rem;
   font-weight: 300;
   text-align: center;
@@ -288,7 +288,7 @@ section.bg-stone { background: var(--bg-stone); }
 .room-card-body a:hover h3 { color: var(--gold); }
 
 .room-card-body h3 {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 1.35rem;
   font-weight: 300;
   margin-bottom: 0.2rem;
@@ -323,7 +323,7 @@ section.bg-stone { background: var(--bg-stone); }
 }
 
 .intro-text h2 {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 2rem;
   font-weight: 300;
   margin-bottom: 1.25rem;
@@ -456,7 +456,7 @@ footer a:hover { color: var(--gold-light); }
 }
 
 .sidebar h3 {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 1.4rem;
   font-weight: 300;
   margin-bottom: 0.2rem;
@@ -593,7 +593,7 @@ footer a:hover { color: var(--gold-light); }
 }
 
 .prose h2 {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 1.9rem;
   font-weight: 300;
   margin-bottom: 1.1rem;
@@ -654,7 +654,7 @@ footer a:hover { color: var(--gold-light); }
   padding: 0.6rem 0.8rem;
   border: 1px solid var(--border);
   background: var(--white);
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 0.95rem;
   color: var(--text);
   transition: border-color 0.2s;
