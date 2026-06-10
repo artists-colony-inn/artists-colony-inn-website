@@ -15,6 +15,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
         <li><a href="/gallery.html">Gallery</a></li>
         <li><a href="/about.html">About</a></li>
         <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/reviews.html">Reviews</a></li>
         <li><a href="/booking.html">Book</a></li>
         <li><a href="tel:+972586200779" class="nav-phone">+972-58-620-0779</a></li>
       </ul>
