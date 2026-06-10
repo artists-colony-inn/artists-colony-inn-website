@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guest Reviews | Artists' Colony Inn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Tokens ── */
+    :root {
+      --gold:       #b8976a;
+      --gold-light: #d4b896;
+      --olive:      #6b7c5c;
+      --cream:      #faf7f2;
+      --parchment:  #f2ece0;
+      --ink:        #2c2416;
+      --ink-soft:   #5a4e3c;
+      --border:     #e0d5c0;
+      --radius:     4px;
+      --max:        760px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--ink);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      border-bottom: 2px solid var(--gold);
+    }
+    header h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 300;
+      color: var(--gold-light);
+      letter-spacing: 0.04em;
+    }
+    header p {
+      margin-top: 0.5rem;
+      color: #a09070;
+      font-style: italic;
+      font-size: 1rem;
+    }
+
+    /* ── Layout ── */
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    /* ── Section titles ── */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--olive);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Reviews list ── */
+    #reviews-list { margin-bottom: 3.5rem; }
+
+    .review-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1.25rem;
+      transition: box-shadow 0.2s;
+    }
+    .review-card:hover { box-shadow: 0 2px 12px rgba(184,151,106,0.12); }
+
+    .review-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .review-name {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+    .review-date {
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+    .review-text {
+      font-size: 1rem;
+      color: var(--ink-soft);
+      white-space: pre-wrap;
+    }
+    .review-text.rtl {
+      direction: rtl;
+      text-align: right;
+    }
+
+    /* loading / empty states */
+    .state-msg {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    /* ── Submit form ── */
+    .form-intro {
+      font-size: 1rem;
+      color: var(--ink-soft);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .form-group { margin-bottom: 1.25rem; }
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 0.4rem;
+    }
+    label .optional {
+      font-weight: 300;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--ink-soft);
+      font-size: 0.85rem;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.65rem 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    textarea:focus { border-color: var(--gold); }
+    textarea { min-height: 130px; }
+
+    /* auto-RTL on textarea */
+    textarea.rtl-input {
+      direction: rtl;
+      text-align: right;
+    }
+
+    .char-count {
+      font-size: 0.8rem;
+      color: #999;
+      text-align: right;
+      margin-top: 0.25rem;
+    }
+    .char-count.warn { color: #c0392b; }
+
+    button[type="submit"] {
+      display: inline-block;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      padding: 0.7rem 2.2rem;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+    }
+    button[type="submit"]:hover:not(:disabled) { background: var(--gold-light); }
+    button[type="submit"]:disabled { opacity: 0.55; cursor: default; }
+
+    .form-msg {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      display: none;
+    }
+    .form-msg.success {
+      background: #f0f7ec;
+      border: 1px solid #8aaf72;
+      color: #3a6b20;
+      display: block;
+    }
+    .form-msg.error {
+      background: #fdf0f0;
+      border: 1px solid #d9928f;
+      color: #8b2020;
+      display: block;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 480px) {
+      .review-card { padding: 1rem 1.1rem; }
+      button[type="submit"] { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Guest Reviews</h1>
+  <p>Artists' Colony Inn &nbsp;·&nbsp; Tzfat, Israel</p>
+</header>
+
+<main>
+
+  <!-- ── Reviews ── -->
+  <div id="reviews-section">
+    <p class="section-title">What Our Guests Say</p>
+    <div id="reviews-list">
+      <p class="state-msg" id="loading-msg">Loading reviews…</p>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ── Submit form ── -->
+  <div id="submit-section">
+    <p class="section-title">Share Your Experience</p>
+    <p class="form-intro">Stayed with us? We'd love to hear from you. Your review will appear after a brief moderation step.</p>
+
+    <form id="review-form" novalidate>
+
+      <div class="form-group">
+        <label for="reviewer-name">Your name <span class="optional">(optional)</span></label>
+        <input type="text" id="reviewer-name" name="reviewer" placeholder="e.g. Sarah, or leave blank to post anonymously" maxlength="100" autocomplete="name" />
+      </div>
+
+      <div class="form-group">
+        <label for="review-text">Your review</label>
+        <textarea id="review-text" name="text" placeholder="Tell us about your stay…" maxlength="3000" required></textarea>
+        <p class="char-count" id="char-count">0 / 3000</p>
+      </div>
+
+      <!-- honeypot — hidden from humans, bots fill it -->
+      <div style="display:none" aria-hidden="true">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <button type="submit" id="submit-btn">Submit Review</button>
+      <div class="form-msg" id="form-msg"></div>
+
+    </form>
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2016–2026 Artists' Colony Inn &nbsp;·&nbsp; Tzfat, Israel
+</footer>
+
+<script>
+  // ── CONFIG — replace with your deployed Apps Script URL ──
+  const API_URL = 'https://script.google.com/macros/s/AKfycbxHkrAYw1KdwXm1rXsKIicWvgkeU-RIteo05kmXoVFASXmzjAbUx5qVgu2fwpTegnclzw/exec';
+
+  // ── Load & render reviews ──
+  async function loadReviews() {
+    const list    = document.getElementById('reviews-list');
+    const loading = document.getElementById('loading-msg');
+    try {
+      const res  = await fetch(API_URL);
+      const data = await res.json();
+      loading.remove();
+      if (!data.ok || !data.reviews.length) {
+        list.innerHTML = '<p class="state-msg">No reviews yet. Be the first!</p>';
+        return;
+      }
+      data.reviews.forEach(r => list.appendChild(buildCard(r)));
+    } catch(e) {
+      loading.textContent = 'Unable to load reviews at this time.';
+    }
+  }
+
+  function buildCard(r) {
+    const isHebrew = r.language === 'Hebrew';
+    const name = (r.reviewer || 'Guest')
+      .replace(/\s*\(אורח\)\s*/g, '')   // strip the (אורח) annotation we added
+      .trim() || 'Guest';
+
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    card.innerHTML = `
+      <div class="review-meta">
+        <span class="review-name">${escHtml(name)}</span>
+        <span class="review-date">${escHtml(r.date)}</span>
+      </div>
+      <p class="review-text${isHebrew ? ' rtl' : ''}">${escHtml(r.text)}</p>
+    `;
+    return card;
+  }
+
+  // ── Character counter & auto-RTL ──
+  const textarea  = document.getElementById('review-text');
+  const charCount = document.getElementById('char-count');
+  const MAX = 3000;
+
+  textarea.addEventListener('input', () => {
+    const len = textarea.value.length;
+    charCount.textContent = len + ' / ' + MAX;
+    charCount.classList.toggle('warn', len > MAX * 0.9);
+
+    // auto RTL: if first meaningful chars are Hebrew, switch direction
+    const sample     = textarea.value.replace(/\s/g, '').substring(0, 20);
+    const hebrewRatio = (sample.match(/[\u0590-\u05FF]/g) || []).length / (sample.length || 1);
+    textarea.classList.toggle('rtl-input', hebrewRatio > 0.3);
+  });
+
+  // ── Submit ──
+  const form      = document.getElementById('review-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const formMsg   = document.getElementById('form-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // honeypot check
+    if (form.elements['website'].value) return;
+
+    const text     = textarea.value.trim();
+    const reviewer = document.getElementById('reviewer-name').value.trim();
+
+    if (!text) {
+      showMsg('Please write your review before submitting.', 'error');
+      textarea.focus();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+    hideMsg();
+
+    try {
+      const res  = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ reviewer, text }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await res.json();
+      if (data.ok) {
+        showMsg('Thank you! Your review has been received and will appear shortly after moderation.', 'success');
+        form.reset();
+        textarea.classList.remove('rtl-input');
+        charCount.textContent = '0 / ' + MAX;
+        charCount.classList.remove('warn');
+      } else {
+        showMsg('Something went wrong: ' + (data.error || 'please try again.'), 'error');
+      }
+    } catch(err) {
+      showMsg('Unable to submit at this time. Please try again later.', 'error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Review';
+    }
+  });
+
+  function showMsg(text, type) {
+    formMsg.textContent = text;
+    formMsg.className   = 'form-msg ' + type;
+  }
+  function hideMsg() {
+    formMsg.className = 'form-msg';
+    formMsg.textContent = '';
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  loadReviews();
+</script>
+</body>
+</html>
