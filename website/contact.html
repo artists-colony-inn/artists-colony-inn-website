@@ -12,47 +12,48 @@
 
 <main>
 <section style="padding-top:5rem">
-  <div class="container">
+  <div class="container" style="max-width:640px">
     <h1 class="section-title">Contact Us</h1>
     <div class="section-rule"></div>
-    <p style="color:var(--text-mid);text-align:center;margin-bottom:2.5rem">Happy to answer questions about the inn, the rooms, Tzfat, or anything that might help you plan your stay.</p>
 
-    <form id="contact-form" novalidate>
-      <div class="form-field">
-        <label for="cf-name">Name <span class="req">*</span></label>
-        <input type="text" id="cf-name" name="name" required maxlength="100" autocomplete="name">
-      </div>
-      <div class="form-field">
-        <label for="cf-email">Email <span class="req">*</span></label>
-        <input type="email" id="cf-email" name="email" required maxlength="200" autocomplete="email">
-      </div>
-      <div class="form-field">
-        <label for="cf-phone">Phone</label>
-        <input type="tel" id="cf-phone" name="phone" maxlength="30" autocomplete="tel">
-      </div>
-      <div class="form-field">
-        <label for="cf-message">Message <span class="req">*</span></label>
-        <textarea id="cf-message" name="message" rows="5" required maxlength="2000"></textarea>
-      </div>
+    <div class="two-col">
+		<form id="contact-form" novalidate>
+		  <div class="form-field">
+			<label for="cf-name">Name <span class="req">*</span></label>
+			<input type="text" id="cf-name" name="name" required maxlength="100" autocomplete="name">
+		  </div>
+		  <div class="form-field">
+			<label for="cf-email">Email <span class="req">*</span></label>
+			<input type="email" id="cf-email" name="email" required maxlength="200" autocomplete="email">
+		  </div>
+		  <div class="form-field">
+			<label for="cf-phone">Phone</label>
+			<input type="tel" id="cf-phone" name="phone" maxlength="30" autocomplete="tel">
+		  </div>
+		  <div class="form-field">
+			<label for="cf-message">Message <span class="req">*</span></label>
+			<textarea id="cf-message" name="message" rows="5" required maxlength="2000"></textarea>
+		  </div>
 
-      <!-- honeypot -->
-      <div class="hp"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+		  <!-- honeypot -->
+		  <div class="hp"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
 
-      <button type="submit" id="cf-submit" class="btn btn-gold" style="width:100%;padding:0.9rem">Send Message</button>
-      <div class="form-msg" id="cf-msg"></div>
-    </form>
+		  <button type="submit" id="cf-submit" class="btn btn-gold" style="width:100%;padding:0.9rem">Send Message</button>
+		  <div class="form-msg" id="cf-msg"></div>
+		</form>
+		<section class="bg-warm">
+		  <div class="container" style="max-width:680px">
+			<h2 class="section-title">Directions</h2>
+			<div class="section-rule"></div>
+			<p style="color:var(--text-mid);margin-bottom:1rem"><strong style="color:var(--text)">By car:</strong> Tzfat is approximately 45 minutes from Tiberias, 1.5 hours from Haifa, and 2.5 hours from Tel Aviv. Free parking is available near the inn.</p>
+			<p style="color:var(--text-mid);margin-bottom:1rem"><strong style="color:var(--text)">By bus:</strong> Egged buses connect Tzfat to Haifa, Tiberias, and Jerusalem. The central bus station is a short taxi ride from the Artists' Quarter.</p>
+			<p style="color:var(--text-mid)"><strong style="color:var(--text)">From Ben Gurion Airport:</strong> Direct sherut services run to Tzfat. We are happy to advise. Just call or WhatsApp us.</p>
+		  </div>
+		</section>
+    </div>
   </div>
 </section>
 
-<section class="bg-warm">
-  <div class="container" style="max-width:680px">
-    <h2 class="section-title">Directions</h2>
-    <div class="section-rule"></div>
-    <p style="color:var(--text-mid);margin-bottom:1rem"><strong style="color:var(--text)">By car:</strong> Tzfat is approximately 45 minutes from Tiberias, 1.5 hours from Haifa, and 2.5 hours from Tel Aviv. Free parking is available near the inn.</p>
-    <p style="color:var(--text-mid);margin-bottom:1rem"><strong style="color:var(--text)">By bus:</strong> Egged buses connect Tzfat to Haifa, Tiberias, and Jerusalem. The central bus station is a short taxi ride from the Artists' Quarter.</p>
-    <p style="color:var(--text-mid)"><strong style="color:var(--text)">From Ben Gurion Airport:</strong> Direct sherut services run to Tzfat. We are happy to advise. Just call or WhatsApp us.</p>
-  </div>
-</section>
 
 </main>
 <script src="/components/footer.js"></script>
