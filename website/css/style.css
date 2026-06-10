@@ -7,8 +7,8 @@
   --bg-warm:    #f8f5ef;
   --bg-stone:   #ede8dc;
   --text:       #1a1610;
-  --text-mid:   #4a4438;
-  --text-light: #7a7060;
+  --text-mid:   #2e2a22;
+  --text-light: #4a4438;
   --gold:       #a07c10;
   --gold-light: #c49a20;
   --olive:      #5c6820;
@@ -28,7 +28,7 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.75;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
 }
 
 img { max-width: 100%; display: block; }
@@ -246,7 +246,7 @@ section.bg-stone { background: var(--bg-stone); }
 
 .section-title {
   font-family: var(--serif);
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 300;
   text-align: center;
   margin-bottom: 0.5rem;
@@ -333,7 +333,7 @@ section.bg-stone { background: var(--bg-stone); }
   color: var(--text-mid);
   font-weight: 300;
   margin-bottom: 0.9rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 /* ── FOOTER ── */
