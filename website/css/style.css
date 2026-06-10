@@ -338,7 +338,7 @@ section.bg-stone { background: var(--bg-stone); }
 
 /* ── FOOTER ── */
 footer {
-  background: var(--text);
+  background: #f8f5ef;
   color: #b0a898;
   font-family: var(--sans);
   font-size: 0.82rem;
