@@ -85,3 +85,7 @@ favicon.rel = 'icon';
 favicon.type = 'image/svg+xml';
 favicon.href = '/images/logo.svg';
 document.head.appendChild(favicon);
+
+var style = document.createElement('style');
+style.textContent = 'body { direction: rtl; text-align: right; }';
+document.head.appendChild(style);
