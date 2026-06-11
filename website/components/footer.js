@@ -22,7 +22,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
 		<li style="margin-top:0.75rem;">Simtat Yud Zayin 9<br>Safed, Israel 1323100</li>
       </ul>
     </div>
-	<div style="grid-column:1/-1;border-top:1px solid #2e2a20;padding-top:1rem;text-align:center;">
+	<div style="grid-column:1/-1;text-align:center;">
       <a href="/policies.html" style="color:#8a8070;font-size:0.78rem;">House Rules &amp; Policies</a>
     </div>
   </div>
