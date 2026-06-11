@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avital Suite &mdash; Artists' Colony Inn, Tzfat</title>
+  <meta name="description" content="Large jacuzzi, private garden at the Artists' Colony Inn, Tzfat.">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-top: 2rem; }
+    .gallery a { display: block; overflow: hidden; }
+    .gallery img { width: 100%; height: 120px; object-fit: cover; display: block; transition: transform 0.2s; }
+    .gallery a:hover img { transform: scale(1.04); }
+
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 88vh; object-fit: contain; display: block; }
+    .lightbox-close { position: absolute; top: 1.25rem; right: 1.5rem; color: #fff; font-size: 2rem; cursor: pointer; line-height: 1; background: none; border: none; opacity: 0.8; }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 2rem; cursor: pointer; background: none; border: none; padding: 1rem; opacity: 0.7; }
+    .lightbox-prev:hover, .lightbox-next:hover { opacity: 1; }
+    .lightbox-prev { left: 1rem; }
+    .lightbox-next { right: 1rem; }
+    .lightbox-counter { position: absolute; bottom: 1.25rem; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.6); font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.1em; }
+
+    @media (max-width: 600px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+      .gallery img { height: 100px; }
+    }
+  </style>
+</head>
+<body>
+<script src="/components/header.js"></script>
+<main>
+
+<img class="room-hero-img" src="/images/avital.jpg" alt="Avital Suite">
+
+<div class="container" style="padding-top:0.5rem;padding-bottom:0.5rem;">
+  <div class="gallery">
+    <a href="#" onclick="openLightbox(0);return false;"><img src="/images/avital.jpg" alt="Avital Suite"></a>
+    <a href="#" onclick="openLightbox(1);return false;"><img src="/images/avital-1.jpg" alt="Avital Suite"></a>
+    <a href="#" onclick="openLightbox(2);return false;"><img src="/images/avital-2.jpg" alt="Avital Suite"></a>
+    <a href="#" onclick="openLightbox(3);return false;"><img src="/images/avital-3.jpg" alt="Avital Suite"></a>
+    <a href="#" onclick="openLightbox(4);return false;"><img src="/images/avital-4.jpg" alt="Avital Suite"></a>
+    <a href="#" onclick="openLightbox(5);return false;"><img src="/images/avital-5.jpg" alt="Avital Suite"></a>
+    <a href="#" onclick="openLightbox(6);return false;"><img src="/images/avital-6.jpg" alt="Avital Suite"></a>
+    <a href="#" onclick="openLightbox(7);return false;"><img src="/images/avital-7.jpg" alt="Avital Suite"></a>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="room-layout">
+      <div>
+        <p class="room-sub">Artists' Colony Inn &nbsp;&middot;&nbsp; Tzfat</p>
+        <h1>Avital</h1>
+        <p>Avital is the inn's most private suite, with a large jacuzzi and access to a private garden. Rich arched details, dark wood furniture, and antique accents give the room a sense of depth and occasion.</p><p>Ideal for couples seeking a complete retreat &mdash; the private garden makes Avital unlike any other room at the inn.</p>
+        <div class="amenity-list">
+          <span class="amenity">Private bathroom</span>
+          <span class="amenity">Jacuzzi</span>
+          <span class="amenity">Air conditioning</span>
+          <span class="amenity">Heating</span>
+          <span class="amenity">Free Wi-Fi</span>
+          <span class="amenity">Private Garden</span>
+          <span class="amenity">Courtesy Breakfast</span>
+        </div>
+      </div>
+      <div class="sidebar">
+        <h3>Avital</h3>
+        <p style="font-family:var(--sans);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--olive);margin-bottom:0.75rem">Check Availability</p>
+        <div id="cal-wrap" class="cal-wrap"><div class="cal-loading">Loading...</div></div>
+        <div class="sel-summary" id="sel-summary"></div>
+        <div style="margin-top:1.1rem">
+          <a class="btn btn-gold" id="book-btn" href="/booking.html" style="display:block;text-align:center;width:100%">Select dates to book</a>
+        </div>
+        <p style="font-family:var(--sans);font-size:0.7rem;color:var(--text-light);margin-top:1rem;text-align:center;line-height:1.6">
+          Or <a href="https://wa.me/972586200779" target="_blank">WhatsApp us</a> &nbsp;&middot;&nbsp; <a href="tel:+972586200779">+972-58-620-0779</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-warm" style="padding:2.5rem 0;text-align:center">
+  <div class="container"><a href="/index.html#rooms" class="btn btn-outline">&larr; All Rooms</a></div>
+</section>
+
+</main>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <button class="lightbox-prev" onclick="prevPhoto(event)">&#8592;</button>
+  <img id="lightbox-img" src="" alt="">
+  <button class="lightbox-next" onclick="nextPhoto(event)">&#8594;</button>
+  <span class="lightbox-counter" id="lightbox-counter"></span>
+</div>
+
+<script src="/components/footer.js"></script>
+<script>
+// ── LIGHTBOX ──────────────────────────────────────────────────
+var photos = [
+  '/images/avital.jpg',
+  '/images/avital-1.jpg',
+  '/images/avital-2.jpg',
+  '/images/avital-3.jpg',
+  '/images/avital-4.jpg',
+  '/images/avital-5.jpg',
+  '/images/avital-6.jpg',
+  '/images/avital-7.jpg'
+];
+var currentPhoto = 0;
+
+function openLightbox(index) {
+  currentPhoto = index;
+  document.getElementById('lightbox-img').src = photos[currentPhoto];
+  document.getElementById('lightbox-counter').textContent = (currentPhoto + 1) + ' / ' + photos.length;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function prevPhoto(e) {
+  e.stopPropagation();
+  currentPhoto = (currentPhoto - 1 + photos.length) % photos.length;
+  document.getElementById('lightbox-img').src = photos[currentPhoto];
+  document.getElementById('lightbox-counter').textContent = (currentPhoto + 1) + ' / ' + photos.length;
+}
+
+function nextPhoto(e) {
+  e.stopPropagation();
+  currentPhoto = (currentPhoto + 1) % photos.length;
+  document.getElementById('lightbox-img').src = photos[currentPhoto];
+  document.getElementById('lightbox-counter').textContent = (currentPhoto + 1) + ' / ' + photos.length;
+}
+
+document.addEventListener('keydown', function(e) {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+  if (e.key === 'ArrowLeft') prevPhoto(e);
+  if (e.key === 'ArrowRight') nextPhoto(e);
+});
+
+// ── CALENDAR ──────────────────────────────────────────────────
+const ROOM     = 'Avital';
+const FORM_URL = '/booking.html';
+const API_URL  = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
+
+const container = document.getElementById('cal-wrap');
+let currentYear, currentMonth;
+let allDates     = {};
+let lastBookable = null;
+let rangeStart   = null, rangeEnd = null;
+let maxGuests    = 2;
+let surcharge    = {};
+let guestCount   = 2;
+
+fetch(API_URL + '?room=' + encodeURIComponent(ROOM))
+  .then(r => r.json())
+  .then(data => {
+    maxGuests = data.maxGuests || 2;
+    surcharge = data.surcharge || {};
+    data.dates.forEach(row => {
+      const d = parseDate(row.date);
+      if (!d) return;
+      const key = dk(d);
+      allDates[key] = { date: d, price: row.price, blocked: row.blocked };
+      if (!lastBookable || d > lastBookable) lastBookable = d;
+    });
+    const today = new Date();
+    currentYear  = today.getFullYear();
+    currentMonth = today.getMonth();
+    render();
+  })
+  .catch(() => {
+    container.innerHTML = '<div class="cal-loading">Unable to load availability. <a href="/contact.html">Contact us</a>.</div>';
+  });
+
+function parseDate(str) {
+  let m = str.match(/^(\d{2})[-\/](\d{2})[-\/](\d{4})$/);
+  if (m) return new Date(+m[3], +m[2]-1, +m[1]);
+  m = str.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (m) return new Date(+m[1], +m[2]-1, +m[3]);
+  return null;
+}
+
+function dk(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function getState(d) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  if (d < today) return 'past';
+  const info = allDates[dk(d)];
+  if (!info) return 'no-data';
+  if (info.blocked) return 'blocked';
+  if (d.getDay() === 6) return 'checkout-only';
+  return 'available';
+}
+
+function hasBlockedBetween(start, end) {
+  const d = new Date(start);
+  d.setDate(d.getDate() + 1);
+  while (d < end) {
+    const s = getState(d);
+    if (s === 'blocked' || s === 'no-data') return true;
+    d.setDate(d.getDate() + 1);
+  }
+  return false;
+}
+
+function render() {
+  container.innerHTML = '';
+  const today = new Date();
+  const isFirst = currentYear === today.getFullYear() && currentMonth === today.getMonth();
+  const curDate = new Date(currentYear, currentMonth, 1);
+  const isLast  = lastBookable && curDate > new Date(lastBookable.getFullYear(), lastBookable.getMonth(), 1);
+
+  // Nav
+  const nav = document.createElement('div');
+  nav.className = 'cal-nav';
+  const prev = document.createElement('button');
+  prev.textContent = '\u2190'; prev.disabled = isFirst;
+  prev.onclick = () => { currentMonth--; if (currentMonth < 0) { currentMonth = 11; currentYear--; } render(); };
+  const next = document.createElement('button');
+  next.textContent = '\u2192'; next.disabled = isLast;
+  next.onclick = () => { currentMonth++; if (currentMonth > 11) { currentMonth = 0; currentYear++; } render(); };
+  const lbl = document.createElement('span');
+  lbl.textContent = new Date(currentYear, currentMonth, 1).toLocaleDateString('en-IL', { month: 'long', year: 'numeric' });
+  nav.appendChild(prev); nav.appendChild(lbl); nav.appendChild(next);
+  container.appendChild(nav);
+
+  // Day labels
+  const dlRow = document.createElement('div'); dlRow.className = 'cal-grid';
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(function(l) {
+    const d = document.createElement('div'); d.className = 'cal-dow'; d.textContent = l; dlRow.appendChild(d);
+  });
+  container.appendChild(dlRow);
+
+  // Grid
+  const grid = document.createElement('div'); grid.className = 'cal-grid';
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    const e = document.createElement('div'); e.className = 'cal-day empty'; grid.appendChild(e);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date  = new Date(currentYear, currentMonth, d);
+    const state = getState(date);
+    const key   = dk(date);
+    const info  = allDates[key];
+
+    const cell = document.createElement('div');
+    cell.className = 'cal-day ' + state;
+
+    const dn = document.createElement('span'); dn.textContent = d;
+    cell.appendChild(dn);
+
+    if (info && !info.blocked && state !== 'past' && state !== 'no-data') {
+      const pr = document.createElement('span'); pr.className = 'cal-price'; pr.textContent = '\u20aa' + info.price;
+      cell.appendChild(pr);
+    }
+
+    if (rangeStart) {
+      if (key === dk(rangeStart)) cell.classList.add('selected');
+      if (rangeEnd) {
+        if (key === dk(rangeEnd)) cell.classList.add('selected');
+        if (date > rangeStart && date < rangeEnd) cell.classList.add('in-range');
+      }
+    }
+
+    if (state === 'available' || (state === 'checkout-only' && rangeStart) || (state === 'blocked' && rangeStart)) {
+      cell.style.cursor = 'pointer';
+      cell.onclick = (function(dt, st) { return function() { handleClick(dt, st); }; })(date, state);
+    }
+
+    grid.appendChild(cell);
+  }
+  container.appendChild(grid);
+
+  // Guest selector
+  if (maxGuests > 2) {
+    const guestDiv = document.createElement('div');
+    guestDiv.style.cssText = 'margin-top:1rem;display:flex;align-items:center;gap:0.75rem;font-family:var(--sans);font-size:0.82rem;color:var(--text);';
+    const guestLabel = document.createElement('label');
+    guestLabel.textContent = 'Guests:';
+    guestLabel.style.fontWeight = '500';
+    const guestSel = document.createElement('select');
+    guestSel.style.cssText = 'padding:4px 8px;border:1px solid var(--border);font-size:0.82rem;';
+    for (let g = 1; g <= maxGuests; g++) {
+      const opt = document.createElement('option');
+      opt.value = g;
+      if (g === 3) opt.textContent = '3 (+25%)';
+      else if (g === 4) opt.textContent = '4 (+50%)';
+      else opt.textContent = g;
+      if (g === guestCount) opt.selected = true;
+      guestSel.appendChild(opt);
+    }
+    guestSel.onchange = function() { guestCount = parseInt(guestSel.value); render(); };
+    guestDiv.appendChild(guestLabel);
+    guestDiv.appendChild(guestSel);
+    container.appendChild(guestDiv);
+  }
+
+  // Total and reserve button
+  if (rangeStart && rangeEnd) {
+    const nights = Math.round((rangeEnd - rangeStart) / (1000 * 60 * 60 * 24));
+    let total = 0;
+    const d = new Date(rangeStart);
+    while (d < rangeEnd) {
+      const info = allDates[dk(d)];
+      if (info) total += info.price;
+      d.setDate(d.getDate() + 1);
+    }
+    const surchargePct  = surcharge[guestCount] || 0;
+    const adjustedTotal = Math.round(total * (1 + surchargePct));
+    const vatAmount     = Math.round(adjustedTotal * 0.18);
+    const totalInclVAT  = adjustedTotal + vatAmount;
+    const nightsLabel   = nights + ' night' + (nights > 1 ? 's' : '');
+    const vatNote       = 'Foreign tourists with a valid passport and B2 visa are exempt from VAT. Please mention this when submitting your booking request.';
+
+    const totalEl = document.createElement('div');
+    totalEl.style.cssText = 'margin-top:1rem;padding:0.85rem;background:var(--bg-warm);border:1px solid var(--border);font-family:var(--sans);font-size:0.78rem;color:var(--text-mid);line-height:1.9;';
+    totalEl.innerHTML = '<div>' + nightsLabel + '</div>'
+      + '<div style="display:flex;justify-content:space-between"><span>Total before VAT</span><span>&#8362;' + adjustedTotal.toLocaleString() + '</span></div>'
+      + '<div style="display:flex;justify-content:space-between"><span>VAT (18%)</span><span>&#8362;' + vatAmount.toLocaleString() + '</span></div>'
+      + '<div style="display:flex;justify-content:space-between;font-weight:600;border-top:1px solid var(--border);margin-top:4px;padding-top:4px"><span>Total incl. VAT</span><span>&#8362;' + totalInclVAT.toLocaleString() + '</span></div>'
+      + '<div style="margin-top:6px;font-size:0.7rem;color:var(--text-light)">' + vatNote + '</div>';
+    container.appendChild(totalEl);
+
+    const btn = document.createElement('a');
+    btn.className = 'btn btn-gold';
+    btn.style.cssText = 'display:block;text-align:center;width:100%;margin-top:1rem;';
+    btn.href = FORM_URL + '?checkin=' + fmtForm(rangeStart) + '&checkout=' + fmtForm(rangeEnd) + '&room=' + encodeURIComponent(ROOM) + '&guests=' + guestCount;
+    btn.textContent = 'Book ' + ROOM + ' \u2014 ' + fmtDisplay(rangeStart) + ' \u2192 ' + fmtDisplay(rangeEnd);
+    container.appendChild(btn);
+
+    // Hide the static book button
+    document.getElementById('book-btn').style.display = 'none';
+    document.getElementById('sel-summary').style.display = 'none';
+  } else {
+    // Restore static book button
+    const bookBtn = document.getElementById('book-btn');
+    bookBtn.style.display = 'block';
+    bookBtn.href = '/booking.html';
+    bookBtn.textContent = rangeStart ? 'Select check-out date' : 'Select dates to book';
+    const summary = document.getElementById('sel-summary');
+    if (rangeStart) {
+      summary.innerHTML = 'Check-in: ' + fmtDisplay(rangeStart) + ' &mdash; select check-out date';
+      summary.style.display = 'block';
+    } else {
+      summary.style.display = 'none';
+    }
+  }
+
+  // Legend
+  const leg = document.createElement('div'); leg.className = 'cal-legend';
+  leg.innerHTML = '<span class="leg"><span class="leg-dot" style="background:var(--white);border:1px solid var(--border)"></span>Available</span>'
+    + '<span class="leg"><span class="leg-dot" style="background:var(--bg-stone);border:1px solid var(--border)"></span>Check-out only</span>'
+    + '<span class="leg"><span class="leg-dot" style="background:var(--bg-warm);border:1px solid var(--border)"></span>Unavailable</span>'
+    + '<span class="leg"><span class="leg-dot" style="background:var(--gold)"></span>Selected</span>';
+  container.appendChild(leg);
+}
+
+function handleClick(date, state) {
+  if (rangeStart && rangeEnd) {
+    rangeStart = null; rangeEnd = null;
+    render();
+    return;
+  }
+  if (!rangeStart) {
+    if (state !== 'available') return;
+    rangeStart = date; rangeEnd = null;
+  } else {
+    if (date <= rangeStart) {
+      rangeStart = state === 'available' ? date : null;
+      rangeEnd = null;
+    } else {
+      if (hasBlockedBetween(rangeStart, date)) {
+        rangeStart = null; rangeEnd = null;
+        alert('Your selected range includes unavailable dates. Please choose different dates.');
+      } else {
+        rangeEnd = date;
+      }
+    }
+  }
+  render();
+}
+
+function fmtForm(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function fmtDisplay(d) {
+  return d.toLocaleDateString('en-IL', { day: 'numeric', month: 'short' });
+}
+</script>
+</body>
+</html>
