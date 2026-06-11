@@ -374,9 +374,9 @@ footer {
 .footer-brand img {
   height: 52px;
   margin-bottom: 1rem;
-  background: rgba(255,255,255,0.08);
+/*  background: rgba(255,255,255,0.08);
   padding: 6px 10px;
-  border-radius: 4px;
+  border-radius: 4px;*/
 }
 .footer-brand p { line-height: 1.8; color: #7a7060; max-width: 260px; }
 
