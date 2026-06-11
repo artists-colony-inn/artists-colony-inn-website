@@ -23,7 +23,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
       </ul>
     </div>
 	<div style="grid-column:1/-1;text-align:center;">
-      <a href="/policies.html" style="color:#8a8070;font-size:0.78rem;">House Rules &amp; Policies</a>
+      <a href="/policies.html">House Rules &amp; Policies</a>
     </div>
   </div>
   <div class="footer-bottom">
