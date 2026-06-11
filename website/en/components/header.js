@@ -86,3 +86,16 @@ favicon.rel = 'icon';
 favicon.type = 'image/svg+xml';
 favicon.href = '/images/logo.svg';
 document.head.appendChild(favicon);
+
+// Google Analytics
+(function() {
+  var script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-H5ZXBGVT4Q';
+  document.head.appendChild(script);
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-H5ZXBGVT4Q');
+})();
