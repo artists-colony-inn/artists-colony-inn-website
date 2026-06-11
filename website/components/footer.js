@@ -3,7 +3,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
   <div class="footer-inner">
     <div class="footer-brand">
       <img src="/images/logo.svg" alt="מלון בוטיק קריית האמנים">
-      <p>אכסניה בוטיק ברובע האמנים של צפת. חמש סוויטות. ארוחת בוקר כלולה. בניהול משפחתי.</p>
+      <p>אכסניה בוטיק ברובע האמנים של צפת. חמש סוויטות. ארוחת בוקר היא מתנתנו לכם. בניהול משפחתי.</p>
     </div>
     <div>
       <h4>דפים</h4>
