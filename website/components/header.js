@@ -46,6 +46,28 @@ document.addEventListener('DOMContentLoaded', function() {
     langToggle.href = enPath;
   }
 
+  // hreflang tags
+  var heUrl = 'https://www.theartistscolonyinn.com' + path;
+  var enUrl = 'https://www.theartistscolonyinn.com/en' + (path === '/' ? '/index.html' : path);
+
+  var linkHe = document.createElement('link');
+  linkHe.rel = 'alternate';
+  linkHe.hreflang = 'he';
+  linkHe.href = heUrl;
+  document.head.appendChild(linkHe);
+
+  var linkEn = document.createElement('link');
+  linkEn.rel = 'alternate';
+  linkEn.hreflang = 'en';
+  linkEn.href = enUrl;
+  document.head.appendChild(linkEn);
+
+  var linkDefault = document.createElement('link');
+  linkDefault.rel = 'alternate';
+  linkDefault.hreflang = 'x-default';
+  linkDefault.href = heUrl;
+  document.head.appendChild(linkDefault);
+
   document.querySelectorAll('nav a').forEach(function(a) {
     var href = a.getAttribute('href');
     if (!href || href.startsWith('tel:') || a.id === 'lang-toggle') return;
