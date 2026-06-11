@@ -13,7 +13,6 @@
 <main>
 	<section style="padding-top:5rem">
 	  <div class="container">
-		<span class="section-label">Reserve your stay</span>
 		<h2 class="section-title">Book a Room</h2>
 		<div class="section-rule"></div>
 		<p style="text-align:center;color:var(--text-light);font-weight:300;max-width:480px;margin:0 auto 2.5rem">To check availability for a specific room first, visit the individual room pages. Otherwise fill in the form below and we will confirm shortly.</p>
@@ -79,7 +78,26 @@ window.addEventListener('DOMContentLoaded', function() {
   if (p.get('checkout')) document.getElementById('checkout').value = p.get('checkout');
   if (p.get('guests'))   document.getElementById('guests').value   = p.get('guests');
 });
-function submitBooking() {
+
+async function checkAvailability(room, checkin, checkout) {
+  const AVAIL_API = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
+  const res = await fetch(AVAIL_API + '?room=' + encodeURIComponent(room));
+  const data = await res.json();
+  if (!data.dates) return false;
+
+  const blocked = new Set(data.dates.filter(d => d.blocked).map(d => d.date));
+  const start = new Date(checkin);
+  const end   = new Date(checkout);
+  for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+    const iso = d.getFullYear() + '-' +
+      String(d.getMonth()+1).padStart(2,'0') + '-' +
+      String(d.getDate()).padStart(2,'0');
+    if (blocked.has(iso)) return false;
+  }
+  return true;
+}
+
+async function submitBooking() {
   var room=document.getElementById('room').value.trim(),
       checkin=document.getElementById('checkin').value,
       checkout=document.getElementById('checkout').value,
@@ -90,7 +108,22 @@ function submitBooking() {
   var cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
   if (!/^\+?[0-9]{7,15}$/.test(cleanPhone)) { alert('Please enter a valid phone number.'); return; }
   if (!document.getElementById('agree-policies').checked) { alert('Please read and agree to our policies before submitting.'); return; }
-  var btn=document.getElementById('submit-btn'); btn.disabled=true; btn.textContent='Sending...';
+  var btn=document.getElementById('submit-btn'); btn.disabled=true; btn.textContent='Checking availability...';
+  try {
+    const available = await checkAvailability(room, checkin, checkout);
+    if (!available) {
+      btn.disabled=false;
+      btn.textContent='Submit Booking Request';
+      alert('Sorry, one or more of the selected dates are not available for ' + room + '. Please choose different dates or check the room calendar.');
+      return;
+    }
+  } catch(e) {
+    btn.disabled=false;
+    btn.textContent='Submit Booking Request';
+    alert('Unable to verify availability. Please try again or contact us directly.');
+    return;
+  }
+  btn.textContent='Sending...';
   var params=new URLSearchParams({action:'booking',name:name,email:email,phone:phone,room:room,checkin:checkin,checkout:checkout,guests:document.getElementById('guests').value,nationality:document.getElementById('nationality').value.trim(),id_number:document.getElementById('id_number').value.trim(),requests:document.getElementById('requests').value.trim(),website:document.getElementById('website').value});
   fetch(BOOKING_API+'?'+params.toString())
     .then(function(r){return r.json();})
