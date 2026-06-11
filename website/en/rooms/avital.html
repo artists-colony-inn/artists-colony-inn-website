@@ -71,7 +71,7 @@
         <div id="cal-wrap" class="cal-wrap"><div class="cal-loading">Loading...</div></div>
         <div class="sel-summary" id="sel-summary"></div>
         <div style="margin-top:1.1rem">
-          <a class="btn btn-gold" id="book-btn" href="/booking.html" style="display:block;text-align:center;width:100%">Select dates to book</a>
+          <a class="btn btn-gold" id="book-btn" href="/en/booking.html" style="display:block;text-align:center;width:100%">Select dates to book</a>
         </div>
         <p style="font-family:var(--sans);font-size:0.7rem;color:var(--text-light);margin-top:1rem;text-align:center;line-height:1.6">
           Or <a href="https://wa.me/972586200779" target="_blank">WhatsApp us</a> &nbsp;&middot;&nbsp; <a href="tel:+972586200779">+972-58-620-0779</a>
@@ -147,7 +147,7 @@ document.addEventListener('keydown', function(e) {
 
 // ── CALENDAR ──────────────────────────────────────────────────
 const ROOM     = 'Avital';
-const FORM_URL = '/booking.html';
+const FORM_URL = '/en/booking.html';
 const API_URL  = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
 
 const container = document.getElementById('cal-wrap');
@@ -348,7 +348,7 @@ function render() {
     // Restore static book button
     const bookBtn = document.getElementById('book-btn');
     bookBtn.style.display = 'block';
-    bookBtn.href = '/booking.html';
+    bookBtn.href = '/en/booking.html';
     bookBtn.textContent = rangeStart ? 'Select check-out date' : 'Select dates to book';
     const summary = document.getElementById('sel-summary');
     if (rangeStart) {
