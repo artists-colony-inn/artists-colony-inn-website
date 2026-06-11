@@ -89,3 +89,16 @@ document.head.appendChild(favicon);
 var style = document.createElement('style');
 style.textContent = 'body { direction: rtl; text-align: right; }';
 document.head.appendChild(style);
+
+// Google Analytics
+(function() {
+  var script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-H5ZXBGVT4Q';
+  document.head.appendChild(script);
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-H5ZXBGVT4Q');
+})();
