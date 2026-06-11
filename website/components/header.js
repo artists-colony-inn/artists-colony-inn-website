@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   var path = window.location.pathname;
+  document.documentElement.lang = 'he';
 
   // Language toggle — add /en/ prefix to get English equivalent
   var langToggle = document.getElementById('lang-toggle');
