@@ -17,7 +17,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
         <li><a href="/contact.html">צור קשר</a></li>
         <li><a href="/reviews.html">ביקורות</a></li>
         <li><a href="/booking.html">הזמנה</a></li>
-        <li><a href="tel:+972586200779" class="nav-phone" text-align: "left">+972-58-620-0779</a></li>
+        <li><a href="tel:+972586200779" class="nav-phone" dir="ltr">+972-58-620-0779</a></li>
         <li><a href="#" id="lang-toggle" class="nav-phone">English</a></li>
       </ul>
     </nav>
