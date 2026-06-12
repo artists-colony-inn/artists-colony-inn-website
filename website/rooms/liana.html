@@ -220,10 +220,10 @@ function render() {
   const nav = document.createElement('div');
   nav.className = 'cal-nav';
   const prev = document.createElement('button');
-  prev.textContent = '\u2190'; prev.disabled = isFirst;
+  prev.textContent = '\u2192'; prev.disabled = isFirst;
   prev.onclick = () => { currentMonth--; if (currentMonth < 0) { currentMonth = 11; currentYear--; } render(); };
   const next = document.createElement('button');
-  next.textContent = '\u2192'; next.disabled = isLast;
+  next.textContent = '\u2190'; next.disabled = isLast;
   next.onclick = () => { currentMonth++; if (currentMonth > 11) { currentMonth = 0; currentYear++; } render(); };
   const lbl = document.createElement('span');
   lbl.textContent = new Date(currentYear, currentMonth, 1).toLocaleDateString('he-IL', { month: 'long', year: 'numeric' });
