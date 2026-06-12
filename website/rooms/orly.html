@@ -263,7 +263,11 @@ function render() {
     cell.appendChild(dn);
 
     if (info && !info.blocked && state !== 'past' && state !== 'no-data') {
-      const pr = document.createElement('span'); pr.className = 'cal-price'; pr.textContent = '\u20aa' + info.price;
+      const pr = document.createElement('span');
+	  pr.className = 'cal-price';
+	  const surchargePct = surcharge[guestCount] || 0;
+	  const adjPrice = Math.round(info.price * (1 + surchargePct));
+	  pr.textContent = '\u20aa' + adjPrice;
       cell.appendChild(pr);
     }
 
