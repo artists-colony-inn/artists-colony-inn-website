@@ -229,7 +229,12 @@ async function submitBooking() {
     website:     document.getElementById('website').value
   };
 
-  fetch(BOOKING_API + '?' + new URLSearchParams(payload).toString())
+  fetch(BOOKING_API, {
+    method:   'POST',
+    redirect: 'follow',
+    headers:  { 'Content-Type': 'text/plain;charset=utf-8' },
+    body:     JSON.stringify(payload)
+  })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (data.success) {
