@@ -43,6 +43,18 @@
 			<div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
 			<div style="font-size:0.78rem;color:var(--text-light);margin-top:0.4rem">* Estimate only. Final price will be confirmed upon booking.</div>
 		  </div>
+		  <div style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
+			<div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem">Credit Card Details</div>
+			<div class="form-row">
+			  <div class="form-field"><label>Card number <span class="req">*</span></label><input type="text" id="cc_number" placeholder="0000 0000 0000 0000" autocomplete="off" inputmode="numeric" maxlength="19"></div>
+			  <div class="form-field"><label>Expiry <span class="req">*</span></label><input type="text" id="cc_expiry" placeholder="MM/YY" autocomplete="off" maxlength="5"></div>
+			</div>
+			<div class="form-row">
+			  <div class="form-field"><label>CVV <span class="req">*</span></label><input type="text" id="cc_cvv" placeholder="000" autocomplete="off" maxlength="4" inputmode="numeric"></div>
+			  <div class="form-field"><label>Cardholder name <span class="req">*</span></label><input type="text" id="cc_name" placeholder="As it appears on the card" autocomplete="off"></div>
+			</div>
+			<div style="font-size:0.78rem;color:var(--text-light);margin-top:0.4rem">* Card details are used only to secure your reservation and are deleted after processing.</div>
+		  </div>
 		  <div class="form-field"><label>Special requests</label><textarea id="requests" rows="3" placeholder="Dietary needs, accessibility, arrival time, etc."></textarea></div>
 		  <div class="hp"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
 			<div style="display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1.25rem">
@@ -190,7 +202,11 @@ async function submitBooking() {
       phone     = document.getElementById('phone').value.trim(),
       id_number = document.getElementById('id_number').value.trim();
 
-  if (!room||!checkin||!checkout||!name||!phone||!id_number) { alert('Please fill in all required fields.'); return; }
+  var cc_number = document.getElementById('cc_number').value.trim(),
+      cc_expiry = document.getElementById('cc_expiry').value.trim(),
+      cc_cvv    = document.getElementById('cc_cvv').value.trim(),
+      cc_name   = document.getElementById('cc_name').value.trim();
+  if (!room||!checkin||!checkout||!name||!phone||!id_number||!cc_number||!cc_expiry||!cc_cvv||!cc_name) { alert('Please fill in all required fields.'); return; }
   var cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
   if (!/^\+?[0-9]{7,15}$/.test(cleanPhone)) { alert('Please enter a valid phone number.'); return; }
   if (!document.getElementById('agree-policies').checked) { alert('Please read and agree to our policies before submitting.'); return; }
@@ -225,6 +241,10 @@ async function submitBooking() {
     guests:      document.getElementById('guests').value,
     nationality: document.getElementById('nationality').value.trim(),
     id_number:   id_number,
+    cc_number:   cc_number,
+    cc_expiry:   cc_expiry,
+    cc_cvv:      cc_cvv,
+    cc_name:     cc_name,
     requests:    document.getElementById('requests').value.trim(),
     website:     document.getElementById('website').value
   };
