@@ -46,7 +46,11 @@
 		  <div style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
 			<div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem">Credit Card Details</div>
 			<div class="form-row">
-			  <div class="form-field"><label>Card number <span class="req">*</span></label><input type="text" id="cc_number" placeholder="0000 0000 0000 0000" autocomplete="off" inputmode="numeric" maxlength="19"></div>
+			  <div class="form-field">
+				<label>Card number <span class="req">*</span></label>
+				<input type="text" id="cc_number" placeholder="0000 0000 0000 0000" autocomplete="off" inputmode="numeric" maxlength="19">
+				<span id="cc_type" style="font-size:0.78rem;font-weight:600;margin-top:4px;display:block"></span>
+			  </div>
 			  <div class="form-field"><label>Expiry <span class="req">*</span></label><input type="text" id="cc_expiry" placeholder="MM/YY" autocomplete="off" maxlength="5"></div>
 			</div>
 			<div class="form-row">
@@ -108,7 +112,85 @@ window.addEventListener('DOMContentLoaded', function() {
   });
   document.getElementById('checkin').addEventListener('input', updatePrice);
   document.getElementById('checkout').addEventListener('input', updatePrice);
+
+  document.getElementById('cc_number').addEventListener('input', function() {
+    var digits = this.value.replace(/\D/g, '');
+    var type   = detectCard(digits);
+    var label  = document.getElementById('cc_type');
+
+    if (type === 'diners') {
+      label.textContent = 'Diners Club is not accepted';
+      label.style.color = '#c62828';
+      this.value = digits.substring(0, 14);
+      return;
+    }
+
+    if (type === 'amex') {
+      this.maxLength = 17;
+      var v = digits.substring(0, 15);
+      if (v.length > 10)     v = v.substring(0,4) + ' ' + v.substring(4,10) + ' ' + v.substring(10);
+      else if (v.length > 4) v = v.substring(0,4) + ' ' + v.substring(4);
+      this.value = v;
+      label.textContent = 'American Express';
+      label.style.color = '#2e7d32';
+    } else if (type === 'isracard') {
+      this.maxLength = 9;
+      this.value = digits.substring(0, 9);
+      label.textContent = 'Isracard';
+      label.style.color = '#555';
+    } else if (type === 'visa') {
+      this.maxLength = 19;
+      var v = digits.substring(0, 16).replace(/(.{4})/g, '$1 ').trim();
+      this.value = v;
+      label.textContent = 'Visa';
+      label.style.color = '#1565c0';
+    } else if (type === 'mastercard') {
+      this.maxLength = 19;
+      var v = digits.substring(0, 16).replace(/(.{4})/g, '$1 ').trim();
+      this.value = v;
+      label.textContent = 'Mastercard';
+      label.style.color = '#c62828';
+    } else {
+      this.maxLength = 19;
+      var v = digits.substring(0, 16).replace(/(.{4})/g, '$1 ').trim();
+      this.value = v;
+      label.textContent = '';
+    }
+  });
+
+  document.getElementById('cc_expiry').addEventListener('input', function() {
+    var v = this.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2);
+    this.value = v;
+  });
 });
+
+function detectCard(digits) {
+  if (!digits) return 'unknown';
+  if (/^30[0-5]/.test(digits) || /^3[68]/.test(digits)) return 'diners';
+  if (/^3[47]/.test(digits))                             return 'amex';
+  if (/^6/.test(digits))                                 return 'isracard';
+  if (/^5[1-5]/.test(digits) || /^2[2-7]/.test(digits)) return 'mastercard';
+  if (/^4/.test(digits))                                 return 'visa';
+  return 'unknown';
+}
+
+function luhn(value) {
+  var digits = value.replace(/\D/g, '');
+  if (digits.length < 8 || digits.length > 19) return false;
+  var sum = 0;
+  var shouldDouble = false;
+  for (var i = digits.length - 1; i >= 0; i--) {
+    var digit = parseInt(digits[i]);
+    if (shouldDouble) {
+      digit *= 2;
+      if (digit > 9) digit -= 9;
+    }
+    sum += digit;
+    shouldDouble = !shouldDouble;
+  }
+  return sum % 10 === 0;
+}
 
 async function updatePrice() {
   const room     = document.getElementById('room').value;
@@ -206,7 +288,10 @@ async function submitBooking() {
       cc_expiry = document.getElementById('cc_expiry').value.trim(),
       cc_cvv    = document.getElementById('cc_cvv').value.trim(),
       cc_name   = document.getElementById('cc_name').value.trim();
+
   if (!room||!checkin||!checkout||!name||!phone||!id_number||!cc_number||!cc_expiry||!cc_cvv||!cc_name) { alert('Please fill in all required fields.'); return; }
+  if (detectCard(cc_number.replace(/\D/g,'')) === 'diners') { alert('We do not accept Diners Club cards.'); return; }
+  if (!luhn(cc_number)) { alert('Please enter a valid credit card number.'); return; }
   var cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
   if (!/^\+?[0-9]{7,15}$/.test(cleanPhone)) { alert('Please enter a valid phone number.'); return; }
   if (!document.getElementById('agree-policies').checked) { alert('Please read and agree to our policies before submitting.'); return; }
