@@ -33,7 +33,7 @@
 		  </div>
 		  <div class="form-row">
 			<div class="form-field"><label>לאום</label><input type="text" id="nationality" placeholder="למשל: ישראלי, אמריקאי, צרפתי"></div>
-			<div class="form-field"><label>ת.ז. / דרכון <span class="req">*</span></label><input type="text" id="id_number" placeholder="לפטור ממע&quot;מ"></div>
+			<div class="form-field"><label>ת.ז. / דרכון <span class="req">*</span></label><input type="text" id="id_number" placeholder="ת.ז. או מספר דרכון"></div>
 		  </div>
 		  <div id="price-box" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.88rem;color:var(--text-mid);line-height:2">
 			<div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">הערכת מחיר</div>
@@ -43,7 +43,7 @@
 			<div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
 			<div style="font-size:0.78rem;color:var(--text-light);margin-top:0.4rem">* הערכה בלבד. המחיר הסופי יאושר בהודעה.</div>
 		  </div>
-		  <div class="form-field"><label>בקשות מיוחדות</label>
+		  <div class="form-field"><label>בקשות מיוחדות</label><textarea id="requests" rows="3" placeholder="צרכים תזונתיים, נגישות, שעת הגעה וכו'"></textarea></div>
 		  <div class="hp"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
 			<div style="display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1.25rem">
 			  <input type="checkbox" id="agree-policies" style="margin-top:0.35rem;flex-shrink:0;width:16px;height:16px;accent-color:var(--gold);cursor:pointer">
@@ -78,83 +78,25 @@
 <script src="/components/footer.js"></script>
 
 <script>
-const BOOKING_API = 'https://script.google.com/macros/s/AKfycbz3m9Qx5tvtYdYogVHTROtbsIiXFqS_27U70LfmTSOINwJVe2yv-w9SIECQQ-XFETq9/exec';
+const BOOKING_API   = 'https://script.google.com/macros/s/AKfycbz3m9Qx5tvtYdYogVHTROtbsIiXFqS_27U70LfmTSOINwJVe2yv-w9SIECQQ-XFETq9/exec';
+const AVAIL_API_URL = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
+
+let priceCache = {};
+
 window.addEventListener('DOMContentLoaded', function() {
   var p = new URLSearchParams(window.location.search);
   if (p.get('room'))     document.getElementById('room').value     = p.get('room');
   if (p.get('checkin'))  document.getElementById('checkin').value  = p.get('checkin');
   if (p.get('checkout')) document.getElementById('checkout').value = p.get('checkout');
   if (p.get('guests'))   document.getElementById('guests').value   = p.get('guests');
+  if (p.get('room') && p.get('checkin') && p.get('checkout')) updatePrice();
+
+  ['room','checkin','checkout','guests'].forEach(function(id) {
+    document.getElementById(id).addEventListener('change', updatePrice);
+  });
+  document.getElementById('checkin').addEventListener('input', updatePrice);
+  document.getElementById('checkout').addEventListener('input', updatePrice);
 });
-
-async function checkAvailability(room, checkin, checkout) {
-  const AVAIL_API = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
-  const res = await fetch(AVAIL_API + '?room=' + encodeURIComponent(room));
-  const data = await res.json();
-  if (!data.dates) return false;
-
-  const blocked = new Set(data.dates.filter(d => d.blocked).map(d => d.date));
-  const start = new Date(checkin);
-  const end   = new Date(checkout);
-  for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
-    const iso = d.getFullYear() + '-' +
-      String(d.getMonth()+1).padStart(2,'0') + '-' +
-      String(d.getDate()).padStart(2,'0');
-    if (blocked.has(iso)) return false;
-  }
-  return true;
-}
-
-async function submitBooking() {
-  var room=document.getElementById('room').value.trim(),
-      checkin=document.getElementById('checkin').value,
-      checkout=document.getElementById('checkout').value,
-      name=document.getElementById('name').value.trim(),
-      email=document.getElementById('email').value.trim(),
-      phone=document.getElementById('phone').value.trim();
-  var id_number=document.getElementById('id_number').value.trim();
-  if (!room||!checkin||!checkout||!name||!phone||!id_number) { alert('נא למלא את כל השדות הנדרשים.'); return; }
-  var cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
-  if (!/^\+?[0-9]{7,15}$/.test(cleanPhone)) { alert('נא להזין מספר טלפון תקין.'); return; }
-  if (!document.getElementById('agree-policies').checked) { alert('נא לקרוא ולאשר את התקנון לפני השליחה.'); return; }
-  var btn=document.getElementById('submit-btn'); btn.disabled=true; btn.textContent='בודק זמינות...';
-  try {
-    const available = await checkAvailability(room, checkin, checkout);
-    if (!available) {
-      btn.disabled=false;
-      btn.textContent='שליחת בקשת הזמנה';
-      alert('מצטערים, אחד או יותר מהתאריכים שנבחרו אינם זמינים עבור ' + room + '. אנא בחרו תאריכים אחרים.');
-      return;
-    }
-  } catch(e) {
-    btn.disabled=false;
-    btn.textContent='שליחת בקשת הזמנה';
-    alert('לא ניתן לאמת זמינות. נסו שוב או צרו קשר ישירות.');
-    return;
-  }
-  btn.textContent='שולח...';
-  var params=new URLSearchParams({action:'booking',name:name,email:email,phone:phone,room:room,checkin:checkin,checkout:checkout,guests:document.getElementById('guests').value,nationality:document.getElementById('nationality').value.trim(),id_number:document.getElementById('id_number').value.trim(),requests:document.getElementById('requests').value.trim(),website:document.getElementById('website').value});
-  fetch(BOOKING_API+'?'+params.toString())
-    .then(function(r){return r.json();})
-    .then(function(data){
-      if(data.success){
-        document.getElementById('booking-form').style.display='none';
-        document.getElementById('msg-ok').style.display='block';
-      } else {
-        btn.disabled=false;
-        btn.textContent='שליחת בקשת הזמנה';
-        document.getElementById('msg-err').style.display='block';
-      }
-    })
-    .catch(function(){
-      btn.disabled=false;
-      btn.textContent='שליחת בקשת הזמנה';
-      document.getElementById('msg-err').style.display='block';
-    });
-}
-const AVAIL_API_PRICE = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
-
-let priceCache = {};
 
 async function updatePrice() {
   const room     = document.getElementById('room').value;
@@ -168,15 +110,14 @@ async function updatePrice() {
     return;
   }
 
-  const cacheKey = room;
   let data;
   try {
-    if (priceCache[cacheKey]) {
-      data = priceCache[cacheKey];
+    if (priceCache[room]) {
+      data = priceCache[room];
     } else {
-      const res = await fetch(AVAIL_API_PRICE + '?room=' + encodeURIComponent(room));
+      const res = await fetch(AVAIL_API_URL + '?room=' + encodeURIComponent(room));
       data = await res.json();
-      priceCache[cacheKey] = data;
+      priceCache[room] = data;
     }
   } catch(e) {
     box.style.display = 'none';
@@ -185,15 +126,13 @@ async function updatePrice() {
 
   if (!data.dates) { box.style.display = 'none'; return; }
 
-  // Build price lookup
   const lookup = {};
-  data.dates.forEach(d => { if (d.price) lookup[d.date] = d.price; });
+  data.dates.forEach(function(d) { if (d.price) lookup[d.date] = d.price; });
 
-  // Sum nights
   let base = 0;
   const start = new Date(checkin);
   const end   = new Date(checkout);
-  for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+  for (var d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
     const iso = d.getFullYear() + '-' +
       String(d.getMonth()+1).padStart(2,'0') + '-' +
       String(d.getDate()).padStart(2,'0');
@@ -204,20 +143,20 @@ async function updatePrice() {
 
   const nights = Math.round((end - start) / 86400000);
 
-  // Surcharge
   let surchargeRate = 0;
   if (guests === 3) surchargeRate = 0.25;
   if (guests >= 4)  surchargeRate = 0.50;
   const surcharge = Math.round(base * surchargeRate);
 
-  // VAT
   const beforeVAT = base + surcharge;
   const vat       = Math.round(beforeVAT * 0.18);
   const total     = beforeVAT + vat;
 
-  const fmt = n => '₪' + n.toLocaleString('he-IL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  const fmt = function(n) {
+    return '₪' + n.toLocaleString('he-IL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  };
 
-  document.getElementById('price-base-row').textContent       = nights + ' לילות (מחיר בסיס): ' + fmt(base);
+  document.getElementById('price-base-row').textContent        = nights + ' לילות (מחיר בסיס): ' + fmt(base);
   document.getElementById('price-surcharge-row').style.display = surcharge ? '' : 'none';
   document.getElementById('price-surcharge-row').textContent   = 'תוספת אורחים (' + (surchargeRate * 100) + '%): ' + fmt(surcharge);
   document.getElementById('price-vat-row').textContent         = 'מע"מ (18%): ' + fmt(vat);
@@ -225,14 +164,90 @@ async function updatePrice() {
   box.style.display = 'block';
 }
 
-// Attach listeners
-window.addEventListener('DOMContentLoaded', function() {
-  ['room','checkin','checkout','guests'].forEach(id => {
-    document.getElementById(id).addEventListener('change', updatePrice);
+async function checkAvailability(room, checkin, checkout) {
+  const res = await fetch(AVAIL_API_URL + '?room=' + encodeURIComponent(room));
+  const data = await res.json();
+  if (!data.dates) return false;
+
+  const blocked = new Set(data.dates.filter(function(d) { return d.blocked; }).map(function(d) { return d.date; }));
+  const start = new Date(checkin);
+  const end   = new Date(checkout);
+  for (var d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+    const iso = d.getFullYear() + '-' +
+      String(d.getMonth()+1).padStart(2,'0') + '-' +
+      String(d.getDate()).padStart(2,'0');
+    if (blocked.has(iso)) return false;
+  }
+  return true;
+}
+
+async function submitBooking() {
+  var room      = document.getElementById('room').value.trim(),
+      checkin   = document.getElementById('checkin').value,
+      checkout  = document.getElementById('checkout').value,
+      name      = document.getElementById('name').value.trim(),
+      email     = document.getElementById('email').value.trim(),
+      phone     = document.getElementById('phone').value.trim(),
+      id_number = document.getElementById('id_number').value.trim();
+
+  if (!room||!checkin||!checkout||!name||!phone||!id_number) { alert('נא למלא את כל השדות הנדרשים.'); return; }
+  var cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
+  if (!/^\+?[0-9]{7,15}$/.test(cleanPhone)) { alert('נא להזין מספר טלפון תקין.'); return; }
+  if (!document.getElementById('agree-policies').checked) { alert('נא לקרוא ולאשר את התקנון לפני השליחה.'); return; }
+
+  var btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'בודק זמינות...';
+
+  try {
+    const available = await checkAvailability(room, checkin, checkout);
+    if (!available) {
+      btn.disabled = false;
+      btn.textContent = 'שליחת בקשת הזמנה';
+      alert('מצטערים, אחד או יותר מהתאריכים שנבחרו אינם זמינים עבור ' + room + '. אנא בחרו תאריכים אחרים.');
+      return;
+    }
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'שליחת בקשת הזמנה';
+    alert('לא ניתן לאמת זמינות. נסו שוב או צרו קשר ישירות.');
+    return;
+  }
+
+  btn.textContent = 'שולח...';
+  var params = new URLSearchParams({
+    action:      'booking',
+    name:        name,
+    email:       email,
+    phone:       phone,
+    room:        room,
+    checkin:     checkin,
+    checkout:    checkout,
+    guests:      document.getElementById('guests').value,
+    nationality: document.getElementById('nationality').value.trim(),
+    id_number:   id_number,
+    requests:    document.getElementById('requests').value.trim(),
+    website:     document.getElementById('website').value
   });
-  document.getElementById('checkin').addEventListener('input', updatePrice);
-  document.getElementById('checkout').addEventListener('input', updatePrice);
-});
+
+  fetch(BOOKING_API + '?' + params.toString())
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.success) {
+        document.getElementById('booking-form').style.display = 'none';
+        document.getElementById('msg-ok').style.display = 'block';
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'שליחת בקשת הזמנה';
+        document.getElementById('msg-err').style.display = 'block';
+      }
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'שליחת בקשת הזמנה';
+      document.getElementById('msg-err').style.display = 'block';
+    });
+}
 </script>
 </body>
 </html>
