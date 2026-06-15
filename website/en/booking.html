@@ -57,7 +57,7 @@
 			  <div class="form-field"><label>CVV <span class="req">*</span></label><input type="text" id="cc_cvv" placeholder="000" autocomplete="off" maxlength="4" inputmode="numeric"></div>
 			  <div class="form-field"><label>Cardholder name <span class="req">*</span></label><input type="text" id="cc_name" placeholder="As it appears on the card" autocomplete="off"></div>
 			</div>
-			<div style="font-size:0.78rem;color:var(--text-light);margin-top:0.4rem">* Card details are used only to secure your reservation and are deleted after processing.</div>
+			<div id="cc_charge_note" style="display:none;font-size:0.78rem;color:var(--text-light);margin-top:0.6rem;line-height:1.6"></div>
 		  </div>
 		  <div class="form-field"><label>Special requests</label><textarea id="requests" rows="3" placeholder="Dietary needs, accessibility, arrival time, etc."></textarea></div>
 		  <div class="hp"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
@@ -67,7 +67,6 @@
 				I have read and agree to the <a href="/en/policies.html" target="_blank">house rules, cancellation policy, and privacy policy</a>.
 			  </label>
 			</div>
-		  <div class="pay-note">We process payments manually using a card reader. Please send your payment details via WhatsApp to <strong>+972-58-620-0779</strong> or call us after submitting. We also accept BIT and bank transfers.</div>
 		  <button class="btn btn-gold" id="submit-btn" onclick="submitBooking()" style="width:100%">Submit Booking Request</button>
 		  <div class="form-msg error" id="msg-err">Something went wrong. Please try again or contact us at <strong>+972-58-620-0779</strong>.</div>
 		</div>
@@ -75,12 +74,12 @@
 		<div id="msg-ok" style="display:none;max-width:560px;margin:0 auto;text-align:center;padding:3rem 2rem;">
 		  <div style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--text);margin-bottom:1rem">Thank you for your booking request.</div>
 		  <div style="font-family:var(--sans);font-size:0.88rem;color:var(--text-light);line-height:1.9;margin-bottom:1.5rem">
-			Your dates have been reserved and we will be in touch shortly to confirm your booking.<br><br>
-			To complete your reservation, please send your payment details via WhatsApp or call us. Your booking is not confirmed until payment details are received.
+			We have received your request and will be in touch shortly to confirm your booking.<br><br>
+			If you have any questions, feel free to contact us by phone or WhatsApp.
 		  </div>
 		  <a href="https://wa.me/972586200779" class="wa-btn" target="_blank" rel="noopener" style="margin:0 auto 1.5rem;display:inline-flex;">
 			<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-			Send payment details via WhatsApp
+			WhatsApp
 		  </a>
 		  <div style="font-family:var(--sans);font-size:0.78rem;color:var(--text-light)">
 			Or call us at <a href="tel:+972586200779">+972-58-620-0779</a>
@@ -101,16 +100,32 @@ let priceCache = {};
 
 window.addEventListener('DOMContentLoaded', function() {
   var p = new URLSearchParams(window.location.search);
-  if (p.get('room'))     document.getElementById('room').value     = p.get('room');
+  if (p.get('room')) {
+    document.getElementById('room').value = p.get('room');
+    updateGuestsForRoom(p.get('room'));
+  }
   if (p.get('checkin'))  document.getElementById('checkin').value  = p.get('checkin');
   if (p.get('checkout')) document.getElementById('checkout').value = p.get('checkout');
   if (p.get('guests'))   document.getElementById('guests').value   = p.get('guests');
-  if (p.get('room') && p.get('checkin') && p.get('checkout')) updatePrice();
+  if (p.get('room') && p.get('checkin') && p.get('checkout')) {
+    updatePrice();
+    updateChargeNote(p.get('checkin'));
+  }
 
-  ['room','checkin','checkout','guests'].forEach(function(id) {
+  document.getElementById('room').addEventListener('change', function() {
+    updateGuestsForRoom(this.value);
+    updatePrice();
+  });
+  ['checkin','checkout','guests'].forEach(function(id) {
     document.getElementById(id).addEventListener('change', updatePrice);
   });
-  document.getElementById('checkin').addEventListener('input', updatePrice);
+  document.getElementById('checkin').addEventListener('change', function() {
+    updateChargeNote(this.value);
+  });
+  document.getElementById('checkin').addEventListener('input', function() {
+    updatePrice();
+    updateChargeNote(this.value);
+  });
   document.getElementById('checkout').addEventListener('input', updatePrice);
 
   document.getElementById('cc_number').addEventListener('input', function() {
@@ -164,6 +179,40 @@ window.addEventListener('DOMContentLoaded', function() {
     this.value = v;
   });
 });
+
+function updateGuestsForRoom(room) {
+  var maxGuests = { 'Tzviya': 2, 'Aryeh': 2, 'Liana': 4, 'Avital': 4, 'Orly': 2 };
+  var max = maxGuests[room] || 4;
+  var sel = document.getElementById('guests');
+  var current = parseInt(sel.value) || 2;
+  var labels = { 1: '1 guest', 2: '2 guests', 3: '3 guests', 4: '4 guests' };
+
+  sel.innerHTML = '';
+  for (var i = 1; i <= max; i++) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = labels[i];
+    sel.appendChild(opt);
+  }
+  sel.value = Math.min(current, max);
+}
+
+function updateChargeNote(checkin) {
+  var note = document.getElementById('cc_charge_note');
+  if (!checkin) { note.style.display = 'none'; return; }
+
+  var checkinDate = new Date(checkin + 'T00:00:00');
+  var today       = new Date();
+  today.setHours(0,0,0,0);
+  var daysUntil   = Math.round((checkinDate - today) / 86400000);
+
+  if (daysUntil <= 7) {
+    note.textContent = 'As your check-in date is within 7 days, your card will be charged within the next 24 hours.';
+  } else {
+    note.textContent = 'Your card will be charged 7 days before your check-in date, in accordance with our cancellation policy. You may cancel free of charge until that date.';
+  }
+  note.style.display = 'block';
+}
 
 function detectCard(digits) {
   if (!digits) return 'unknown';
