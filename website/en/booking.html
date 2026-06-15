@@ -78,7 +78,7 @@
 <script src="/en/components/footer.js"></script>
 
 <script>
-const BOOKING_API   = 'https://script.google.com/macros/s/AKfycbz3m9Qx5tvtYdYogVHTROtbsIiXFqS_27U70LfmTSOINwJVe2yv-w9SIECQQ-XFETq9/exec';
+const BOOKING_API   = 'https://script.google.com/macros/s/AKfycbw9wuatkTr1_ajEtjYD5i9M3QiSHxC6E2jMSxrVJf1BXync1BkRC8LbdeueFs7h5zhS/exec';
 const AVAIL_API_URL = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
 
 let priceCache = {};
@@ -229,8 +229,14 @@ async function submitBooking() {
     website:     document.getElementById('website').value
   };
 
-  fetch(BOOKING_API + '?' + new URLSearchParams(payload).toString())
-    .then(function(r) { return r.json(); })
+  fetch(BOOKING_API, {
+    method:   'POST',
+    redirect: 'follow',
+    headers:  { 'Content-Type': 'text/plain;charset=utf-8' },
+    body:     JSON.stringify(payload)
+  })
+    .then(function(r) { return r.text(); })
+    .then(function(text) { return JSON.parse(text); })
     .then(function(data) {
       if (data.success) {
         document.getElementById('booking-form').style.display = 'none';
