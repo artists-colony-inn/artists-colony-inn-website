@@ -29,7 +29,7 @@ body {
   color: var(--text);
   line-height: 1.75;
   font-size: 1.15rem;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -191,7 +191,7 @@ nav a:hover, nav a.active { color: var(--gold); }
   display: inline-block;
   font-family: var(--sans);
   font-size: 0.76rem;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 0.8rem 2rem;
@@ -214,7 +214,7 @@ nav a:hover, nav a.active { color: var(--gold); }
 .btn-outline {
   background: transparent;
   color: var(--gold);
-  border: 1px solid var(--gold);
+  border: 1.5px solid var(--gold);
 }
 .btn-outline:hover { background: var(--gold); color: var(--white); }
 
@@ -434,7 +434,7 @@ footer a:hover { color: var(--gold-light); }
 
 .room-layout p {
   color: var(--text-mid);
-  font-weight: 300;
+  font-weight: 400;
   margin-bottom: 0.9rem;
   font-size: 1rem;
 }
@@ -452,7 +452,7 @@ footer a:hover { color: var(--gold-light); }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   background: var(--bg-warm);
-  color: var(--text-light);
+  color: var(--text-mid);
   border: 1px solid var(--border);
   padding: 0.3rem 0.75rem;
 }
@@ -552,7 +552,7 @@ footer a:hover { color: var(--gold-light); }
 .cal-day.selected { background: var(--gold) !important; color: var(--white) !important; }
 .cal-day.in-range { background: #fdf3d0; color: var(--text); }
 
-.cal-price { font-size: 0.58rem; color: var(--olive); line-height: 1; }
+.cal-price { font-size: 0.58rem; color: var(--text-mid); line-height: 1; }
 .cal-day.selected .cal-price { color: rgba(255,255,255,0.75); }
 
 .cal-legend {
@@ -563,7 +563,7 @@ footer a:hover { color: var(--gold-light); }
   font-family: var(--sans);
   font-size: 0.62rem;
   letter-spacing: 0.05em;
-  color: var(--text-light);
+  color: var(--text-mid);
   flex-wrap: wrap;
 }
 
