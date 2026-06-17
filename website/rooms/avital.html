@@ -68,10 +68,11 @@
       <div class="sidebar">
         <h3>אביטל</h3>
         <p style="font-family:var(--sans);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--olive);margin-bottom:0.75rem">בדיקת זמינות</p>
+        <p style="font-family:var(--sans);font-size:0.78rem;color:var(--text-mid);margin-bottom:0.5rem;">בחרו תאריך כניסה ויציאה לבדיקת מחיר והזמנה</p>
         <div id="cal-wrap" class="cal-wrap"><div class="cal-loading">טוען...</div></div>
         <div class="sel-summary" id="sel-summary"></div>
         <div style="margin-top:1.1rem">
-          <a class="btn btn-gold" id="book-btn" href="/booking.html" style="display:block;text-align:center;width:100%">בחרו תאריכים להזמנה</a>
+          <a class="btn btn-gold" id="book-btn" href="#" style="display:block;text-align:center;width:100%;pointer-events:none;opacity:0.45;">בחרו תאריכים להזמנה</a>
         </div>
         <p style="font-family:var(--sans);font-size:0.7rem;color:var(--text-light);margin-top:1rem;text-align:center;line-height:1.6">
           או <a href="https://wa.me/972586200779" target="_blank">וואטסאפ</a> &nbsp;&middot;&nbsp; <a href="tel:+972586200779">+972-58-620-0779</a>
@@ -352,7 +353,9 @@ function render() {
     // Restore static book button
     const bookBtn = document.getElementById('book-btn');
     bookBtn.style.display = 'block';
-    bookBtn.href = '/booking.html';
+    bookBtn.href = '#';
+    bookBtn.style.pointerEvents = 'none';
+    bookBtn.style.opacity = '0.45';
     bookBtn.textContent = rangeStart ? 'בחרו תאריך צ\'ק-אאוט' : 'בחרו תאריכים להזמנה';
     const summary = document.getElementById('sel-summary');
     if (rangeStart) {
