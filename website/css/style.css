@@ -714,6 +714,11 @@ footer a:hover { color: var(--gold-light); }
   letter-spacing: 0.2em;
 }
 
+#cc_number, #cc_expiry, #cc_cvv {
+  direction: ltr;
+  text-align: left;
+}
+
 .form-msg.success { background: #f0f5ee; border: 1px solid #b8d0b0; color: #2a4a28; }
 .form-msg.error   { background: #f8efee; border: 1px solid #d8b8b0; color: #5a2820; }
 
