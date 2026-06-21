@@ -2,15 +2,17 @@ document.currentScript.insertAdjacentHTML('afterend', `
 <div style="position:fixed;top:0;right:0;z-index:200;font-family:'David','Times New Roman',serif;font-size:0.7rem;color:var(--text-light);padding:2px 6px;letter-spacing:0.05em;opacity:0.7">בס"ד</div>
 <header>
   <div class="header-inner">
-    <a class="logo" href="/en/index.html">
-      <img src="/images/logo.svg" alt="Artists' Colony Inn">
-    </a>
-    <a href="https://g.page/r/CWm_4YA5CjqAEBM" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.35rem;background:var(--white);border:1px solid var(--border);border-radius:3px;padding:0.3rem 0.6rem;text-decoration:none;flex-shrink:0">
-      <span style="font-family:'David','Times New Roman',serif;font-size:0.75rem;font-weight:700;background:linear-gradient(135deg,#4285F4,#EA4335,#FBBC05,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em">G</span>
-      <span style="color:#FBBC05;font-size:0.7rem;letter-spacing:0.02em">★★★★★</span>
-      <span style="font-family:var(--sans);font-size:0.72rem;font-weight:500;color:var(--text);line-height:1">4.8</span>
-      <span style="font-family:var(--sans);font-size:0.68rem;color:var(--text-light);line-height:1">(123)</span>
-    </a>
+    <div style="display:flex;align-items:center;gap:0.75rem;">
+      <a class="logo" href="/en/index.html">
+        <img src="/images/logo.svg" alt="Artists' Colony Inn">
+      </a>
+      <a href="https://g.page/r/CWm_4YA5CjqAEBM" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.35rem;background:var(--white);border:1px solid var(--border);border-radius:3px;padding:0.3rem 0.6rem;text-decoration:none;flex-shrink:0">
+        <span style="font-family:'David','Times New Roman',serif;font-size:0.75rem;font-weight:700;background:linear-gradient(135deg,#4285F4,#EA4335,#FBBC05,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em">G</span>
+        <span style="color:#FBBC05;font-size:0.7rem;letter-spacing:0.02em">★★★★★</span>
+        <span style="font-family:var(--sans);font-size:0.72rem;font-weight:500;color:var(--text);line-height:1">4.8</span>
+        <span style="font-family:var(--sans);font-size:0.68rem;color:var(--text-light);line-height:1">(123)</span>
+      </a>
+    </div>
     <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
       <span></span><span></span><span></span>
     </button>
@@ -44,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   var path = window.location.pathname;
   document.documentElement.lang = 'en';
-
   // Language toggle — strip /en/ prefix to get Hebrew equivalent
   var langToggle = document.getElementById('lang-toggle');
   if (langToggle) {
@@ -52,29 +53,24 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hePath === '/') hePath = '/index.html';
     langToggle.href = hePath;
   }
-
   // hreflang tags
   var enUrl = 'https://www.theartistscolonyinn.com' + path;
   var heUrl = 'https://www.theartistscolonyinn.com' + path.replace(/^\/en\//, '/');
-
   var linkEn = document.createElement('link');
   linkEn.rel = 'alternate';
   linkEn.hreflang = 'en';
   linkEn.href = enUrl;
   document.head.appendChild(linkEn);
-
   var linkHe = document.createElement('link');
   linkHe.rel = 'alternate';
   linkHe.hreflang = 'he';
   linkHe.href = heUrl;
   document.head.appendChild(linkHe);
-
   var linkDefault = document.createElement('link');
   linkDefault.rel = 'alternate';
   linkDefault.hreflang = 'x-default';
   linkDefault.href = heUrl;
   document.head.appendChild(linkDefault);
-
   document.querySelectorAll('nav a').forEach(function(a) {
     var href = a.getAttribute('href');
     if (!href || href.startsWith('tel:') || a.id === 'lang-toggle') return;
