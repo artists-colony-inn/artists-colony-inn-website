@@ -8,11 +8,13 @@
   <link rel="stylesheet" href="/css/style.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-H5ZXBGVT4Q"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-H5ZXBGVT4Q');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-H5ZXBGVT4Q');
   </script>
+  
+  <!-- Meta Pixel -->
   <script>
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
   n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -22,154 +24,113 @@
   fbq('init', '983698949964438');
   fbq('track', 'PageView');
   </script>
-  <style>
-    @media (max-width: 768px) {
-      #booking-layout { display: block !important; }
-      #reviews-sidebar { position: static !important; margin-top: 2rem; }
-    }
-  </style>
 </head>
 <body>
 <script src="/en/components/header.js"></script>
 
 <main>
-  <section style="padding-top:5rem">
-    <div class="container">
-      <h2 class="section-title">Book a Room</h2>
-      <div class="section-rule"></div>
+	<section style="padding-top:5rem">
+	  <div class="container">
+		<h2 class="section-title">Book a Room</h2>
+		<div class="section-rule"></div>
 
-      <div id="booking-layout" style="display:grid;grid-template-columns:1fr 340px;gap:3rem;align-items:start;max-width:960px;margin:0 auto">
+		<div style="display:grid;grid-template-columns:1fr 340px;gap:3rem;align-items:start;max-width:960px;margin:0 auto">
 
-        <!-- LEFT: form -->
-        <div>
-          <div style="background:var(--bg-warm);border:1px solid var(--border);padding:0.9rem 1.1rem;font-size:0.85rem;color:var(--text-light);line-height:1.7;margin-bottom:1.5rem">
-            Your ID or passport number is required to complete the booking. <strong>Israeli residents:</strong> this is part of the payment process. <strong>Non-residents of Israel:</strong> your passport number may exempt your stay from VAT.
-          </div>
+		  <!-- LEFT: form -->
+		  <div>
+			<div id="id-note" style="background:var(--bg-warm);border:1px solid var(--border);padding:0.9rem 1.1rem;font-size:0.85rem;color:var(--text-light);line-height:1.7;margin-bottom:1.5rem">
+				Your ID or passport number is required to complete the booking. <strong>Israeli residents:</strong> this is part of the payment process. <strong>Non-residents of Israel:</strong> your passport number may exempt your stay from VAT.
+			</div>
 
-          <div class="booking-form" id="booking-form" style="max-width:100%">
+			<div class="booking-form" id="booking-form" style="max-width:100%">
+		  <div class="form-row">
+			<div class="form-field"><label>Room</label><input type="text" id="room-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+			<div class="form-field"><label>Guests</label><input type="text" id="guests-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+			<input type="hidden" id="room">
+			<input type="hidden" id="guests">
+		  </div>
+		  <div class="form-row">
+			<div class="form-field"><label>Check-in</label><input type="text" id="checkin-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+			<div class="form-field"><label>Check-out</label><input type="text" id="checkout-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+			<input type="hidden" id="checkin">
+			<input type="hidden" id="checkout">
+		  </div>
+		  <div class="form-field"><label>Full name <span class="req">*</span></label><input type="text" id="name" placeholder="As it appears on your ID or passport" autocomplete="name"></div>
+		  <div class="form-row">
+			<div class="form-field"><label>Email </label><input type="email" id="email" placeholder="your@email.com" autocomplete="email"></div>
+			<div class="form-field"><label>Phone <span class="req">*</span></label><input type="text" id="phone" placeholder="+972..." autocomplete="off"></div>
+		  </div>
+		  <div class="form-row">
+			<div class="form-field"><label>Nationality</label><input type="text" id="nationality" placeholder="e.g. Israeli, US, French"></div>
+			<div class="form-field"><label>ID / Passport <span class="req">*</span></label><input type="text" id="id_number" placeholder="ID or passport number"></div>
+		  </div>
+		  <div id="price-box" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.88rem;color:var(--text-mid);line-height:2">
+			<div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">Price Summary</div>
+			<div id="price-base-row"></div>
+			<div id="price-surcharge-row"></div>
+			<div id="price-vat-row"></div>
+			<div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
+		  </div>
+		  <div style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
+			<div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem">Credit Card Details</div>
+			<div class="form-row">
+			  <div class="form-field">
+				<label>Card number <span class="req">*</span></label>
+				<input type="text" id="cc_number" placeholder="0000 0000 0000 0000" autocomplete="off" inputmode="numeric" maxlength="19">
+				<span id="cc_type" style="font-size:0.78rem;font-weight:600;margin-top:4px;display:block"></span>
+			  </div>
+			  <div class="form-field"><label>Expiry <span class="req">*</span></label><input type="text" id="cc_expiry" placeholder="MM/YY" autocomplete="off" maxlength="5"></div>
+			</div>
+			<div class="form-row">
+			  <div class="form-field"><label>CVV <span class="req">*</span></label><input type="password" id="cc_cvv" placeholder="000" autocomplete="new-password" maxlength="4" inputmode="numeric"></div>
+			  <div class="form-field"><label>Cardholder name <span class="req">*</span></label><input type="text" id="cc_name" placeholder="As it appears on the card" autocomplete="off"></div>
+			</div>
+			<div id="cc_charge_note" style="display:none;font-size:0.78rem;color:var(--text-light);margin-top:0.6rem;line-height:1.6"></div>
+		  </div>
+		  <div class="form-field"><label>Special requests</label><textarea id="requests" rows="3" placeholder="Dietary needs, accessibility, arrival time, etc."></textarea></div>
+		  <div class="hp"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
+			<div style="display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1.25rem">
+			  <input type="checkbox" id="agree-policies" style="margin-top:0.35rem;flex-shrink:0;width:16px;height:16px;accent-color:var(--gold);cursor:pointer">
+			  <label for="agree-policies" style="font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:0.95rem;font-weight:400;color:var(--text-mid);cursor:pointer">
+				I have read and agree to the <a href="/en/policies.html" target="_blank">house rules, cancellation policy, and privacy policy</a>.
+			  </label>
+			</div>
+		  <button class="btn btn-gold" id="submit-btn" onclick="submitBooking()" style="width:100%">Submit Booking Request</button>
+		  <div class="form-msg error" id="msg-err">Something went wrong. Please try again or contact us at <strong>+972-58-620-0779</strong>.</div>
+		</div>
 
-            <div class="form-row">
-              <div class="form-field"><label>Room</label><input type="text" id="room-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <div class="form-field"><label>Guests</label><input type="text" id="guests-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <input type="hidden" id="room">
-              <input type="hidden" id="guests">
-            </div>
-            <div class="form-row">
-              <div class="form-field"><label>Check-in</label><input type="text" id="checkin-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <div class="form-field"><label>Check-out</label><input type="text" id="checkout-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <input type="hidden" id="checkin">
-              <input type="hidden" id="checkout">
-            </div>
+		<div id="msg-ok" style="display:none;text-align:center;padding:3rem 2rem;">
+		  <div style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--text);margin-bottom:1rem">Thank you for your booking request.</div>
+		  <div style="font-family:var(--sans);font-size:0.88rem;color:var(--text-light);line-height:1.9;margin-bottom:1.5rem">
+			We have received your request and will be in touch shortly to confirm your booking.<br><br>
+			If you have any questions, feel free to contact us by phone or WhatsApp.
+		  </div>
+		  <a id="msg-ok-wa" href="https://wa.me/972586200779" class="wa-btn" target="_blank" rel="noopener" style="margin:0 auto 1.5rem;display:inline-flex;">
+			<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+			WhatsApp
+		  </a>
+		  <div id="msg-ok-call" style="font-family:var(--sans);font-size:0.78rem;color:var(--text-light)">
+			Or call us at <a href="tel:+972586200779">+972-58-620-0779</a>
+		  </div>
+		</div>
+		  </div><!-- end left column -->
 
-            <div class="form-field"><label>Full name <span class="req">*</span></label><input type="text" id="name" placeholder="As it appears on your ID or passport" autocomplete="name"></div>
-            <div class="form-row">
-              <div class="form-field"><label>Email</label><input type="email" id="email" placeholder="your@email.com" autocomplete="email"></div>
-              <div class="form-field"><label>Phone <span class="req">*</span></label><input type="text" id="phone" placeholder="+972..." autocomplete="off"></div>
-            </div>
-            <div class="form-row">
-              <div class="form-field"><label>Nationality</label><input type="text" id="nationality" placeholder="e.g. Israeli, US, French"></div>
-              <div class="form-field"><label>ID / Passport <span class="req">*</span></label><input type="text" id="id_number" placeholder="ID or passport number"></div>
-            </div>
+		  <!-- RIGHT: reviews sidebar -->
+		  <div id="reviews-sidebar" style="position:sticky;top:90px">
+			<div style="font-family:var(--sans);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem">What our guests say</div>
+			<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem">
+			  <span style="color:#FBBC05;font-size:1rem">★★★★★</span>
+			  <span style="font-family:var(--sans);font-size:0.85rem;color:var(--text-light)">4.8 · 123 reviews on Google</span>
+			</div>
+			<div id="reviews-list-sidebar">
+			  <div style="font-family:var(--sans);font-size:0.82rem;color:var(--text-light);font-style:italic">Loading reviews…</div>
+			</div>
+		  </div><!-- end right column -->
 
-            <!-- Price summary -->
-            <div id="price-box" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.88rem;color:var(--text-mid);line-height:2">
-              <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">Price Summary</div>
-              <div id="price-base-row"></div>
-              <div id="price-surcharge-row"></div>
-              <div id="price-vat-row"></div>
-              <div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
-            </div>
+		</div><!-- end grid -->
 
-            <!-- Payment method (only shown once total is available) -->
-            <div id="payment-method-section" style="display:none;margin-bottom:1.25rem">
-              <label style="display:block;font-family:var(--sans);font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.6rem">Payment method <span class="req">*</span></label>
-              <label style="display:flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400;margin-bottom:0.5rem">
-                <input type="radio" name="payment_method" value="credit_card" id="pay_cc" checked style="accent-color:var(--gold)"> Credit Card
-              </label>
-              <label style="display:flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400;margin-bottom:0.5rem">
-                <input type="radio" name="payment_method" value="bit" id="pay_bit" style="accent-color:var(--gold)"> Bit
-              </label>
-              <label style="display:flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400">
-                <input type="radio" name="payment_method" value="bank_transfer" id="pay_bank" style="accent-color:var(--gold)"> Bank Transfer
-              </label>
-            </div>
-
-            <!-- Credit card section -->
-            <div id="cc-section" style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
-              <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem">Credit Card Details</div>
-              <div class="form-row">
-                <div class="form-field">
-                  <label>Card number <span class="req">*</span></label>
-                  <input type="text" id="cc_number" placeholder="0000 0000 0000 0000" autocomplete="off" inputmode="numeric" maxlength="19">
-                  <span id="cc_type" style="font-size:0.78rem;font-weight:600;margin-top:4px;display:block"></span>
-                </div>
-                <div class="form-field"><label>Expiry <span class="req">*</span></label><input type="text" id="cc_expiry" placeholder="MM/YY" autocomplete="off" maxlength="5"></div>
-              </div>
-              <div class="form-row">
-                <div class="form-field"><label>CVV <span class="req">*</span></label><input type="password" id="cc_cvv" placeholder="000" autocomplete="new-password" maxlength="4" inputmode="numeric"></div>
-                <div class="form-field"><label>Cardholder name <span class="req">*</span></label><input type="text" id="cc_name" placeholder="As it appears on the card" autocomplete="off"></div>
-              </div>
-              <div id="cc_charge_note" style="display:none;font-size:0.78rem;color:var(--text-light);margin-top:0.6rem;line-height:1.6"></div>
-            </div>
-
-            <!-- Bit section -->
-            <div id="bit-section" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
-              <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.5rem">Pay by Bit</div>
-              <div style="font-family:var(--sans);font-size:0.9rem;color:var(--text-mid);line-height:1.8">
-                Send <strong id="bit-total"></strong> to <strong dir="ltr">+972-58-620-0779</strong> via Bit.
-              </div>
-            </div>
-
-            <!-- Bank transfer section -->
-            <div id="bank-section" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
-              <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.5rem">Bank Transfer Details</div>
-              <div style="font-family:var(--sans);font-size:0.9rem;color:var(--text-mid);line-height:2">
-                Bank: <strong>Leumi</strong><br>
-                Branch: <strong>975</strong><br>
-                Account: <strong>4859654</strong>
-              </div>
-            </div>
-
-            <div class="form-field"><label>Special requests</label><textarea id="requests" rows="3" placeholder="Dietary needs, accessibility, arrival time, etc."></textarea></div>
-            <div class="hp"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
-            <div style="display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1.25rem">
-              <input type="checkbox" id="agree-policies" style="margin-top:0.35rem;flex-shrink:0;width:16px;height:16px;accent-color:var(--gold);cursor:pointer">
-              <label for="agree-policies" style="font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:0.95rem;font-weight:400;color:var(--text-mid);cursor:pointer">
-                I have read and agree to the <a href="/en/policies.html" target="_blank">house rules, cancellation policy, and privacy policy</a>.
-              </label>
-            </div>
-            <button class="btn btn-gold" id="submit-btn" onclick="submitBooking()" style="width:100%;opacity:0.45;cursor:not-allowed" disabled>Submit Booking Request</button>
-            <div class="form-msg error" id="msg-err">Something went wrong. Please try again or contact us at <strong>+972-58-620-0779</strong>.</div>
-          </div>
-
-          <div id="msg-ok" style="display:none;text-align:center;padding:3rem 2rem;">
-            <div style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--text);margin-bottom:1rem">Thank you for your booking request.</div>
-            <div id="msg-ok-text" style="font-family:var(--sans);font-size:0.88rem;color:var(--text-light);line-height:1.9;margin-bottom:1.5rem"></div>
-            <a href="https://wa.me/972586200779" class="wa-btn" target="_blank" rel="noopener" style="margin:0 auto 1.5rem;display:inline-flex;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              WhatsApp
-            </a>
-            <div style="font-family:var(--sans);font-size:0.78rem;color:var(--text-light)">
-              Or call us at <a href="tel:+972586200779">+972-58-620-0779</a>
-            </div>
-          </div>
-        </div><!-- end left column -->
-
-        <!-- RIGHT: reviews sidebar -->
-        <div id="reviews-sidebar" style="position:sticky;top:90px">
-          <div style="font-family:var(--sans);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem">What our guests say</div>
-          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem">
-            <span style="color:#FBBC05;font-size:1rem">★★★★★</span>
-            <span style="font-family:var(--sans);font-size:0.85rem;color:var(--text-light)">4.8 · 123 reviews on Google</span>
-          </div>
-          <div id="reviews-list-sidebar">
-            <div style="font-family:var(--sans);font-size:0.82rem;color:var(--text-light);font-style:italic">Loading reviews…</div>
-          </div>
-        </div>
-
-      </div><!-- end grid -->
-    </div>
-  </section>
+	  </div>
+	</section>
 </main>
 
 <script src="/en/components/footer.js"></script>
@@ -177,27 +138,8 @@
 <script>
 const BOOKING_API   = 'https://script.google.com/macros/s/AKfycbw9wuatkTr1_ajEtjYD5i9M3QiSHxC6E2jMSxrVJf1BXync1BkRC8LbdeueFs7h5zhS/exec';
 const AVAIL_API_URL = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
-const REVIEWS_API   = 'https://script.google.com/macros/s/AKfycbzVmDCp9ajvCPVQEhxV1RMDpWgJBbAzuCfdGfQ0UotgW9GNYJBpVbncPl6C-dCuMNB6/exec';
 
 let priceCache = {};
-
-function updateSubmitBtn() {
-  var btn     = document.getElementById('submit-btn');
-  var agreed  = document.getElementById('agree-policies').checked;
-  var payMethod = document.querySelector('input[name="payment_method"]:checked');
-  var method  = payMethod ? payMethod.value : 'credit_card';
-  var ccOk    = true;
-  if (method === 'credit_card') {
-    ccOk = document.getElementById('cc_number').value.trim().length > 0
-        && document.getElementById('cc_expiry').value.trim().length === 5
-        && document.getElementById('cc_cvv').value.trim().length >= 3
-        && document.getElementById('cc_name').value.trim().length > 0;
-  }
-  var enabled = agreed && ccOk;
-  btn.disabled      = !enabled;
-  btn.style.opacity = enabled ? '1' : '0.45';
-  btn.style.cursor  = enabled ? 'pointer' : 'not-allowed';
-}
 
 window.addEventListener('DOMContentLoaded', function() {
   var p = new URLSearchParams(window.location.search);
@@ -206,60 +148,44 @@ window.addEventListener('DOMContentLoaded', function() {
   var checkout = p.get('checkout');
   var guests   = p.get('guests');
 
+  // Redirect to home if any required param is missing
   if (!room || !checkin || !checkout || !guests) {
     window.location.replace('/en/index.html');
     return;
   }
 
-  document.getElementById('room').value     = room;
-  document.getElementById('checkin').value  = checkin;
+  // Populate hidden fields used by the rest of the script
+  document.getElementById('room').value    = room;
+  document.getElementById('checkin').value = checkin;
   document.getElementById('checkout').value = checkout;
-  document.getElementById('guests').value   = guests;
+  document.getElementById('guests').value  = guests;
 
+  // Populate read-only display fields
   var guestLabel = guests === '1' ? '1 guest' : guests + ' guests';
   var fmtDate = function(iso) {
     var d = new Date(iso + 'T00:00:00');
     return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
   };
-  document.getElementById('room-display').value     = room;
-  document.getElementById('guests-display').value   = guestLabel;
+  document.getElementById('room-display').value    = room;
+  document.getElementById('guests-display').value  = guestLabel;
   document.getElementById('checkin-display').value  = fmtDate(checkin);
   document.getElementById('checkout-display').value = fmtDate(checkout);
 
   updatePrice();
   updateChargeNote(checkin);
 
-  // Payment method toggle
-  document.querySelectorAll('input[name="payment_method"]').forEach(function(radio) {
-    radio.addEventListener('change', function() {
-      var method = this.value;
-      document.getElementById('cc-section').style.display   = method === 'credit_card'   ? '' : 'none';
-      document.getElementById('bit-section').style.display  = method === 'bit'           ? '' : 'none';
-      document.getElementById('bank-section').style.display = method === 'bank_transfer' ? '' : 'none';
-      updateSubmitBtn();
-    });
-  });
-
-  // Submit button state watchers
-  document.getElementById('agree-policies').addEventListener('change', updateSubmitBtn);
-  ['cc_number','cc_expiry','cc_cvv','cc_name'].forEach(function(id) {
-    document.getElementById(id).addEventListener('input', updateSubmitBtn);
-  });
-
-  // Initial state
-  updateSubmitBtn();
-
-  // CC number formatting
   document.getElementById('cc_number').addEventListener('input', function() {
     var digits = this.value.replace(/\D/g, '');
     var type   = detectCard(digits);
     var label  = document.getElementById('cc_type');
+
     if (type === 'diners') {
       label.textContent = 'Diners Club is not accepted';
       label.style.color = '#c62828';
       this.value = digits.substring(0, 14);
       return;
     }
+
     if (type === 'amex') {
       this.maxLength = 17;
       var v = digits.substring(0, 15);
@@ -298,46 +224,20 @@ window.addEventListener('DOMContentLoaded', function() {
     if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2);
     this.value = v;
   });
-
-  // Load reviews sidebar
-  fetch(REVIEWS_API)
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      var list = document.getElementById('reviews-list-sidebar');
-      if (!list) return;
-      if (!data.ok || !data.reviews || !data.reviews.length) { list.innerHTML = ''; return; }
-      list.innerHTML = '';
-      data.reviews.slice(0, 5).forEach(function(r) {
-        var card = document.createElement('div');
-        card.style.cssText = 'border-left:2px solid var(--gold);padding:0.75rem 0 0.75rem 0.85rem;margin-bottom:1.1rem;';
-        var name = document.createElement('div');
-        name.style.cssText = 'font-family:var(--sans);font-size:0.78rem;font-weight:500;color:var(--text);margin-bottom:0.2rem;';
-        name.textContent = r.name;
-        var stars = document.createElement('div');
-        stars.style.cssText = 'color:#FBBC05;font-size:0.7rem;margin-bottom:0.35rem;';
-        stars.textContent = '★★★★★';
-        var text = document.createElement('p');
-        text.style.cssText = 'font-family:var(--sans);font-size:0.78rem;color:var(--text-light);line-height:1.6;margin:0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;';
-        text.textContent = r.text;
-        card.appendChild(name);
-        card.appendChild(stars);
-        card.appendChild(text);
-        list.appendChild(card);
-      });
-    })
-    .catch(function() {
-      var list = document.getElementById('reviews-list-sidebar');
-      if (list) list.innerHTML = '';
-    });
 });
+
+
+
 
 function updateChargeNote(checkin) {
   var note = document.getElementById('cc_charge_note');
   if (!checkin) { note.style.display = 'none'; return; }
+
   var checkinDate = new Date(checkin + 'T00:00:00');
-  var today = new Date();
+  var today       = new Date();
   today.setHours(0,0,0,0);
-  var daysUntil = Math.round((checkinDate - today) / 86400000);
+  var daysUntil   = Math.round((checkinDate - today) / 86400000);
+
   if (daysUntil <= 7) {
     note.textContent = 'As your check-in date is within 7 days, your card will be charged within the next 24 hours.';
   } else {
@@ -359,10 +259,14 @@ function detectCard(digits) {
 function luhn(value) {
   var digits = value.replace(/\D/g, '');
   if (digits.length < 8 || digits.length > 19) return false;
-  var sum = 0, shouldDouble = false;
+  var sum = 0;
+  var shouldDouble = false;
   for (var i = digits.length - 1; i >= 0; i--) {
     var digit = parseInt(digits[i]);
-    if (shouldDouble) { digit *= 2; if (digit > 9) digit -= 9; }
+    if (shouldDouble) {
+      digit *= 2;
+      if (digit > 9) digit -= 9;
+    }
     sum += digit;
     shouldDouble = !shouldDouble;
   }
@@ -375,11 +279,9 @@ async function updatePrice() {
   const checkout = document.getElementById('checkout').value;
   const guests   = parseInt(document.getElementById('guests').value) || 2;
   const box      = document.getElementById('price-box');
-  const paySection = document.getElementById('payment-method-section');
 
   if (!room || !checkin || !checkout || checkin >= checkout) {
     box.style.display = 'none';
-    paySection.style.display = 'none';
     return;
   }
 
@@ -394,11 +296,10 @@ async function updatePrice() {
     }
   } catch(e) {
     box.style.display = 'none';
-    paySection.style.display = 'none';
     return;
   }
 
-  if (!data.dates) { box.style.display = 'none'; paySection.style.display = 'none'; return; }
+  if (!data.dates) { box.style.display = 'none'; return; }
 
   const lookup = {};
   data.dates.forEach(function(d) { if (d.price) lookup[d.date] = d.price; });
@@ -413,16 +314,18 @@ async function updatePrice() {
     if (lookup[iso]) base += lookup[iso];
   }
 
-  if (!base) { box.style.display = 'none'; paySection.style.display = 'none'; return; }
+  if (!base) { box.style.display = 'none'; return; }
 
   const nights = Math.round((end - start) / 86400000);
+
   let surchargeRate = 0;
   if (guests === 3) surchargeRate = 0.25;
   if (guests >= 4)  surchargeRate = 0.50;
-  const surcharge  = Math.round(base * surchargeRate);
-  const beforeVAT  = base + surcharge;
-  const vat        = Math.round(beforeVAT * 0.18);
-  const total      = beforeVAT + vat;
+  const surcharge = Math.round(base * surchargeRate);
+
+  const beforeVAT = base + surcharge;
+  const vat       = Math.round(beforeVAT * 0.18);
+  const total     = beforeVAT + vat;
 
   const fmt = function(n) {
     return '₪' + n.toLocaleString('en-IL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
@@ -434,17 +337,13 @@ async function updatePrice() {
   document.getElementById('price-vat-row').textContent         = 'VAT (18%): ' + fmt(vat);
   document.getElementById('price-total-row').textContent       = 'Total: ' + fmt(total);
   box.style.display = 'block';
-
-  // Show payment method selector and update Bit total
-  paySection.style.display = 'block';
-  var bitTotal = document.getElementById('bit-total');
-  if (bitTotal) bitTotal.textContent = fmt(total);
 }
 
 async function checkAvailability(room, checkin, checkout) {
   const res = await fetch(AVAIL_API_URL + '?room=' + encodeURIComponent(room));
   const data = await res.json();
   if (!data.dates) return false;
+
   const blocked = new Set(data.dates.filter(function(d) { return d.blocked; }).map(function(d) { return d.date; }));
   const start = new Date(checkin);
   const end   = new Date(checkout);
@@ -466,43 +365,32 @@ async function submitBooking() {
       phone     = document.getElementById('phone').value.trim(),
       id_number = document.getElementById('id_number').value.trim();
 
-  var payMethod = document.querySelector('input[name="payment_method"]:checked').value;
-  var cc_number = '', cc_expiry = '', cc_cvv = '', cc_name = '';
+  var cc_number = document.getElementById('cc_number').value.trim(),
+      cc_expiry = document.getElementById('cc_expiry').value.trim(),
+      cc_cvv    = document.getElementById('cc_cvv').value.trim(),
+      cc_name   = document.getElementById('cc_name').value.trim();
 
-  if (payMethod === 'credit_card') {
-    cc_number = document.getElementById('cc_number').value.trim();
-    cc_expiry = document.getElementById('cc_expiry').value.trim();
-    cc_cvv    = document.getElementById('cc_cvv').value.trim();
-    cc_name   = document.getElementById('cc_name').value.trim();
-  }
-
-  if (!room||!checkin||!checkout||!name||!phone||!id_number) { alert('Please fill in all required fields.'); return; }
-  if (payMethod === 'credit_card') {
-    if (!cc_number||!cc_expiry||!cc_cvv||!cc_name) { alert('Please fill in all credit card fields.'); return; }
-    if (detectCard(cc_number.replace(/\D/g,'')) === 'diners') { alert('We do not accept Diners Club cards.'); return; }
-    if (!luhn(cc_number)) { alert('Please enter a valid credit card number.'); return; }
-  }
+  if (!room||!checkin||!checkout||!name||!phone||!id_number||!cc_number||!cc_expiry||!cc_cvv||!cc_name) { alert('Please fill in all required fields.'); return; }
+  if (detectCard(cc_number.replace(/\D/g,'')) === 'diners') { alert('We do not accept Diners Club cards.'); return; }
+  if (!luhn(cc_number)) { alert('Please enter a valid credit card number.'); return; }
   var cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
   if (!/^\+?[0-9]{7,15}$/.test(cleanPhone)) { alert('Please enter a valid phone number.'); return; }
   if (!document.getElementById('agree-policies').checked) { alert('Please read and agree to our policies before submitting.'); return; }
 
   var btn = document.getElementById('submit-btn');
   btn.disabled = true;
-  btn.style.opacity = '0.45';
   btn.textContent = 'Checking availability...';
 
   try {
     const available = await checkAvailability(room, checkin, checkout);
     if (!available) {
       btn.disabled = false;
-      btn.style.opacity = '1';
       btn.textContent = 'Submit Booking Request';
       alert('Sorry, one or more of the selected dates are not available for ' + room + '. Please choose different dates or check the room calendar.');
       return;
     }
   } catch(e) {
     btn.disabled = false;
-    btn.style.opacity = '1';
     btn.textContent = 'Submit Booking Request';
     alert('Unable to verify availability. Please try again or contact us directly.');
     return;
@@ -510,22 +398,21 @@ async function submitBooking() {
 
   btn.textContent = 'Sending...';
   var payload = {
-    name:           name,
-    email:          email,
-    phone:          phone,
-    room:           room,
-    checkin:        checkin,
-    checkout:       checkout,
-    guests:         document.getElementById('guests').value,
-    nationality:    document.getElementById('nationality').value.trim(),
-    id_number:      id_number,
-    payment_method: payMethod,
-    cc_number:      cc_number,
-    cc_expiry:      cc_expiry,
-    cc_cvv:         cc_cvv,
-    cc_name:        cc_name,
-    requests:       document.getElementById('requests').value.trim(),
-    website:        document.getElementById('website').value
+    name:        name,
+    email:       email,
+    phone:       phone,
+    room:        room,
+    checkin:     checkin,
+    checkout:    checkout,
+    guests:      document.getElementById('guests').value,
+    nationality: document.getElementById('nationality').value.trim(),
+    id_number:   id_number,
+    cc_number:   cc_number,
+    cc_expiry:   cc_expiry,
+    cc_cvv:      cc_cvv,
+    cc_name:     cc_name,
+    requests:    document.getElementById('requests').value.trim(),
+    website:     document.getElementById('website').value
   };
 
   fetch(BOOKING_API, {
@@ -539,27 +426,70 @@ async function submitBooking() {
     .then(function(data) {
       if (data.success) {
         document.getElementById('booking-form').style.display = 'none';
-        var msgText = document.getElementById('msg-ok-text');
-        if (payMethod === 'credit_card') {
-          msgText.innerHTML = 'We have received your request and will be in touch shortly to confirm your booking.<br><br>If you have any questions, feel free to contact us by phone or WhatsApp.';
-        } else {
-          msgText.innerHTML = 'We have received your request.<br><br>Please send payment confirmation within 24 hours to <strong dir="ltr">+972-58-620-0779</strong> via WhatsApp to secure your booking.';
-        }
+        document.getElementById('id-note').style.display = 'none';
+        document.getElementById('msg-ok-wa').style.display = 'none';
+        document.getElementById('msg-ok-call').style.display = 'none';
         document.getElementById('msg-ok').style.display = 'block';
       } else {
         btn.disabled = false;
-        btn.style.opacity = '1';
         btn.textContent = 'Submit Booking Request';
         document.getElementById('msg-err').style.display = 'block';
       }
     })
     .catch(function() {
       btn.disabled = false;
-      btn.style.opacity = '1';
       btn.textContent = 'Submit Booking Request';
       document.getElementById('msg-err').style.display = 'block';
     });
 }
+</script>
+<style>
+@media (max-width: 768px) {
+  #reviews-sidebar { display: none; }
+  div[style*="grid-template-columns:1fr 340px"] {
+    display: block !important;
+  }
+}
+</style>
+
+<script>
+const REVIEWS_API = 'https://script.google.com/macros/s/AKfycbzVmDCp9ajvCPVQEhxV1RMDpWgJBbAzuCfdGfQ0UotgW9GNYJBpVbncPl6C-dCuMNB6/exec';
+
+(function() {
+  fetch(REVIEWS_API)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var list = document.getElementById('reviews-list-sidebar');
+      if (!list) return;
+      if (!data.ok || !data.reviews || !data.reviews.length) {
+        list.innerHTML = '';
+        return;
+      }
+      var reviews = data.reviews.slice(0, 5);
+      list.innerHTML = '';
+      reviews.forEach(function(r) {
+        var card = document.createElement('div');
+        card.style.cssText = 'border-left:2px solid var(--gold);padding:0.75rem 0 0.75rem 0.85rem;margin-bottom:1.1rem;';
+        var name = document.createElement('div');
+        name.style.cssText = 'font-family:var(--sans);font-size:0.78rem;font-weight:500;color:var(--text);margin-bottom:0.2rem;';
+        name.textContent = r.name;
+        var stars = document.createElement('div');
+        stars.style.cssText = 'color:#FBBC05;font-size:0.7rem;margin-bottom:0.35rem;';
+        stars.textContent = '★★★★★';
+        var text = document.createElement('p');
+        text.style.cssText = 'font-family:var(--sans);font-size:0.78rem;color:var(--text-light);line-height:1.6;margin:0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;';
+        text.textContent = r.text;
+        card.appendChild(name);
+        card.appendChild(stars);
+        card.appendChild(text);
+        list.appendChild(card);
+      });
+    })
+    .catch(function() {
+      var list = document.getElementById('reviews-list-sidebar');
+      if (list) list.innerHTML = '';
+    });
+})();
 </script>
 </body>
 </html>
