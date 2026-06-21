@@ -213,7 +213,9 @@ function updateSubmitBtn() {
         && document.getElementById('cc_cvv').value.trim().length >= 3
         && document.getElementById('cc_name').value.trim().length > 0;
   }
-  var enabled = agreed && ccOk && idOk;
+  var nameOk  = document.getElementById('name').value.trim().length > 0;
+  var phoneOk = document.getElementById('phone').value.trim().length > 0;
+  var enabled = agreed && ccOk && idOk && nameOk && phoneOk;
   btn.disabled      = !enabled;
   btn.style.opacity = enabled ? '1' : '0.45';
   btn.style.cursor  = enabled ? 'pointer' : 'not-allowed';
@@ -274,7 +276,7 @@ window.addEventListener('DOMContentLoaded', function() {
   // Submit button state watchers
   document.getElementById('agree-policies').addEventListener('change', updateSubmitBtn);
   document.getElementById('id_number').addEventListener('input', updateSubmitBtn);
-  ['cc_number','cc_expiry','cc_cvv','cc_name'].forEach(function(id) {
+  ['cc_number','cc_expiry','cc_cvv','cc_name','name','phone'].forEach(function(id) {
     document.getElementById(id).addEventListener('input', updateSubmitBtn);
   });
 
