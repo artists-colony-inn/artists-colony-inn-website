@@ -43,7 +43,7 @@
         <!-- LEFT: form -->
         <div>
           <div id="id-note" style="background:var(--bg-warm);border:1px solid var(--border);padding:0.9rem 1.1rem;font-size:0.85rem;color:var(--text-light);line-height:1.7;margin-bottom:1.5rem">
-            Your ID or passport number is required to complete the booking. <strong>Israeli residents:</strong> this is part of the payment process. <strong>Non-residents of Israel:</strong> your passport number may exempt your stay from VAT.
+            Israeli citizens must provide their Teudat Zehut as part of the payment process. Non-Israeli guests may be exempt from VAT — a valid passport and B2 visa must be presented at check-in.
           </div>
 
           <div class="booking-form" id="booking-form" style="max-width:100%">
@@ -68,7 +68,24 @@
             </div>
             <div class="form-row">
               <div class="form-field"><label>Nationality</label><input type="text" id="nationality" placeholder="e.g. Israeli, US, French"></div>
-              <div class="form-field"><label>ID / Passport <span class="req">*</span></label><input type="text" id="id_number" placeholder="ID or passport number"></div>
+              <div class="form-field">
+                <label>Israeli citizen or resident? <span class="req">*</span></label>
+                <div style="display:flex;gap:1rem;margin-top:0.4rem">
+                  <label style="display:flex;align-items:center;gap:0.4rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400">
+                    <input type="radio" name="is_israeli" value="yes" id="israeli_yes" checked style="accent-color:var(--gold)"> Yes
+                  </label>
+                  <label style="display:flex;align-items:center;gap:0.4rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400">
+                    <input type="radio" name="is_israeli" value="no" id="israeli_no" style="accent-color:var(--gold)"> No
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-field" id="id-field">
+              <label>Teudat Zehut <span class="req">*</span></label>
+              <input type="text" id="id_number" placeholder="Israeli ID number">
+            </div>
+            <div id="vat-exempt-note" style="display:none;background:#fff8e1;border:1px solid #f9a825;border-radius:4px;padding:0.75rem 1rem;font-family:var(--sans);font-size:0.82rem;color:#7a5c00;line-height:1.6;margin-bottom:1.25rem">
+              ⚠️ VAT is not included in the price shown. You must present a valid passport and B2 tourist visa at check-in to qualify for the VAT exemption. If you are unable to do so, VAT (18%) will be charged upon arrival.
             </div>
 
             <!-- Price summary -->
@@ -184,6 +201,9 @@ let priceCache = {};
 function updateSubmitBtn() {
   var btn     = document.getElementById('submit-btn');
   var agreed  = document.getElementById('agree-policies').checked;
+  var isIsraeli = document.querySelector('input[name="is_israeli"]:checked') &&
+                  document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
+  var idOk    = !isIsraeli || document.getElementById('id_number').value.trim().length > 0;
   var payMethod = document.querySelector('input[name="payment_method"]:checked');
   var method  = payMethod ? payMethod.value : 'credit_card';
   var ccOk    = true;
@@ -193,7 +213,7 @@ function updateSubmitBtn() {
         && document.getElementById('cc_cvv').value.trim().length >= 3
         && document.getElementById('cc_name').value.trim().length > 0;
   }
-  var enabled = agreed && ccOk;
+  var enabled = agreed && ccOk && idOk;
   btn.disabled      = !enabled;
   btn.style.opacity = enabled ? '1' : '0.45';
   btn.style.cursor  = enabled ? 'pointer' : 'not-allowed';
@@ -229,6 +249,17 @@ window.addEventListener('DOMContentLoaded', function() {
   updatePrice();
   updateChargeNote(checkin);
 
+  // Citizenship toggle
+  document.querySelectorAll('input[name="is_israeli"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      var isIsraeli = this.value === 'yes';
+      document.getElementById('id-field').style.display        = isIsraeli ? '' : 'none';
+      document.getElementById('vat-exempt-note').style.display = isIsraeli ? 'none' : '';
+      updatePrice();
+      updateSubmitBtn();
+    });
+  });
+
   // Payment method toggle
   document.querySelectorAll('input[name="payment_method"]').forEach(function(radio) {
     radio.addEventListener('change', function() {
@@ -242,6 +273,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
   // Submit button state watchers
   document.getElementById('agree-policies').addEventListener('change', updateSubmitBtn);
+  document.getElementById('id_number').addEventListener('input', updateSubmitBtn);
   ['cc_number','cc_expiry','cc_cvv','cc_name'].forEach(function(id) {
     document.getElementById(id).addEventListener('input', updateSubmitBtn);
   });
@@ -421,7 +453,8 @@ async function updatePrice() {
   if (guests >= 4)  surchargeRate = 0.50;
   const surcharge  = Math.round(base * surchargeRate);
   const beforeVAT  = base + surcharge;
-  const vat        = Math.round(beforeVAT * 0.18);
+  const isIsraeli  = document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
+  const vat        = isIsraeli ? Math.round(beforeVAT * 0.18) : 0;
   const total      = beforeVAT + vat;
 
   const fmt = function(n) {
@@ -431,6 +464,7 @@ async function updatePrice() {
   document.getElementById('price-base-row').textContent        = nights + ' night' + (nights > 1 ? 's' : '') + ' (base price): ' + fmt(base);
   document.getElementById('price-surcharge-row').style.display = surcharge ? '' : 'none';
   document.getElementById('price-surcharge-row').textContent   = 'Guest surcharge (' + (surchargeRate * 100) + '%): ' + fmt(surcharge);
+  document.getElementById('price-vat-row').style.display       = isIsraeli ? '' : 'none';
   document.getElementById('price-vat-row').textContent         = 'VAT (18%): ' + fmt(vat);
   document.getElementById('price-total-row').textContent       = 'Total: ' + fmt(total);
   box.style.display = 'block';
@@ -463,8 +497,10 @@ async function submitBooking() {
       checkout  = document.getElementById('checkout').value,
       name      = document.getElementById('name').value.trim(),
       email     = document.getElementById('email').value.trim(),
-      phone     = document.getElementById('phone').value.trim(),
-      id_number = document.getElementById('id_number').value.trim();
+      phone     = document.getElementById('phone').value.trim();
+
+  var isIsraeli = document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
+  var id_number = isIsraeli ? document.getElementById('id_number').value.trim() : '';
 
   var payMethod = document.querySelector('input[name="payment_method"]:checked').value;
   var cc_number = '', cc_expiry = '', cc_cvv = '', cc_name = '';
@@ -476,7 +512,8 @@ async function submitBooking() {
     cc_name   = document.getElementById('cc_name').value.trim();
   }
 
-  if (!room||!checkin||!checkout||!name||!phone||!id_number) { alert('Please fill in all required fields.'); return; }
+  if (!room||!checkin||!checkout||!name||!phone) { alert('Please fill in all required fields.'); return; }
+  if (isIsraeli && !id_number) { alert('Please enter your Teudat Zehut.'); return; }
   if (payMethod === 'credit_card') {
     if (!cc_number||!cc_expiry||!cc_cvv||!cc_name) { alert('Please fill in all credit card fields.'); return; }
     if (detectCard(cc_number.replace(/\D/g,'')) === 'diners') { alert('We do not accept Diners Club cards.'); return; }
@@ -519,6 +556,7 @@ async function submitBooking() {
     guests:         document.getElementById('guests').value,
     nationality:    document.getElementById('nationality').value.trim(),
     id_number:      id_number,
+    is_israeli:     isIsraeli ? 'yes' : 'no',
     payment_method: payMethod,
     cc_number:      cc_number,
     cc_expiry:      cc_expiry,
