@@ -138,7 +138,7 @@
                 I have read and agree to the <a href="/en/policies.html" target="_blank">house rules, cancellation policy, and privacy policy</a>.
               </label>
             </div>
-            <button class="btn btn-gold" id="submit-btn" onclick="submitBooking()" style="width:100%">Submit Booking Request</button>
+            <button class="btn btn-gold" id="submit-btn" onclick="submitBooking()" style="width:100%;opacity:0.45;cursor:not-allowed" disabled>Submit Booking Request</button>
             <div class="form-msg error" id="msg-err">Something went wrong. Please try again or contact us at <strong>+972-58-620-0779</strong>.</div>
           </div>
 
@@ -181,6 +181,24 @@ const REVIEWS_API   = 'https://script.google.com/macros/s/AKfycbzVmDCp9ajvCPVQEh
 
 let priceCache = {};
 
+function updateSubmitBtn() {
+  var btn     = document.getElementById('submit-btn');
+  var agreed  = document.getElementById('agree-policies').checked;
+  var payMethod = document.querySelector('input[name="payment_method"]:checked');
+  var method  = payMethod ? payMethod.value : 'credit_card';
+  var ccOk    = true;
+  if (method === 'credit_card') {
+    ccOk = document.getElementById('cc_number').value.trim().length > 0
+        && document.getElementById('cc_expiry').value.trim().length === 5
+        && document.getElementById('cc_cvv').value.trim().length >= 3
+        && document.getElementById('cc_name').value.trim().length > 0;
+  }
+  var enabled = agreed && ccOk;
+  btn.disabled      = !enabled;
+  btn.style.opacity = enabled ? '1' : '0.45';
+  btn.style.cursor  = enabled ? 'pointer' : 'not-allowed';
+}
+
 window.addEventListener('DOMContentLoaded', function() {
   var p = new URLSearchParams(window.location.search);
   var room     = p.get('room');
@@ -218,9 +236,20 @@ window.addEventListener('DOMContentLoaded', function() {
       document.getElementById('cc-section').style.display   = method === 'credit_card'   ? '' : 'none';
       document.getElementById('bit-section').style.display  = method === 'bit'           ? '' : 'none';
       document.getElementById('bank-section').style.display = method === 'bank_transfer' ? '' : 'none';
+      updateSubmitBtn();
     });
   });
 
+  // Submit button state watchers
+  document.getElementById('agree-policies').addEventListener('change', updateSubmitBtn);
+  ['cc_number','cc_expiry','cc_cvv','cc_name'].forEach(function(id) {
+    document.getElementById(id).addEventListener('input', updateSubmitBtn);
+  });
+
+  // Initial state
+  updateSubmitBtn();
+
+  // CC number formatting
   document.getElementById('cc_number').addEventListener('input', function() {
     var digits = this.value.replace(/\D/g, '');
     var type   = detectCard(digits);
@@ -459,18 +488,21 @@ async function submitBooking() {
 
   var btn = document.getElementById('submit-btn');
   btn.disabled = true;
+  btn.style.opacity = '0.45';
   btn.textContent = 'Checking availability...';
 
   try {
     const available = await checkAvailability(room, checkin, checkout);
     if (!available) {
       btn.disabled = false;
+      btn.style.opacity = '1';
       btn.textContent = 'Submit Booking Request';
       alert('Sorry, one or more of the selected dates are not available for ' + room + '. Please choose different dates or check the room calendar.');
       return;
     }
   } catch(e) {
     btn.disabled = false;
+    btn.style.opacity = '1';
     btn.textContent = 'Submit Booking Request';
     alert('Unable to verify availability. Please try again or contact us directly.');
     return;
@@ -516,12 +548,14 @@ async function submitBooking() {
         document.getElementById('msg-ok').style.display = 'block';
       } else {
         btn.disabled = false;
+        btn.style.opacity = '1';
         btn.textContent = 'Submit Booking Request';
         document.getElementById('msg-err').style.display = 'block';
       }
     })
     .catch(function() {
       btn.disabled = false;
+      btn.style.opacity = '1';
       btn.textContent = 'Submit Booking Request';
       document.getElementById('msg-err').style.display = 'block';
     });
