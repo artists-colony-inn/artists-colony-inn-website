@@ -32,8 +32,8 @@
   <div class="container">
     <h2 class="section-title">Five Distinct Suites</h2>
     <div class="section-rule"></div>
-    <p id="price-range-line" style="text-align:center;font-family:var(--sans);font-size:0.88rem;color:var(--text-light);font-weight:300;margin-bottom:0.4rem">&nbsp;</p>
-    <p style="text-align:center;font-family:var(--sans);font-size:0.88rem;color:var(--text-light);font-weight:300;margin-bottom:2.5rem">Free cancellation up to 7 days before check-in</p>
+    <p id="price-range-line" style="text-align:center;font-family:var(--sans);font-size:1rem;color:var(--text-light);font-weight:300;margin-bottom:0.25rem">&nbsp;</p>
+    <p style="text-align:center;font-family:var(--sans);font-size:1rem;color:var(--text-light);font-weight:300;margin-bottom:2.5rem">Free cancellation up to 7 days before check-in</p>
     <div class="rooms-grid">
 		<div class="room-card"><a href="/en/rooms/tzviya.html"><img src="/images/tzviya.jpg" alt="Tzviya Suite"></a><div class="room-card-body"><a href="/en/rooms/tzviya.html"><h3>Tzviya</h3></a><p class="tagline">A refuge carved from ancient stone.</p><a href="/en/rooms/tzviya.html" class="btn btn-outline">Discover</a></div></div>
 		<div class="room-card"><a href="/en/rooms/aryeh.html"><img src="/images/aryeh.jpg" alt="Aryeh Suite"></a><div class="room-card-body"><a href="/en/rooms/aryeh.html"><h3>Aryeh</h3></a><p class="tagline">Warmth that wraps around both of you.</p><a href="/en/rooms/aryeh.html" class="btn btn-outline">Discover</a></div></div>
@@ -79,9 +79,9 @@
 
     var el = document.getElementById('price-range-line');
     if (el) {
-      el.textContent = 'Summer from \u20aa' + sMin + ' to \u20aa' + sMax
-        + '\u2003\u00b7\u2003Winter from \u20aa' + wMin + ' to \u20aa' + wMax
-        + '\u2003\u00b7\u2003per room per night, before VAT';
+      el.innerHTML = 'Summer from \u20aa' + sMin + ' to \u20aa' + sMax + '<br>'
+        + 'Winter from \u20aa' + wMin + ' to \u20aa' + wMax + '<br>'
+        + '<span style="font-size:0.82rem">per room per night, before VAT</span>';
     }
   }
 
