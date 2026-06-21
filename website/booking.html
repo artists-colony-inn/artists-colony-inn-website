@@ -22,16 +22,22 @@
 	  <div class="container">
 		<h2 class="section-title">הזמנת חדר</h2>
 		<div class="section-rule"></div>
-		<p style="text-align:center;color:var(--text-light);font-weight:300;max-width:480px;margin:0 auto 2.5rem">לבדיקת זמינות לחדר ספציפי, בקרו בדפי החדרים. אחרת, מלאו את הטופס למטה ונאשר בהקדם.</p>
+		<div style="max-width:560px;margin:0 auto 1.5rem;background:var(--bg-warm);border:1px solid var(--border);padding:0.9rem 1.1rem;font-size:0.85rem;color:var(--text-light);line-height:1.7;direction:rtl;text-align:right">
+			מספר תעודת הזהות או הדרכון נדרש להשלמת ההזמנה. <strong>תושבי ישראל:</strong> הפרט משמש כחלק מתהליך התשלום. <strong>תושבי חוץ:</strong> מספר הדרכון עשוי לפטור את שהותכם ממע"מ.
+		</div>
 
 		<div class="booking-form" id="booking-form">
 		  <div class="form-row">
-			<div class="form-field"><label>חדר <span class="req">*</span></label><select id="room"><option value="">בחרו חדר</option><option value="Tzviya">צביה</option><option value="Aryeh">אריה</option><option value="Liana">ליאנה</option><option value="Avital">אביטל</option><option value="Orly">אורלי</option></select></div>
-			<div class="form-field"><label>אורחים <span class="req">*</span></label><select id="guests"><option value="1">אורח 1</option><option value="2" selected>2 אורחים</option><option value="3">3 אורחים</option><option value="4">4 אורחים</option></select></div>
+			<div class="form-field"><label>חדר</label><input type="text" id="room-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+			<div class="form-field"><label>אורחים</label><input type="text" id="guests-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+			<input type="hidden" id="room">
+			<input type="hidden" id="guests">
 		  </div>
 		  <div class="form-row">
-			<div class="form-field"><label>צ'ק-אין <span class="req">*</span></label><input type="date" id="checkin"></div>
-			<div class="form-field"><label>צ'ק-אאוט <span class="req">*</span></label><input type="date" id="checkout"></div>
+			<div class="form-field"><label>צ'ק-אין</label><input type="text" id="checkin-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+			<div class="form-field"><label>צ'ק-אאוט</label><input type="text" id="checkout-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+			<input type="hidden" id="checkin">
+			<input type="hidden" id="checkout">
 		  </div>
 		  <div class="form-field"><label>שם מלא <span class="req">*</span></label><input type="text" id="name" placeholder="כפי שמופיע בתעודת הזהות או הדרכון" autocomplete="name"></div>
 		  <div class="form-row">
@@ -43,12 +49,11 @@
 			<div class="form-field"><label>ת.ז. / דרכון <span class="req">*</span></label><input type="text" id="id_number" placeholder="ת.ז. או מספר דרכון"></div>
 		  </div>
 		  <div id="price-box" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.88rem;color:var(--text-mid);line-height:2">
-			<div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">הערכת מחיר</div>
+			<div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">סיכום מחיר</div>
 			<div id="price-base-row"></div>
 			<div id="price-surcharge-row"></div>
 			<div id="price-vat-row"></div>
 			<div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
-			<div style="font-size:0.78rem;color:var(--text-light);margin-top:0.4rem">* הערכה בלבד. המחיר הסופי יאושר בהודעה.</div>
 		  </div>
 		  <div style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
 			<div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem">פרטי כרטיס אשראי</div>
@@ -107,33 +112,37 @@ let priceCache = {};
 
 window.addEventListener('DOMContentLoaded', function() {
   var p = new URLSearchParams(window.location.search);
-  if (p.get('room')) {
-    document.getElementById('room').value = p.get('room');
-    updateGuestsForRoom(p.get('room'));
-  }
-  if (p.get('checkin'))  document.getElementById('checkin').value  = p.get('checkin');
-  if (p.get('checkout')) document.getElementById('checkout').value = p.get('checkout');
-  if (p.get('guests'))   document.getElementById('guests').value   = p.get('guests');
-  if (p.get('room') && p.get('checkin') && p.get('checkout')) {
-    updatePrice();
-    updateChargeNote(p.get('checkin'));
+  var room     = p.get('room');
+  var checkin  = p.get('checkin');
+  var checkout = p.get('checkout');
+  var guests   = p.get('guests');
+
+  // Redirect to home if any required param is missing
+  if (!room || !checkin || !checkout || !guests) {
+    window.location.replace('/index.html');
+    return;
   }
 
-  document.getElementById('room').addEventListener('change', function() {
-    updateGuestsForRoom(this.value);
-    updatePrice();
-  });
-  ['checkin','checkout','guests'].forEach(function(id) {
-    document.getElementById(id).addEventListener('change', updatePrice);
-  });
-  document.getElementById('checkin').addEventListener('change', function() {
-    updateChargeNote(this.value);
-  });
-  document.getElementById('checkin').addEventListener('input', function() {
-    updatePrice();
-    updateChargeNote(this.value);
-  });
-  document.getElementById('checkout').addEventListener('input', updatePrice);
+  // Populate hidden fields
+  document.getElementById('room').value     = room;
+  document.getElementById('checkin').value  = checkin;
+  document.getElementById('checkout').value = checkout;
+  document.getElementById('guests').value   = guests;
+
+  // Populate read-only display fields
+  var guestLabels = { '1': 'אורח 1', '2': '2 אורחים', '3': '3 אורחים', '4': '4 אורחים' };
+  var roomLabels  = { 'Tzviya': 'צביה', 'Aryeh': 'אריה', 'Liana': 'ליאנה', 'Avital': 'אביטל', 'Orly': 'אורלי' };
+  var fmtDate = function(iso) {
+    var d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('he-IL', { day:'numeric', month:'numeric', year:'numeric' });
+  };
+  document.getElementById('room-display').value     = roomLabels[room] || room;
+  document.getElementById('guests-display').value   = guestLabels[guests] || guests + ' אורחים';
+  document.getElementById('checkin-display').value  = fmtDate(checkin);
+  document.getElementById('checkout-display').value = fmtDate(checkout);
+
+  updatePrice();
+  updateChargeNote(checkin);
 
   document.getElementById('cc_number').addEventListener('input', function() {
     var digits = this.value.replace(/\D/g, '');
@@ -187,22 +196,8 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-function updateGuestsForRoom(room) {
-  var maxGuests = { 'Tzviya': 2, 'Aryeh': 2, 'Liana': 4, 'Avital': 4, 'Orly': 2 };
-  var max = maxGuests[room] || 4;
-  var sel = document.getElementById('guests');
-  var current = parseInt(sel.value) || 2;
-  var labels = { 1: 'אורח 1', 2: '2 אורחים', 3: '3 אורחים', 4: '4 אורחים' };
 
-  sel.innerHTML = '';
-  for (var i = 1; i <= max; i++) {
-    var opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = labels[i];
-    sel.appendChild(opt);
-  }
-  sel.value = Math.min(current, max);
-}
+
 
 function updateChargeNote(checkin) {
   var note = document.getElementById('cc_charge_note');
