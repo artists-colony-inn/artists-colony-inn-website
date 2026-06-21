@@ -6,11 +6,12 @@ document.currentScript.insertAdjacentHTML('afterend', `
       <img src="/images/logo.svg" alt="Artists' Colony Inn">
     </a>
     <a href="https://g.page/r/CWm_4YA5CjqAEBM" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.35rem;background:var(--white);border:1px solid var(--border);border-radius:3px;padding:0.3rem 0.6rem;text-decoration:none;flex-shrink:0">
-      <span style="font-family:'David','Times New Roman',serif;font-size:0.75rem;font-weight:700;background:linear-gradient(135deg,#4285F4,#EA4335,#FBBC05,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em">G</span>
-      <span style="color:#FBBC05;font-size:0.7rem;letter-spacing:0.02em">★★★★★</span>
-      <span style="font-family:var(--sans);font-size:0.72rem;font-weight:500;color:var(--text);line-height:1">4.8</span>
-      <span style="font-family:var(--sans);font-size:0.68rem;color:var(--text-light);line-height:1">(123)</span>
-    </a>
+        <span style="font-family:'David','Times New Roman',serif;font-size:0.75rem;font-weight:700;background:linear-gradient(135deg,#4285F4,#EA4335,#FBBC05,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em">G</span>
+        <span style="display:flex;flex-direction:column;align-items:center;line-height:1.2">
+          <span style="color:#FBBC05;font-size:0.65rem;letter-spacing:0.02em">★★★★★</span>
+          <span style="font-family:var(--sans);font-size:0.65rem;color:var(--text-light)">4.8 (123)</span>
+        </span>
+      </a>
     <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
       <span></span><span></span><span></span>
     </button>
