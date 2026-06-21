@@ -32,6 +32,8 @@
   <div class="container">
     <h2 class="section-title">Five Distinct Suites</h2>
     <div class="section-rule"></div>
+    <p id="price-range-line" style="text-align:center;font-family:var(--sans);font-size:0.88rem;color:var(--text-light);font-weight:300;margin-bottom:0.4rem">&nbsp;</p>
+    <p style="text-align:center;font-family:var(--sans);font-size:0.88rem;color:var(--text-light);font-weight:300;margin-bottom:2.5rem">Free cancellation up to 7 days before check-in</p>
     <div class="rooms-grid">
 		<div class="room-card"><a href="/en/rooms/tzviya.html"><img src="/images/tzviya.jpg" alt="Tzviya Suite"></a><div class="room-card-body"><a href="/en/rooms/tzviya.html"><h3>Tzviya</h3></a><p class="tagline">A refuge carved from ancient stone.</p><a href="/en/rooms/tzviya.html" class="btn btn-outline">Discover</a></div></div>
 		<div class="room-card"><a href="/en/rooms/aryeh.html"><img src="/images/aryeh.jpg" alt="Aryeh Suite"></a><div class="room-card-body"><a href="/en/rooms/aryeh.html"><h3>Aryeh</h3></a><p class="tagline">Warmth that wraps around both of you.</p><a href="/en/rooms/aryeh.html" class="btn btn-outline">Discover</a></div></div>
@@ -52,5 +54,52 @@
 
 </main>
 <script src="/en/components/footer.js"></script>
+<script>
+(function() {
+  var API = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
+  var rooms = ['Tzviya', 'Aryeh', 'Liana', 'Avital', 'Orly'];
+  var allPrices = [];
+  var fetched = 0;
+
+  function isSummer(dateStr) {
+    var m = parseInt(dateStr.split('-')[1]);
+    return m >= 3 && m <= 10;
+  }
+
+  function tryRender() {
+    if (fetched < rooms.length) return;
+    var summer = allPrices.filter(function(p) { return isSummer(p.date) && p.price > 0; });
+    var winter  = allPrices.filter(function(p) { return !isSummer(p.date) && p.price > 0; });
+    if (!summer.length || !winter.length) return;
+
+    var sMin = Math.min.apply(null, summer.map(function(p){ return p.price; }));
+    var sMax = Math.max.apply(null, summer.map(function(p){ return p.price; }));
+    var wMin = Math.min.apply(null, winter.map(function(p){ return p.price; }));
+    var wMax = Math.max.apply(null, winter.map(function(p){ return p.price; }));
+
+    var el = document.getElementById('price-range-line');
+    if (el) {
+      el.textContent = 'Summer from \u20aa' + sMin + ' to \u20aa' + sMax
+        + '\u2003\u00b7\u2003Winter from \u20aa' + wMin + ' to \u20aa' + wMax
+        + '\u2003\u00b7\u2003per room per night, before VAT';
+    }
+  }
+
+  rooms.forEach(function(room) {
+    fetch(API + '?room=' + encodeURIComponent(room))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.dates) {
+          data.dates.forEach(function(d) {
+            if (d.price) allPrices.push({ date: d.date, price: d.price });
+          });
+        }
+        fetched++;
+        tryRender();
+      })
+      .catch(function() { fetched++; tryRender(); });
+  });
+})();
+</script>
 </body>
 </html>
