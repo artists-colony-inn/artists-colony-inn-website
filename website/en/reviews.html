@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ביקורות אורחים | מלון בוטיק קריית האמנים</title>
-  <meta name="description" content="קראו מה אורחים אומרים על שהותם במלון בוטיק קריית האמנים בצפת.">
+  <title>Guest Reviews | Artists' Colony Inn</title>
+  <meta name="description" content="Read what guests say about their stay at the Artists' Colony Inn in Tzfat, Israel.">
   <link rel="stylesheet" href="/css/style.css">
   <style>
     .review-card {
       background: var(--bg-parchment, #faf7f2);
       border: 1px solid var(--border, #e0d5c0);
-      border-right: 3px solid var(--gold, #b8976a);
+      border-left: 3px solid var(--gold, #b8976a);
       border-radius: 4px;
       padding: 1.4rem 1.6rem;
       margin-bottom: 1.25rem;
@@ -143,37 +143,48 @@
 	gtag('js', new Date());
 	gtag('config', 'G-H5ZXBGVT4Q');
   </script>
+  
+  <!-- Meta Pixel -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '983698949964438');
+  fbq('track', 'PageView');
+  </script>
 </head>
 <body>
-<script src="/components/header.js"></script>
+<script src="/en/components/header.js"></script>
 
 <main>
   <section>
     <div class="container">
-      <h1 class="section-title">ביקורות אורחים</h1>
+      <h1 class="section-title">Guest Reviews</h1>
       <div class="section-rule"></div>
 
       <!-- Reviews list -->
       <div id="reviews-list">
-        <p class="state-msg" id="loading-msg">טוען ביקורות…</p>
+        <p class="state-msg" id="loading-msg">Loading reviews…</p>
       </div>
 
       <hr class="reviews-divider" />
 
       <!-- Submit form -->
-      <h2 class="section-title" style="font-size:1.1rem;">שתפו את חוויתכם</h2>
-      <p class="form-intro">שהיתם אצלנו? נשמח לשמוע מכם. הביקורת תופיע לאחר אישור קצר.</p>
+      <h2 class="section-title" style="font-size:1.1rem;">Share Your Experience</h2>
+      <p class="form-intro">Stayed with us? We'd love to hear from you. Your review will appear after a brief moderation step.</p>
 
       <form id="review-form" novalidate>
 
         <div class="form-group">
-          <label for="reviewer-name">שמכם <span class="optional">(רשות)</span></label>
-          <input type="text" id="reviewer-name" name="reviewer" placeholder="למשל: שרה, או השאירו ריק לפרסום אנונימי" maxlength="100" autocomplete="name" />
+          <label for="reviewer-name">Your name <span class="optional">(optional)</span></label>
+          <input type="text" id="reviewer-name" name="reviewer" placeholder="e.g. Sarah, or leave blank to post anonymously" maxlength="100" autocomplete="name" />
         </div>
 
         <div class="form-group">
-          <label for="review-text">הביקורת שלכם</label>
-          <textarea id="review-text" name="text" placeholder="ספרו לנו על שהותכם…" maxlength="3000" required></textarea>
+          <label for="review-text">Your review</label>
+          <textarea id="review-text" name="text" placeholder="Tell us about your stay…" maxlength="3000" required></textarea>
           <p class="char-count" id="char-count">0 / 3000</p>
         </div>
 
@@ -182,7 +193,7 @@
           <input type="text" name="website" tabindex="-1" autocomplete="off" />
         </div>
 
-        <button type="submit" id="submit-btn" class="btn-primary">שלח ביקורת</button>
+        <button type="submit" id="submit-btn" class="btn-primary">Submit Review</button>
         <div class="form-msg" id="form-msg"></div>
 
       </form>
@@ -191,7 +202,7 @@
   </section>
 </main>
 
-<script src="/components/footer.js"></script>
+<script src="/en/components/footer.js"></script>
 
 <script>
   const API_URL = 'https://script.google.com/macros/s/AKfycbwsmf5HBXhZ6qgCCnjk0q_kvU-__XjI0A8k44Lkh_zg1jI2cTrPbYDDrJQsXYxZPOBYew/exec';
@@ -208,13 +219,13 @@ const PAGE_SIZE = 10;
       const data = await res.json();
       loading.remove();
       if (!data.ok || !data.reviews.length) {
-        list.innerHTML = '<p class="state-msg">אין ביקורות עדיין. היו הראשונים!</p>';
+        list.innerHTML = '<p class="state-msg">No reviews yet. Be the first!</p>';
         return;
       }
       allReviews = data.reviews;
       showMore();
     } catch(e) {
-      loading.textContent = 'לא ניתן לטעון ביקורות כרגע.';
+      loading.textContent = 'Unable to load reviews at this time.';
     }
   }
 
@@ -232,7 +243,7 @@ const PAGE_SIZE = 10;
       btn.id = 'show-more-btn';
       btn.className = 'btn-primary';
       btn.style.cssText = 'display:block;margin:1.5rem auto 0;';
-      btn.textContent = 'הצג עוד ביקורות';
+      btn.textContent = 'Show more reviews';
       btn.addEventListener('click', showMore);
       list.appendChild(btn);
     }
@@ -240,10 +251,10 @@ const PAGE_SIZE = 10;
 
   function buildCard(r) {
     const isHebrew = r.language === 'Hebrew';
-    const name = (r.reviewer || 'אורח')
+    const name = (r.reviewer || 'Guest')
       .replace(/\s*\(אורח\)\s*/g, '')
       .replace(/\s*\/\s*אורח\s*/g, '')
-      .trim() || 'אורח';
+      .trim() || 'Guest';
 
     const card = document.createElement('div');
     card.className = 'review-card';
@@ -282,13 +293,13 @@ const PAGE_SIZE = 10;
     const reviewer = document.getElementById('reviewer-name').value.trim();
 
     if (!text) {
-      showMsg('נא לכתוב את ביקורתכם לפני השליחה.', 'error');
+      showMsg('Please write your review before submitting.', 'error');
       textarea.focus();
       return;
     }
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'שולח…';
+    submitBtn.textContent = 'Submitting…';
     hideMsg();
 
     try {
@@ -296,19 +307,19 @@ const PAGE_SIZE = 10;
       const res  = await fetch(API_URL + '?' + params.toString());
       const data = await res.json();
       if (data.ok) {
-        showMsg('תודה! ביקורתכם התקבלה ותופיע בקרוב לאחר אישור.', 'success');
+        showMsg('Thank you! Your review has been received and will appear shortly after moderation.', 'success');
         form.reset();
         textarea.classList.remove('rtl-input');
         charCount.textContent = '0 / ' + MAX;
         charCount.classList.remove('warn');
       } else {
-        showMsg('משהו השתבש: ' + (data.error || 'נסו שוב.'), 'error');
+        showMsg('Something went wrong: ' + (data.error || 'please try again.'), 'error');
       }
     } catch(err) {
-      showMsg('לא ניתן לשלוח כרגע. נסו שוב מאוחר יותר.', 'error');
+      showMsg('Unable to submit at this time. Please try again later.', 'error');
     } finally {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'שלח ביקורת';
+      submitBtn.textContent = 'Submit Review';
     }
   });
 
