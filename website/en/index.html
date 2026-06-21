@@ -91,7 +91,7 @@
       .then(function(data) {
         if (data.dates) {
           data.dates.forEach(function(d) {
-            if (d.price) allPrices.push({ date: d.date, price: d.price });
+            if (d.price && d.price >= 600) allPrices.push({ date: d.date, price: d.price });
           });
         }
         fetched++;
