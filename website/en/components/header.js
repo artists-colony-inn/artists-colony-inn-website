@@ -5,7 +5,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
     <a class="logo" href="/en/index.html">
       <img src="/images/logo.svg" alt="Artists' Colony Inn">
     </a>
-    <a href="https://www.google.com/maps/place/?q=place_id:ChIJnQZA1pAjHBURab_hgDkKOoA" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.35rem;background:var(--white);border:1px solid var(--border);border-radius:3px;padding:0.3rem 0.6rem;text-decoration:none;flex-shrink:0">
+    <a href="https://g.page/r/CWm_4YA5CjqAEBM" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.35rem;background:var(--white);border:1px solid var(--border);border-radius:3px;padding:0.3rem 0.6rem;text-decoration:none;flex-shrink:0">
       <span style="font-family:'David','Times New Roman',serif;font-size:0.75rem;font-weight:700;background:linear-gradient(135deg,#4285F4,#EA4335,#FBBC05,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em">G</span>
       <span style="color:#FBBC05;font-size:0.7rem;letter-spacing:0.02em">★★★★★</span>
       <span style="font-family:var(--sans);font-size:0.72rem;font-weight:500;color:var(--text);line-height:1">4.8</span>
