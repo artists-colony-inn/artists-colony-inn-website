@@ -43,30 +43,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   var path = window.location.pathname;
-  document.documentElement.lang = 'he';
+  document.documentElement.lang = 'en';
 
-  // Language toggle — add /en/ prefix to get English equivalent
+  // Language toggle — strip /en/ prefix to get Hebrew equivalent
   var langToggle = document.getElementById('lang-toggle');
   if (langToggle) {
-    var enPath = '/en' + (path === '/' ? '/index.html' : path);
-    langToggle.href = enPath;
+    var hePath = path.replace(/^\/en\//, '/');
+    if (hePath === '/') hePath = '/index.html';
+    langToggle.href = hePath;
   }
 
   // hreflang tags
-  var heUrl = 'https://www.theartistscolonyinn.com' + path;
-  var enUrl = 'https://www.theartistscolonyinn.com/en' + (path === '/' ? '/index.html' : path);
-
-  var linkHe = document.createElement('link');
-  linkHe.rel = 'alternate';
-  linkHe.hreflang = 'he';
-  linkHe.href = heUrl;
-  document.head.appendChild(linkHe);
+  var enUrl = 'https://www.theartistscolonyinn.com' + path;
+  var heUrl = 'https://www.theartistscolonyinn.com' + path.replace(/^\/en\//, '/');
 
   var linkEn = document.createElement('link');
   linkEn.rel = 'alternate';
   linkEn.hreflang = 'en';
   linkEn.href = enUrl;
   document.head.appendChild(linkEn);
+
+  var linkHe = document.createElement('link');
+  linkHe.rel = 'alternate';
+  linkHe.hreflang = 'he';
+  linkHe.href = heUrl;
+  document.head.appendChild(linkHe);
 
   var linkDefault = document.createElement('link');
   linkDefault.rel = 'alternate';
@@ -78,8 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var href = a.getAttribute('href');
     if (!href || href.startsWith('tel:') || a.id === 'lang-toggle') return;
     if (
-      (href === '/index.html' && (path === '/' || path === '/index.html')) ||
-      (href !== '/index.html' && path.startsWith(href.replace('.html', '')))
+      (href === '/en/index.html' && (path === '/en/' || path === '/en/index.html')) ||
+      (href !== '/en/index.html' && path.startsWith(href.replace('.html', '')))
     ) {
       a.classList.add('active');
     }
@@ -90,7 +91,3 @@ favicon.rel = 'icon';
 favicon.type = 'image/svg+xml';
 favicon.href = '/images/logo.svg';
 document.head.appendChild(favicon);
-
-var style = document.createElement('style');
-style.textContent = 'body { direction: rtl; text-align: right; }';
-document.head.appendChild(style);
