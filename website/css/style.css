@@ -132,6 +132,11 @@ nav a:hover, nav a.active { color: var(--gold); }
   gap: 5px;
   padding: 4px;
 }
+
+.header-inner nav {
+  margin-left: auto;
+}
+
 .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--text); transition: 0.3s; }
 
 /* ── HERO ── */
