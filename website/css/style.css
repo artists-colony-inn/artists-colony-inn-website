@@ -778,7 +778,7 @@ footer a:hover { color: var(--gold-light); }
 .trust-bullets li::before {
   content: '●';
   color: var(--gold);
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   line-height: 1;
   vertical-align: middle;
   margin-left: 0.4rem;
