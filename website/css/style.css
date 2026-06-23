@@ -771,11 +771,18 @@ footer a:hover { color: var(--gold-light); }
   margin: 0;
   font-family: var(--sans);
   font-size: 0.82rem;
-  color: var(--text-light);
+  color: var(--text);
   line-height: 2;
 }
 
 .trust-bullets li::before {
   content: '• ';
+  font-size: 1.1rem;
   color: var(--gold);
+}
+
+[dir="rtl"] .trust-bullets,
+.trust-bullets[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
 }
