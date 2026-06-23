@@ -65,6 +65,7 @@
     <div class="hero-text">
       <h1>מלון בוטיק קריית האמנים<br><span style="font-weight:300;font-size:0.75em;">מעוצב לשקט. בלב צפת.</span></h1>
       <p>נוחות בוטיק בעיר העתיקה של צפת, ברובע האמנים.</p>
+      <p style="font-family:var(--sans);font-size:1rem;letter-spacing:0.05em;margin-top:0.5rem"><a href="tel:+972586200779" style="color:var(--white);text-decoration:none" dir="ltr">+972-58-620-0779</a></p>
       <div class="hero-actions">
         <a href="#booking" class="btn btn-gold">לבדיקת זמינות</a>
       </div>
@@ -92,10 +93,22 @@
     </div>
   </section>
 
+  <!-- Trust bullets -->
+  <section style="padding:2rem 0 0">
+    <div class="container" style="max-width:560px;text-align:center">
+      <ul class="trust-bullets" style="display:inline-block;text-align:right">
+        <li>ארוחת בוקר באדיבות הבית</li>
+        <li>ביטול חינם עד 7 ימים לפני הצ'ק-אין</li>
+        <li>5 סוויטות בלעדיות</li>
+        <li>צ'ק-אאוט לאחר שבת וחג</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- Booking widget -->
-  <section id="booking" style="padding:4rem 0">
+  <section id="booking" style="padding:3rem 0 4rem">
     <div class="container">
-      <h2 class="section-title">בדקו זמינות</h2>
+      <h2 class="section-title">בחרו את הסוויטה המושלמת לכם</h2>
       <div class="section-rule"></div>
 
       <div class="avail-form">
@@ -128,6 +141,19 @@
   </section>
 
 </main>
+
+<!-- Google reviews -->
+<section style="padding:3rem 0;background:var(--bg-warm)">
+  <div class="container" style="max-width:900px">
+    <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;justify-content:center">
+      <span style="color:#FBBC05;font-size:1.1rem">★★★★★</span>
+      <span style="font-family:var(--sans);font-size:0.9rem;color:var(--text-light)">4.8 · 123 ביקורות בגוגל</span>
+    </div>
+    <div id="reviews-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem">
+      <div style="font-family:var(--sans);font-size:0.82rem;color:var(--text-light);font-style:italic">טוען ביקורות…</div>
+    </div>
+  </div>
+</section>
 
 <!-- Room popup -->
 <div class="room-popup-overlay" id="room-popup-overlay" onclick="closePopup(event)">
@@ -375,6 +401,38 @@ function closePopup(event) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closePopup(null);
 });
+</script>
+<script>
+(function() {
+  var REVIEWS_API = 'https://script.google.com/macros/s/AKfycbzVmDCp9ajvCPVQEhxV1RMDpWgJBbAzuCfdGfQ0UotgW9GNYJBpVbncPl6C-dCuMNB6/exec';
+  fetch(REVIEWS_API)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var grid = document.getElementById('reviews-grid');
+      if (!data.ok || !data.reviews || !data.reviews.length) { grid.innerHTML = ''; return; }
+      grid.innerHTML = '';
+      data.reviews.slice(0, 5).forEach(function(r) {
+        var card = document.createElement('div');
+        card.style.cssText = 'background:var(--white);border:1px solid var(--border);border-radius:4px;padding:1rem 1.1rem;';
+        var name = document.createElement('div');
+        name.style.cssText = 'font-family:var(--sans);font-size:0.78rem;font-weight:500;color:var(--text);margin-bottom:0.2rem;';
+        name.textContent = r.name;
+        var stars = document.createElement('div');
+        stars.style.cssText = 'color:#FBBC05;font-size:0.7rem;margin-bottom:0.4rem;';
+        stars.textContent = '★★★★★';
+        var text = document.createElement('p');
+        text.style.cssText = 'font-family:var(--sans);font-size:0.78rem;color:var(--text-light);line-height:1.6;margin:0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;';
+        text.textContent = r.text;
+        card.appendChild(name);
+        card.appendChild(stars);
+        card.appendChild(text);
+        grid.appendChild(card);
+      });
+    })
+    .catch(function() {
+      document.getElementById('reviews-grid').innerHTML = '';
+    });
+})();
 </script>
 </body>
 </html>
