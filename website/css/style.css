@@ -749,7 +749,6 @@ footer a:hover { color: var(--gold-light); }
   line-height: 2;
   border: 1px solid var(--gold);
   border-radius: 2px;
-  display: inline-block;
   margin: 0 1rem 1rem 0;
 }
 
@@ -796,6 +795,6 @@ footer a:hover { color: var(--gold-light); }
 }
 
 @media (min-width: 769px) {
-  .trust-bullets {float: left;}
+  .trust-bullets {float: left; display: inline-block;}
 }
 
