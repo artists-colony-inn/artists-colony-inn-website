@@ -777,6 +777,7 @@ footer a:hover { color: var(--gold-light); }
 
 .trust-bullets li::before {
   content: '• ';
+  font-family: var(--sans);
   font-size: 1.1rem;
   color: var(--gold);
 }
