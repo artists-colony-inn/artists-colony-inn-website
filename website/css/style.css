@@ -790,6 +790,10 @@ footer a:hover { color: var(--gold-light); }
   border-radius: 2px;
 }
 
+:target {
+  scroll-margin-top: 80px;
+}
+
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
