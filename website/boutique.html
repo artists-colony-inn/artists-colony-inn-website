@@ -146,6 +146,9 @@
     <div id="reviews-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem">
       <div style="font-family:var(--sans);font-size:0.82rem;color:var(--text-light);font-style:italic">טוען ביקורות…</div>
     </div>
+    <div style="text-align:center;margin-top:1.5rem">
+      <button id="reviews-load-more" onclick="loadMoreReviews()" class="btn btn-outline" style="display:none">טען עוד ביקורות</button>
+    </div>
   </div>
 </section>
 
@@ -399,33 +402,49 @@ document.addEventListener('keydown', function(e) {
 <script>
 (function() {
   var REVIEWS_API = 'https://script.google.com/macros/s/AKfycbzVmDCp9ajvCPVQEhxV1RMDpWgJBbAzuCfdGfQ0UotgW9GNYJBpVbncPl6C-dCuMNB6/exec';
+  var allReviews = [];
+  var shown = 0;
+  var BATCH = 6;
+
+  function renderReviews() {
+    var grid = document.getElementById('reviews-grid');
+    var batch = allReviews.slice(shown, shown + BATCH);
+    batch.forEach(function(r) {
+      var card = document.createElement('div');
+      card.style.cssText = 'background:var(--white);border:1px solid var(--border);border-radius:4px;padding:1rem 1.1rem;';
+      var name = document.createElement('div');
+      name.style.cssText = 'font-family:var(--sans);font-size:0.78rem;font-weight:500;color:var(--text);margin-bottom:0.2rem;';
+      name.textContent = r.name;
+      var stars = document.createElement('div');
+      stars.style.cssText = 'color:#FBBC05;font-size:0.7rem;margin-bottom:0.4rem;';
+      stars.textContent = '★★★★★';
+      var text = document.createElement('p');
+      text.style.cssText = 'font-family:var(--sans);font-size:0.78rem;color:var(--text-light);line-height:1.6;margin:0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;';
+      text.textContent = r.text;
+      card.appendChild(name);
+      card.appendChild(stars);
+      card.appendChild(text);
+      grid.appendChild(card);
+    });
+    shown += batch.length;
+    var btn = document.getElementById('reviews-load-more');
+    if (btn) btn.style.display = shown >= allReviews.length ? 'none' : 'inline-block';
+  }
+
   fetch(REVIEWS_API)
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var grid = document.getElementById('reviews-grid');
-      if (!data.ok || !data.reviews || !data.reviews.length) { grid.innerHTML = ''; return; }
       grid.innerHTML = '';
-      data.reviews.slice(0, 5).forEach(function(r) {
-        var card = document.createElement('div');
-        card.style.cssText = 'background:var(--white);border:1px solid var(--border);border-radius:4px;padding:1rem 1.1rem;';
-        var name = document.createElement('div');
-        name.style.cssText = 'font-family:var(--sans);font-size:0.78rem;font-weight:500;color:var(--text);margin-bottom:0.2rem;';
-        name.textContent = r.name;
-        var stars = document.createElement('div');
-        stars.style.cssText = 'color:#FBBC05;font-size:0.7rem;margin-bottom:0.4rem;';
-        stars.textContent = '★★★★★';
-        var text = document.createElement('p');
-        text.style.cssText = 'font-family:var(--sans);font-size:0.78rem;color:var(--text-light);line-height:1.6;margin:0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;';
-        text.textContent = r.text;
-        card.appendChild(name);
-        card.appendChild(stars);
-        card.appendChild(text);
-        grid.appendChild(card);
-      });
+      if (!data.ok || !data.reviews || !data.reviews.length) return;
+      allReviews = data.reviews;
+      renderReviews();
     })
     .catch(function() {
       document.getElementById('reviews-grid').innerHTML = '';
     });
+
+  window.loadMoreReviews = function() { renderReviews(); };
 })();
 </script>
 </body>
