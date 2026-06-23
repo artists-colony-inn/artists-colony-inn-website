@@ -764,3 +764,24 @@ footer a:hover { color: var(--gold-light); }
   .hero-text h1 { font-size: 1.8rem; }
   .hero-text p { font-size: 0.95rem; }
 }
+
+.trust-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--text-light);
+  line-height: 2;
+}
+
+.trust-bullets li::before {
+  content: '• ';
+  color: var(--gold);
+}
+
+[dir="rtl"] .trust-bullets,
+.trust-bullets[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
