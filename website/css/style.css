@@ -776,6 +776,8 @@ footer a:hover { color: var(--gold-light); }
   border: 1px solid var(--gold);
   border-radius: 2px;
   display: inline-block;
+  float: left;
+  margin: 0 1.5rem 1rem 1rem;
 }
 
 .trust-bullets li::before {
