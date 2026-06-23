@@ -23,7 +23,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
         <li><a href="/shabbat.html">שבת</a></li>
         <li><a href="/gallery.html">גלריה</a></li>
         <li><a href="/about.html">אודות</a></li>
-        <li><a href="/contact.html">צור קשר</a></li>
+        <li><a href="/index.html#contact">צור קשר</a></li>
         <li><a href="/reviews.html">ביקורות</a></li>
         <li><a href="tel:+972586200779" class="nav-phone" dir="ltr">+972-58-620-0779</a></li>
         <li><a href="#" id="lang-toggle" class="nav-phone">English</a></li>
