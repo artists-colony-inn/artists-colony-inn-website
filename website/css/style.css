@@ -779,9 +779,3 @@ footer a:hover { color: var(--gold-light); }
   content: '• ';
   color: var(--gold);
 }
-
-[dir="rtl"] .trust-bullets,
-.trust-bullets[dir="rtl"] {
-  direction: rtl;
-  text-align: right;
-}
