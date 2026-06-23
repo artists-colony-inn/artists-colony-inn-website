@@ -749,7 +749,6 @@ footer a:hover { color: var(--gold-light); }
   line-height: 2;
   border: 1px solid var(--gold);
   border-radius: 2px;
-  margin: 0 1rem 1rem 0;
 }
 
 .trust-bullets li::before {
@@ -785,7 +784,7 @@ footer a:hover { color: var(--gold-light); }
   .footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
   .form-row { grid-template-columns: 1fr; }
   .booking-form { padding: 1.5rem; }
-  .trust-bullets {float: none;}
+  .trust-bullets {float: none; margin: 0 0 1rem 0;}
 }
 
 @media (max-width: 480px) {
@@ -795,6 +794,6 @@ footer a:hover { color: var(--gold-light); }
 }
 
 @media (min-width: 769px) {
-  .trust-bullets {float: left; display: inline-block;}
+  .trust-bullets {float: left; display: inline-block; margin: 0 1rem 1rem 0;}
 }
 
