@@ -142,6 +142,89 @@
   </div>
 </section>
 
+<section id="contact" style="padding:4rem 0">
+  <div class="container" style="max-width:640px">
+    <h2 class="section-title">צרו קשר</h2>
+    <div class="section-rule"></div>
+
+    <form id="contact-form" novalidate>
+      <div class="form-field">
+        <label for="cf-name">שם <span class="req">*</span></label>
+        <input type="text" id="cf-name" name="name" required maxlength="100" autocomplete="name">
+      </div>
+      <div class="form-field">
+        <label for="cf-email">אימייל <span class="req">*</span></label>
+        <input type="email" id="cf-email" name="email" required maxlength="200" autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label for="cf-phone">טלפון</label>
+        <input type="tel" id="cf-phone" name="phone" maxlength="30" autocomplete="tel">
+      </div>
+      <div class="form-field">
+        <label for="cf-message">הודעה <span class="req">*</span></label>
+        <textarea id="cf-message" name="message" rows="5" required maxlength="2000"></textarea>
+      </div>
+      <div class="hp"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+      <button type="submit" id="cf-submit" class="btn btn-gold" style="width:100%;padding:0.9rem">שלח הודעה</button>
+      <div class="form-msg" id="cf-msg"></div>
+    </form>
+  </div>
+</section>
+
+<script>
+  const API_URL = 'https://script.google.com/macros/s/AKfycbwsmf5HBXhZ6qgCCnjk0q_kvU-__XjI0A8k44Lkh_zg1jI2cTrPbYDDrJQsXYxZPOBYew/exec';
+
+  const form    = document.getElementById('contact-form');
+  const btn     = document.getElementById('cf-submit');
+  const msgBox  = document.getElementById('cf-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (form.elements['website'].value) return;
+
+    const name    = document.getElementById('cf-name').value.trim();
+    const email   = document.getElementById('cf-email').value.trim();
+    const phone   = document.getElementById('cf-phone').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+
+    if (!name || !email || !message) {
+      showMsg('נא למלא את כל השדות הנדרשים.', 'error');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'שולח...';
+    hideMsg();
+
+    try {
+      const params = new URLSearchParams({ action:'contact', name, email, phone, message });
+      const res  = await fetch(API_URL + '?' + params.toString());
+      const data = await res.json();
+      if (data.ok) {
+        showMsg('תודה! נחזור אליכם בהקדם.', 'success');
+        form.reset();
+      } else {
+        showMsg('משהו השתבש. נסו שוב או צרו קשר בטלפון.', 'error');
+      }
+    } catch(err) {
+      showMsg('לא ניתן לשלוח כרגע. צרו קשר בטלפון או בוואטסאפ.', 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'שלח הודעה';
+    }
+  });
+
+  function showMsg(text, type) {
+    msgBox.textContent = text;
+    msgBox.className = 'form-msg ' + type;
+    msgBox.style.display = 'block';
+  }
+  function hideMsg() {
+    msgBox.className = 'form-msg';
+    msgBox.style.display = 'none';
+  }
+</script>
+
 <section class="bg-warm">
   <div class="container" style="text-align:center;max-width:640px">
     <h2>שבת וחגים במלון בוטיק קריית האמנים</h2>
