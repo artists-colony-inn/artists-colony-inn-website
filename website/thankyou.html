@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>תודה על הזמנתכם | מלון בוטיק קריית האמנים, צפת</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H5ZXBGVT4Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H5ZXBGVT4Q');
+  </script>
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '983698949964438');
+  fbq('track', 'Purchase');
+  </script>
+  <style>
+    .thankyou-section {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .thankyou-inner { max-width: 560px; margin: 0 auto; }
+    .thankyou-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    .thankyou-inner h1 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .thankyou-inner p {
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+    .bit-note {
+      background: var(--bg-warm);
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      line-height: 1.8;
+      margin: 1.5rem 0;
+      display: none;
+    }
+    .thankyou-inner .divider {
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      margin: 1.5rem auto;
+    }
+  </style>
+</head>
+<body>
+<script src="/components/header.js"></script>
+
+<main>
+  <section class="thankyou-section">
+    <div class="thankyou-inner">
+      <span class="thankyou-icon">✓</span>
+      <h1>תודה על בקשת ההזמנה שלכם</h1>
+      <div class="divider"></div>
+      <p>קיבלנו את פרטי הזמנתכם ונחזור אליכם בהקדם לאישור.</p>
+      <p>אם יש לכם שאלות, אתם מוזמנים ליצור איתנו קשר בטלפון או בוואטסאפ.</p>
+      <div class="bit-note" id="bit-note">
+        שילמתם בביט? אנא שלחו אישור תשלום תוך 24 שעות למספר
+        <strong dir="ltr">+972-58-620-0779</strong> בוואטסאפ כדי לאשר את ההזמנה.
+      </div>
+      <div style="margin-top:2rem">
+        <a href="/index.html" class="btn btn-gold">לדף הבית</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="/components/footer.js"></script>
+<script>
+  if (new URLSearchParams(window.location.search).get('pay') === 'bit') {
+    document.getElementById('bit-note').style.display = 'block';
+  }
+</script>
+</body>
+</html>
