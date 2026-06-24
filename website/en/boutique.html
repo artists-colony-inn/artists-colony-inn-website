@@ -305,8 +305,7 @@ fetch(REVIEWS_API)
   .then(function(data){
     var grid=document.getElementById('reviews-grid'); grid.innerHTML='';
     if(!data.ok||!data.reviews||!data.reviews.length) return;
-    allReviews=data.reviews.filter(function(r){ return r.lang==='en'||r.lang==='EN'; });
-    if(!allReviews.length) allReviews=data.reviews;
+    allReviews=data.reviews;
     renderReviews();
   })
   .catch(function(){ document.getElementById('reviews-grid').innerHTML=''; });
