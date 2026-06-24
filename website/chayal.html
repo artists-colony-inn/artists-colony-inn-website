@@ -366,12 +366,7 @@
         <div class="form-msg error" id="msg-err">משהו השתבש. נסו שוב או צרו קשר בטלפון <strong>+972-58-620-0779</strong>.</div>
 
       </div><!-- /booking-form -->
-
-      <div id="msg-ok" style="display:none;text-align:center;padding:3rem 2rem">
-        <div style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--text);margin-bottom:1rem">תודה על בקשת ההזמנה שלכם.</div>
-        <div id="msg-ok-text" style="font-family:var(--sans);font-size:0.88rem;color:var(--text-light);line-height:1.9;margin-bottom:1.5rem"></div>
-        <a href="/index.html" class="btn btn-outline" style="display:inline-block">לדף הבית</a>
-      </div>
+    </div>
 
     </div><!-- /booking-section -->
 
@@ -872,15 +867,7 @@ async function submitBooking() {
     .then(function(text) { return JSON.parse(text); })
     .then(function(data) {
       if (data.success) {
-        document.getElementById('booking-form').style.display = 'none';
-        var msgText = document.getElementById('msg-ok-text');
-        if (payMethod === 'credit_card') {
-          msgText.innerHTML = 'קיבלנו את בקשתכם ואת תעודת השחרור שלכם. נבדוק ונחזור אליכם בהקדם עם אישור ההזמנה וחיוב הכרטיס.<br><br>אם יש לכם שאלות, אתם מוזמנים ליצור איתנו קשר בטלפון או בוואטסאפ.';
-        } else {
-          msgText.innerHTML = 'קיבלנו את בקשתכם ואת תעודת השחרור שלכם.<br><br>אנא שלחו אישור תשלום של <strong>' + fmt(amountDue) + '</strong> תוך 24 שעות למספר <strong dir="ltr">+972-58-620-0779</strong> בוואטסאפ כדי לאשר את ההזמנה.';
-        }
-        document.getElementById('msg-ok').style.display = 'block';
-        document.getElementById('msg-ok').scrollIntoView({ behavior:'smooth', block:'start' });
+        window.location.replace(payMethod === 'bit' ? '/thankyou.html?pay=bit' : '/thankyou.html');
       } else {
         btn.disabled=false; btn.style.opacity='1'; btn.textContent='שליחת בקשת הזמנה';
         document.getElementById('msg-err').style.display='block';
