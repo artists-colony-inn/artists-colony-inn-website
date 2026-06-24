@@ -1082,23 +1082,9 @@ async function submitBooking() {
       method: 'POST', redirect: 'follow',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({
-        action:               'logSubmission',
-        name:                 name,
-        phone:                phone,
-        email:                email,
-        room:                 room,
-        checkin:              checkin,
-        checkout:             checkout,
-        nights:               currentPriceInfo ? currentPriceInfo.nights : '',
-        guests:               document.getElementById('guests').value,
-        is_israeli:           isIsraeli ? 'yes' : 'no',
-        id_number:            id_number,
-        payment_method:       payMethod,
-        full_price:           fullPrice,
-        certificate_discount: CERTIFICATE_DISCOUNT,
-        amount_due:           amountDue,
-        teudat_url:           driveUrl,
-        requests:             document.getElementById('requests').value.trim()
+        action:     'logSubmission',
+        name:       name,
+        teudat_url: driveUrl
       })
     });
   } catch(e) { /* non-fatal, continue to main booking */ }
