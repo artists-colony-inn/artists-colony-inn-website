@@ -734,15 +734,14 @@ function selectRoom(room, priceInfo) {
   // Load reviews
   loadReviewsSidebar();
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('booking-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   updateSubmitBtn();
 }
 
 function showSearch() {
   document.getElementById('booking-section').style.display = 'none';
   document.getElementById('search-section').style.display  = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+  document.getElementById('search-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
 // ── Price box ──────────────────────────────────────────────────────────────
 function updatePriceBox() {
@@ -1029,6 +1028,7 @@ async function submitBooking() {
           msgText.innerHTML = 'קיבלנו את בקשתכם ואת תעודת השחרור שלכם.<br><br>אנא שלחו אישור תשלום של <strong>' + fmt(amountDue) + '</strong> תוך 24 שעות למספר <strong dir="ltr">+972-58-620-0779</strong> בוואטסאפ כדי לאשר את ההזמנה.';
         }
         document.getElementById('msg-ok').style.display = 'block';
+        document.getElementById('msg-ok').scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
         btn.disabled = false; btn.style.opacity = '1'; btn.textContent = 'שליחת בקשת הזמנה';
         document.getElementById('msg-err').style.display = 'block';
