@@ -32,6 +32,17 @@
       position: relative;
       overflow: hidden;
     }
+    .chayal-hero-img {
+      position: absolute;
+      top: 1.25rem;
+      left: 1.25rem;
+      width: 220px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 4px;
+      opacity: 0.75;
+    }
+    @media (max-width: 640px) { .chayal-hero-img { display: none; } }
     .chayal-hero::before {
       content: '✡';
       position: absolute;
@@ -178,6 +189,7 @@
 
 <main>
   <div class="chayal-hero">
+    <img class="chayal-hero-img" src="/images/hero.jpg" alt="מלון בוטיק קריית האמנים, צפת">
     <div class="certificate-badge">תעודת מתנה ₪750</div>
     <h1>תודה על שירותכם</h1>
     <p class="subtitle">
