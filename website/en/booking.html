@@ -99,6 +99,7 @@
               <label style="display:flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400;margin-bottom:0.5rem">
                 <input type="radio" name="payment_method" value="bit" id="pay_bit" style="accent-color:var(--gold)"> Bit
               </label>
+
             </div>
 
             <!-- Credit card section -->
@@ -130,7 +131,6 @@
                 Send <strong id="bit-total"></strong> to <strong dir="ltr">+972-58-620-0779</strong> via Bit.
               </div>
             </div>
-
 
             <div class="form-field"><label>Special requests</label><textarea id="requests" rows="3" placeholder="Dietary needs, accessibility, arrival time, etc."></textarea></div>
             <div class="hp"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
@@ -225,16 +225,6 @@ window.addEventListener('DOMContentLoaded', function() {
   updatePrice();
   updateChargeNote(checkin);
 
-  // Citizenship toggle
-  document.querySelectorAll('input[name="is_israeli"]').forEach(function(radio) {
-    radio.addEventListener('change', function() {
-      var isIsraeli = this.value === 'yes';
-      document.getElementById('vat-exempt-note').style.display = isIsraeli ? 'none' : '';
-      updatePrice();
-      updateSubmitBtn();
-    });
-  });
-
   // Payment method toggle
   document.querySelectorAll('input[name="payment_method"]').forEach(function(radio) {
     radio.addEventListener('change', function() {
@@ -245,13 +235,22 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  // Citizenship toggle
+  document.querySelectorAll('input[name="is_israeli"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      var isIsraeli = this.value === 'yes';
+      document.getElementById('vat-exempt-note').style.display = isIsraeli ? 'none' : '';
+      updatePrice();
+      updateSubmitBtn();
+    });
+  });
+
   // Submit button state watchers
   document.getElementById('agree-policies').addEventListener('change', updateSubmitBtn);
   ['cc_number','cc_expiry','cc_cvv','cc_name','id_number','name','phone'].forEach(function(id) {
     document.getElementById(id).addEventListener('input', updateSubmitBtn);
   });
 
-  // Initial state
   updateSubmitBtn();
 
   // CC number formatting
@@ -442,7 +441,6 @@ async function updatePrice() {
   document.getElementById('price-total-row').textContent       = 'Total: ' + fmt(total);
   box.style.display = 'block';
 
-  // Show payment method selector and update Bit total
   paySection.style.display = 'block';
   var bitTotal = document.getElementById('bit-total');
   if (bitTotal) bitTotal.textContent = fmt(total);
