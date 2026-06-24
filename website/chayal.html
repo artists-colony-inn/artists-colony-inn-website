@@ -103,7 +103,7 @@
     .terms-block ul li::before { content: '✓'; position: absolute; right: 0; color: var(--gold); font-weight: 700; }
 
     /* Room tiles */
-    .room-results { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.25rem; margin-top:2rem; }
+    .room-results { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.25rem; margin-top:2rem; direction:rtl; }
     .room-result-card { border:1px solid var(--border); border-radius:4px; overflow:hidden; background:var(--white); transition:box-shadow 0.2s; }
     .room-result-card:not(.unavailable):hover { box-shadow:0 4px 18px rgba(0,0,0,0.1); }
     .room-result-card.unavailable { opacity:0.45; filter:grayscale(0.4); }
