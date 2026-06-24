@@ -316,10 +316,11 @@
           <input type="date" id="bw-checkout">
         </div>
         <div class="form-field" style="margin:0">
-          <label>אורחים</label>
+          <label>אורחים (מגיל שנה) <span class="req">*</span></label>
           <select id="bw-guests">
+            <option value="" selected disabled>בחרו מספר אורחים</option>
             <option value="1">אורח 1</option>
-            <option value="2" selected>2 אורחים</option>
+            <option value="2">2 אורחים</option>
             <option value="3">3 אורחים</option>
             <option value="4">4 אורחים</option>
           </select>
@@ -455,7 +456,7 @@
                   <input type="text" id="cc_name" placeholder="כפי שמופיע על הכרטיס" autocomplete="off">
                 </div>
               </div>
-              <div id="cc_charge_note" style="display:none;font-size:0.78rem;color:var(--text-light);margin-top:0.6rem;line-height:1.6"></div>
+              <div id="cc_charge_note" style="font-size:0.78rem;color:var(--text-light);margin-top:0.6rem;line-height:1.6">הכרטיס יחויב 7 ימים לפני תאריך הצ'ק-אין, בהתאם למדיניות הביטול שלנו.</div>
             </div>
 
             <!-- Bit section -->
@@ -474,7 +475,7 @@
             <div style="display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1.25rem">
               <input type="checkbox" id="agree-policies" style="margin-top:0.35rem;flex-shrink:0;width:16px;height:16px;accent-color:var(--gold);cursor:pointer">
               <label for="agree-policies" style="font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:0.95rem;font-weight:400;color:var(--text-mid);cursor:pointer">
-                קראתי ואני מסכים/ה ל<a href="/policies.html" target="_blank">תקנון, מדיניות ביטול ומדיניות פרטיות</a>, ומבין/ה שהזמנה זו אינה ניתנת לביטול לאחר התשלום.
+                קראתי ואני מסכים/ה לתנאי תוכנית המתנה לחיילי צה"ל ול<a href="/policies.html" target="_blank">תקנון ומדיניות הביטול</a> של המלון.
               </label>
             </div>
             <button class="btn btn-gold" id="submit-btn" onclick="submitBooking()" style="width:100%;opacity:0.45;cursor:not-allowed" disabled>שליחת בקשת הזמנה</button>
@@ -600,6 +601,10 @@ async function searchRooms() {
   var guests   = parseInt(document.getElementById('bw-guests').value);
   if (!checkin || !checkout || checkin >= checkout) {
     alert("נא לבחור תאריכי צ'ק-אין וצ'ק-אאוט תקינים.");
+    return;
+  }
+  if (!guests) {
+    alert('נא לבחור מספר אורחים.');
     return;
   }
   currentCheckin  = checkin;
@@ -776,7 +781,6 @@ function selectRoom(room, priceInfo) {
     priceInfo.nights + ' לילות · ' + currentGuests + ' אורחים';
 
   updatePriceBox();
-  updateChargeNote(currentCheckin);
 
   // Switch views
   document.getElementById('search-section').style.display  = 'none';
@@ -940,18 +944,6 @@ function handleFileSelect(input) {
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────
-function updateChargeNote(checkin) {
-  var note = document.getElementById('cc_charge_note');
-  if (!checkin) { note.style.display = 'none'; return; }
-  var checkinDate = new Date(checkin + 'T00:00:00');
-  var today = new Date(); today.setHours(0,0,0,0);
-  var daysUntil = Math.round((checkinDate - today) / 86400000);
-  note.textContent = daysUntil <= 7
-    ? 'מכיוון שתאריך הצ\'ק-אין הוא בתוך 7 ימים, הכרטיס יחויב תוך 24 שעות.'
-    : 'הכרטיס יחויב 7 ימים לפני תאריך הצ\'ק-אין, בהתאם למדיניות הביטול שלנו.';
-  note.style.display = 'block';
-}
-
 function detectCard(digits) {
   if (!digits) return 'unknown';
   if (/^30[0-5]/.test(digits) || /^3[68]/.test(digits)) return 'diners';
