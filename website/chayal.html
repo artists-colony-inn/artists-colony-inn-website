@@ -570,7 +570,7 @@ function renderResults(results, checkin, checkout, guests) {
     grid.appendChild(card);
   });
   document.getElementById('bw-results').style.display = 'block';
-  document.getElementById('bw-checkin').scrollIntoView({ behavior:'smooth', block:'start' });
+  document.getElementById('main-content').scrollIntoView({ behavior:'smooth', block:'start' });
   setTimeout(function() { window.scrollBy({ top: -80, behavior: 'smooth' }); }, 400);
 }
 
