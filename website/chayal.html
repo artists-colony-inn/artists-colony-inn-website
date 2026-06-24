@@ -571,6 +571,7 @@ function renderResults(results, checkin, checkout, guests) {
   });
   document.getElementById('bw-results').style.display = 'block';
   document.getElementById('bw-room-grid').scrollIntoView({ behavior:'smooth', block:'start' });
+  setTimeout(function() { window.scrollBy({ top: -80, behavior: 'smooth' }); }, 400);
 }
 
 // Popup
