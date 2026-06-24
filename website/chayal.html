@@ -23,33 +23,6 @@
   fbq('track', 'PageView');
   </script>
   <style>
-    /* Trimmed header */
-    .chayal-header {
-      background: var(--bg-dark, #1a1a1a);
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .chayal-header-brand {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      color: var(--gold);
-      text-decoration: none;
-      letter-spacing: 0.03em;
-    }
-    .chayal-header-back {
-      font-family: var(--sans);
-      font-size: 0.78rem;
-      color: var(--text-light, #999);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      opacity: 0.7;
-    }
-    .chayal-header-back:hover { opacity: 1; }
-
     /* Hero */
     .chayal-hero {
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
@@ -273,10 +246,23 @@
 </head>
 <body>
 
-<!-- Trimmed header -->
-<header class="chayal-header">
-  <a href="/" class="chayal-header-brand">מלון בוטיק קריית האמנים</a>
-  <a href="/" class="chayal-header-back">חזרה לאתר הראשי ›</a>
+<!-- Self-contained header — logo and badge only, no nav -->
+<div style="position:fixed;top:0;right:0;z-index:200;font-family:'David','Times New Roman',serif;font-size:0.7rem;color:var(--text-light);padding:2px 6px;letter-spacing:0.05em;opacity:0.7">בס"ד</div>
+<header>
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;gap:0.75rem;">
+      <a class="logo" href="/index.html">
+        <img src="/images/logo.svg" alt="מלון בוטיק קריית האמנים">
+      </a>
+      <a href="https://g.page/r/CWm_4YA5CjqAEBM" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.35rem;background:var(--white);border:1px solid var(--border);border-radius:3px;padding:0.3rem 0.6rem;text-decoration:none;flex-shrink:0">
+        <span style="font-family:'David','Times New Roman',serif;font-size:0.75rem;font-weight:700;background:linear-gradient(135deg,#4285F4,#EA4335,#FBBC05,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em">G</span>
+        <span style="display:flex;flex-direction:column;align-items:center;line-height:1.2">
+          <span style="color:#FBBC05;font-size:0.65rem;letter-spacing:0.02em">★★★★★</span>
+          <span style="font-family:var(--sans);font-size:0.65rem;color:var(--text-light)">4.8 (123)</span>
+        </span>
+      </a>
+    </div>
+  </div>
 </header>
 
 <main>
@@ -287,7 +273,7 @@
     <h1>תודה על שירותכם</h1>
     <p class="subtitle">
       לכבוד חיילי צה"ל ומשרתים לשעבר — מכל הדרגות ומכל התקופות.<br>
-      תעודת מתנה של ₪750 להשתמש בה כרצונכם.
+      תעודת מתנה של ₪750 כהוקרה על שירותכם — לשהייה במלון בוטיק קריית האמנים בצפת.
     </p>
     <p class="counter-note">נותרו <strong id="cert-counter" style="color:var(--gold)">20</strong> תעודות מתוך 20</p>
   </div>
@@ -303,7 +289,6 @@
         <li>יש להזמין ולשלם את ההפרש תוך 24 שעות מהגשת הטופס</li>
         <li>השהייה חייבת להתקיים בתוך 3 חודשים מתאריך ההזמנה</li>
         <li>ההזמנה אינה ניתנת לביטול לאחר התשלום</li>
-        <li>ניתן להעביר את התעודה לאדם אחר</li>
       </ul>
     </div>
 
@@ -321,7 +306,7 @@
     <!-- Step 1: Search + Room tiles -->
     <div id="search-section">
 
-      <div class="avail-form" style="margin-bottom:1rem">
+      <div class="avail-form" style="margin-bottom:1rem;direction:rtl">
         <div class="form-field" style="margin:0">
           <label>צ'ק-אין</label>
           <input type="date" id="bw-checkin">
