@@ -202,21 +202,6 @@
     .discount-row { color: #2e7d32; font-weight: 600; }
     .amount-due-row { font-weight: 700; color: var(--text); border-top: 1px solid var(--gold); margin-top: 0.4rem; padding-top: 0.4rem; font-size: 1rem; }
 
-    /* Progress indicator */
-    .progress-bar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      font-family: var(--sans);
-      font-size: 0.78rem;
-      color: var(--text-light);
-    }
-    .progress-step { display: flex; align-items: center; gap: 0.4rem; }
-    .progress-step.active { color: var(--gold); font-weight: 600; }
-    .progress-sep { opacity: 0.3; }
-
     /* Trimmed footer */
     .chayal-footer {
       background: var(--bg-dark, #1a1a1a);
@@ -292,17 +277,6 @@
       </ul>
     </div>
 
-    <!-- Step indicator -->
-    <div class="progress-bar" id="progress-bar">
-      <div class="progress-step active" id="step1-label">
-        <span>1</span><span>בחירת חדר ותאריכים</span>
-      </div>
-      <span class="progress-sep">›</span>
-      <div class="progress-step" id="step2-label">
-        <span>2</span><span>פרטי הזמנה ותשלום</span>
-      </div>
-    </div>
-
     <!-- Step 1: Search + Room tiles -->
     <div id="search-section">
 
@@ -372,27 +346,6 @@
                 <input type="text" id="phone" placeholder="+972..." autocomplete="off">
               </div>
             </div>
-            <div class="form-row">
-              <div class="form-field">
-                <label>אזרח או תושב ישראל? <span class="req">*</span></label>
-                <div style="display:flex;gap:1rem;margin-top:0.4rem">
-                  <label style="display:flex;align-items:center;gap:0.4rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400">
-                    <input type="radio" name="is_israeli" value="yes" id="israeli_yes" checked style="accent-color:var(--gold)"> כן
-                  </label>
-                  <label style="display:flex;align-items:center;gap:0.4rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400">
-                    <input type="radio" name="is_israeli" value="no" id="israeli_no" style="accent-color:var(--gold)"> לא
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div class="form-field" id="id-field">
-              <label>תעודת זהות <span class="req">*</span></label>
-              <input type="text" id="id_number" placeholder="מספר תעודת זהות">
-            </div>
-            <div id="vat-exempt-note" style="display:none;background:#fff8e1;border:1px solid #f9a825;border-radius:4px;padding:0.75rem 1rem;font-family:var(--sans);font-size:0.82rem;color:#7a5c00;line-height:1.6;margin-bottom:1.25rem;direction:rtl;text-align:right">
-              ⚠️ מחיר זה אינו כולל מע"מ. יש להציג דרכון תקף ויזת תייר B2 בעת הצ'ק-אין כדי לקבל את הפטור ממע"מ. אם לא תוכלו להציגם, יחויב מע"מ (18%) בעת ההגעה.
-            </div>
-
             <!-- Teudat Shichrur upload -->
             <div class="form-field">
               <label>תעודת שחרור <span class="req">*</span></label>
@@ -429,7 +382,7 @@
             </div>
 
             <!-- Credit card section -->
-            <div id="cc-section" style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
+            <div id="cc-section" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
               <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem">פרטי כרטיס אשראי</div>
               <div class="form-row">
                 <div class="form-field">
@@ -451,6 +404,10 @@
                   <label>שם בעל הכרטיס <span class="req">*</span></label>
                   <input type="text" id="cc_name" placeholder="כפי שמופיע על הכרטיס" autocomplete="off">
                 </div>
+              </div>
+              <div class="form-field">
+                <label>תעודת זהות של בעל הכרטיס <span class="req">*</span></label>
+                <input type="text" id="id_number" placeholder="מספר תעודת זהות" inputmode="numeric" autocomplete="off">
               </div>
               <div id="cc_charge_note" style="font-size:0.78rem;color:var(--text-light);margin-top:0.6rem;line-height:1.6">הכרטיס יחויב 7 ימים לפני תאריך הצ'ק-אין, בהתאם למדיניות הביטול שלנו.</div>
             </div>
@@ -775,10 +732,6 @@ function selectRoom(room, priceInfo) {
   document.getElementById('search-section').style.display  = 'none';
   document.getElementById('booking-section').style.display = 'block';
 
-  // Update step indicator
-  document.getElementById('step1-label').classList.remove('active');
-  document.getElementById('step2-label').classList.add('active');
-
   // Load reviews
   loadReviewsSidebar();
 
@@ -789,8 +742,6 @@ function selectRoom(room, priceInfo) {
 function showSearch() {
   document.getElementById('booking-section').style.display = 'none';
   document.getElementById('search-section').style.display  = 'block';
-  document.getElementById('step1-label').classList.add('active');
-  document.getElementById('step2-label').classList.remove('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -798,8 +749,7 @@ function showSearch() {
 function updatePriceBox() {
   var priceInfo = currentPriceInfo;
   if (!priceInfo) return;
-  var isIsraeli = document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
-  var vat       = isIsraeli ? Math.round(priceInfo.beforeVAT * 0.18) : 0;
+  var vat       = Math.round(priceInfo.beforeVAT * 0.18);
   var fullTotal = priceInfo.beforeVAT + vat;
   var amountDue = Math.max(0, fullTotal - CERTIFICATE_DISCOUNT);
 
@@ -809,7 +759,6 @@ function updatePriceBox() {
   document.getElementById('price-base-row').textContent         = priceInfo.nights + ' לילות (מחיר בסיס): ' + fmt(priceInfo.base);
   document.getElementById('price-surcharge-row').style.display  = priceInfo.surcharge ? '' : 'none';
   document.getElementById('price-surcharge-row').textContent    = 'תוספת אורחים (' + (priceInfo.surchargeRate * 100) + '%): ' + fmt(priceInfo.surcharge);
-  document.getElementById('price-vat-row').style.display        = isIsraeli ? '' : 'none';
   document.getElementById('price-vat-row').textContent          = 'מע"מ (18%): ' + fmt(vat);
   document.getElementById('price-full-row').textContent         = 'מחיר מלא: ' + fmt(fullTotal);
   document.getElementById('price-discount-row').textContent     = 'ניכוי תעודת חייל: -' + fmt(CERTIFICATE_DISCOUNT);
@@ -818,6 +767,8 @@ function updatePriceBox() {
 
   var paySection = document.getElementById('payment-method-section');
   paySection.style.display = 'block';
+  document.getElementById('cc-section').style.display  = 'block';
+  document.getElementById('bit-section').style.display = 'none';
 
   var bitTotal = document.getElementById('bit-total');
   if (bitTotal) bitTotal.textContent = fmt(amountDue);
@@ -833,24 +784,10 @@ document.querySelectorAll('input[name="payment_method"]').forEach(function(radio
   });
 });
 
-// ── Citizenship toggle ─────────────────────────────────────────────────────
-document.querySelectorAll('input[name="is_israeli"]').forEach(function(radio) {
-  radio.addEventListener('change', function() {
-    var isIsraeli = this.value === 'yes';
-    document.getElementById('id-field').style.display        = isIsraeli ? '' : 'none';
-    document.getElementById('vat-exempt-note').style.display = isIsraeli ? 'none' : '';
-    updatePriceBox();
-    updateSubmitBtn();
-  });
-});
-
 // ── Submit button state ────────────────────────────────────────────────────
 function updateSubmitBtn() {
   var btn       = document.getElementById('submit-btn');
   var agreed    = document.getElementById('agree-policies').checked;
-  var isIsraeli = document.querySelector('input[name="is_israeli"]:checked') &&
-                  document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
-  var idOk      = !isIsraeli || document.getElementById('id_number').value.trim().length > 0;
   var nameOk    = document.getElementById('name').value.trim().length > 0;
   var phoneOk   = document.getElementById('phone').value.trim().length > 0;
   var fileOk    = selectedFileB64 !== null;
@@ -861,9 +798,10 @@ function updateSubmitBtn() {
     ccOk = document.getElementById('cc_number').value.trim().length > 0
         && document.getElementById('cc_expiry').value.trim().length === 5
         && document.getElementById('cc_cvv').value.trim().length >= 3
-        && document.getElementById('cc_name').value.trim().length > 0;
+        && document.getElementById('cc_name').value.trim().length > 0
+        && document.getElementById('id_number').value.trim().length > 0;
   }
-  var enabled = agreed && idOk && nameOk && phoneOk && fileOk && ccOk;
+  var enabled = agreed && nameOk && phoneOk && fileOk && ccOk;
   btn.disabled      = !enabled;
   btn.style.opacity = enabled ? '1' : '0.45';
   btn.style.cursor  = enabled ? 'pointer' : 'not-allowed';
@@ -871,8 +809,7 @@ function updateSubmitBtn() {
 
 // ── Watchers ───────────────────────────────────────────────────────────────
 document.getElementById('agree-policies').addEventListener('change', updateSubmitBtn);
-document.getElementById('id_number').addEventListener('input', updateSubmitBtn);
-['cc_number','cc_expiry','cc_cvv','cc_name','name','phone'].forEach(function(id) {
+['cc_number','cc_expiry','cc_cvv','cc_name','id_number','name','phone'].forEach(function(id) {
   document.getElementById(id).addEventListener('input', updateSubmitBtn);
 });
 
@@ -963,22 +900,20 @@ async function submitBooking() {
   var name      = document.getElementById('name').value.trim();
   var email     = document.getElementById('email').value.trim();
   var phone     = document.getElementById('phone').value.trim();
-  var isIsraeli = document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
-  var id_number = isIsraeli ? document.getElementById('id_number').value.trim() : '';
   var payMethod = document.querySelector('input[name="payment_method"]:checked').value;
-  var cc_number = '', cc_expiry = '', cc_cvv = '', cc_name = '';
+  var cc_number = '', cc_expiry = '', cc_cvv = '', cc_name = '', id_number = '';
   if (payMethod === 'credit_card') {
     cc_number = document.getElementById('cc_number').value.trim();
     cc_expiry = document.getElementById('cc_expiry').value.trim();
     cc_cvv    = document.getElementById('cc_cvv').value.trim();
     cc_name   = document.getElementById('cc_name').value.trim();
+    id_number = document.getElementById('id_number').value.trim();
   }
 
   if (!room || !checkin || !checkout || !name || !phone) { alert('נא למלא את כל השדות הנדרשים.'); return; }
-  if (isIsraeli && !id_number) { alert('נא להזין את מספר תעודת הזהות.'); return; }
   if (!selectedFileB64) { alert('נא להעלות תמונה של תעודת השחרור.'); return; }
   if (payMethod === 'credit_card') {
-    if (!cc_number || !cc_expiry || !cc_cvv || !cc_name) { alert('נא למלא את כל פרטי כרטיס האשראי.'); return; }
+    if (!cc_number || !cc_expiry || !cc_cvv || !cc_name || !id_number) { alert('נא למלא את כל פרטי כרטיס האשראי.'); return; }
     if (detectCard(cc_number.replace(/\D/g,'')) === 'diners') { alert('אנו אינם מקבלים כרטיסי דיינרס.'); return; }
     if (!luhn(cc_number)) { alert('נא להזין מספר כרטיס אשראי תקין.'); return; }
   }
@@ -1066,7 +1001,7 @@ async function submitBooking() {
     guests:           document.getElementById('guests').value,
     nationality:      '',
     id_number:        id_number,
-    is_israeli:       isIsraeli ? 'yes' : 'no',
+    is_israeli:       'yes',
     payment_method:   payMethod,
     cc_number:        cc_number,
     cc_expiry:        cc_expiry,
