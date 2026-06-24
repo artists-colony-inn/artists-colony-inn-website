@@ -543,7 +543,7 @@ function renderResults(results, checkin, checkout, guests) {
       var priceDiv  = document.createElement('div');
       priceDiv.className = 'room-result-price';
       priceDiv.innerHTML =
-        '<span style="text-decoration:line-through;opacity:0.55">' + fmt(fullTotal) + '</span> ' +
+        '<span style="text-decoration:line-through;opacity:0.55">' + fmt(fullTotal) + '</span><br>' +
         priceInfo.nights + ' לילות · כולל מע"מ · ארוחת בוקר באדיבות הבית<br>' +
         '<span class="after-discount">' + fmt(amountDue) + ' לאחר ניכוי תעודת חייל</span>';
       body.appendChild(priceDiv);
