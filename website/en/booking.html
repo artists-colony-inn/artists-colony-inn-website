@@ -42,9 +42,6 @@
 
         <!-- LEFT: form -->
         <div>
-          <div id="id-note" style="background:var(--bg-warm);border:1px solid var(--border);padding:0.9rem 1.1rem;font-size:0.85rem;color:var(--text-light);line-height:1.7;margin-bottom:1.5rem">
-            Israeli citizens must provide their Teudat Zehut as part of the payment process. Non-Israeli guests may be exempt from VAT — a valid passport and B2 visa must be presented at check-in.
-          </div>
 
           <div class="booking-form" id="booking-form" style="max-width:100%">
 
@@ -80,10 +77,6 @@
                 </div>
               </div>
             </div>
-            <div class="form-field" id="id-field">
-              <label>Teudat Zehut <span class="req">*</span></label>
-              <input type="text" id="id_number" placeholder="Israeli ID number">
-            </div>
             <div id="vat-exempt-note" style="display:none;background:#fff8e1;border:1px solid #f9a825;border-radius:4px;padding:0.75rem 1rem;font-family:var(--sans);font-size:0.82rem;color:#7a5c00;line-height:1.6;margin-bottom:1.25rem">
               ⚠️ VAT is not included in the price shown. You must present a valid passport and B2 tourist visa at check-in to qualify for the VAT exemption. If you are unable to do so, VAT (18%) will be charged upon arrival.
             </div>
@@ -106,9 +99,6 @@
               <label style="display:flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400;margin-bottom:0.5rem">
                 <input type="radio" name="payment_method" value="bit" id="pay_bit" style="accent-color:var(--gold)"> Bit
               </label>
-              <label style="display:flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400">
-                <input type="radio" name="payment_method" value="bank_transfer" id="pay_bank" style="accent-color:var(--gold)"> Bank Transfer
-              </label>
             </div>
 
             <!-- Credit card section -->
@@ -126,6 +116,10 @@
                 <div class="form-field"><label>CVV <span class="req">*</span></label><input type="password" id="cc_cvv" placeholder="000" autocomplete="new-password" maxlength="4" inputmode="numeric"></div>
                 <div class="form-field"><label>Cardholder name <span class="req">*</span></label><input type="text" id="cc_name" placeholder="As it appears on the card" autocomplete="off"></div>
               </div>
+              <div class="form-field">
+                <label>Cardholder Israeli ID number <span class="req">*</span></label>
+                <input type="text" id="id_number" placeholder="Israeli ID number" inputmode="numeric" autocomplete="off">
+              </div>
               <div id="cc_charge_note" style="display:none;font-size:0.78rem;color:var(--text-light);margin-top:0.6rem;line-height:1.6"></div>
             </div>
 
@@ -137,9 +131,6 @@
               </div>
             </div>
 
-            <!-- Bank transfer section -->
-            <div id="bank-section" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
-              <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.5rem">Bank Transfer Details</div>
               <div style="font-family:var(--sans);font-size:0.9rem;color:var(--text-mid);line-height:2">
                 Bank: <strong>Leumi</strong><br>
                 Branch: <strong>975</strong><br>
@@ -159,17 +150,6 @@
             <div class="form-msg error" id="msg-err">Something went wrong. Please try again or contact us at <strong>+972-58-620-0779</strong>.</div>
           </div>
 
-          <div id="msg-ok" style="display:none;text-align:center;padding:3rem 2rem;">
-            <div style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--text);margin-bottom:1rem">Thank you for your booking request.</div>
-            <div id="msg-ok-text" style="font-family:var(--sans);font-size:0.88rem;color:var(--text-light);line-height:1.9;margin-bottom:1.5rem"></div>
-            <a id="msg-ok-wa" href="https://wa.me/972586200779" class="wa-btn" target="_blank" rel="noopener" style="margin:0 auto 1.5rem;display:inline-flex;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              WhatsApp
-            </a>
-            <div id="msg-ok-call" style="font-family:var(--sans);font-size:0.78rem;color:var(--text-light)">
-              Or call us at <a href="tel:+972586200779">+972-58-620-0779</a>
-            </div>
-          </div>
         </div><!-- end left column -->
 
         <!-- RIGHT: reviews sidebar -->
@@ -203,7 +183,6 @@ function updateSubmitBtn() {
   var agreed  = document.getElementById('agree-policies').checked;
   var isIsraeli = document.querySelector('input[name="is_israeli"]:checked') &&
                   document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
-  var idOk    = !isIsraeli || document.getElementById('id_number').value.trim().length > 0;
   var payMethod = document.querySelector('input[name="payment_method"]:checked');
   var method  = payMethod ? payMethod.value : 'credit_card';
   var ccOk    = true;
@@ -211,11 +190,12 @@ function updateSubmitBtn() {
     ccOk = document.getElementById('cc_number').value.trim().length > 0
         && document.getElementById('cc_expiry').value.trim().length === 5
         && document.getElementById('cc_cvv').value.trim().length >= 3
-        && document.getElementById('cc_name').value.trim().length > 0;
+        && document.getElementById('cc_name').value.trim().length > 0
+        && document.getElementById('id_number').value.trim().length > 0;
   }
   var nameOk  = document.getElementById('name').value.trim().length > 0;
   var phoneOk = document.getElementById('phone').value.trim().length > 0;
-  var enabled = agreed && ccOk && idOk && nameOk && phoneOk;
+  var enabled = agreed && ccOk && nameOk && phoneOk;
   btn.disabled      = !enabled;
   btn.style.opacity = enabled ? '1' : '0.45';
   btn.style.cursor  = enabled ? 'pointer' : 'not-allowed';
@@ -255,7 +235,6 @@ window.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('input[name="is_israeli"]').forEach(function(radio) {
     radio.addEventListener('change', function() {
       var isIsraeli = this.value === 'yes';
-      document.getElementById('id-field').style.display        = isIsraeli ? '' : 'none';
       document.getElementById('vat-exempt-note').style.display = isIsraeli ? 'none' : '';
       updatePrice();
       updateSubmitBtn();
@@ -268,15 +247,13 @@ window.addEventListener('DOMContentLoaded', function() {
       var method = this.value;
       document.getElementById('cc-section').style.display   = method === 'credit_card'   ? '' : 'none';
       document.getElementById('bit-section').style.display  = method === 'bit'           ? '' : 'none';
-      document.getElementById('bank-section').style.display = method === 'bank_transfer' ? '' : 'none';
       updateSubmitBtn();
     });
   });
 
   // Submit button state watchers
   document.getElementById('agree-policies').addEventListener('change', updateSubmitBtn);
-  document.getElementById('id_number').addEventListener('input', updateSubmitBtn);
-  ['cc_number','cc_expiry','cc_cvv','cc_name','name','phone'].forEach(function(id) {
+  ['cc_number','cc_expiry','cc_cvv','cc_name','id_number','name','phone'].forEach(function(id) {
     document.getElementById(id).addEventListener('input', updateSubmitBtn);
   });
 
@@ -502,22 +479,20 @@ async function submitBooking() {
       phone     = document.getElementById('phone').value.trim();
 
   var isIsraeli = document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
-  var id_number = isIsraeli ? document.getElementById('id_number').value.trim() : '';
-
   var payMethod = document.querySelector('input[name="payment_method"]:checked').value;
-  var cc_number = '', cc_expiry = '', cc_cvv = '', cc_name = '';
+  var cc_number = '', cc_expiry = '', cc_cvv = '', cc_name = '', id_number = '';
 
   if (payMethod === 'credit_card') {
     cc_number = document.getElementById('cc_number').value.trim();
     cc_expiry = document.getElementById('cc_expiry').value.trim();
     cc_cvv    = document.getElementById('cc_cvv').value.trim();
     cc_name   = document.getElementById('cc_name').value.trim();
+    id_number = document.getElementById('id_number').value.trim();
   }
 
   if (!room||!checkin||!checkout||!name||!phone) { alert('Please fill in all required fields.'); return; }
-  if (isIsraeli && !id_number) { alert('Please enter your Teudat Zehut.'); return; }
   if (payMethod === 'credit_card') {
-    if (!cc_number||!cc_expiry||!cc_cvv||!cc_name) { alert('Please fill in all credit card fields.'); return; }
+    if (!cc_number||!cc_expiry||!cc_cvv||!cc_name||!id_number) { alert('Please fill in all credit card fields.'); return; }
     if (detectCard(cc_number.replace(/\D/g,'')) === 'diners') { alert('We do not accept Diners Club cards.'); return; }
     if (!luhn(cc_number)) { alert('Please enter a valid credit card number.'); return; }
   }
@@ -578,17 +553,7 @@ async function submitBooking() {
     .then(function(text) { return JSON.parse(text); })
     .then(function(data) {
       if (data.success) {
-        document.getElementById('booking-form').style.display = 'none';
-        document.getElementById('id-note').style.display = 'none';
-        document.getElementById('msg-ok-wa').style.display = 'none';
-        document.getElementById('msg-ok-call').style.display = 'none';
-        var msgText = document.getElementById('msg-ok-text');
-        if (payMethod === 'credit_card') {
-          msgText.innerHTML = 'We have received your request and will be in touch shortly to confirm your booking.<br><br>If you have any questions, feel free to contact us by phone or WhatsApp.';
-        } else {
-          msgText.innerHTML = 'We have received your request.<br><br>Please send payment confirmation within 24 hours to <strong dir="ltr">+972-58-620-0779</strong> via WhatsApp to secure your booking.';
-        }
-        document.getElementById('msg-ok').style.display = 'block';
+        window.location.replace(payMethod === 'bit' ? '/en/thankyou.html?pay=bit' : '/en/thankyou.html');
       } else {
         btn.disabled = false;
         btn.style.opacity = '1';
