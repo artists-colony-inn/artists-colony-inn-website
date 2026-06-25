@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var langToggle = document.getElementById('lang-toggle');
   if (langToggle) {
     var enPath = '/en' + (path === '/' ? '/index.html' : path);
-    langToggle.href = enPath;
+	langToggle.href = enPath + window.location.search;
   }
 
   // hreflang tags
