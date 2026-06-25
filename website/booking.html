@@ -38,7 +38,7 @@
       <h2 class="section-title">הזמנת חדר</h2>
       <div class="section-rule"></div>
 
-      <div id="booking-layout" style="display:grid;grid-template-columns:1fr 340px;gap:3rem;align-items:start;max-width:960px;margin:0 auto">
+      <div id="booking-layout" style="display:grid;grid-template-columns:1fr;gap:3rem;align-items:start;max-width:640px;margin:0 auto">
 
         <!-- RIGHT (visually left in RTL): reviews sidebar 
         <div id="reviews-sidebar" style="position:sticky;top:90px;order:2">
@@ -120,13 +120,13 @@
               <div class="form-row">
                 <div class="form-field">
                   <label>מספר כרטיס <span class="req">*</span></label>
-                  <input type="text" id="cc_number" placeholder="0000 0000 0000 0000" autocomplete="off" inputmode="numeric" maxlength="19">
+                  <input type="text" id="cc_number" placeholder="0000 0000 0000 0000" autocomplete="off" inputmode="numeric" maxlength="19"  style="text-align:right">
                   <span id="cc_type" style="font-size:0.78rem;font-weight:600;margin-top:4px;display:block"></span>
                 </div>
-                <div class="form-field"><label>תוקף <span class="req">*</span></label><input type="text" id="cc_expiry" placeholder="MM/YY" autocomplete="off" maxlength="5"></div>
+                <div class="form-field"><label>תוקף <span class="req">*</span></label><input type="text" id="cc_expiry" placeholder="MM/YY" autocomplete="off" maxlength="5"  style="text-align:right"></div>
               </div>
               <div class="form-row">
-                <div class="form-field"><label>CVV <span class="req">*</span></label><input type="password" id="cc_cvv" placeholder="000" autocomplete="new-password" maxlength="4" inputmode="numeric"></div>
+                <div class="form-field"><label>CVV <span class="req">*</span></label><input type="password" id="cc_cvv" placeholder="000" autocomplete="new-password" maxlength="4" inputmode="numeric"  style="text-align:right"></div>
                 <div class="form-field"><label>שם בעל הכרטיס <span class="req">*</span></label><input type="text" id="cc_name" placeholder="כפי שמופיע על הכרטיס" autocomplete="off"></div>
               </div>
               <div class="form-field">
