@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var langToggle = document.getElementById('lang-toggle');
   if (langToggle) {
     var hePath = path.replace(/^\/en\//, '/');
-    if (hePath === '/') hePath = '/index.html';
-    langToggle.href = hePath;
+	if (hePath === '/') hePath = '/index.html';
+	langToggle.href = hePath + window.location.search;
   }
 
   // hreflang tags
