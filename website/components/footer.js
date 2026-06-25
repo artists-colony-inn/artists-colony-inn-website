@@ -38,6 +38,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
   <div class="footer-bottom">
     <p>&copy; 2026 מלון בוטיק קריית האמנים &nbsp;&middot;&nbsp; צפת, ישראל</p>
     <p style="margin-top:0.4rem;font-size:0.8em;opacity:0.7;">חלק מהתמונות באדיבות <a href="https://www.facebook.com/share/1H3ZjgGxfo/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">אבי רויטמן</a></p>
+	<p style="margin-top:0.6rem;font-size:0.8em;opacity:0.7;">עברית של עולים חדשים, כתובה באהבה ולא בשלמות. מקווים שתסלחו לנו 😊</p>
   </div>
 </footer>
 `);
