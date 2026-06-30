@@ -455,7 +455,7 @@ document.addEventListener('keydown', function(e) {
         allReviews = data.reviews.slice().sort(function(a, b) {
 		return new Date(b.date) - new Date(a.date);
 	  });
-	  var latest = allReviews.find(function(r) { return r.lang === 'he'; });
+	  var latest = allReviews.find(function(r) { return r.lang.toUpperCase() === 'HE'; });
 	  if (latest) {
 		  var heroBox = document.getElementById('hero-latest-review');
 		  var dateObj = latest.date ? new Date(latest.date) : null;
