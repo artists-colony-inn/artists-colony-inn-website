@@ -829,3 +829,49 @@ footer a:hover { color: var(--gold-light); }
   :lang(he) .trust-bullets {float: left; display: inline-block; margin: 0 1rem 0 1rem;}
 }
 
+.hero-host {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  text-align: center;
+  text-decoration: none;
+}
+
+.hero-host img {
+  width: 90px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--white);
+}
+
+.hero-host span {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  color: var(--white);
+  margin-top: 0.3rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.hero-rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0.75rem 0;
+}
+
+.hero-rating .stars { color: #FBBC05; font-size: 1.1rem; }
+.hero-rating .count { font-family: var(--sans); font-size: 0.9rem; color: var(--white); }
+
+.hero-review {
+  max-width: 420px;
+  margin: 0 auto 0.75rem;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--white);
+  font-style: italic;
+  display: none;
+}
