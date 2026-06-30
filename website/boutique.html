@@ -452,10 +452,10 @@ document.addEventListener('keydown', function(e) {
       var grid = document.getElementById('reviews-grid');
       grid.innerHTML = '';
       if (!data.ok || !data.reviews || !data.reviews.length) return;
-      allReviews = data.reviews.slice().sort(function(a, b) {
+        allReviews = data.reviews.slice().sort(function(a, b) {
 		return new Date(b.date) - new Date(a.date);
 	  });
-	  var latest = allReviews[0];
+	  var latest = allReviews.find(function(r) { return r.lang === 'he'; });
 	  if (latest) {
 		  var heroBox = document.getElementById('hero-latest-review');
 		  var dateObj = latest.date ? new Date(latest.date) : null;
