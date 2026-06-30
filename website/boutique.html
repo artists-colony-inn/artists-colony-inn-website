@@ -56,6 +56,11 @@
     <div class="hero-overlay"></div>
     <div class="hero-text">
       <h1>מלון בוטיק קריית האמנים<br><span style="font-weight:300;font-size:0.75em;">מעוצב ושקט. בלב צפת.</span></h1>
+	  <div style="display:flex;align-items:center;justify-content:center;gap:0.6rem;margin:0.75rem 0">
+		<span style="color:#FBBC05;font-size:1.1rem">★★★★★</span>
+		<span style="font-family:var(--sans);font-size:0.9rem;color:var(--white)">4.8 · 123 ביקורות בגוגל</span>
+	  </div>
+	  <div id="hero-latest-review" style="max-width:420px;margin:0 auto 0.75rem;font-family:var(--sans);font-size:0.85rem;color:var(--white);font-style:italic;display:none"></div>
       <p>נוחות בוטיק בעיר העתיקה של צפת, ברובע האמנים.</p>
       <p style="font-family:var(--sans);font-size:1rem;letter-spacing:0.05em;margin-top:0.5rem"><a href="tel:+972586200779" style="color:var(--white);text-decoration:none" dir="ltr">+972-58-620-0779</a></p>
       <div class="hero-actions">
@@ -134,10 +139,6 @@
 <!-- Google reviews -->
 <section style="padding:3rem 0;background:var(--bg-warm)">
   <div class="container" style="max-width:900px">
-    <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;justify-content:center">
-      <span style="color:#FBBC05;font-size:1.1rem">★★★★★</span>
-      <span style="font-family:var(--sans);font-size:0.9rem;color:var(--text-light)">4.8 · 123 ביקורות בגוגל</span>
-    </div>
     <div id="reviews-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem">
       <div style="font-family:var(--sans);font-size:0.82rem;color:var(--text-light);font-style:italic">טוען ביקורות…</div>
     </div>
@@ -435,6 +436,12 @@ document.addEventListener('keydown', function(e) {
       grid.innerHTML = '';
       if (!data.ok || !data.reviews || !data.reviews.length) return;
       allReviews = data.reviews;
+	  var latest = allReviews[0];
+	  if (latest) {
+		  var heroBox = document.getElementById('hero-latest-review');
+		  heroBox.textContent = '"' + latest.text.slice(0, 110) + (latest.text.length > 110 ? '…' : '') + '" — ' + latest.name + (latest.relative_time_description ? ' · ' + latest.relative_time_description : '');
+		  heroBox.style.display = 'block';
+	  }
       renderReviews();
     })
     .catch(function() {
