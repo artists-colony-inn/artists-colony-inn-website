@@ -42,15 +42,38 @@
 </head>
 <body>
 <script src="/en/components/header.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var headlines = {
+    couples: 'Just the two of you. In the heart of old Tzfat.',
+    families: 'A family getaway in the heart of old Tzfat.'
+  };
+  var params = new URLSearchParams(window.location.search);
+  var camp = params.get('camp');
+  if (camp && headlines[camp]) {
+    var el = document.getElementById('hero-subhead');
+    if (el) el.textContent = headlines[camp];
+  }
+});
+</script>
 
 <main>
 
   <!-- Hero -->
   <div class="hero">
+    <a href="/about" class="hero-host">
+	  <img src="/images/hosts.jpg" alt="Shlomo and Leah">
+	  <span>Shlomo &amp; Leah welcome you</span>
+	</a>
     <img class="hero-img" src="/images/hero.jpg" alt="View from the Artists' Colony Inn terrace, Tzfat" fetchpriority="high" loading="eager" width="1200" height="899">
     <div class="hero-overlay"></div>
     <div class="hero-text">
-      <h1>Artists' Colony Inn<br><span style="font-weight:300;font-size:0.75em;">Designed for quiet. In the heart of Tzfat.</span></h1>
+      <h1>Artists' Colony Inn<br><span id="hero-subhead" style="font-weight:300;font-size:0.75em;">Designed for quiet. In the heart of Tzfat.</span></h1>
+	  <div class="hero-rating">
+		<span class="stars">★★★★★</span>
+		<span class="count">4.8 &middot; 124 reviews on Google</span>
+	  </div>
+	  <div id="hero-latest-review" class="hero-review"></div>
       <p>Boutique comfort in Tzfat's Old City, in the Artists' Quarter.</p>
       <p style="font-family:var(--sans);font-size:1rem;letter-spacing:0.05em;margin-top:0.5rem"><a href="tel:+972586200779" style="color:var(--white);text-decoration:none" dir="ltr">+972-58-620-0779</a></p>
       <div class="hero-actions">
@@ -140,10 +163,6 @@
 <!-- Google reviews -->
 <section style="padding:3rem 0;background:var(--bg-warm)">
   <div class="container" style="max-width:900px">
-    <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;justify-content:center">
-      <span style="color:#FBBC05;font-size:1.1rem">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-      <span style="font-family:var(--sans);font-size:0.9rem;color:var(--text-light)">4.8 &middot; 123 reviews on Google</span>
-    </div>
     <div id="reviews-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem">
       <div style="font-family:var(--sans);font-size:0.82rem;color:var(--text-light);font-style:italic">Loading reviews&hellip;</div>
     </div>
@@ -299,7 +318,17 @@ fetch(REVIEWS_API)
   .then(function(data){
     var grid=document.getElementById('reviews-grid'); grid.innerHTML='';
     if(!data.ok||!data.reviews||!data.reviews.length) return;
-    allReviews=data.reviews;
+    allReviews = data.reviews.slice().sort(function(a, b) {
+	  return new Date(b.date) - new Date(a.date);
+	});
+	var latest = allReviews.find(function(r) { return r.lang === 'en'; });
+	if (latest) {
+	  var heroBox = document.getElementById('hero-latest-review');
+	  var dateObj = latest.date ? new Date(latest.date) : null;
+	  var dateStr = dateObj && !isNaN(dateObj) ? dateObj.toLocaleDateString('en-GB') : '';
+	  heroBox.textContent = '"' + latest.text.slice(0, 110) + (latest.text.length > 110 ? '…' : '') + '" — ' + latest.name + (dateStr ? ' · ' + dateStr : '');
+	  heroBox.style.display = 'block';
+	}
     renderReviews();
   })
   .catch(function(){ document.getElementById('reviews-grid').innerHTML=''; });
