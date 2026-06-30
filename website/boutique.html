@@ -458,7 +458,9 @@ document.addEventListener('keydown', function(e) {
 	  var latest = allReviews[0];
 	  if (latest) {
 		  var heroBox = document.getElementById('hero-latest-review');
-		  heroBox.textContent = '"' + latest.text.slice(0, 110) + (latest.text.length > 110 ? '…' : '') + '" — ' + latest.name + (latest.date ? ' · ' + latest.date : '');
+		  var dateObj = latest.date ? new Date(latest.date) : null;
+		  var dateStr = dateObj && !isNaN(dateObj) ? dateObj.toLocaleDateString('he-IL') : '';
+		  heroBox.textContent = '"' + latest.text.slice(0, 110) + (latest.text.length > 110 ? '…' : '') + '" — ' + latest.name + (dateStr ? ' · ' + dateStr : '');
 		  heroBox.style.display = 'block';
 	  }
       renderReviews();
