@@ -61,8 +61,28 @@
 	<h1>Artists' Colony Inn<br>Designed for quiet. In the heart of Tzfat.</h1>
     <p>Boutique comfort in Tzfat's Old City, in the Artists' Quarter.</p>
     <div class="hero-actions">
-      <a href="#availability" class="btn btn-gold">Check Availability</a>
-    </div>
+	  <div class="avail-form" style="background:rgba(0,0,0,0.45);padding:1rem;border-radius:4px;margin-bottom:1rem">
+		<div class="form-field" style="margin:0">
+		  <label style="color:var(--white)">Check-in</label>
+		  <input type="date" id="bw-checkin">
+		</div>
+		<div class="form-field" style="margin:0">
+		  <label style="color:var(--white)">Check-out</label>
+		  <input type="date" id="bw-checkout">
+		</div>
+		<div class="form-field" style="margin:0">
+		  <label style="color:var(--white)">Guests</label>
+		  <select id="bw-guests">
+			<option value="" selected disabled>Select number of guests</option>
+			<option value="1">1 guest</option>
+			<option value="2">2 guests</option>
+			<option value="3">3 guests</option>
+			<option value="4">4 guests</option>
+		  </select>
+		</div>
+		<button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">Search</button>
+	  </div>
+	</div>
   </div>
 </div>
 
@@ -151,26 +171,6 @@
   <div class="container">
     <h2 class="section-title">Check Availability</h2>
     <div class="section-rule"></div>
-    <div class="avail-form">
-      <div class="form-field" style="margin:0">
-        <label>Check-in</label>
-        <input type="date" id="bw-checkin">
-      </div>
-      <div class="form-field" style="margin:0">
-        <label>Check-out</label>
-        <input type="date" id="bw-checkout">
-      </div>
-      <div class="form-field" style="margin:0">
-        <label>Guests</label>
-        <select id="bw-guests">
-          <option value="1">1 guest</option>
-          <option value="2" selected>2 guests</option>
-          <option value="3">3 guests</option>
-          <option value="4">4 guests</option>
-        </select>
-      </div>
-      <button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">Search</button>
-    </div>
     <div id="bw-results" style="display:none">
       <div class="room-results" id="bw-room-grid"></div>
     </div>
@@ -306,6 +306,7 @@ let priceCache = {};
 async function searchRooms(){
   var checkin=document.getElementById('bw-checkin').value,checkout=document.getElementById('bw-checkout').value,guests=parseInt(document.getElementById('bw-guests').value);
   if(!checkin||!checkout||checkin>=checkout){alert('Please select valid check-in and check-out dates.');return;}
+  if(!guests){ alert('Please select the number of guests.'); return; }
   document.getElementById('bw-results').style.display='none';
   document.getElementById('bw-error').style.display='none';
   document.getElementById('bw-loading').style.display='block';
