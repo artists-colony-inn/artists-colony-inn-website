@@ -874,6 +874,8 @@ footer a:hover { color: var(--gold-light); }
 
 .hero-host span {
   display: block;
+  text-align: center;
+  width: 90px;
   font-family: var(--sans);
   font-size: 0.7rem;
   color: var(--white);
