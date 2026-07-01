@@ -525,7 +525,9 @@ async function submitBooking() {
     .then(function(text) { return JSON.parse(text); })
     .then(function(data) {
       if (data.success) {
-        window.location.replace(payMethod === 'bit' ? '/en/thankyou.html?pay=bit' : '/en/thankyou.html');
+        var qs = 'resnum=' + encodeURIComponent(data.resnum || '');
+        if (payMethod === 'bit') qs += '&pay=bit';
+        window.location.replace('/en/thankyou.html?' + qs);
       } else {
         btn.disabled = false;
         btn.style.opacity = '1';
