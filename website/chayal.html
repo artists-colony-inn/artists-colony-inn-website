@@ -181,7 +181,7 @@
 
 <main>
   <div class="chayal-hero">
-    <img class="chayal-hero-img" src="/images/hero.jpg" alt="מלון בוטיק קריית האמנים, צפת">
+    <img id="chayal-hero-img" class="chayal-hero-img" src="/images/hero.jpg" alt="מלון בוטיק קריית האמנים, צפת">
     <div class="certificate-badge">תעודת מתנה ₪750</div>
     <h1>תודה על שירותכם</h1>
     <p class="subtitle">
@@ -189,18 +189,28 @@
       תעודת מתנה של ₪750 כהוקרה על שירותכם — לשהייה במלון בוטיק קריית האמנים בצפת.
     </p>
     <p class="counter-note">נותרו <strong id="cert-counter" style="color:var(--gold)">...</strong> תעודות מתוך <span id="cert-total">20</span></p>
+	<div class="avail-form" style="margin-top:2rem;direction:rtl;background:rgba(0,0,0,0.3);padding:1rem;border-radius:4px;position:relative">
+	  <div class="form-field" style="margin:0">
+		<label style="color:var(--white)">צ'ק-אין</label>
+		<input type="date" id="bw-checkin">
+	  </div>
+	  <div class="form-field" style="margin:0">
+		<label style="color:var(--white)">צ'ק-אאוט</label>
+		<input type="date" id="bw-checkout">
+	  </div>
+	  <div class="form-field" style="margin:0">
+		<label style="color:var(--white)">אורחים (מגיל שנה) <span class="req">*</span></label>
+		<select id="bw-guests">
+		  <option value="" selected disabled>בחרו מספר אורחים</option>
+		  <option value="1">אורח 1</option>
+		  <option value="2">2 אורחים</option>
+		  <option value="3">3 אורחים</option>
+		  <option value="4">4 אורחים</option>
+		</select>
+	  </div>
+	  <button class="btn btn-gold" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">חפש</button>
+	</div>
   </div>
-
-  <section class="property-gallery">
-    <div class="container">
-      <div class="property-gallery-grid">
-        <img src="/images/aci-4.jpg" alt="חצר מלון בוטיק קריית האמנים, צפת">
-        <img src="/images/aci-1.jpg" alt="נוף אל הר מירון והגליל">
-        <img src="/images/aci-2.jpg" alt="גנים וחצרות המלון">
-        <img src="/images/aci-3.jpg" alt="ארוחת בוקר באדיבות הבית">
-      </div>
-    </div>
-  </section>
 
   <div class="container" id="main-content" style="max-width:720px;padding-top:2rem">
 
@@ -217,27 +227,6 @@
 
     <!-- Search -->
     <div id="search-section">
-      <div class="avail-form" style="margin-bottom:1rem;direction:rtl">
-        <div class="form-field" style="margin:0">
-          <label>צ'ק-אין</label>
-          <input type="date" id="bw-checkin">
-        </div>
-        <div class="form-field" style="margin:0">
-          <label>צ'ק-אאוט</label>
-          <input type="date" id="bw-checkout">
-        </div>
-        <div class="form-field" style="margin:0">
-          <label>אורחים (מגיל שנה) <span class="req">*</span></label>
-          <select id="bw-guests">
-            <option value="" selected disabled>בחרו מספר אורחים</option>
-            <option value="1">אורח 1</option>
-            <option value="2">2 אורחים</option>
-            <option value="3">3 אורחים</option>
-            <option value="4">4 אורחים</option>
-          </select>
-        </div>
-        <button class="btn btn-gold" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">חפש</button>
-      </div>
       <div id="bw-loading" style="display:none;text-align:center;padding:2rem;font-family:var(--sans);color:var(--text-light)">בודק זמינות...</div>
       <div id="bw-error" style="display:none;text-align:center;padding:2rem;font-family:var(--sans);color:var(--text-light)">לא ניתן לבדוק זמינות כרגע. אנא צרו קשר בוואטסאפ.</div>
       <div id="bw-results" style="display:none">
@@ -912,6 +901,35 @@ async function submitBooking() {
       document.getElementById('msg-err').style.display='block';
     });
 }
+</script>
+<script>
+(function() {
+  var images = [
+    { src: '/images/hero.jpg',  alt: 'מלון בוטיק קריית האמנים, צפת' },
+    { src: '/images/aci-4.jpg', alt: 'חצר מלון בוטיק קריית האמנים, צפת' },
+    { src: '/images/aci-1.jpg', alt: 'נוף אל הר מירון והגליל' },
+    { src: '/images/aci-2.jpg', alt: 'גנים וחצרות המלון' },
+    { src: '/images/aci-3.jpg', alt: 'ארוחת בוקר באדיבות הבית' }
+  ];
+  var current = 0;
+  var el = document.getElementById('chayal-hero-img');
+  if (!el) return;
+
+  images.forEach(function(img) {
+    var p = new Image();
+    p.src = img.src;
+  });
+
+  setInterval(function() {
+    current = (current + 1) % images.length;
+    el.style.opacity = '0';
+    setTimeout(function() {
+      el.src = images[current].src;
+      el.alt = images[current].alt;
+      el.style.opacity = '0.75';
+    }, 400);
+  }, 3000);
+})();
 </script>
 </body>
 </html>
