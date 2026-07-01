@@ -920,14 +920,19 @@ async function submitBooking() {
     p.src = img.src;
   });
 
-  setInterval(function() {
-    current = (current + 1) % images.length;
-    el.style.opacity = '0';
-    setTimeout(function() {
-      el.src = images[current].src;
-      el.alt = images[current].alt;
-      el.style.opacity = '0.75';
-    }, 400);
+setInterval(function() {
+    var next = (current + 1) % images.length;
+    var preload = new Image();
+    preload.src = images[next].src;
+    preload.onload = function() {
+      el.style.opacity = '0';
+      setTimeout(function() {
+        current = next;
+        el.src = images[current].src;
+        el.alt = images[current].alt;
+        el.style.opacity = '1';
+      }, 400);
+    };
   }, 3000);
 })();
 </script>
