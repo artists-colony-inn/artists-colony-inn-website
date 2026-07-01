@@ -273,6 +273,12 @@
             <input type="text" id="phone" placeholder="+972..." autocomplete="off">
           </div>
         </div>
+        <div class="form-row" id="meals-field" style="display:none">
+          <div class="form-field">
+            <label>ארוחות שבת (₪100 לארוחה, כולל מע"מ)</label>
+            <input type="number" id="meals" min="0" max="20" value="0">
+          </div>
+        </div>
 
         <div class="form-field">
           <label>תעודת שחרור <span class="req">*</span></label>
@@ -290,6 +296,7 @@
           <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">סיכום מחיר</div>
           <div id="price-base-row"></div>
           <div id="price-surcharge-row"></div>
+          <div id="price-meals-row"></div>
           <div id="price-vat-row"></div>
           <div id="price-full-row" style="font-weight:600;color:var(--text)"></div>
           <div id="price-discount-row" class="discount-row"></div>
@@ -607,6 +614,7 @@ function closePopup(event) {
 function selectRoomFromPopup() { closePopup(null); selectRoom(currentRoom, currentPriceInfo); }
 
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePopup(null); });
+document.getElementById('meals').addEventListener('input', updatePriceBox);
 
 // Show booking form
 function selectRoom(room, priceInfo) {
@@ -623,11 +631,28 @@ function selectRoom(room, priceInfo) {
     '<strong>' + (roomLabels[room.id] || room.id) + '</strong> · ' +
     fmtDate(currentCheckin) + ' — ' + fmtDate(currentCheckout) + ' · ' +
     priceInfo.nights + ' לילות · ' + currentGuests + ' אורחים';
+  updateMealsVisibility(currentCheckin, currentCheckout);
   updatePriceBox();
   document.getElementById('search-section').style.display  = 'none';
   document.getElementById('booking-section').style.display = 'block';
   scrollToContent();
   updateSubmitBtn();
+}
+
+function updateMealsVisibility(checkin, checkout) {
+  var field = document.getElementById('meals-field');
+  var start = new Date(checkin + 'T00:00:00');
+  var end   = new Date(checkout + 'T00:00:00');
+  var hasFriday = false;
+  for (var d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+    if (d.getDay() === 5) { hasFriday = true; break; }
+  }
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  var daysOut = Math.round((start - today) / 86400000);
+  var eligible = hasFriday && daysOut >= 2;
+  field.style.display = eligible ? '' : 'none';
+  if (!eligible) document.getElementById('meals').value = 0;
 }
 
 function showSearch() {
@@ -640,13 +665,17 @@ function showSearch() {
 function updatePriceBox() {
   var p = currentPriceInfo;
   if (!p) return;
-  var vat       = Math.round(p.beforeVAT * 0.18);
-  var fullTotal = p.beforeVAT + vat;
-  var amountDue = Math.max(0, fullTotal - CERTIFICATE_DISCOUNT);
+  var mealsCount = parseInt(document.getElementById('meals').value) || 0;
+  var mealsBase  = mealsCount * 100;
+  var vat        = Math.round((p.beforeVAT + mealsBase) * 0.18);
+  var fullTotal  = p.beforeVAT + mealsBase + vat;
+  var amountDue  = Math.max(0, fullTotal - CERTIFICATE_DISCOUNT);
   document.getElementById('full-price-hidden').value = fullTotal;
   document.getElementById('price-base-row').textContent        = p.nights + ' לילות (מחיר בסיס): ' + fmt(p.base);
   document.getElementById('price-surcharge-row').style.display = p.surcharge ? '' : 'none';
   document.getElementById('price-surcharge-row').textContent   = 'תוספת אורחים (' + (p.surchargeRate * 100) + '%): ' + fmt(p.surcharge);
+  document.getElementById('price-meals-row').style.display     = mealsBase ? '' : 'none';
+  document.getElementById('price-meals-row').textContent       = 'ארוחות שבת (' + mealsCount + '): ' + fmt(mealsBase);
   document.getElementById('price-vat-row').textContent         = 'מע"מ (18%): ' + fmt(vat);
   document.getElementById('price-full-row').textContent        = 'מחיר מלא: ' + fmt(fullTotal);
   document.getElementById('price-discount-row').textContent    = 'ניכוי תעודת חייל: -' + fmt(CERTIFICATE_DISCOUNT);
@@ -857,6 +886,7 @@ async function submitBooking() {
     body: JSON.stringify({
       name:name, email:email, phone:phone, room:room,
       checkin:checkin, checkout:checkout, guests:document.getElementById('guests').value,
+      meals:document.getElementById('meals').value,
       nationality:'', id_number:id_number, is_israeli:'yes',
       payment_method:payMethod, cc_number:cc_number, cc_expiry:cc_expiry,
       cc_cvv:cc_cvv, cc_name:cc_name,
