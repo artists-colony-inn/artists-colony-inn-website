@@ -55,7 +55,7 @@
 <main>
 
 <div class="hero">
-  <img class="hero-img" src="/images/hero.jpg" alt="View from the Artists' Colony Inn terrace, Tzfat" fetchpriority="high" loading="eager" width="1200" height="899">
+  <img id="hero-img" class="hero-img" src="/images/hero.jpg" alt="View from the Artists' Colony Inn terrace, Tzfat" fetchpriority="high" loading="eager" width="1200" height="899">
   <div class="hero-overlay"></div>
   <div class="hero-text">
 	<h1>Artists' Colony Inn<br>Designed for quiet. In the heart of Tzfat.</h1>
@@ -70,17 +70,6 @@
 	<h2>Rest, beauty, and the spirit of Tzfat.</h2>
 	<p>Located in Tzfat's Old City Artists' Quarter, the Artists' Colony Inn is just steps from galleries, ancient synagogues, and restaurants. Breathtaking views of Mount Meron and the Galilee open from the terraces and courtyards, a quiet, singular atmosphere carved from ancient Jerusalem stone.</p>
 </div>
-
-<section class="property-gallery">
-  <div class="container">
-    <div class="property-gallery-grid">
-      <img src="/images/aci-4.jpg" alt="Artists' Colony Inn courtyard, Tzfat">
-      <img src="/images/aci-1.jpg" alt="View of Mount Meron and the Galilee from Artists' Colony Inn">
-      <img src="/images/aci-2.jpg" alt="Artists' Colony Inn gardens and courtyards">
-      <img src="/images/aci-3.jpg" alt="Courtesy breakfast at Artists' Colony Inn">
-    </div>
-  </div>
-</section>
 
 <section id="rooms">
   <div class="container">
@@ -403,6 +392,34 @@ function closePopup(event){
   document.body.style.overflow='';
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closePopup(null);});
+</script>
+<script>
+(function() {
+  var images = [
+    { src: '/images/hero.jpg',  alt: "View from the Artists' Colony Inn terrace, Tzfat" },
+    { src: '/images/aci-4.jpg', alt: "Artists' Colony Inn courtyard, Tzfat" },
+    { src: '/images/aci-1.jpg', alt: "View of Mount Meron and the Galilee from Artists' Colony Inn" },
+    { src: '/images/aci-2.jpg', alt: "Artists' Colony Inn gardens and courtyards" },
+    { src: '/images/aci-3.jpg', alt: "Courtesy breakfast at Artists' Colony Inn" }
+  ];
+  var current = 0;
+  var el = document.getElementById('hero-img');
+
+  images.forEach(function(img) {
+    var p = new Image();
+    p.src = img.src;
+  });
+
+  setInterval(function() {
+    current = (current + 1) % images.length;
+    el.style.opacity = '0';
+    setTimeout(function() {
+      el.src = images[current].src;
+      el.alt = images[current].alt;
+      el.style.opacity = '1';
+    }, 400);
+  }, 3000);
+})();
 </script>
 </body>
 </html>
