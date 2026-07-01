@@ -367,7 +367,7 @@ function renderResults(results, checkin, checkout, guests) {
   });
 
   document.getElementById('bw-results').style.display = 'block';
-  document.getElementById('bw-results').scrollIntoView({ behavior:'smooth', block:'start' });
+  document.getElementById('bw-results').scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
 
 function openPopup(room, checkin, checkout, guests, priceInfo) {
