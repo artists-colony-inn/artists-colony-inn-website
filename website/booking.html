@@ -53,6 +53,9 @@
             <div class="form-row">
               <div class="form-field"><label>אימייל</label><input type="email" id="email" placeholder="your@email.com" autocomplete="email"></div>
               <div class="form-field"><label>טלפון <span class="req">*</span></label><input type="text" id="phone" placeholder="+972..." autocomplete="off"></div>
+			  <div class="form-row" id="meals-field" style="display:none">
+                <div class="form-field"><label>ארוחות שבת (₪100 לארוחה, כולל מע"מ)</label><input type="number" id="meals" min="0" max="20" value="0"></div>
+              </div>
             </div>
             <div class="form-row">
               <div class="form-field"><label>לאום</label><input type="text" id="nationality" placeholder="למשל: ישראלי, אמריקאי, צרפתי"></div>
@@ -77,6 +80,7 @@
               <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">סיכום מחיר</div>
               <div id="price-base-row"></div>
               <div id="price-surcharge-row"></div>
+              <div id="price-meals-row"></div>
               <div id="price-vat-row"></div>
               <div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
             </div>
@@ -201,8 +205,11 @@ window.addEventListener('DOMContentLoaded', function() {
   document.getElementById('checkin-display').value  = fmtDate(checkin);
   document.getElementById('checkout-display').value = fmtDate(checkout);
 
+  updateMealsVisibility(checkin, checkout);
   updatePrice();
   updateChargeNote(checkin);
+
+  document.getElementById('meals').addEventListener('input', updatePrice);
 
   // Payment method toggle
   document.querySelectorAll('input[name="payment_method"]').forEach(function(radio) {
@@ -352,6 +359,22 @@ function luhn(value) {
   return sum % 10 === 0;
 }
 
+function updateMealsVisibility(checkin, checkout) {
+  var field = document.getElementById('meals-field');
+  var start = new Date(checkin + 'T00:00:00');
+  var end   = new Date(checkout + 'T00:00:00');
+  var hasFriday = false;
+  for (var d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+    if (d.getDay() === 5) { hasFriday = true; break; }
+  }
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  var daysOut = Math.round((start - today) / 86400000);
+  var eligible = hasFriday && daysOut >= 2;
+  field.style.display = eligible ? '' : 'none';
+  if (!eligible) document.getElementById('meals').value = 0;
+}
+
 async function updatePrice() {
   const room     = document.getElementById('room').value;
   const checkin  = document.getElementById('checkin').value;
@@ -403,7 +426,9 @@ async function updatePrice() {
   if (guests === 3) surchargeRate = 0.25;
   if (guests >= 4)  surchargeRate = 0.50;
   const surcharge  = Math.round(base * surchargeRate);
-  const beforeVAT  = base + surcharge;
+  const mealsCount = parseInt(document.getElementById('meals').value) || 0;
+  const mealsBase  = mealsCount * 100;
+  const beforeVAT  = base + surcharge + mealsBase;
   const isIsraeli  = document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
   const vat        = isIsraeli ? Math.round(beforeVAT * 0.18) : 0;
   const total      = beforeVAT + vat;
@@ -415,6 +440,8 @@ async function updatePrice() {
   document.getElementById('price-base-row').textContent        = nights + ' לילות (מחיר בסיס): ' + fmt(base);
   document.getElementById('price-surcharge-row').style.display = surcharge ? '' : 'none';
   document.getElementById('price-surcharge-row').textContent   = 'תוספת אורחים (' + (surchargeRate * 100) + '%): ' + fmt(surcharge);
+  document.getElementById('price-meals-row').style.display     = mealsBase ? '' : 'none';
+  document.getElementById('price-meals-row').textContent       = 'ארוחות שבת (' + mealsCount + '): ' + fmt(mealsBase);
   document.getElementById('price-vat-row').style.display       = isIsraeli ? '' : 'none';
   document.getElementById('price-vat-row').textContent         = 'מע"מ (18%): ' + fmt(vat);
   document.getElementById('price-total-row').textContent       = 'סה"כ לתשלום: ' + fmt(total);
@@ -502,6 +529,7 @@ async function submitBooking() {
     checkin:        checkin,
     checkout:       checkout,
     guests:         document.getElementById('guests').value,
+	meals:          document.getElementById('meals').value,
     nationality:    document.getElementById('nationality').value.trim(),
     id_number:      id_number,
     is_israeli:     isIsraeli ? 'yes' : 'no',
