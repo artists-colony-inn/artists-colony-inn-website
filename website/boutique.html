@@ -81,8 +81,28 @@ document.addEventListener('DOMContentLoaded', function() {
       <p>נוחות בוטיק בעיר העתיקה של צפת, ברובע האמנים.</p>
       <p style="font-family:var(--sans);font-size:1rem;letter-spacing:0.05em;margin-top:0.5rem"><a href="tel:+972586200779" style="color:var(--white);text-decoration:none" dir="ltr">+972-58-620-0779</a></p>
       <div class="hero-actions">
-        <a href="#booking" class="btn btn-gold">לבדיקת זמינות</a>
-      </div>
+	  <div class="avail-form" style="background:rgba(0,0,0,0.45);padding:1rem;border-radius:4px;margin-bottom:1rem">
+		<div class="form-field" style="margin:0">
+		  <label style="color:var(--white)">צ'ק-אין</label>
+		  <input type="date" id="bw-checkin">
+		</div>
+		<div class="form-field" style="margin:0">
+		  <label style="color:var(--white)">צ'ק-אאוט</label>
+		  <input type="date" id="bw-checkout">
+		</div>
+		<div class="form-field" style="margin:0">
+		  <label style="color:var(--white)">אורחים (מגיל שנה) <span class="req">*</span></label>
+		  <select id="bw-guests">
+			<option value="" selected disabled>בחרו מספר אורחים</option>
+			<option value="1">אורח 1</option>
+			<option value="2">2 אורחים</option>
+			<option value="3">3 אורחים</option>
+			<option value="4">4 אורחים</option>
+		  </select>
+		</div>
+		<button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">חפש</button>
+	  </div>
+	</div>
     </div>
   </div>
 
@@ -120,29 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="container">
       <h2 class="section-title">בחרו את הסוויטה המושלמת לכם</h2>
       <div class="section-rule"></div>
-
-      <div class="avail-form">
-        <div class="form-field" style="margin:0">
-          <label>צ'ק-אין</label>
-          <input type="date" id="bw-checkin">
-        </div>
-        <div class="form-field" style="margin:0">
-          <label>צ'ק-אאוט</label>
-          <input type="date" id="bw-checkout">
-        </div>
-        <div class="form-field" style="margin:0">
-          <label>אורחים (מגיל שנה) <span class="req">*</span></label>
-          <select id="bw-guests">
-		    <option value="" selected disabled>בחרו מספר אורחים</option>
-            <option value="1">אורח 1</option>
-            <option value="2">2 אורחים</option>
-            <option value="3">3 אורחים</option>
-            <option value="4">4 אורחים</option>
-          </select>
-        </div>
-        <button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">חפש</button>
-      </div>
-
       <div id="bw-results" style="display:none">
         <div class="room-results" id="bw-room-grid"></div>
       </div>
