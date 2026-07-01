@@ -842,18 +842,26 @@ footer a:hover { color: var(--gold-light); }
   .property-gallery-grid {grid-template-columns: 1fr;}
 }
 
+@media (min-width: 481px) {
+  .hero-host {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    margin: 0;
+    z-index: 2;
+  }
+}
+
 @media (min-width: 769px) {
   :lang(en) .trust-bullets {float: left; display: inline-block; margin: 0 1rem 1rem 0;}
   :lang(he) .trust-bullets {float: left; display: inline-block; margin: 0 1rem 0 1rem;}
 }
 
 .hero-host {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  z-index: 2;
+  display: block;
   text-align: center;
   text-decoration: none;
+  margin: 0 auto 0.75rem;
 }
 
 .hero-host img {
