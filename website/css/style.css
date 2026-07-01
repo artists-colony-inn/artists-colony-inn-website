@@ -150,6 +150,8 @@ nav a:hover, nav a.active { color: var(--gold); }
   object-position: center 40%;
 }
 
+.hero-img { transition: opacity 0.4s ease; }
+
 .hero-overlay {
   position: absolute;
   inset: 0;
