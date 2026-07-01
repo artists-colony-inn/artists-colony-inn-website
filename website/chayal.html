@@ -869,7 +869,9 @@ async function submitBooking() {
     .then(function(text) { return JSON.parse(text); })
     .then(function(data) {
       if (data.success) {
-        window.location.replace(payMethod === 'bit' ? '/thankyou.html?pay=bit' : '/thankyou.html');
+        var qs = 'resnum=' + encodeURIComponent(data.resnum || '');
+        if (payMethod === 'bit') qs += '&pay=bit';
+        window.location.replace('/thankyou.html?' + qs);
       } else {
         btn.disabled=false; btn.style.opacity='1'; btn.textContent='שליחת בקשת הזמנה';
         document.getElementById('msg-err').style.display='block';
