@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	  <img src="/images/hosts.jpg" alt="שלמה ולאה">
 	  <span>שלמה ולאה מזמינים אתכם</span>
 	</a>
-    <img class="hero-img" src="/images/hero.jpg" alt="נוף ממרפסת מלון בוטיק קריית האמנים, צפת" fetchpriority="high" loading="eager" width="1200" height="899">
+    <img id="hero-img" class="hero-img" src="/images/hero.jpg" alt="נוף ממרפסת מלון בוטיק קריית האמנים, צפת" fetchpriority="high" loading="eager" width="1200" height="899">
     <div class="hero-overlay"></div>
     <div class="hero-text">
       <h1>מלון בוטיק קריית האמנים<br><span id="hero-subhead" style="font-weight:300;font-size:0.75em;">מעוצב ושקט. בלב צפת.</span></h1>
@@ -105,18 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	</div>
     </div>
   </div>
-
-  <!-- Property photos -->
-  <section class="property-gallery">
-    <div class="container">
-      <div class="property-gallery-grid">
-        <img src="/images/aci-4.jpg" alt="חצר מלון בוטיק קריית האמנים, צפת">
-        <img src="/images/aci-1.jpg" alt="נוף אל הר מירון והגליל">
-        <img src="/images/aci-2.jpg" alt="גנים וחצרות המלון">
-        <img src="/images/aci-3.jpg" alt="ארוחת בוקר באדיבות הבית">
-      </div>
-    </div>
-  </section>
 
 <!-- Description + trust bullets -->
   <section class="bg-warm">
@@ -467,6 +455,34 @@ document.addEventListener('keydown', function(e) {
     });
 
   window.loadMoreReviews = function() { renderReviews(); };
+})();
+</script>
+<script>
+(function() {
+  var images = [
+    { src: '/images/hero.jpg',  alt: 'נוף ממרפסת מלון בוטיק קריית האמנים, צפת' },
+    { src: '/images/aci-4.jpg', alt: 'חצר מלון בוטיק קריית האמנים, צפת' },
+    { src: '/images/aci-1.jpg', alt: 'נוף אל הר מירון והגליל' },
+    { src: '/images/aci-2.jpg', alt: 'גנים וחצרות המלון' },
+    { src: '/images/aci-3.jpg', alt: 'ארוחת בוקר באדיבות הבית' }
+  ];
+  var current = 0;
+  var el = document.getElementById('hero-img');
+
+  images.forEach(function(img) {
+    var p = new Image();
+    p.src = img.src;
+  });
+
+  setInterval(function() {
+    current = (current + 1) % images.length;
+    el.style.opacity = '0';
+    setTimeout(function() {
+      el.src = images[current].src;
+      el.alt = images[current].alt;
+      el.style.opacity = '1';
+    }, 400);
+  }, 3000);
 })();
 </script>
 </body>
