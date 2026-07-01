@@ -81,8 +81,13 @@
               <div id="price-base-row"></div>
               <div id="price-surcharge-row"></div>
               <div id="price-meals-row"></div>
-              <div id="price-vat-row"></div>
+              <div id="price-vat-row" style="display:none"></div>
               <div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
+            </div>
+
+            <!-- Cancellation policy note -->
+            <div id="cancel-policy-note" style="display:none;background:#f0f7f0;border:1px solid #7aab7a;border-radius:4px;padding:0.75rem 1rem;font-family:var(--sans);font-size:0.82rem;color:#2e5c2e;line-height:1.6;margin-bottom:1.25rem;direction:rtl;text-align:right">
+              ✓ ביטול חינם עד 7 ימים לפני הצ'ק-אין. הכרטיס יחויב 7 ימים לפני ההגעה.
             </div>
 
             <!-- Payment method (only shown once total is available) -->
@@ -112,11 +117,11 @@
                 <div class="form-field"><label>CVV <span class="req">*</span></label><input type="password" id="cc_cvv" placeholder="000" autocomplete="new-password" maxlength="4" inputmode="numeric"  style="text-align:right"></div>
                 <div class="form-field"><label>שם בעל הכרטיס <span class="req">*</span></label><input type="text" id="cc_name" placeholder="כפי שמופיע על הכרטיס" autocomplete="off"></div>
               </div>
-              <div class="form-field">
+              <div class="form-field" id="id-number-field">
                 <label>תעודת זהות של בעל הכרטיס <span class="req">*</span></label>
                 <input type="text" id="id_number" placeholder="מספר תעודת זהות" inputmode="numeric" autocomplete="off">
               </div>
-              <div id="cc_charge_note" style="display:none;font-size:0.78rem;color:var(--text-light);margin-top:0.6rem;line-height:1.6"></div>
+
             </div>
 
             <!-- Bit section -->
@@ -163,11 +168,13 @@ function updateSubmitBtn() {
   var method  = payMethod ? payMethod.value : 'credit_card';
   var ccOk    = true;
   if (method === 'credit_card') {
+    var isIsraeli = document.querySelector('input[name="is_israeli"]:checked') &&
+                    document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
     ccOk = document.getElementById('cc_number').value.trim().length > 0
         && document.getElementById('cc_expiry').value.trim().length === 5
         && document.getElementById('cc_cvv').value.trim().length >= 3
         && document.getElementById('cc_name').value.trim().length > 0
-        && document.getElementById('id_number').value.trim().length > 0;
+        && (!isIsraeli || document.getElementById('id_number').value.trim().length > 0);
   }
   var nameOk  = document.getElementById('name').value.trim().length > 0;
   var phoneOk = document.getElementById('phone').value.trim().length > 0;
@@ -207,7 +214,6 @@ window.addEventListener('DOMContentLoaded', function() {
 
   updateMealsVisibility(checkin, checkout);
   updatePrice();
-  updateChargeNote(checkin);
 
   document.getElementById('meals').addEventListener('input', updatePrice);
 
@@ -226,6 +232,8 @@ window.addEventListener('DOMContentLoaded', function() {
     radio.addEventListener('change', function() {
       var isIsraeli = this.value === 'yes';
       document.getElementById('vat-exempt-note').style.display = isIsraeli ? 'none' : '';
+      var idField = document.getElementById('id-number-field');
+      if (idField) idField.style.display = isIsraeli ? '' : 'none';
       updatePrice();
       updateSubmitBtn();
     });
@@ -442,10 +450,12 @@ async function updatePrice() {
   document.getElementById('price-surcharge-row').textContent   = 'תוספת אורחים (' + (surchargeRate * 100) + '%): ' + fmt(surcharge);
   document.getElementById('price-meals-row').style.display     = mealsBase ? '' : 'none';
   document.getElementById('price-meals-row').textContent       = 'ארוחות שבת (' + mealsCount + '): ' + fmt(mealsBase);
-  document.getElementById('price-vat-row').style.display       = isIsraeli ? '' : 'none';
-  document.getElementById('price-vat-row').textContent         = 'מע"מ (18%): ' + fmt(vat);
-  document.getElementById('price-total-row').textContent       = 'סה"כ לתשלום: ' + fmt(total);
+  document.getElementById('price-vat-row').style.display       = 'none';
+  document.getElementById('price-total-row').textContent       = 'סה"כ לתשלום' + (isIsraeli ? ' (כולל מע"מ)' : '') + ': ' + fmt(total);
   box.style.display = 'block';
+
+  var cancelNote = document.getElementById('cancel-policy-note');
+  if (cancelNote) cancelNote.style.display = 'block';
 
   paySection.style.display = 'block';
   var bitTotal = document.getElementById('bit-total');
@@ -490,7 +500,7 @@ async function submitBooking() {
 
   if (!room||!checkin||!checkout||!name||!phone) { alert('נא למלא את כל השדות הנדרשים.'); return; }
   if (payMethod === 'credit_card') {
-    if (!cc_number||!cc_expiry||!cc_cvv||!cc_name||!id_number) { alert('נא למלא את כל פרטי כרטיס האשראי.'); return; }
+    if (!cc_number||!cc_expiry||!cc_cvv||!cc_name||(isIsraeli && !id_number)) { alert('נא למלא את כל פרטי כרטיס האשראי.'); return; }
     if (detectCard(cc_number.replace(/\D/g,'')) === 'diners') { alert('אנו אינם מקבלים כרטיסי דיינרס.'); return; }
     if (!luhn(cc_number)) { alert('נא להזין מספר כרטיס אשראי תקין.'); return; }
   }
