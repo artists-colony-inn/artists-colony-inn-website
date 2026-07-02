@@ -15,31 +15,6 @@
   </script>
 
 <!-- Meta Pixel Code --><script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '873268495859931'); fbq('track', 'PageView');</script><noscript> <img height="1" width="1" src="https://www.facebook.com/tr?id=873268495859931&ev=PageView&noscript=1"/></noscript><!-- End Meta Pixel Code -->
-  <style>
-    .room-results { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.25rem; margin-top:2rem; }
-    .room-result-card { border:1px solid var(--border); border-radius:4px; overflow:hidden; background:var(--white); transition:box-shadow 0.2s; }
-    .room-result-card:not(.unavailable):hover { box-shadow:0 4px 18px rgba(0,0,0,0.1); }
-    .room-result-card.unavailable { opacity:0.45; filter:grayscale(0.4); }
-    .room-result-card img { width:100%; aspect-ratio:4/3; object-fit:cover; cursor:pointer; }
-    .room-result-card.unavailable img { cursor:default; }
-    .room-result-body { padding:1rem; }
-    .room-result-body h3 { font-family:var(--serif); font-size:1.15rem; margin:0 0 0.25rem; color:var(--text); }
-    .room-result-price { font-family:var(--sans); font-size:0.9rem; color:var(--gold); font-weight:500; margin-bottom:0.75rem; }
-    .room-result-unavail { font-family:var(--sans); font-size:0.82rem; color:var(--text-light); margin-bottom:0.75rem; }
-    .room-popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000; align-items:center; justify-content:center; padding:1rem; }
-    .room-popup-overlay.open { display:flex; }
-    .room-popup { background:var(--white); border-radius:6px; max-width:640px; width:100%; max-height:90vh; overflow-y:auto; position:relative; }
-    .room-popup-close { position:sticky; top:0; float:left; background:var(--white); border:none; font-size:1.5rem; cursor:pointer; padding:0.5rem 0.75rem; color:var(--text-light); z-index:10; }
-    .room-popup-gallery { display:flex; gap:0.5rem; overflow-x:auto; padding:0 1.25rem 0.75rem; scroll-snap-type:x mandatory; }
-    .room-popup-gallery img { width:220px; flex-shrink:0; aspect-ratio:4/3; object-fit:cover; border-radius:3px; scroll-snap-align:start; }
-    .room-popup-body { padding:1.25rem; }
-    .room-popup-body h2 { font-family:var(--serif); font-size:1.5rem; margin:0 0 0.75rem; color:var(--text); }
-    .room-popup-body p { font-family:var(--sans); font-size:0.9rem; color:var(--text-mid); line-height:1.8; margin-bottom:0.75rem; }
-    .room-popup-body .amenity-list { display:flex; flex-wrap:wrap; gap:0.4rem; margin:1rem 0 1.25rem; }
-    .room-popup-body .amenity { font-family:var(--sans); font-size:0.75rem; border:1px solid var(--border); border-radius:2px; padding:0.2rem 0.6rem; color:var(--text-light); }
-    .avail-form { display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:0.75rem; align-items:end; }
-    @media (max-width:640px) { .avail-form { grid-template-columns:1fr 1fr; } }
-  </style>
 </head>
 <body>
 <script src="/components/header.js"></script>
@@ -58,12 +33,10 @@
     <div class="hero-actions">
 	  <div class="avail-form" style="background:rgba(0,0,0,0.45);padding:1rem;border-radius:4px;margin-bottom:1rem">
 		<div class="form-field" style="margin:0">
-		  <label style="color:var(--white)">צ'ק-אין</label>
-		  <input type="date" id="bw-checkin">
-		</div>
-		<div class="form-field" style="margin:0">
-		  <label style="color:var(--white)">צ'ק-אאוט</label>
-		  <input type="date" id="bw-checkout">
+		  <label style="color:var(--white)">תאריכים</label>
+		  <button type="button" class="dr-trigger" id="dr-trigger" onclick="openDatePicker()">בחרו תאריכים</button>
+		  <input type="hidden" id="bw-checkin">
+		  <input type="hidden" id="bw-checkout">
 		</div>
 		<div class="form-field" style="margin:0">
 		  <label style="color:var(--white)">אורחים (מגיל שנה) <span class="req">*</span></label>
@@ -176,6 +149,23 @@
   </div>
 </div>
 
+<!-- Date range picker popup -->
+<div class="dr-popup-overlay" id="dr-popup-overlay" onclick="closeDatePicker(event)">
+  <div class="dr-popup" id="dr-popup">
+    <button class="dr-popup-close" onclick="closeDatePicker(null)">✕</button>
+    <div class="dr-nav">
+      <button type="button" id="dr-prev">&#8592;</button>
+      <button type="button" id="dr-next">&#8594;</button>
+    </div>
+    <div class="dr-months">
+      <div class="cal-wrap" id="dr-cal-0"></div>
+      <div class="cal-wrap" id="dr-cal-1"></div>
+    </div>
+    <div class="dr-summary" id="dr-summary"></div>
+    <a class="btn btn-gold" id="dr-apply" style="display:none;width:100%;text-align:center;margin-top:0.75rem;cursor:pointer" onclick="applyDatePicker()">אישור</a>
+  </div>
+</div>
+
 <section id="contact" style="padding:4rem 0">
   <div class="container" style="max-width:640px">
     <h2 class="section-title">צור קשר</h2>
@@ -280,12 +270,139 @@ const ROOMS = [
   { id:'Orly', name:'אורלי', maxGuests:2, images:['orly','orly-1','orly-2','orly-3','orly-4','orly-5','orly-6','orly-7'], desc:'<p>אורלי מציעה ג\'קוזי גדול ונוף על הגליל. ראש מיטה בצורת קשת טרקוטה ופרופורציות נדיבות יוצרים אווירה חמה ומקיפה.</p><p>סוויטה המשלבת נוחות מרגיעה עם האופי הייחודי של הארכיטקטורה העתיקה של צפת.</p>', amenities:['חדר אמבטיה פרטי','ג\'קוזי','מיזוג אוויר','חימום','Wi-Fi חינם','מרפסת פרטית','ארוחת בוקר מתנתנו לכם'] }
 ];
 let priceCache = {};
-(function(){
-  var today = new Date().toISOString().split('T')[0];
-  document.getElementById('bw-checkin').min = today;
-  document.getElementById('bw-checkout').min = today;
-  document.getElementById('bw-checkin').addEventListener('change', function(){ document.getElementById('bw-checkout').min = this.value; });
-})();
+
+// ── DATE RANGE PICKER (popup, this month + next) ────────────
+let drYear, drMonth;
+let drStart = null, drEnd = null;
+
+function openDatePicker(){
+  const today = new Date();
+  if (drYear === undefined){ drYear = today.getFullYear(); drMonth = today.getMonth(); }
+  document.getElementById('dr-popup-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderPicker();
+}
+
+function closeDatePicker(e){
+  if (e && e.target !== document.getElementById('dr-popup-overlay')) return;
+  document.getElementById('dr-popup-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function drKey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+function drState(d){
+  const today = new Date(); today.setHours(0,0,0,0);
+  if (d < today) return 'past';
+  if (d.getDay() === 6) return 'checkout-only';
+  return 'available';
+}
+
+function renderMonthGrid(container, year, month){
+  container.innerHTML = '';
+  const title = document.createElement('div');
+  title.style.cssText = 'text-align:center;font-family:var(--sans);font-weight:500;font-size:0.85rem;color:var(--text);margin-bottom:0.5rem;';
+  title.textContent = new Date(year, month, 1).toLocaleDateString('he-IL', { month:'long', year:'numeric' });
+  container.appendChild(title);
+
+  const dlRow = document.createElement('div'); dlRow.className = 'cal-grid';
+  ['א','ב','ג','ד','ה','ו','ש'].forEach(function(l){
+    const d = document.createElement('div'); d.className = 'cal-dow'; d.textContent = l; dlRow.appendChild(d);
+  });
+  container.appendChild(dlRow);
+
+  const grid = document.createElement('div'); grid.className = 'cal-grid';
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++){
+    const e = document.createElement('div'); e.className = 'cal-day empty'; grid.appendChild(e);
+  }
+  for (let d = 1; d <= daysInMonth; d++){
+    const date = new Date(year, month, d);
+    const state = drState(date);
+    const key = drKey(date);
+    const cell = document.createElement('div');
+    cell.className = 'cal-day ' + state;
+    const dn = document.createElement('span'); dn.textContent = d;
+    cell.appendChild(dn);
+
+    if (drStart){
+      if (key === drKey(drStart)) cell.classList.add('selected');
+      if (drEnd){
+        if (key === drKey(drEnd)) cell.classList.add('selected');
+        if (date > drStart && date < drEnd) cell.classList.add('in-range');
+      }
+    }
+    if (state === 'available' || (state === 'checkout-only' && drStart)){
+      cell.style.cursor = 'pointer';
+      cell.onclick = (function(dt, st){ return function(){ drHandleClick(dt, st); }; })(date, state);
+    }
+    grid.appendChild(cell);
+  }
+  container.appendChild(grid);
+}
+
+function renderPicker(){
+  const today = new Date();
+  document.getElementById('dr-prev').disabled = (drYear === today.getFullYear() && drMonth === today.getMonth());
+  renderMonthGrid(document.getElementById('dr-cal-0'), drYear, drMonth);
+  let nextY = drYear, nextM = drMonth + 1;
+  if (nextM > 11){ nextM = 0; nextY++; }
+  renderMonthGrid(document.getElementById('dr-cal-1'), nextY, nextM);
+
+  const summary = document.getElementById('dr-summary');
+  const apply = document.getElementById('dr-apply');
+  if (drStart && drEnd){
+    summary.textContent = 'צ\'ק-אין: ' + fmtDr(drStart) + '  \u2192  צ\'ק-אאוט: ' + fmtDr(drEnd);
+    apply.style.display = 'block';
+  } else if (drStart){
+    summary.textContent = 'צ\'ק-אין: ' + fmtDr(drStart) + ' \u2014 בחרו תאריך צ\'ק-אאוט';
+    apply.style.display = 'none';
+  } else {
+    summary.textContent = 'בחרו תאריך צ\'ק-אין';
+    apply.style.display = 'none';
+  }
+}
+
+function drHandleClick(date, state){
+  if (drStart && drEnd){
+    drStart = null; drEnd = null;
+    renderPicker();
+    return;
+  }
+  if (!drStart){
+    if (state !== 'available') return;
+    drStart = date; drEnd = null;
+  } else if (date <= drStart){
+    drStart = state === 'available' ? date : null;
+    drEnd = null;
+  } else {
+    drEnd = date;
+  }
+  renderPicker();
+}
+
+function fmtDr(d){ return d.toLocaleDateString('he-IL', { day:'numeric', month:'short', year:'numeric' }); }
+function fmtDrForm(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+function applyDatePicker(){
+  if (!drStart || !drEnd) return;
+  document.getElementById('bw-checkin').value  = fmtDrForm(drStart);
+  document.getElementById('bw-checkout').value = fmtDrForm(drEnd);
+  document.getElementById('dr-trigger').textContent = fmtDr(drStart) + '  \u2192  ' + fmtDr(drEnd);
+  closeDatePicker(null);
+}
+
+document.getElementById('dr-prev').onclick = function(){
+  drMonth--; if (drMonth < 0){ drMonth = 11; drYear--; }
+  renderPicker();
+};
+document.getElementById('dr-next').onclick = function(){
+  drMonth++; if (drMonth > 11){ drMonth = 0; drYear++; }
+  renderPicker();
+};
+
 async function searchRooms(){
   var checkin=document.getElementById('bw-checkin').value, checkout=document.getElementById('bw-checkout').value, guests=parseInt(document.getElementById('bw-guests').value);
   if(!checkin||!checkout||checkin>=checkout){alert('נא לבחור תאריכי צ\'ק-אין וצ\'ק-אאוט תקינים.');return;}
