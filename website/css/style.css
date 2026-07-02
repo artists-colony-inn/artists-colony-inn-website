@@ -903,3 +903,43 @@ footer a:hover { color: var(--gold-light); }
   font-style: italic;
   display: none;
 }
+/* ── Room search results (index.html) ─────────────────────── */
+.room-results { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.25rem; margin-top:2rem; }
+.room-result-card { border:1px solid var(--border); border-radius:4px; overflow:hidden; background:var(--white); transition:box-shadow 0.2s; }
+.room-result-card:not(.unavailable):hover { box-shadow:0 4px 18px rgba(0,0,0,0.1); }
+.room-result-card.unavailable { opacity:0.45; filter:grayscale(0.4); }
+.room-result-card img { width:100%; aspect-ratio:4/3; object-fit:cover; cursor:pointer; }
+.room-result-card.unavailable img { cursor:default; }
+.room-result-body { padding:1rem; }
+.room-result-body h3 { font-family:var(--serif); font-size:1.15rem; margin:0 0 0.25rem; color:var(--text); }
+.room-result-price { font-family:var(--sans); font-size:0.9rem; color:var(--gold); font-weight:500; margin-bottom:0.75rem; }
+.room-result-unavail { font-family:var(--sans); font-size:0.82rem; color:var(--text-light); margin-bottom:0.75rem; }
+
+.room-popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000; align-items:center; justify-content:center; padding:1rem; }
+.room-popup-overlay.open { display:flex; }
+.room-popup { background:var(--white); border-radius:6px; max-width:640px; width:100%; max-height:90vh; overflow-y:auto; position:relative; }
+.room-popup-close { position:sticky; top:0; float:right; background:var(--white); border:none; font-size:1.5rem; cursor:pointer; padding:0.5rem 0.75rem; color:var(--text-light); z-index:10; }
+.room-popup-gallery { display:flex; gap:0.5rem; overflow-x:auto; padding:0 1.25rem 0.75rem; scroll-snap-type:x mandatory; }
+.room-popup-gallery img { width:220px; flex-shrink:0; aspect-ratio:4/3; object-fit:cover; border-radius:3px; scroll-snap-align:start; }
+.room-popup-body { padding:1.25rem; }
+.room-popup-body h2 { font-family:var(--serif); font-size:1.5rem; margin:0 0 0.75rem; color:var(--text); }
+.room-popup-body p { font-family:var(--sans); font-size:0.9rem; color:var(--text-mid); line-height:1.8; margin-bottom:0.75rem; }
+.room-popup-body .amenity-list { display:flex; flex-wrap:wrap; gap:0.4rem; margin:1rem 0 1.25rem; }
+.room-popup-body .amenity { font-family:var(--sans); font-size:0.75rem; border:1px solid var(--border); border-radius:2px; padding:0.2rem 0.6rem; color:var(--text-light); }
+
+.avail-form { display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:0.75rem; align-items:end; }
+@media (max-width:640px) { .avail-form { grid-template-columns:1fr 1fr; } }
+
+/* ── Date range picker popup (index/boutique/chayal search) ── */
+.dr-trigger { display:block; width:100%; text-align:left; padding:0.6rem 0.75rem; background:var(--white); border:1px solid var(--border); border-radius:2px; font-family:var(--sans); font-size:0.85rem; color:var(--text); cursor:pointer; }
+.dr-popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000; align-items:center; justify-content:center; padding:1rem; }
+.dr-popup-overlay.open { display:flex; }
+.dr-popup { background:var(--white); border-radius:6px; max-width:680px; width:100%; max-height:90vh; overflow-y:auto; position:relative; padding:1.5rem; }
+.dr-popup-close { position:sticky; top:-1.5rem; float:right; background:var(--white); border:none; font-size:1.5rem; cursor:pointer; padding:0.25rem 0.5rem; color:var(--text-light); z-index:10; }
+.dr-nav { display:flex; justify-content:space-between; margin-bottom:0.75rem; }
+.dr-nav button { background:var(--white); border:1px solid var(--border); width:2.1rem; height:2.1rem; cursor:pointer; font-size:1rem; color:var(--text); }
+.dr-nav button:disabled { opacity:0.3; cursor:default; }
+.dr-months { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; clear:both; }
+.dr-months .cal-wrap { min-width:0; }
+.dr-summary { margin-top:1rem; font-family:var(--sans); font-size:0.85rem; color:var(--text-mid); text-align:center; }
+@media (max-width:640px) { .dr-months { grid-template-columns:1fr; } }
