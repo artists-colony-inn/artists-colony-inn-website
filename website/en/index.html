@@ -302,7 +302,9 @@ function drKey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,
 
 function drState(d){
   const today = new Date(); today.setHours(0,0,0,0);
-  return d < today ? 'past' : 'available';
+  if (d < today) return 'past';
+  if (d.getDay() === 6) return 'checkout-only';
+  return 'available';
 }
 
 function renderMonthGrid(container, year, month){
@@ -341,9 +343,9 @@ function renderMonthGrid(container, year, month){
         if (date > drStart && date < drEnd) cell.classList.add('in-range');
       }
     }
-    if (state === 'available'){
+    if (state === 'available' || (state === 'checkout-only' && drStart)){
       cell.style.cursor = 'pointer';
-      cell.onclick = (function(dt){ return function(){ drHandleClick(dt); }; })(date);
+      cell.onclick = (function(dt, st){ return function(){ drHandleClick(dt, st); }; })(date, state);
     }
     grid.appendChild(cell);
   }
@@ -372,13 +374,18 @@ function renderPicker(){
   }
 }
 
-function drHandleClick(date){
+function drHandleClick(date, state){
   if (drStart && drEnd){
+    drStart = null; drEnd = null;
+    renderPicker();
+    return;
+  }
+  if (!drStart){
+    if (state !== 'available') return;
     drStart = date; drEnd = null;
-  } else if (!drStart){
-    drStart = date;
   } else if (date <= drStart){
-    drStart = date; drEnd = null;
+    drStart = state === 'available' ? date : null;
+    drEnd = null;
   } else {
     drEnd = date;
   }
