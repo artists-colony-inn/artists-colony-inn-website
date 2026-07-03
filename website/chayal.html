@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>מתנה לחיילי צה"ל | מלון בוטיק קריית האמנים, צפת</title>
-  <meta name="description" content="תעודת מתנה של ₪750 לחיילי צה&quot;ל ומשרתים לשעבר. מלון בוטיק קריית האמנים, צפת.">
+  <meta name="description" content="תעודת מתנה של ₪250 לחיילי צה&quot;ל ומשרתים לשעבר. מלון בוטיק קריית האמנים, צפת.">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-H5ZXBGVT4Q"></script>
@@ -182,11 +182,11 @@
 <main>
   <div class="chayal-hero">
     <img id="chayal-hero-img" class="chayal-hero-img" src="/images/hero.jpg" alt="מלון בוטיק קריית האמנים, צפת">
-    <div class="certificate-badge">תעודת מתנה ₪750</div>
+    <div class="certificate-badge">תעודת מתנה ₪250</div>
     <h1>תודה על שירותכם</h1>
     <p class="subtitle">
       לכבוד חיילי צה"ל ומשרתים לשעבר — מכל הדרגות ומכל התקופות.<br>
-      תעודת מתנה של ₪750 כהוקרה על שירותכם — לשהייה במלון בוטיק קריית האמנים בצפת.
+      תעודת מתנה של ₪250 כהוקרה על שירותכם — לשהייה במלון בוטיק קריית האמנים בצפת.
     </p>
     <p class="counter-note">נותרו <strong id="cert-counter" style="color:var(--gold)">...</strong> תעודות מתוך <span id="cert-total">20</span></p>
 	<div class="avail-form" style="margin-top:2rem;direction:rtl;background:rgba(0,0,0,0.3);padding:1rem;border-radius:4px;position:relative">
@@ -387,7 +387,7 @@
 const BOOKING_API   = 'https://script.google.com/macros/s/AKfycbw9wuatkTr1_ajEtjYD5i9M3QiSHxC6E2jMSxrVJf1BXync1BkRC8LbdeueFs7h5zhS/exec';
 const AVAIL_API_URL = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
 const CHAYAL_API    = 'https://script.google.com/macros/s/AKfycbzivmI8dBwZ4pgTGCXBDLZcN9HuHYITwl_Rm66Sr-4cnjkjQkEj-aNZl7Sv-TzqLh2E1g/exec';
-const CERTIFICATE_DISCOUNT = 750;
+const CERTIFICATE_DISCOUNT = 250;
 
 const ROOMS = [
   { id:'Tzviya', name:'צביה', maxGuests:2,
@@ -879,7 +879,7 @@ async function submitBooking() {
       nationality:'', id_number:id_number, is_israeli:'yes',
       payment_method:payMethod, cc_number:cc_number, cc_expiry:cc_expiry,
       cc_cvv:cc_cvv, cc_name:cc_name,
-      requests:'[תעודת חייל 750] ' + document.getElementById('requests').value.trim() + ' | תז"ש: ' + driveUrl,
+      requests:'[תעודת חייל 250] ' + document.getElementById('requests').value.trim() + ' | תז"ש: ' + driveUrl,
       website:document.getElementById('website').value,
       certificate_type:'chayal', certificate_discount:CERTIFICATE_DISCOUNT
     })
