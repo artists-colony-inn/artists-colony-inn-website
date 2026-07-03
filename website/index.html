@@ -59,7 +59,7 @@
 	<p>הממוקם בעיר העתיקה של צפת, ברובע האמנים, מלון בוטיק קריית האמנים נמצא במרחק צעדים ספורים מגלריות, בתי כנסת עתיקים ומסעדות. נוף עוצר נשימה אל הר מירון והגליל נשקף מהמרפסות ומחצרות המלון, אווירה שקטה ומיוחדת, החצובה באבן ירושלמית עתיקת יומין.</p>
 </div>
 
-<div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">בודקים זמינות...</div>
+<div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>בודקים זמינות...</div>
 <div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">לא ניתן לבדוק זמינות כרגע. נסו שוב או צרו קשר בטלפון.</div>
 <div id="bw-results" style="display:none">
   <div class="container">
@@ -416,6 +416,10 @@ document.getElementById('dr-next').onclick = function(){
 async function searchRooms(){
   var checkin=document.getElementById('bw-checkin').value, checkout=document.getElementById('bw-checkout').value, guests=parseInt(document.getElementById('bw-guests').value);
   if(!checkin||!checkout||checkin>=checkout){alert('נא לבחור תאריכי צ\'ק-אין וצ\'ק-אאוט תקינים.');return;}
+  var searchBtn = document.getElementById('bw-search');
+  var origLabel = searchBtn.textContent;
+  searchBtn.disabled = true;
+  searchBtn.textContent = 'מחפש...';
   document.getElementById('bw-results').style.display='none';
   document.getElementById('bw-error').style.display='none';
   document.getElementById('bw-loading').style.display='block';
@@ -426,6 +430,9 @@ async function searchRooms(){
   }catch(e){
     document.getElementById('bw-loading').style.display='none';
     document.getElementById('bw-error').style.display='block';
+  }finally{
+    searchBtn.disabled = false;
+    searchBtn.textContent = origLabel;
   }
 }
 async function fetchRoom(id){
