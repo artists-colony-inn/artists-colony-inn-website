@@ -68,7 +68,7 @@
 	<p>Located in Tzfat's Old City Artists' Quarter, the Artists' Colony Inn is just steps from galleries, ancient synagogues, and restaurants. Breathtaking views of Mount Meron and the Galilee open from the terraces and courtyards, a quiet, singular atmosphere carved from ancient Jerusalem stone.</p>
 </div>
 
-<div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Checking availability...</div>
+<div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>Checking availability...</div>
 <div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Unable to check availability right now. Please try again or contact us by phone.</div>
 <div id="bw-results" style="display:none">
   <div class="container">
@@ -426,6 +426,10 @@ async function searchRooms(){
   var checkin=document.getElementById('bw-checkin').value,checkout=document.getElementById('bw-checkout').value,guests=parseInt(document.getElementById('bw-guests').value);
   if(!checkin||!checkout||checkin>=checkout){alert('Please select valid check-in and check-out dates.');return;}
   if(!guests){ alert('Please select the number of guests.'); return; }
+  var searchBtn = document.getElementById('bw-search');
+  var origLabel = searchBtn.textContent;
+  searchBtn.disabled = true;
+  searchBtn.textContent = 'Searching...';
   document.getElementById('bw-results').style.display='none';
   document.getElementById('bw-error').style.display='none';
   document.getElementById('bw-loading').style.display='block';
@@ -436,6 +440,9 @@ async function searchRooms(){
   }catch(e){
     document.getElementById('bw-loading').style.display='none';
     document.getElementById('bw-error').style.display='block';
+  }finally{
+    searchBtn.disabled = false;
+    searchBtn.textContent = origLabel;
   }
 }
 async function fetchRoom(id){

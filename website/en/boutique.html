@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			  <option value="4">4 guests</option>
 		  </select>
 		</div>
-		<button class="btn btn-gold" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">Search</button>
+		<button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">Search</button>
 	  </div>
 	</div>
     </div>
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div id="bw-results" style="display:none">
         <div class="room-results" id="bw-room-grid"></div>
       </div>
-      <div id="bw-loading" style="display:none;text-align:center;padding:2rem;font-family:var(--sans);color:var(--text-light)">Checking availability...</div>
+      <div id="bw-loading" style="display:none;text-align:center;padding:2rem;font-family:var(--sans);color:var(--text-light)"><span class="bw-spinner"></span>Checking availability...</div>
       <div id="bw-error" style="display:none;text-align:center;padding:2rem;font-family:var(--sans);color:var(--text-light)">Unable to check availability. Please contact us via WhatsApp.</div>
     </div>
   </section>
@@ -304,6 +304,10 @@ async function searchRooms(){
   var checkin=document.getElementById('bw-checkin').value, checkout=document.getElementById('bw-checkout').value, guests=parseInt(document.getElementById('bw-guests').value);
   if(!checkin||!checkout||checkin>=checkout){ alert('Please select valid check-in and check-out dates.'); return; }
   if(!guests){ alert('Please select the number of guests.'); return; }
+  var searchBtn = document.getElementById('bw-search');
+  var origLabel = searchBtn.textContent;
+  searchBtn.disabled = true;
+  searchBtn.textContent = 'Searching...';
   document.getElementById('bw-results').style.display='none';
   document.getElementById('bw-error').style.display='none';
   document.getElementById('bw-loading').style.display='block';
@@ -314,6 +318,9 @@ async function searchRooms(){
   } catch(e){
     document.getElementById('bw-loading').style.display='none';
     document.getElementById('bw-error').style.display='block';
+  } finally {
+    searchBtn.disabled = false;
+    searchBtn.textContent = origLabel;
   }
 }
 
