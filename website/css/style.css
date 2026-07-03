@@ -928,7 +928,7 @@ footer a:hover { color: var(--gold-light); }
 .room-popup-body .amenity-list { display:flex; flex-wrap:wrap; gap:0.4rem; margin:1rem 0 1.25rem; }
 .room-popup-body .amenity { font-family:var(--sans); font-size:0.75rem; border:1px solid var(--border); border-radius:2px; padding:0.2rem 0.6rem; color:var(--text-light); }
 
-.avail-form { display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:0.75rem; align-items:end; }
+.avail-form { display:grid; grid-template-columns:1fr 1fr auto; gap:0.75rem; align-items:end; }
 @media (max-width:640px) { .avail-form { grid-template-columns:1fr 1fr; } }
 
 /* ── Date range picker popup (index/boutique/chayal search) ── */
