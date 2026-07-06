@@ -294,6 +294,7 @@ section.bg-stone { background: var(--bg-stone); }
 }
 
 .rooms-grid-pair { grid-template-columns: repeat(2, 1fr); }
+.rooms-grid-single { grid-template-columns: 1fr; }
 
 .room-group-title {
   font-family: var(--sans);
