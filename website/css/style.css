@@ -427,6 +427,11 @@ footer a:hover { color: var(--gold-light); }
   padding: 0 2rem;
 }
 
+.social-icon { color: #8a8070; transition: color 0.2s; }
+.social-icon:hover { color: var(--gold-light); }
+.social-icon.fb:hover { color: #1877F2; }
+.social-icon.ig:hover { color: #E1306C; }
+
 /* ── ROOM PAGE ── */
 .room-hero-img {
   width: 100%;
