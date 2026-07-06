@@ -510,33 +510,5 @@ function closePopup(event){
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closePopup(null);});
 </script>
-<script>
-(function() {
-  var images = [
-    { src: '/images/hero.jpg',  alt: 'נוף ממרפסת מלון בוטיק קריית האמנים, צפת' },
-    { src: '/images/aci-4.jpg', alt: 'חצר מלון בוטיק קריית האמנים, צפת' },
-    { src: '/images/aci-1.jpg', alt: 'נוף אל הר מירון והגליל' },
-    { src: '/images/aci-2.jpg', alt: 'גנים וחצרות המלון' },
-    { src: '/images/aci-3.jpg', alt: 'ארוחת בוקר באדיבות הבית' }
-  ];
-  var current = 0;
-  var el = document.getElementById('hero-img');
-
-  images.forEach(function(img) {
-    var p = new Image();
-    p.src = img.src;
-  });
-
-  setInterval(function() {
-    current = (current + 1) % images.length;
-    el.style.opacity = '0';
-    setTimeout(function() {
-      el.src = images[current].src;
-      el.alt = images[current].alt;
-      el.style.opacity = '1';
-    }, 400);
-  }, 3000);
-})();
-</script>
 </body>
 </html>
