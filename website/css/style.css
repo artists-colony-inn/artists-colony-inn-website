@@ -198,6 +198,16 @@ nav a:hover, nav a.active { color: var(--gold); }
   flex-wrap: wrap;
 }
 
+.hero-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.75rem 0;
+}
+.hero-divider span { height: 1px; width: 90px; background: var(--gold); }
+.hero-divider i { width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); display: inline-block; }
+
 /* ── BUTTONS ── */
 .btn {
   display: inline-block;
