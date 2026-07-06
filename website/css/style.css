@@ -382,9 +382,10 @@ section.bg-stone { background: var(--bg-stone); }
 /* ── FOOTER ── */
 footer {
   background: var(--bg-stone);
-  color: #b0a898;
+  color: var(--text-light);
   font-family: var(--sans);
   font-size: 0.82rem;
+  font-weight: 500;
   padding: 3rem 0 1.5rem;
 }
 
@@ -403,11 +404,11 @@ footer {
   height: 52px;
   margin-bottom: 1rem;
 }
-.footer-brand p { line-height: 1.8; color: #7a7060; max-width: 260px; }
+.footer-brand p { line-height: 1.8; color: var(--text-light); font-weight: 500; max-width: 260px; }
 
 footer h4 {
   font-size: 0.68rem;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gold);
@@ -416,7 +417,7 @@ footer h4 {
 
 footer ul { list-style: none; }
 footer ul li { margin-bottom: 0.5rem; }
-footer a { color: #8a8070; }
+footer a { color: var(--gold); font-weight: 600; }
 footer a:hover { color: var(--gold-light); }
 
 .footer-bottom {
