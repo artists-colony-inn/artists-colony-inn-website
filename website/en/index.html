@@ -411,7 +411,7 @@ function applyDatePicker(){
   document.getElementById('bw-checkout').value = fmtDrForm(drEnd);
   document.getElementById('dr-trigger').textContent = fmtDr(drStart) + '  \u2192  ' + fmtDr(drEnd);
   closeDatePicker(null);
-}
+};
 
 document.getElementById('dr-prev').onclick = function(){
   drMonth--; if (drMonth < 0){ drMonth = 11; drYear--; }
@@ -519,34 +519,6 @@ function closePopup(event){
   document.body.style.overflow='';
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closePopup(null);});
-</script>
-<script>
-(function() {
-  var images = [
-    { src: '/images/hero.jpg',  alt: "View from the Artists' Colony Inn terrace, Tzfat" },
-    { src: '/images/aci-4.jpg', alt: "Artists' Colony Inn courtyard, Tzfat" },
-    { src: '/images/aci-1.jpg', alt: "View of Mount Meron and the Galilee from Artists' Colony Inn" },
-    { src: '/images/aci-2.jpg', alt: "Artists' Colony Inn gardens and courtyards" },
-    { src: '/images/aci-3.jpg', alt: "Courtesy breakfast at Artists' Colony Inn" }
-  ];
-  var current = 0;
-  var el = document.getElementById('hero-img');
-
-  images.forEach(function(img) {
-    var p = new Image();
-    p.src = img.src;
-  });
-
-  setInterval(function() {
-    current = (current + 1) % images.length;
-    el.style.opacity = '0';
-    setTimeout(function() {
-      el.src = images[current].src;
-      el.alt = images[current].alt;
-      el.style.opacity = '1';
-    }, 400);
-  }, 3000);
-})();
 </script>
 </body>
 </html>
