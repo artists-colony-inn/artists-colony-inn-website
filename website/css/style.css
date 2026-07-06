@@ -952,6 +952,14 @@ footer a:hover { color: var(--gold-light); }
 .room-popup-body .amenity { font-family:var(--sans); font-size:0.75rem; border:1px solid var(--border); border-radius:2px; padding:0.2rem 0.6rem; color:var(--text-light); }
 
 .avail-form { display:grid; grid-template-columns:1fr 1fr auto; gap:0.75rem; align-items:end; }
+.avail-form .dr-trigger,
+.avail-form select,
+.avail-form #bw-search {
+  height: 46px;
+  padding: 0 0.9rem;
+  box-sizing: border-box;
+  line-height: 44px;
+}
 @media (max-width:640px) { .avail-form { grid-template-columns:1fr 1fr; } }
 
 /* ── Date range picker popup (index/boutique/chayal search) ── */
