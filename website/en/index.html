@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>מלון בוטיק קריית האמנים — אכסניה בוטיק בצפת</title>
-  <meta name="description" content="אכסניה בוטיק בלב העיר העתיקה של צפת. חמש סוויטות מעוצבות. ארוחת בוקר כלולה.">
+  <title>Artists' Colony Inn &mdash; Boutique Guesthouse in Tzfat</title>
+  <meta name="description" content="A small boutique inn in the Old City of Safed. Five individually appointed rooms, breakfast included.">
   <link rel="stylesheet" href="/css/style.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-H5ZXBGVT4Q"></script>
   <script>
@@ -13,42 +13,51 @@
 	gtag('js', new Date());
 	gtag('config', 'G-H5ZXBGVT4Q');
   </script>
-
-<!-- Meta Pixel Code --><script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '873268495859931'); fbq('track', 'PageView');</script><noscript> <img height="1" width="1" src="https://www.facebook.com/tr?id=873268495859931&ev=PageView&noscript=1"/></noscript><!-- End Meta Pixel Code -->
+  
+  <!-- Meta Pixel -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '983698949964438');
+  fbq('track', 'PageView');
+  </script>
 </head>
 <body>
-<script src="/components/header.js"></script>
+<script src="/en/components/header.js"></script>
 <main>
 
 <div class="hero">
-  <img id="hero-img" class="hero-img" src="/images/hero.jpg" alt="נוף ממרפסת מלון בוטיק קריית האמנים, צפת" fetchpriority="high" loading="eager" width="1200" height="899">
+  <img id="hero-img" class="hero-img" src="/images/hero.jpg" alt="View from the Artists' Colony Inn terrace, Tzfat" fetchpriority="high" loading="eager" width="1200" height="899">
   <div class="hero-overlay"></div>
   <div class="hero-text">
-	<a href="/about.html#hosts" class="hero-host">
-		<img src="/images/hosts.jpg" alt="שלמה ולאה">
-		<span>שלמה ולאה מזמינים אתכם</span>
+    <a href="/en/about#hosts" class="hero-host">
+		<img src="/images/hosts.jpg" alt="Shlomo and Leah">
+		<span>Shlomo &amp; Leah welcome you</span>
 	</a>
-    <h1>מלון בוטיק קריית האמנים<br><span style="font-weight:400;font-size:0.85em;">בית קסום חצוב מאבן עתיקה</span></h1>
-    <p>נוחות בוטיק בעיר העתיקה של צפת, ברובע האמנים.</p>
+	<h1>Artists' Colony Inn<br><span style="font-weight:400;font-size:0.85em;">A magical five-star home carved from ancient stone.</span></h1>
+    <p>Boutique comfort in Tzfat's Old City, in the Artists' Quarter.</p>
     <div class="hero-actions">
 	  <div class="avail-form" style="background:rgba(0,0,0,0.45);padding:1rem;border-radius:4px;margin-bottom:1rem">
 		<div class="form-field" style="margin:0">
-		  <label style="color:var(--white)">תאריכים</label>
-		  <button type="button" class="dr-trigger" id="dr-trigger" onclick="openDatePicker()">בחרו תאריכים</button>
+		  <label style="color:var(--white)">Dates</label>
+		  <button type="button" class="dr-trigger" id="dr-trigger" onclick="openDatePicker()">Select dates</button>
 		  <input type="hidden" id="bw-checkin">
 		  <input type="hidden" id="bw-checkout">
 		</div>
 		<div class="form-field" style="margin:0">
-		  <label style="color:var(--white)">אורחים (מגיל שנה) <span class="req">*</span></label>
+		  <label style="color:var(--white)">Guests</label>
 		  <select id="bw-guests">
-			<option value="" selected disabled>בחרו מספר אורחים</option>
-			<option value="1">אורח 1</option>
-			<option value="2">2 אורחים</option>
-			<option value="3">3 אורחים</option>
-			<option value="4">4 אורחים</option>
+			<option value="" selected disabled>Select number of guests</option>
+			<option value="1">1 guest</option>
+			<option value="2">2 guests</option>
+			<option value="3">3 guests</option>
+			<option value="4">4 guests</option>
 		  </select>
 		</div>
-		<button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">חפש</button>
+		<button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">Search</button>
 	  </div>
 	</div>
   </div>
@@ -62,32 +71,32 @@
 <section class="property-gallery">
   <div class="container">
     <div class="property-gallery-grid">
-      <img src="/images/aci-1.jpg" alt="נוף אל הר מירון והגליל" loading="lazy">
-      <img src="/images/aci-2.jpg" alt="גנים וחצרות המלון" loading="lazy">
-      <img src="/images/aci-3.jpg" alt="ארוחת בוקר באדיבות הבית" loading="lazy">
+      <img src="/images/aci-1.jpg" alt="View of Mount Meron and the Galilee from Artists' Colony Inn" loading="lazy">
+      <img src="/images/aci-2.jpg" alt="Artists' Colony Inn gardens and courtyards" loading="lazy">
+      <img src="/images/aci-3.jpg" alt="Courtesy breakfast at Artists' Colony Inn" loading="lazy">
     </div>
   </div>
 </section>
 
 <div class="tagline-strip">
-	<h2>מנוחה יופי ורוח של צפת.</h2>
-	<p>הממוקם בעיר העתיקה של צפת, ברובע האמנים, מלון בוטיק קריית האמנים נמצא במרחק צעדים ספורים מגלריות, בתי כנסת עתיקים ומסעדות. נוף עוצר נשימה אל הר מירון והגליל נשקף מהמרפסות ומחצרות המלון, אווירה שקטה ומיוחדת, החצובה באבן ירושלמית עתיקת יומין.</p>
+	<h2>Rest, beauty, and the spirit of Tzfat.</h2>
+	<p>Located in Tzfat's Old City Artists' Quarter, the Artists' Colony Inn is just steps from galleries, ancient synagogues, and restaurants. Breathtaking views of Mount Meron and the Galilee open from the terraces and courtyards, a quiet, singular atmosphere carved from ancient Jerusalem stone.</p>
 </div>
 
 <section>
   <div class="container" style="max-width:760px;text-align:center">
-    <h2 class="section-title">בניין שזוכר</h2>
+    <h2 class="section-title">A Building That Remembers</h2>
     <div class="section-rule"></div>
-    <p style="font-family:var(--sans);font-weight:300;color:var(--text-mid);line-height:1.7">קירות הבניין בני כ-350 שנה, וייתכן שחלק מהאבנים אף עתיקות יותר. מדריך טיולים מוסמך וארכיאולוג בדימוס סיפר לנו שבכמה מהאבנים אפשר לזהות סימנים מתקופת הצלבנים, הממלוכים והעות'מאנים, כולם יחד באותם הקירות. אי שם מתחת לבניין מסתתרת קשת שנטמנה באדמה, רמז לחדרים שעדיין חבויים מתחת לפני הקרקע.</p>
-    <a href="/about.html#history" class="btn btn-outline" style="margin-top:1rem">קראו את הסיפור המלא</a>
+    <p style="font-family:var(--sans);font-weight:300;color:var(--text-mid);line-height:1.7">The walls of this building are close to 350 years old, and some of the stones may be older still. A local tour guide and retired archaeologist once pointed out that certain stones carry marks belonging to Crusader, Mamluk, and Ottoman times alike, all present in the same walls. Somewhere beneath the building, a buried arch in the basement hints at rooms still hidden below.</p>
+    <a href="/en/about.html#history" class="btn btn-outline" style="margin-top:1rem">Read the full story</a>
   </div>
 </section>
 
-<div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>בודקים זמינות...</div>
-<div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">לא ניתן לבדוק זמינות כרגע. נסו שוב או צרו קשר בטלפון.</div>
+<div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>Checking availability...</div>
+<div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Unable to check availability right now. Please try again or contact us by phone.</div>
 <div id="bw-results" style="display:none">
   <div class="container">
-    <h2 class="section-title">חדרים זמינים</h2>
+    <h2 class="section-title">Available Rooms</h2>
     <div class="section-rule"></div>
     <div class="room-results" id="bw-room-grid"></div>
   </div>
@@ -95,74 +104,74 @@
 
 <section id="rooms">
   <div class="container">
-    <h2 class="section-title">חמש סוויטות ייחודיות</h2>
+    <h2 class="section-title">Five Distinct Suites</h2>
     <div class="section-rule"></div>
-    <p style="text-align:center;font-family:var(--sans);font-size:1rem;color:var(--text-light);font-weight:300;margin-bottom:0.25rem">קיץ מ-₪944<br>חורף מ-₪708<br><span style="font-size:0.82rem">לחדר ללילה לזוג, כולל מע"מ</span></p>
-    <p style="text-align:center;font-family:var(--sans);font-size:1rem;color:var(--text-light);font-weight:300;margin-bottom:2.5rem">ביטול חינם עד 7 ימים לפני הצ'ק-אין</p>
+    <p style="text-align:center;font-family:var(--sans);font-size:1rem;color:var(--text-light);font-weight:300;margin-bottom:0.25rem">Summer from ₪800<br>Winter from ₪600<br><span style="font-size:0.82rem">per room per night for a couple, before VAT</span></p>
+    <p style="text-align:center;font-family:var(--sans);font-size:1rem;color:var(--text-light);font-weight:300;margin-bottom:2.5rem">Free cancellation up to 7 days before check-in</p>
     <div class="rooms-grid">
 		<div class="room-card">
-			<a href="/rooms/tzviya.html"><img src="/images/tzviya.jpg" alt="חדר צביה"></a>
+			<a href="/en/rooms/tzviya.html"><img src="/images/tzviya.jpg" alt="Tzviya Suite"></a>
 			<div class="room-card-body">
-				<a href="/rooms/tzviya.html">
+				<a href="/en/rooms/tzviya.html">
 					<div style="display:flex;align-items:center;justify-content:space-between">
-						<h3 style="margin:0">צביה</h3>
-						<img src="/images/breakfast-icon.svg" alt="ארוחת בוקר" style="width:80px;height:80px;margin:-20px;opacity:0.8">
+						<h3 style="margin:0">Tzviya</h3>
+						<img src="/images/breakfast-icon.svg" alt="Courtesy breakfast" style="width:80px;height:80px;margin:-20px">
 					</div>
 				</a>
-				<p class="tagline">מקלט החצוב מאבן עתיקה.</p>
-				<a href="/rooms/tzviya.html" class="btn btn-gold">בדוק זמינות</a>
+				<p class="tagline">A refuge carved from ancient stone.</p>
+				<a href="/en/rooms/tzviya.html" class="btn btn-gold">Check Availability</a>
 			</div>
 		</div>
 		<div class="room-card">
-			<a href="/rooms/aryeh.html"><img src="/images/aryeh.jpg" alt="חדר אריה"></a>
+			<a href="/en/rooms/aryeh.html"><img src="/images/aryeh.jpg" alt="Aryeh Suite"></a>
 			<div class="room-card-body">
-				<a href="/rooms/aryeh.html">
+				<a href="/en/rooms/aryeh.html">
 					<div style="display:flex;align-items:center;justify-content:space-between">
-						<h3 style="margin:0">אריה</h3>
-						<img src="/images/breakfast-icon.svg" alt="ארוחת בוקר" style="width:80px;height:80px;margin:-20px;opacity:0.8">
+						<h3 style="margin:0">Aryeh</h3>
+						<img src="/images/breakfast-icon.svg" alt="Courtesy breakfast" style="width:80px;height:80px;margin:-20px">
 					</div>
 				</a>
-				<p class="tagline">חמימות שמקיפה את שניכם.</p>
-				<a href="/rooms/aryeh.html" class="btn btn-gold">בדוק זמינות</a>
+				<p class="tagline">Warmth that wraps around both of you.</p>
+				<a href="/en/rooms/aryeh.html" class="btn btn-gold">Check Availability</a>
 			</div>
 		</div>
 		<div class="room-card">
-			<a href="/rooms/liana.html"><img src="/images/liana.jpg" alt="סוויטת ליאנה"></a>
+			<a href="/en/rooms/liana.html"><img src="/images/liana.jpg" alt="Liana Suite"></a>
 			<div class="room-card-body">
-				<a href="/rooms/liana.html">
+				<a href="/en/rooms/liana.html">
 					<div style="display:flex;align-items:center;justify-content:space-between">
-						<h3 style="margin:0">ליאנה</h3>
-						<img src="/images/breakfast-icon.svg" alt="ארוחת בוקר" style="width:80px;height:80px;margin:-20px;opacity:0.8">
+						<h3 style="margin:0">Liana</h3>
+						<img src="/images/breakfast-icon.svg" alt="Courtesy breakfast" style="width:80px;height:80px;margin:-20px">
 					</div>
 				</a>
-				<p class="tagline">נוחות ויופי, מתאים לכל המשפחה.</p>
-				<a href="/rooms/liana.html" class="btn btn-gold">בדוק זמינות</a>
+				<p class="tagline">Comfort and beauty, made for the whole family.</p>
+				<a href="/en/rooms/liana.html" class="btn btn-gold">Check Availability</a>
 			</div>
 		</div>
 		<div class="room-card">
-			<a href="/rooms/avital.html"><img src="/images/avital.jpg" alt="סוויטת אביטל"></a>
+			<a href="/en/rooms/avital.html"><img src="/images/avital.jpg" alt="Avital Suite"></a>
 			<div class="room-card-body">
-				<a href="/rooms/avital.html">
+				<a href="/en/rooms/avital.html">
 					<div style="display:flex;align-items:center;justify-content:space-between">
-						<h3 style="margin:0">אביטל</h3>
-						<img src="/images/breakfast-icon.svg" alt="ארוחת בוקר" style="width:80px;height:80px;margin:-20px;opacity:0.8">
+						<h3 style="margin:0">Avital</h3>
+						<img src="/images/breakfast-icon.svg" alt="Courtesy breakfast" style="width:80px;height:80px;margin:-20px">
 					</div>
 				</a>
-				<p class="tagline">לרגעים שתזכרו תמיד.</p>
-				<a href="/rooms/avital.html" class="btn btn-gold">בדוק זמינות</a>
+				<p class="tagline">For the moments you'll always remember.</p>
+				<a href="/en/rooms/avital.html" class="btn btn-gold">Check Availability</a>
 			</div>
 		</div>
 		<div class="room-card">
-			<a href="/rooms/orly.html"><img src="/images/orly.jpg" alt="סוויטת אורלי"></a>
+			<a href="/en/rooms/orly.html"><img src="/images/orly.jpg" alt="Orly Suite"></a>
 			<div class="room-card-body">
-				<a href="/rooms/orly.html">
-					<div style="display:flex;align-items:center;justify-content:space-between">
-						<h3 style="margin:0">אורלי</h3>
-						<img src="/images/breakfast-icon.svg" alt="ארוחת בוקר" style="width:80px;height:80px;margin:-20px;opacity:0.8">
-					</div>
+				<a href="/en/rooms/orly.html">
+				<div style="display:flex;align-items:center;justify-content:space-between">
+					<h3 style="margin:0">Orly</h3>
+					<img src="/images/breakfast-icon.svg" alt="Courtesy breakfast" style="width:80px;height:80px;margin:-20px">
+				</div>
 				</a>
-				<p class="tagline">עולם פרטי משלכם, עם הצצה אל הגליל.</p>
-				<a href="/rooms/orly.html" class="btn btn-gold">בדוק זמינות</a>
+				<p class="tagline">Your own private world, with a glimpse of the Galilee beyond.</p>
+				<a href="/en/rooms/orly.html" class="btn btn-gold">Check Availability</a>
 			</div>
 		</div>
     </div>
@@ -178,7 +187,7 @@
       <h2 id="popup-name"></h2>
       <div id="popup-desc"></div>
       <div class="amenity-list" id="popup-amenities"></div>
-      <a id="popup-book-btn" class="btn btn-gold" style="display:inline-block;width:100%;text-align:center;padding:0.9rem">הזמן חדר זה</a>
+      <a id="popup-book-btn" class="btn btn-gold" style="display:inline-block;width:100%;text-align:center;padding:0.9rem">Book this room</a>
     </div>
   </div>
 </div>
@@ -188,42 +197,43 @@
   <div class="dr-popup" id="dr-popup">
     <button class="dr-popup-close" onclick="closeDatePicker(null)">✕</button>
     <div class="dr-nav">
-      <button type="button" id="dr-prev">&#8594;</button>
-      <button type="button" id="dr-next">&#8592;</button>
+      <button type="button" id="dr-prev">&#8592;</button>
+      <button type="button" id="dr-next">&#8594;</button>
     </div>
     <div class="dr-months">
       <div class="cal-wrap" id="dr-cal-0"></div>
       <div class="cal-wrap" id="dr-cal-1"></div>
     </div>
     <div class="dr-summary" id="dr-summary"></div>
-    <a class="btn btn-gold" id="dr-apply" style="display:none;width:100%;text-align:center;margin-top:0.75rem;cursor:pointer" onclick="applyDatePicker()">אישור</a>
+    <a class="btn btn-gold" id="dr-apply" style="display:none;width:100%;text-align:center;margin-top:0.75rem;cursor:pointer" onclick="applyDatePicker()">Apply</a>
   </div>
 </div>
 
 <section id="contact" style="padding:4rem 0">
   <div class="container" style="max-width:640px">
-    <h2 class="section-title">צור קשר</h2>
+    <span class="section-label" style="text-align:center">Get in Touch</span>
+	<h2 class="section-title">Contact Us</h2>
     <div class="section-rule"></div>
 
-    <form id="contact-form" novalidate>
+    <form id="contact-form" class="booking-form" novalidate>
       <div class="form-field">
-        <label for="cf-name">שם <span class="req">*</span></label>
+        <label for="cf-name">Name <span class="req">*</span></label>
         <input type="text" id="cf-name" name="name" required maxlength="100" autocomplete="name">
       </div>
       <div class="form-field">
-        <label for="cf-email">אימייל <span class="req">*</span></label>
+        <label for="cf-email">Email <span class="req">*</span></label>
         <input type="email" id="cf-email" name="email" required maxlength="200" autocomplete="email">
       </div>
       <div class="form-field">
-        <label for="cf-phone">טלפון</label>
+        <label for="cf-phone">Phone</label>
         <input type="tel" id="cf-phone" name="phone" maxlength="30" autocomplete="tel">
       </div>
       <div class="form-field">
-        <label for="cf-message">הודעה <span class="req">*</span></label>
+        <label for="cf-message">Message <span class="req">*</span></label>
         <textarea id="cf-message" name="message" rows="5" required maxlength="2000"></textarea>
       </div>
       <div class="hp"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
-      <button type="submit" id="cf-submit" class="btn btn-gold" style="width:100%;padding:0.9rem">שלח הודעה</button>
+      <button type="submit" id="cf-submit" class="btn btn-gold" style="width:100%;padding:0.9rem">Send Message</button>
       <div class="form-msg" id="cf-msg"></div>
     </form>
   </div>
@@ -246,12 +256,12 @@
     const message = document.getElementById('cf-message').value.trim();
 
     if (!name || !email || !message) {
-      showMsg('נא למלא את כל השדות הנדרשים.', 'error');
+      showMsg('Please fill in all required fields.', 'error');
       return;
     }
 
     btn.disabled = true;
-    btn.textContent = 'שולח...';
+    btn.textContent = 'Sending...';
     hideMsg();
 
     try {
@@ -259,16 +269,16 @@
       const res  = await fetch(API_URL + '?' + params.toString());
       const data = await res.json();
       if (data.ok) {
-        showMsg('תודה! נחזור אליכם בהקדם.', 'success');
+        showMsg('Thank you! We will get back to you shortly.', 'success');
         form.reset();
       } else {
-        showMsg('משהו השתבש. נסו שוב או צרו קשר בטלפון.', 'error');
+        showMsg('Something went wrong. Please try again or contact us by phone.', 'error');
       }
     } catch(err) {
-      showMsg('לא ניתן לשלוח כרגע. צרו קשר בטלפון או בוואטסאפ.', 'error');
+      showMsg('Unable to send at this time. Please contact us by phone or WhatsApp.', 'error');
     } finally {
       btn.disabled = false;
-      btn.textContent = 'שלח הודעה';
+      btn.textContent = 'Send Message';
     }
   });
 
@@ -285,23 +295,23 @@
 
 <section class="bg-warm">
   <div class="container" style="text-align:center;max-width:640px">
-    <h2>שבת וחגים במלון בוטיק קריית האמנים</h2>
+    <h2>Shabbat & Chagim at the Artists' Colony Inn</h2>
     <div class="section-rule"></div>
-    <p style="color:var(--text-mid);font-weight:300;font-size:1rem">מלון בוטיק קריית האמנים מציע אווירה שקטה ונינוחה לאורך כל השבת והחגים, עם צ'ק-אאוט מאוחר לאחר הבדלה.</p>
-	<a href="/shabbat.html" class="btn btn-gold" style="margin-top:1.5rem">שבת וחגים</a>
-  </div>
+		<p style="color:var(--text-mid);font-weight:300;font-size:1rem">The Artists' Colony Inn offers a restful atmosphere throughout Shabbat and Chagim, with late checkout after Havdalah.</p>
+		<a href="/en/shabbat.html" class="btn btn-gold" style="margin-top:1.5rem">Shabbat & Chagim</a>
+	</div>
 </section>
 
 </main>
-<script src="/components/footer.js"></script>
+<script src="/en/components/footer.js"></script>
 <script>
 const AVAIL_API = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
 const ROOMS = [
-  { id:'Tzviya', name:'צביה', maxGuests:2, images:['tzviya','tzviya-1','tzviya-2','tzviya-3','tzviya-4','tzviya-5'], desc:'<p>חדר שלו עם תקרת אבן קמורה ואור מנורות חמים. צביה הוא חדר אינטימי ומעוצב בטעם רב, הכולל מקלחת גדולה ואווירה שקטה המתאימה בצורה מושלמת לאופייה המדיטטיבי של צפת.</p><p>מראת הברזל האמנותית ופינת הירוק הרכה נותנים לחדר אופי ייחודי — מנוחה, פרטיות ויופי אמיתי.</p>', amenities:['חדר אמבטיה פרטי','מקלחת גדולה','מיזוג אוויר','חימום','Wi-Fi חינם','ארוחת בוקר מתנתנו לכם'] },
-  { id:'Aryeh', name:'אריה', maxGuests:2, images:['aryeh','aryeh-1','aryeh-2','aryeh-3','aryeh-4','aryeh-5'], desc:'<p>אריה מציע פריסה מרווחת עם קירות אבן חשופים וגוונים עצים חמים. החדר כולל ג\'קוזי פרטי ואווירה אינטימית ונינוחה המזמינה להירגעות מוחלטת.</p><p>תקרות קמורות וריהוט קלאסי משלימים את האופי העתיק של הבניין, וכל פרט נבחר עבור נוחות וחמימות.</p>', amenities:['חדר אמבטיה פרטי','ג\'קוזי','מיזוג אוויר','חימום','Wi-Fi חינם','ארוחת בוקר מתנתנו לכם'] },
-  { id:'Liana', name:'ליאנה', maxGuests:4, images:['liana','liana-1','liana-2','liana-3','liana-4','liana-5'], desc:'<p>ליאנה היא אחת הסוויטות המרכזיות של המלון, הכוללת ג\'קוזי גדול ונוף הרים מרהיב על הגליל. גוונים חמים של טרקוטה, עבודות ברזל שחורות ייחודיות ואמנות מקורית על הקירות נותנים לחדר אופי נועז ומזמין.</p><p>מקום לאורחים שרוצים יופי ונוחות במידה שווה.</p>', amenities:['חדר אמבטיה פרטי','ג\'קוזי','מיזוג אוויר','חימום','Wi-Fi חינם','מרפסת פרטית','ארוחת בוקר מתנתנו לכם'] },
-  { id:'Avital', name:'אביטל', maxGuests:4, images:['avital','avital-1','avital-2','avital-3','avital-4','avital-5','avital-6','avital-7'], desc:'<p>אביטל היא הסוויטה הפרטית ביותר במלון, עם ג\'קוזי גדול וגישה לגינה פרטית. פרטי קשתות עשירים, ריהוט עץ כהה ומבטאים עתיקים נותנים לחדר תחושת עומק ומיוחדות.</p><p>מושלם לזוגות המחפשים נסיגה שלמה — הגינה הפרטית הופכת את אביטל לחדר שאין כמוהו במלון.</p>', amenities:['חדר אמבטיה פרטי','ג\'קוזי','מיזוג אוויר','חימום','Wi-Fi חינם','גינה פרטית','ארוחת בוקר מתנתנו לכם'] },
-  { id:'Orly', name:'אורלי', maxGuests:2, images:['orly','orly-1','orly-2','orly-3','orly-4','orly-5','orly-6','orly-7'], desc:'<p>אורלי מציעה ג\'קוזי גדול ונוף על הגליל. ראש מיטה בצורת קשת טרקוטה ופרופורציות נדיבות יוצרים אווירה חמה ומקיפה.</p><p>סוויטה המשלבת נוחות מרגיעה עם האופי הייחודי של הארכיטקטורה העתיקה של צפת.</p>', amenities:['חדר אמבטיה פרטי','ג\'קוזי','מיזוג אוויר','חימום','Wi-Fi חינם','מרפסת פרטית','ארוחת בוקר מתנתנו לכם'] }
+  { id:'Tzviya', name:'Tzviya', maxGuests:2, images:['tzviya','tzviya-1','tzviya-2','tzviya-3','tzviya-4','tzviya-5'], desc:'<p>A serene room with a vaulted stone ceiling and warm lamplight. Tzviya is an intimate, beautifully appointed room featuring a large shower and a quiet atmosphere perfectly suited to Tzfat\'s meditative character.</p><p>The room\'s graceful ironwork mirror and soft green alcove give it a distinctive character — restful, private, and genuinely beautiful.</p>', amenities:['Private bathroom','Large shower','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
+  { id:'Aryeh', name:'Aryeh', maxGuests:2, images:['aryeh','aryeh-1','aryeh-2','aryeh-3','aryeh-4','aryeh-5'], desc:'<p>Aryeh offers a spacious layout with exposed stone walls and warm wooden tones. The room includes a private jacuzzi and an intimate, relaxed atmosphere that invites complete unwinding.</p><p>Vaulted ceilings and classic furniture complement the ancient character of the building, with every detail chosen for comfort and warmth.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
+  { id:'Liana', name:'Liana', maxGuests:4, images:['liana','liana-1','liana-2','liana-3','liana-4','liana-5'], desc:'<p>Liana is one of the inn\'s central suites, featuring a large jacuzzi and a stunning mountain view over the Galilee. Warm terracotta tones, unique black ironwork and original art on the walls give the room a bold and inviting character.</p><p>A room for guests who want both beauty and comfort in equal measure.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] },
+  { id:'Avital', name:'Avital', maxGuests:4, images:['avital','avital-1','avital-2','avital-3','avital-4','avital-5','avital-6','avital-7'], desc:'<p>Avital is the most private suite at the inn, with a large jacuzzi and access to a private garden. Rich arch details, dark wood furniture and antique accents give the room a sense of depth and distinction.</p><p>Ideal for couples seeking a complete retreat — the private garden makes Avital unlike any other room at the inn.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private garden','Courtesy breakfast'] },
+  { id:'Orly', name:'Orly', maxGuests:2, images:['orly','orly-1','orly-2','orly-3','orly-4','orly-5','orly-6','orly-7'], desc:'<p>Orly offers a large jacuzzi and a view over the Galilee. A terracotta arch headboard and generous proportions create a warm, enveloping atmosphere.</p><p>A suite that balances restful comfort with the distinctive character of Tzfat\'s ancient architecture.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] }
 ];
 let priceCache = {};
 
@@ -336,11 +346,11 @@ function renderMonthGrid(container, year, month){
   container.innerHTML = '';
   const title = document.createElement('div');
   title.style.cssText = 'text-align:center;font-family:var(--sans);font-weight:500;font-size:0.85rem;color:var(--text);margin-bottom:0.5rem;';
-  title.textContent = new Date(year, month, 1).toLocaleDateString('he-IL', { month:'long', year:'numeric' });
+  title.textContent = new Date(year, month, 1).toLocaleDateString('en-IL', { month:'long', year:'numeric' });
   container.appendChild(title);
 
   const dlRow = document.createElement('div'); dlRow.className = 'cal-grid';
-  ['א','ב','ג','ד','ה','ו','ש'].forEach(function(l){
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(function(l){
     const d = document.createElement('div'); d.className = 'cal-dow'; d.textContent = l; dlRow.appendChild(d);
   });
   container.appendChild(dlRow);
@@ -388,13 +398,13 @@ function renderPicker(){
   const summary = document.getElementById('dr-summary');
   const apply = document.getElementById('dr-apply');
   if (drStart && drEnd){
-    summary.textContent = 'צ\'ק-אין: ' + fmtDr(drStart) + '  \u2192  צ\'ק-אאוט: ' + fmtDr(drEnd);
+    summary.textContent = 'Check-in: ' + fmtDr(drStart) + '  \u2192  Check-out: ' + fmtDr(drEnd);
     apply.style.display = 'block';
   } else if (drStart){
-    summary.textContent = 'צ\'ק-אין: ' + fmtDr(drStart) + ' \u2014 בחרו תאריך צ\'ק-אאוט';
+    summary.textContent = 'Check-in: ' + fmtDr(drStart) + ' \u2014 select check-out date';
     apply.style.display = 'none';
   } else {
-    summary.textContent = 'בחרו תאריך צ\'ק-אין';
+    summary.textContent = 'Select your check-in date';
     apply.style.display = 'none';
   }
 }
@@ -417,7 +427,7 @@ function drHandleClick(date, state){
   renderPicker();
 }
 
-function fmtDr(d){ return d.toLocaleDateString('he-IL', { day:'numeric', month:'short', year:'numeric' }); }
+function fmtDr(d){ return d.toLocaleDateString('en-IL', { day:'numeric', month:'short', year:'numeric' }); }
 function fmtDrForm(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
 function applyDatePicker(){
@@ -426,7 +436,7 @@ function applyDatePicker(){
   document.getElementById('bw-checkout').value = fmtDrForm(drEnd);
   document.getElementById('dr-trigger').textContent = fmtDr(drStart) + '  \u2192  ' + fmtDr(drEnd);
   closeDatePicker(null);
-}
+};
 
 document.getElementById('dr-prev').onclick = function(){
   drMonth--; if (drMonth < 0){ drMonth = 11; drYear--; }
@@ -438,12 +448,13 @@ document.getElementById('dr-next').onclick = function(){
 };
 
 async function searchRooms(){
-  var checkin=document.getElementById('bw-checkin').value, checkout=document.getElementById('bw-checkout').value, guests=parseInt(document.getElementById('bw-guests').value);
-  if(!checkin||!checkout||checkin>=checkout){alert('נא לבחור תאריכי צ\'ק-אין וצ\'ק-אאוט תקינים.');return;}
+  var checkin=document.getElementById('bw-checkin').value,checkout=document.getElementById('bw-checkout').value,guests=parseInt(document.getElementById('bw-guests').value);
+  if(!checkin||!checkout||checkin>=checkout){alert('Please select valid check-in and check-out dates.');return;}
+  if(!guests){ alert('Please select the number of guests.'); return; }
   var searchBtn = document.getElementById('bw-search');
   var origLabel = searchBtn.textContent;
   searchBtn.disabled = true;
-  searchBtn.textContent = 'מחפש...';
+  searchBtn.textContent = 'Searching...';
   document.getElementById('bw-results').style.display='none';
   document.getElementById('bw-error').style.display='none';
   document.getElementById('bw-loading').style.display='block';
@@ -481,7 +492,7 @@ function calcPrice(data,checkin,checkout,guests){
   var nights=Math.round((end-start)/86400000);
   return{total,nights,available:true};
 }
-function fmt(n){return '₪'+n.toLocaleString('he-IL');}
+function fmt(n){return '₪'+n.toLocaleString('en-IL');}
 function renderResults(results,checkin,checkout,guests){
   var grid=document.getElementById('bw-room-grid');
   grid.innerHTML='';
@@ -501,14 +512,14 @@ function renderResults(results,checkin,checkout,guests){
     body.appendChild(name);
     if(available){
       var price=document.createElement('div');price.className='room-result-price';
-      price.textContent=fmt(priceInfo.total)+' לסך הכל · '+priceInfo.nights+' לילות · כולל מע"מ';
+      price.textContent=fmt(priceInfo.total)+' total · '+priceInfo.nights+' night'+(priceInfo.nights>1?'s':'')+' · VAT included';
       body.appendChild(price);
       var btn=document.createElement('a');btn.className='btn btn-gold';btn.style.cssText='display:block;text-align:center;';
-      btn.href='/booking.html?room='+encodeURIComponent(room.id)+'&checkin='+checkin+'&checkout='+checkout+'&guests='+guests;
-      btn.textContent='הזמן';body.appendChild(btn);
+      btn.href='/en/booking.html?room='+encodeURIComponent(room.id)+'&checkin='+checkin+'&checkout='+checkout+'&guests='+guests;
+      btn.textContent='Book';body.appendChild(btn);
     }else{
       var unavail=document.createElement('div');unavail.className='room-result-unavail';
-      unavail.textContent=guestsExceed?'החדר אינו מתאים למספר האורחים שנבחר':'לא זמין בתאריכים אלו';
+      unavail.textContent=guestsExceed?'This room does not accommodate the number of guests selected':'Not available for these dates';
       body.appendChild(unavail);
     }
     card.appendChild(body);grid.appendChild(card);
@@ -523,7 +534,7 @@ function openPopup(room,checkin,checkout,guests,priceInfo){
   document.getElementById('popup-desc').innerHTML=room.desc;
   var am=document.getElementById('popup-amenities');am.innerHTML='';
   room.amenities.forEach(function(a){var s=document.createElement('span');s.className='amenity';s.textContent=a;am.appendChild(s);});
-  document.getElementById('popup-book-btn').href='/booking.html?room='+encodeURIComponent(room.id)+'&checkin='+checkin+'&checkout='+checkout+'&guests='+guests;
+  document.getElementById('popup-book-btn').href='/en/booking.html?room='+encodeURIComponent(room.id)+'&checkin='+checkin+'&checkout='+checkout+'&guests='+guests;
   document.getElementById('room-popup-overlay').classList.add('open');
   document.body.style.overflow='hidden';
 }
