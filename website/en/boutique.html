@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	  <div id="hero-latest-review" class="hero-review"></div>
       <p>Boutique comfort in Tzfat's Old City, in the Artists' Quarter.</p>
       <div class="hero-actions">
-	  <div class="avail-form" style="background:rgba(0,0,0,0.45);padding:1rem;border-radius:4px;margin-bottom:1rem">
+	  <div class="avail-form" style="background:rgba(26,22,16,0.55);padding:1.25rem 1rem 1rem;border-radius:3px;margin-bottom:1rem;border-top:2px solid var(--gold)">
 		<div class="form-field" style="margin:0">
 		  <label style="color:var(--white)">Dates</label>
 		  <button type="button" class="dr-trigger" id="dr-trigger" onclick="openDatePicker()">Select dates</button>
@@ -68,11 +68,23 @@ document.addEventListener('DOMContentLoaded', function() {
 			  <option value="4">4 guests</option>
 		  </select>
 		</div>
-		<button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">Search</button>
+		<button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap">Search</button>
 	  </div>
 	</div>
     </div>
   </div>
+
+  <div class="hero-divider"><span></span><i></i><span></span></div>
+
+  <section class="property-gallery">
+    <div class="container">
+      <div class="property-gallery-grid">
+        <img src="/images/aci-1.jpg" alt="View of Mount Meron and the Galilee">
+        <img src="/images/aci-2.jpg" alt="Artists' Colony Inn gardens and courtyards">
+        <img src="/images/aci-3.jpg" alt="Courtesy breakfast at Artists' Colony Inn">
+      </div>
+    </div>
+  </section>
 
   <!-- Description + trust bullets -->
   <section class="bg-warm">
@@ -442,35 +454,6 @@ fetch(REVIEWS_API)
     renderReviews();
   })
   .catch(function(){ document.getElementById('reviews-grid').innerHTML=''; });
-</script>
-<script>
-(function() {
-  var images = [
-    { src: '/images/hero.jpg',  alt: "View from the Artists' Colony Inn terrace, Tzfat" },
-    { src: '/images/aci-4.jpg', alt: "Artists' Colony Inn courtyard, Tzfat" },
-    { src: '/images/aci-1.jpg', alt: "View of Mount Meron and the Galilee" },
-    { src: '/images/aci-2.jpg', alt: "Artists' Colony Inn gardens and courtyards" },
-    { src: '/images/aci-3.jpg', alt: "Courtesy breakfast at Artists' Colony Inn" }
-  ];
-  var current = 0;
-  var el = document.getElementById('hero-img');
-
-  // Preload all images
-  images.forEach(function(img) {
-    var p = new Image();
-    p.src = img.src;
-  });
-
-  setInterval(function() {
-    current = (current + 1) % images.length;
-    el.style.opacity = '0';
-    setTimeout(function() {
-      el.src = el.src = images[current].src;
-      el.alt = images[current].alt;
-      el.style.opacity = '1';
-    }, 400);
-  }, 3000);
-})();
 </script>
 </body>
 </html>
