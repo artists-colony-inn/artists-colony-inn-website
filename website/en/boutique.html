@@ -76,6 +76,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <div class="hero-divider"><span></span><i></i><span></span></div>
 
+  <style>
+  .property-gallery .property-gallery-grid{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:768px){.property-gallery .property-gallery-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.property-gallery .property-gallery-grid{grid-template-columns:1fr}}
+  </style>
   <section class="property-gallery">
     <div class="container">
       <div class="property-gallery-grid">
@@ -109,7 +114,18 @@ document.addEventListener('DOMContentLoaded', function() {
       <h2 class="section-title">Choose your perfect suite</h2>
       <div class="section-rule"></div>
       <div id="bw-results" style="display:none">
-        <div class="room-results" id="bw-room-grid"></div>
+        <div class="room-group">
+          <div class="room-group-title">Rooms</div>
+          <div class="rooms-grid rooms-grid-pair" id="bw-group-rooms"></div>
+        </div>
+        <div class="room-group">
+          <div class="room-group-title">Suites</div>
+          <div class="rooms-grid rooms-grid-pair" id="bw-group-suites"></div>
+        </div>
+        <div class="room-group">
+          <div class="room-group-title">Honeymoon Suite</div>
+          <div class="rooms-grid rooms-grid-single" style="max-width:360px;margin:0 auto" id="bw-group-honeymoon"></div>
+        </div>
       </div>
       <div id="bw-loading" style="display:none;text-align:center;padding:2rem;font-family:var(--sans);color:var(--text-light)"><span class="bw-spinner"></span>Checking availability...</div>
       <div id="bw-error" style="display:none;text-align:center;padding:2rem;font-family:var(--sans);color:var(--text-light)">Unable to check availability. Please contact us via WhatsApp.</div>
@@ -363,9 +379,16 @@ function calcPrice(data, checkin, checkout, guests){
 function fmt(n){ return '&#8362;'+n.toLocaleString('en-IL'); }
 
 function renderResults(results, checkin, checkout, guests){
-  var grid = document.getElementById('bw-room-grid');
-  grid.innerHTML = '';
+  var groups = {
+    Tzviya: document.getElementById('bw-group-rooms'),
+    Aryeh: document.getElementById('bw-group-rooms'),
+    Liana: document.getElementById('bw-group-suites'),
+    Orly: document.getElementById('bw-group-suites'),
+    Avital: document.getElementById('bw-group-honeymoon')
+  };
+  Object.keys(groups).forEach(function(id){ groups[id].innerHTML=''; });
   ROOMS.forEach(function(room, i){
+    var grid = groups[room.id];
     var data=results[i], guestsExceed=guests>room.maxGuests;
     var priceInfo=(!guestsExceed&&data)?calcPrice(data,checkin,checkout,guests):null;
     var available=priceInfo&&priceInfo.available;
