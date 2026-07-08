@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	  <div id="hero-latest-review" class="hero-review"></div>
       <p>נוחות בוטיק בעיר העתיקה של צפת, ברובע האמנים.</p>
       <div class="hero-actions">
-	  <div class="avail-form" style="background:rgba(0,0,0,0.45);padding:1rem;border-radius:4px;margin-bottom:1rem">
+	  <div class="avail-form" style="background:rgba(26,22,16,0.55);padding:1.25rem 1rem 1rem;border-radius:3px;margin-bottom:1rem;border-top:2px solid var(--gold)">
 		<div class="form-field" style="margin:0">
 		  <label style="color:var(--white)">תאריכים</label>
 		  <button type="button" class="dr-trigger" id="dr-trigger" onclick="openDatePicker()">בחרו תאריכים</button>
@@ -67,11 +67,28 @@ document.addEventListener('DOMContentLoaded', function() {
 			<option value="4">4 אורחים</option>
 		  </select>
 		</div>
-		<button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap;padding:0.7rem 1.5rem">חפש</button>
+		<button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap">חפש</button>
 	  </div>
 	</div>
     </div>
   </div>
+
+  <div class="hero-divider"><span></span><i></i><span></span></div>
+
+  <style>
+  .property-gallery .property-gallery-grid{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:768px){.property-gallery .property-gallery-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.property-gallery .property-gallery-grid{grid-template-columns:1fr}}
+  </style>
+  <section class="property-gallery">
+    <div class="container">
+      <div class="property-gallery-grid">
+        <img src="/images/aci-1.jpg" alt="נוף אל הר מירון והגליל">
+        <img src="/images/aci-2.jpg" alt="גנים וחצרות המלון">
+        <img src="/images/aci-3.jpg" alt="ארוחת בוקר באדיבות הבית">
+      </div>
+    </div>
+  </section>
 
 <!-- Description + trust bullets -->
   <section class="bg-warm">
@@ -93,10 +110,21 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- Booking widget -->
   <section id="booking" style="padding:3rem 0 4rem">
     <div class="container">
-      <h2 class="section-title">בחרו את הסוויטה המושלמת לכם</h2>
-      <div class="section-rule"></div>
       <div id="bw-results" style="display:none">
-        <div class="room-results" id="bw-room-grid"></div>
+        <h2 class="section-title">בחרו את הסוויטה המושלמת לכם</h2>
+        <div class="section-rule"></div>
+        <div class="room-group">
+          <div class="room-group-title">חדרים</div>
+          <div class="rooms-grid rooms-grid-pair" id="bw-group-rooms"></div>
+        </div>
+        <div class="room-group">
+          <div class="room-group-title">סוויטות</div>
+          <div class="rooms-grid rooms-grid-pair" id="bw-group-suites"></div>
+        </div>
+        <div class="room-group">
+          <div class="room-group-title">סוויטת ירח דבש</div>
+          <div class="rooms-grid rooms-grid-single" style="max-width:360px;margin:0 auto" id="bw-group-honeymoon"></div>
+        </div>
       </div>
       <div id="bw-loading" style="display:none;text-align:center;padding:2rem;font-family:var(--sans);color:var(--text-light)"><span class="bw-spinner"></span>בודק זמינות...</div>
       <div id="bw-error" style="display:none;text-align:center;padding:2rem;font-family:var(--sans);color:var(--text-light)">לא ניתן לבדוק זמינות כרגע. אנא צרו קשר בוואטסאפ.</div>
@@ -413,10 +441,17 @@ function fmt(n) {
 }
 
 function renderResults(results, checkin, checkout, guests) {
-  const grid = document.getElementById('bw-room-grid');
-  grid.innerHTML = '';
+  const groups = {
+    Tzviya: document.getElementById('bw-group-rooms'),
+    Aryeh: document.getElementById('bw-group-rooms'),
+    Liana: document.getElementById('bw-group-suites'),
+    Orly: document.getElementById('bw-group-suites'),
+    Avital: document.getElementById('bw-group-honeymoon')
+  };
+  Object.keys(groups).forEach(function(id){ groups[id].innerHTML = ''; });
 
   ROOMS.forEach(function(room, i) {
+    const grid = groups[room.id];
     const data = results[i];
     const guestsExceed = guests > room.maxGuests;
     const priceInfo = (!guestsExceed && data) ? calcPrice(data, checkin, checkout, guests) : null;
@@ -569,34 +604,6 @@ document.addEventListener('keydown', function(e) {
     });
 
   window.loadMoreReviews = function() { renderReviews(); };
-})();
-</script>
-<script>
-(function() {
-  var images = [
-    { src: '/images/hero.jpg',  alt: 'נוף ממרפסת מלון בוטיק קריית האמנים, צפת' },
-    { src: '/images/aci-4.jpg', alt: 'חצר מלון בוטיק קריית האמנים, צפת' },
-    { src: '/images/aci-1.jpg', alt: 'נוף אל הר מירון והגליל' },
-    { src: '/images/aci-2.jpg', alt: 'גנים וחצרות המלון' },
-    { src: '/images/aci-3.jpg', alt: 'ארוחת בוקר באדיבות הבית' }
-  ];
-  var current = 0;
-  var el = document.getElementById('hero-img');
-
-  images.forEach(function(img) {
-    var p = new Image();
-    p.src = img.src;
-  });
-
-  setInterval(function() {
-    current = (current + 1) % images.length;
-    el.style.opacity = '0';
-    setTimeout(function() {
-      el.src = images[current].src;
-      el.alt = images[current].alt;
-      el.style.opacity = '1';
-    }, 400);
-  }, 3000);
 })();
 </script>
 </body>
