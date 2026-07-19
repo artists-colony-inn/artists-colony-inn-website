@@ -10,7 +10,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
         <span style="font-family:'David','Times New Roman',serif;font-size:0.75rem;font-weight:700;background:linear-gradient(135deg,#4285F4,#EA4335,#FBBC05,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em">Google</span>
         <span style="display:flex;flex-direction:column;align-items:center;line-height:1.2">
           <span style="color:#FBBC05;font-size:0.65rem;letter-spacing:0.02em">★★★★★</span>
-          <span style="font-family:var(--sans);font-size:0.65rem;color:var(--text-light)">4.8 (126)</span>
+          <span style="font-family:var(--sans);font-size:0.65rem;color:var(--text-light)">4.8 (127)</span>
         </span>
       </a>
     </div>
