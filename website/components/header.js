@@ -25,7 +25,13 @@ document.currentScript.insertAdjacentHTML('afterend', `
         <li><a href="/about.html">אודות</a></li>
         <li><a href="/index.html#contact">צור קשר</a></li>
         <li><a href="/reviews.html">ביקורות</a></li>
-        <li><a href="tel:+972586200779" class="nav-phone" dir="ltr">+972-58-620-0779</a></li>
+        <li>
+		  <a href="tel:+972586200779" class="nav-phone nav-phone-icon" dir="ltr" data-tooltip="+972-58-620-0779" aria-label="+972-58-620-0779">
+			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+			</svg>
+		  </a>
+		</li>
         <li><a href="#" id="lang-toggle" class="nav-phone">English</a></li>
       </ul>
     </nav>
@@ -96,4 +102,37 @@ document.head.appendChild(favicon);
 
 var style = document.createElement('style');
 style.textContent = 'body { direction: rtl; text-align: right; }';
+document.head.appendChild(style);
+var style = document.createElement('style');
+style.textContent = `
+  body { direction: rtl; text-align: right; }
+  .nav-phone-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-phone-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    right: 50%;
+    transform: translateX(50%) translateY(4px);
+    background: var(--text-dark, #222);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    white-space: nowrap;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    z-index: 250;
+  }
+  .nav-phone-icon:hover::after,
+  .nav-phone-icon:focus::after {
+    opacity: 1;
+  }
+`;
 document.head.appendChild(style);
