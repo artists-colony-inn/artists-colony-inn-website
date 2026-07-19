@@ -811,6 +811,9 @@ footer a:hover { color: var(--gold-light); }
   margin-left: 0.4rem;
 }
 
+:lang(he) body { direction: rtl; text-align: right; }
+:lang(en) body { direction: ltr; text-align: left; }
+
 [dir="rtl"] .trust-bullets,
 .trust-bullets[dir="rtl"] {
   direction: rtl;
