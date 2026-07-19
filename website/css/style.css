@@ -123,6 +123,40 @@ nav a:hover, nav a.active { color: var(--gold); }
   text-transform: none !important;
 }
 
+.nav-phone-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-phone-icon::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 100%;
+  right: 50%;
+  transform: translateX(50%) translateY(-4px);
+  background: var(--white);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  white-space: nowrap;
+  padding: 0.3rem 0.6rem;
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 250;
+}
+
+.nav-phone-icon:hover::after,
+.nav-phone-icon:focus::after {
+  opacity: 1;
+  transform: translateX(50%) translateY(4px);
+}
+
 .nav-toggle {
   display: none;
   background: none;
