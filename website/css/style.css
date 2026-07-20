@@ -210,8 +210,8 @@ nav a:hover, nav a.active { color: var(--gold); }
   text-transform: none !important;
 }
 
-#lang-toggle[dir="ltr"] { text-align: left; }
-#lang-toggle[dir="rtl"] { text-align: right; }
+nav ul li[dir="ltr"] { display: flex; justify-content: flex-start; }
+nav ul li[dir="rtl"] { display: flex; justify-content: flex-end; }
 
 /* ── HERO ── */
 .hero {
