@@ -50,10 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   var headerFixed = document.querySelector('.header-fixed');
+  var hasHero = !!document.querySelector('.hero');
   function toggleHeaderScrolled() {
     if (headerFixed) {
-      headerFixed.classList.toggle('is-scrolled', window.scrollY > 20);
-    }
+	  headerFixed.classList.toggle('is-scrolled', hasHero ? window.scrollY > 20 : true);
+	}
   }
   toggleHeaderScrolled();
   window.addEventListener('scroll', toggleHeaderScrolled, { passive: true });
