@@ -58,7 +58,8 @@ a:hover { color: var(--gold-light); }
   left: 0;
   right: 0;
   z-index: 150;
-  background: transparent;
+  background: var(--white);
+  box-shadow: var(--shadow);
 }
 
 .header-top-inner {
@@ -86,17 +87,15 @@ a:hover { color: var(--gold-light); }
 .header-phone {
   display: inline-flex;
   align-items: center;
-  color: var(--white) !important;
+  color: var(--gold) !important;
   font-family: var(--sans);
   font-size: 0.82rem;
   letter-spacing: 0.04em;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
 }
 .header-phone svg {
   display: none;
   width: 18px;
   height: 18px;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
 }
 
 @media (max-width: 768px) {
@@ -126,7 +125,7 @@ a:hover { color: var(--gold-light); }
 
 .nav-toggle {
   display: flex;
-  background: transparent;
+  background: var(--white);
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -137,21 +136,12 @@ a:hover { color: var(--gold-light); }
   width: 42px;
   height: 42px;
   padding: 0;
-  transition: background 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: var(--shadow);
 }
 .nav-toggle span {
   display: block;
   width: 18px;
   height: 2px;
-  background: var(--white);
-  transition: background 0.25s ease;
-}
-
-.header-fixed.is-scrolled .nav-toggle {
-  background: var(--white);
-  box-shadow: var(--shadow);
-}
-.header-fixed.is-scrolled .nav-toggle span {
   background: var(--text);
 }
 
