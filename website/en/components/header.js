@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.documentElement.lang = 'en';
   
 	var btnBook = document.querySelector('.btn-book');
-	if (btnBook && document.getElementById('bw-search')) {
+	if (btnBook && window.IS_BOOK_PAGE) {
 	  btnBook.style.display = 'none';
 	}
 
