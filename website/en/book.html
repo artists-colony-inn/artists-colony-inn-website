@@ -62,12 +62,20 @@
 
 <div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>Checking availability...</div>
 <div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Unable to check availability right now. Please try again or contact us by phone.</div>
-<div id="bw-results" style="display:none;padding-bottom:6rem">
+<div id="bw-results" style="display:none;padding-bottom:5rem">
   <div class="container">
     <h2 class="section-title">Available Rooms</h2>
     <div class="section-rule"></div>
-    <p style="text-align:center;font-family:var(--sans);font-size:0.85rem;color:var(--text-light);font-weight:300;margin-top:-1.5rem;margin-bottom:2rem">You can select more than one room to book together.</p>
-    <div class="room-results" id="bw-room-grid"></div>
+    <div class="book-layout">
+      <div class="room-list" id="bw-room-grid"></div>
+      <aside class="cart-widget">
+        <h3 id="cart-heading">Your Cart: 0 Items</h3>
+        <div id="cart-empty" class="cart-empty">No rooms selected yet.</div>
+        <ul id="cart-items" class="cart-items" style="display:none"></ul>
+        <div id="cart-total" class="cart-total" style="display:none"></div>
+        <a id="cart-continue-btn" class="btn btn-gold" href="#" style="display:none">Continue to Book</a>
+      </aside>
+    </div>
   </div>
 </div>
 
@@ -102,22 +110,16 @@
   </div>
 </div>
 
-<!-- Sticky selection bar -->
-<div class="selection-bar" id="selection-bar">
-  <div class="selection-bar-info" id="selection-bar-info"></div>
-  <a class="btn btn-gold" id="selection-bar-btn" href="#">Continue to Book</a>
-</div>
-
 </main>
 <script src="/en/components/footer.js"></script>
 <script>
 const AVAIL_API = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
 const ROOMS = [
-  { id:'Tzviya', name:'Tzviya', maxGuests:2, images:['tzviya','tzviya-1','tzviya-2','tzviya-3','tzviya-4','tzviya-5'], desc:'<p>A serene room with a vaulted stone ceiling and warm lamplight. Tzviya is an intimate, beautifully appointed room featuring a large shower and a quiet atmosphere perfectly suited to Tzfat\'s meditative character.</p><p>The room\'s graceful ironwork mirror and soft green alcove give it a distinctive character — restful, private, and genuinely beautiful.</p>', amenities:['Private bathroom','Large shower','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
-  { id:'Aryeh', name:'Aryeh', maxGuests:2, images:['aryeh','aryeh-1','aryeh-2','aryeh-3','aryeh-4','aryeh-5'], desc:'<p>Aryeh offers a spacious layout with exposed stone walls and warm wooden tones. The room includes a private jacuzzi and an intimate, relaxed atmosphere that invites complete unwinding.</p><p>Vaulted ceilings and classic furniture complement the ancient character of the building, with every detail chosen for comfort and warmth.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
-  { id:'Liana', name:'Liana', maxGuests:4, images:['liana','liana-1','liana-2','liana-3','liana-4','liana-5'], desc:'<p>Liana is one of the inn\'s central suites, featuring a large jacuzzi and a stunning mountain view over the Galilee. Warm terracotta tones, unique black ironwork and original art on the walls give the room a bold and inviting character.</p><p>A room for guests who want both beauty and comfort in equal measure.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] },
-  { id:'Avital', name:'Avital', maxGuests:4, images:['avital','avital-1','avital-2','avital-3','avital-4','avital-5','avital-6','avital-7'], desc:'<p>Avital is the most private suite at the inn, with a large jacuzzi and access to a private garden. Rich arch details, dark wood furniture and antique accents give the room a sense of depth and distinction.</p><p>Ideal for couples seeking a complete retreat — the private garden makes Avital unlike any other room at the inn.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private garden','Courtesy breakfast'] },
-  { id:'Orly', name:'Orly', maxGuests:2, images:['orly','orly-1','orly-2','orly-3','orly-4','orly-5','orly-6','orly-7'], desc:'<p>Orly offers a large jacuzzi and a view over the Galilee. A terracotta arch headboard and generous proportions create a warm, enveloping atmosphere.</p><p>A suite that balances restful comfort with the distinctive character of Tzfat\'s ancient architecture.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] }
+  { id:'Tzviya', name:'Tzviya', maxGuests:2, tagline:'A refuge carved from ancient stone.', images:['tzviya','tzviya-1','tzviya-2','tzviya-3','tzviya-4','tzviya-5'], desc:'<p>A serene room with a vaulted stone ceiling and warm lamplight. Tzviya is an intimate, beautifully appointed room featuring a large shower and a quiet atmosphere perfectly suited to Tzfat\'s meditative character.</p><p>The room\'s graceful ironwork mirror and soft green alcove give it a distinctive character — restful, private, and genuinely beautiful.</p>', amenities:['Private bathroom','Large shower','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
+  { id:'Aryeh', name:'Aryeh', maxGuests:2, tagline:'Warmth that wraps around both of you.', images:['aryeh','aryeh-1','aryeh-2','aryeh-3','aryeh-4','aryeh-5'], desc:'<p>Aryeh offers a spacious layout with exposed stone walls and warm wooden tones. The room includes a private jacuzzi and an intimate, relaxed atmosphere that invites complete unwinding.</p><p>Vaulted ceilings and classic furniture complement the ancient character of the building, with every detail chosen for comfort and warmth.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
+  { id:'Liana', name:'Liana', maxGuests:4, tagline:'Comfort and beauty, made for the whole family.', images:['liana','liana-1','liana-2','liana-3','liana-4','liana-5'], desc:'<p>Liana is one of the inn\'s central suites, featuring a large jacuzzi and a stunning mountain view over the Galilee. Warm terracotta tones, unique black ironwork and original art on the walls give the room a bold and inviting character.</p><p>A room for guests who want both beauty and comfort in equal measure.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] },
+  { id:'Avital', name:'Avital', maxGuests:4, tagline:'For the moments you\'ll always remember.', images:['avital','avital-1','avital-2','avital-3','avital-4','avital-5','avital-6','avital-7'], desc:'<p>Avital is the most private suite at the inn, with a large jacuzzi and access to a private garden. Rich arch details, dark wood furniture and antique accents give the room a sense of depth and distinction.</p><p>Ideal for couples seeking a complete retreat — the private garden makes Avital unlike any other room at the inn.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private garden','Courtesy breakfast'] },
+  { id:'Orly', name:'Orly', maxGuests:2, tagline:'Your own private world, with a glimpse of the Galilee beyond.', images:['orly','orly-1','orly-2','orly-3','orly-4','orly-5','orly-6','orly-7'], desc:'<p>Orly offers a large jacuzzi and a view over the Galilee. A terracotta arch headboard and generous proportions create a warm, enveloping atmosphere.</p><p>A suite that balances restful comfort with the distinctive character of Tzfat\'s ancient architecture.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] }
 ];
 let priceCache = {};
 let selectedRooms = {};
@@ -259,7 +261,7 @@ async function searchRooms(){
   if(!checkin||!checkout||checkin>=checkout){alert('Please select valid check-in and check-out dates.');return;}
   if(!guests){ alert('Please select the number of guests.'); return; }
   selectedRooms = {};
-  updateSelectionBar();
+  updateCartWidget();
   var searchBtn = document.getElementById('bw-search');
   var origLabel = searchBtn.textContent;
   searchBtn.disabled = true;
@@ -303,37 +305,74 @@ function calcPrice(data,checkin,checkout,guests){
 }
 function fmt(n){return '₪'+n.toLocaleString('en-IL');}
 
-function toggleRoomSelection(room, priceInfo, checkin, checkout, guests, card, btn){
+function toggleRoomSelection(room, priceInfo, checkin, checkout, guests, rowEl, btnEl){
   if (selectedRooms[room.id]){
     delete selectedRooms[room.id];
-    card.classList.remove('selected');
-    btn.classList.remove('selected');
-    btn.textContent = 'Add to Selection';
+    rowEl.classList.remove('selected');
+    btnEl.classList.remove('selected');
+    btnEl.textContent = 'Book Now';
   } else {
     selectedRooms[room.id] = { room:room, priceInfo:priceInfo, checkin:checkin, checkout:checkout, guests:guests };
-    card.classList.add('selected');
-    btn.classList.add('selected');
-    btn.textContent = 'Added \u2713 (Remove)';
+    rowEl.classList.add('selected');
+    btnEl.classList.add('selected');
+    btnEl.textContent = 'Added \u2713 (Remove)';
   }
-  updateSelectionBar();
+  updateCartWidget();
 }
 
-function updateSelectionBar(){
-  var bar = document.getElementById('selection-bar');
+function removeFromCart(roomId){
+  delete selectedRooms[roomId];
+  var rowEl = document.querySelector('.room-list-row[data-room-id="'+roomId+'"]');
+  if (rowEl){
+    rowEl.classList.remove('selected');
+    var btnEl = rowEl.querySelector('.btn-select');
+    if (btnEl){ btnEl.classList.remove('selected'); btnEl.textContent = 'Book Now'; }
+  }
+  updateCartWidget();
+}
+
+function updateCartWidget(){
   var ids = Object.keys(selectedRooms);
+  document.getElementById('cart-heading').textContent = 'Your Cart: ' + ids.length + ' Item' + (ids.length===1?'':'s');
+
+  var emptyEl = document.getElementById('cart-empty');
+  var listEl = document.getElementById('cart-items');
+  var totalEl = document.getElementById('cart-total');
+  var continueBtn = document.getElementById('cart-continue-btn');
+
   if (ids.length === 0){
-    bar.classList.remove('show');
+    emptyEl.style.display = 'block';
+    listEl.style.display = 'none';
+    totalEl.style.display = 'none';
+    continueBtn.style.display = 'none';
     return;
   }
+
+  emptyEl.style.display = 'none';
+  listEl.style.display = 'block';
+  listEl.innerHTML = '';
   var total = 0;
-  ids.forEach(function(id){ total += selectedRooms[id].priceInfo.total; });
-  var info = document.getElementById('selection-bar-info');
-  info.innerHTML = '<strong>' + ids.length + ' room' + (ids.length>1?'s':'') + '</strong> selected \u00b7 ' + fmt(total) + ' total';
+  ids.forEach(function(id){
+    var entry = selectedRooms[id];
+    total += entry.priceInfo.total;
+    var li = document.createElement('li');
+    li.className = 'cart-item';
+    var info = document.createElement('div');
+    var name = document.createElement('div'); name.className = 'cart-item-name'; name.textContent = entry.room.name;
+    var price = document.createElement('div'); price.className = 'cart-item-price'; price.textContent = fmt(entry.priceInfo.total) + ' \u00b7 ' + entry.priceInfo.nights + ' night' + (entry.priceInfo.nights>1?'s':'');
+    info.appendChild(name); info.appendChild(price);
+    var remove = document.createElement('button'); remove.type = 'button'; remove.className = 'cart-item-remove'; remove.textContent = 'Remove';
+    remove.onclick = function(){ removeFromCart(id); };
+    li.appendChild(info); li.appendChild(remove);
+    listEl.appendChild(li);
+  });
+
+  totalEl.style.display = 'flex';
+  totalEl.innerHTML = '<span>Total</span><span>' + fmt(total) + '</span>';
 
   var first = selectedRooms[ids[0]];
-  var btn = document.getElementById('selection-bar-btn');
-  btn.href = '/en/booking.html?rooms=' + ids.map(encodeURIComponent).join(',') + '&checkin=' + first.checkin + '&checkout=' + first.checkout + '&guests=' + first.guests;
-  bar.classList.add('show');
+  continueBtn.style.display = 'block';
+  continueBtn.href = '/en/booking.html?rooms=' + ids.map(encodeURIComponent).join(',') + '&checkin=' + first.checkin + '&checkout=' + first.checkout + '&guests=' + first.guests;
 }
 
 function renderResults(results,checkin,checkout,guests){
@@ -343,37 +382,59 @@ function renderResults(results,checkin,checkout,guests){
     var data=results[i],guestsExceed=guests>room.maxGuests;
     var priceInfo=(!guestsExceed&&data)?calcPrice(data,checkin,checkout,guests):null;
     var available=priceInfo&&priceInfo.available;
-    var card=document.createElement('div');
-    card.className='room-result-card'+(available?'':' unavailable');
-    if (selectedRooms[room.id]) card.classList.add('selected');
+    var row=document.createElement('div');
+    row.className='room-list-row'+(available?'':' unavailable');
+    row.setAttribute('data-room-id', room.id);
+    if (selectedRooms[room.id]) row.classList.add('selected');
+
+    var imgWrap=document.createElement('div');imgWrap.className='room-list-image-wrap';
     var img=document.createElement('img');
     img.src='/images/'+room.images[0]+'.jpg';img.alt=room.name;
     if(available)img.onclick=function(){openPopup(room,checkin,checkout,guests,priceInfo);};
-    card.appendChild(img);
-    if (selectedRooms[room.id]){
-      var badge=document.createElement('div');badge.className='room-select-badge';badge.textContent='Selected';
-      card.appendChild(badge);
-    }
-    var body=document.createElement('div');body.className='room-result-body';
+    imgWrap.appendChild(img);
+    row.appendChild(imgWrap);
+
+    var details=document.createElement('div');details.className='room-list-details';
     var name=document.createElement('h3');name.textContent=room.name;
-    if(available){name.style.cursor='pointer';name.onclick=function(){openPopup(room,checkin,checkout,guests,priceInfo);};}
-    body.appendChild(name);
+    if(available)name.onclick=function(){openPopup(room,checkin,checkout,guests,priceInfo);};
+    details.appendChild(name);
+
+    var meta=document.createElement('div');meta.className='room-list-meta';
+    meta.textContent='Sleeps '+room.maxGuests;
+    details.appendChild(meta);
+
+    var tagline=document.createElement('p');tagline.className='room-list-tagline';tagline.textContent=room.tagline;
+    details.appendChild(tagline);
+
+    var detailsLink=document.createElement('a');detailsLink.className='room-list-details-link';detailsLink.textContent='Room Details';
+    detailsLink.onclick=function(){openPopup(room,checkin,checkout,guests,priceInfo);};
+    details.appendChild(detailsLink);
+
     if(available){
-      var price=document.createElement('div');price.className='room-result-price';
-      price.textContent=fmt(priceInfo.total)+' total · '+priceInfo.nights+' night'+(priceInfo.nights>1?'s':'')+' · VAT included';
-      body.appendChild(price);
+      var rateRow=document.createElement('div');rateRow.className='room-list-rate-row';
+      var rateLabel=document.createElement('div');rateLabel.className='room-list-rate-label';
+      rateLabel.innerHTML='<strong>Nightly Rate</strong><span>Includes courtesy breakfast</span>';
+      rateRow.appendChild(rateLabel);
+
+      var ratePrice=document.createElement('div');ratePrice.className='room-list-rate-price';
+      var amount=document.createElement('div');amount.className='price-amount';amount.textContent=fmt(priceInfo.total);
+      var caption=document.createElement('div');caption.className='price-caption';
+      caption.textContent=priceInfo.nights+' night'+(priceInfo.nights>1?'s':'')+' total \u00b7 VAT included';
       var btn=document.createElement('button');
       btn.type='button';
       btn.className='btn btn-gold btn-select'+(selectedRooms[room.id]?' selected':'');
-      btn.textContent=selectedRooms[room.id]?'Added \u2713 (Remove)':'Add to Selection';
-      btn.onclick=function(){toggleRoomSelection(room,priceInfo,checkin,checkout,guests,card,btn);};
-      body.appendChild(btn);
+      btn.textContent=selectedRooms[room.id]?'Added \u2713 (Remove)':'Book Now';
+      btn.onclick=function(){toggleRoomSelection(room,priceInfo,checkin,checkout,guests,row,btn);};
+      ratePrice.appendChild(amount);ratePrice.appendChild(caption);ratePrice.appendChild(btn);
+      rateRow.appendChild(ratePrice);
+      details.appendChild(rateRow);
     }else{
-      var unavail=document.createElement('div');unavail.className='room-result-unavail';
+      var unavail=document.createElement('div');unavail.className='room-list-unavail';
       unavail.textContent=guestsExceed?'This room does not accommodate the number of guests selected':'Not available for these dates';
-      body.appendChild(unavail);
+      details.appendChild(unavail);
     }
-    card.appendChild(body);grid.appendChild(card);
+    row.appendChild(details);
+    grid.appendChild(row);
   });
   document.getElementById('bw-results').style.display='block';
 }
@@ -389,12 +450,9 @@ function openPopup(room,checkin,checkout,guests,priceInfo){
   selectBtn.className='btn btn-gold btn-select'+(isSelected?' selected':'');
   selectBtn.textContent=isSelected?'Added \u2713 (Remove)':'Add to Selection';
   selectBtn.onclick=function(){
-    var card=document.querySelector('.room-result-card:not(.unavailable) h3');
-    var cardEl=null,btnEl=null;
-    Array.prototype.forEach.call(document.querySelectorAll('.room-result-card'),function(c){
-      if(c.querySelector('h3')&&c.querySelector('h3').textContent===room.name){cardEl=c;btnEl=c.querySelector('.btn-select');}
-    });
-    toggleRoomSelection(room,priceInfo,checkin,checkout,guests,cardEl,btnEl);
+    var rowEl=document.querySelector('.room-list-row[data-room-id="'+room.id+'"]');
+    var btnEl=rowEl?rowEl.querySelector('.btn-select'):null;
+    toggleRoomSelection(room,priceInfo,checkin,checkout,guests,rowEl,btnEl);
     closePopup(null);
   };
   document.getElementById('room-popup-overlay').classList.add('open');
