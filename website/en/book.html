@@ -61,6 +61,8 @@
   </div>
 </section>
 
+<div id="bw-spacer" style="height:55vh"></div>
+
 <div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>Checking availability...</div>
 <div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Unable to check availability right now. Please try again or contact us by phone.</div>
 <div id="bw-results" style="display:none;background:var(--bg-warm);padding:3rem 0 5rem">
@@ -299,6 +301,7 @@ async function searchRooms(){
   if(!guests){ alert('Please select the number of guests.'); return; }
   selectedRooms = {};
   updateCartWidget();
+  document.getElementById('bw-spacer').style.display='none';
   document.getElementById('bw-results').style.display='none';
   document.getElementById('bw-error').style.display='none';
   document.getElementById('bw-loading').style.display='block';
