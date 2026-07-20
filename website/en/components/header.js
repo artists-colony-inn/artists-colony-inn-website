@@ -29,7 +29,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
         <li><a href="/en/about.html">About</a></li>
         <li><a href="/en/index.html#contact">Contact</a></li>
         <li><a href="/en/reviews.html">Reviews</a></li>
-        <li><a href="#" id="lang-toggle" class="nav-phone" dir="rtl">עברית</a></li>
+        <li dir="rtl"><a href="#" id="lang-toggle" class="nav-phone">עברית</a></li>
       </ul>
     </nav>
   </div>
