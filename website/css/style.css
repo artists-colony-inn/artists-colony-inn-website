@@ -53,10 +53,7 @@ a:hover { color: var(--gold-light); }
 
 /* ── HEADER ── */
 .header-top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   z-index: 150;
   background: var(--white);
   box-shadow: var(--shadow);
@@ -230,10 +227,6 @@ nav ul li[dir="ltr"], nav ul li[dir="rtl"] { display: flex; justify-content: fle
   padding: 3rem 2rem 3.5rem;
   text-align: center;
   color: var(--white);
-}
-
-@media (min-width: 481px) {
-  .hero-text { padding-top: 7rem; }
 }
 
 .hero-text h1 {
@@ -942,7 +935,7 @@ footer a:hover { color: var(--gold-light); }
   position: static;
   display: block;
   text-align: center;
-  margin: 4.5rem auto 0.75rem;
+  margin: 0 auto 0.75rem;
 }
   .property-gallery-grid {grid-template-columns: 1fr;}
 }
@@ -950,7 +943,7 @@ footer a:hover { color: var(--gold-light); }
 @media (min-width: 481px) {
   .hero-host {
     position: absolute;
-    top: 6.75rem;
+    top: 1rem;
     left: 1rem;
     margin: 0;
     z-index: 2;
