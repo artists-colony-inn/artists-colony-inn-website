@@ -451,12 +451,14 @@ function renderResults(results,checkin,checkout,guests){
       var amount=document.createElement('div');amount.className='price-amount';amount.textContent=fmt(Math.round(priceInfo.total/priceInfo.nights));
       var caption=document.createElement('div');caption.className='price-caption';
       caption.textContent='Per night';
+      var caption2=document.createElement('div');caption2.className='price-caption-secondary';
+      caption2.textContent='Includes taxes and fees';
       var btn=document.createElement('button');
       btn.type='button';
       btn.className='btn btn-gold btn-select'+(selectedRooms[room.id]?' selected':'');
       btn.textContent=selectedRooms[room.id]?'Added \u2713 (Remove)':'Book Now';
       btn.onclick=function(){toggleRoomSelection(room,priceInfo,checkin,checkout,guests,row,btn);};
-      ratePrice.appendChild(amount);ratePrice.appendChild(caption);ratePrice.appendChild(btn);
+      ratePrice.appendChild(amount);ratePrice.appendChild(caption);ratePrice.appendChild(caption2);ratePrice.appendChild(btn);
       rateRow.appendChild(ratePrice);
       details.appendChild(rateRow);
     }else{
