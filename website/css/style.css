@@ -63,7 +63,7 @@ a:hover { color: var(--gold-light); }
 }
 
 .header-top-inner {
-  padding: 1.25rem 1rem;
+  padding: 0.75rem 1rem;
   padding-inline-end: 13rem;
   display: flex;
   align-items: center;
@@ -104,7 +104,7 @@ a:hover { color: var(--gold-light); }
   left: 0;
   right: 0;
   z-index: 200;
-  padding: 1.25rem 1rem;
+  padding: 0.75rem 1rem;
   display: flex;
   justify-content: flex-end;
   pointer-events: none;
@@ -950,7 +950,7 @@ footer a:hover { color: var(--gold-light); }
 @media (min-width: 481px) {
   .hero-host {
     position: absolute;
-    top: 7.5rem;
+    top: 6.75rem;
     left: 1rem;
     margin: 0;
     z-index: 2;
