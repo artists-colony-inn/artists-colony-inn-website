@@ -948,7 +948,7 @@ footer a:hover { color: var(--gold-light); }
 @media (min-width: 481px) {
   .hero-host {
     position: absolute;
-    top: 1rem;
+    top: 6.5rem;
     left: 1rem;
     margin: 0;
     z-index: 2;
