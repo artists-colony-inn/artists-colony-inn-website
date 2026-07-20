@@ -90,7 +90,7 @@
       <button type="button" id="dr-prev">&#8592;</button>
       <button type="button" id="dr-next">&#8594;</button>
     </div>
-    <p style="text-align:center;font-family:var(--sans);font-size:0.72rem;color:var(--text-light);margin:0 0 0.75rem">Prices shown are for our lowest available room that night</p>
+    <p style="text-align:center;font-family:var(--sans);font-size:0.72rem;color:var(--text-light);margin:0 0 0.75rem">Prices shown are for our lowest available room that night, including VAT</p>
     <div class="dr-months">
       <div class="cal-wrap" id="dr-cal-0"></div>
       <div class="cal-wrap" id="dr-cal-1"></div>
@@ -125,7 +125,8 @@ function lowestPriceForDate(dateKey, guests){
     for (var i=0; i<data.dates.length; i++){ if (data.dates[i].date === dateKey){ day = data.dates[i]; break; } }
     if (!day || day.blocked || !day.price) return;
     var sr = (data.surcharge && data.surcharge[guests]) || 0;
-    var adjPrice = Math.round(day.price * (1 + sr));
+    var beforeVAT = Math.round(day.price * (1 + sr));
+    var adjPrice = beforeVAT + Math.round(beforeVAT * 0.18);
     if (lowest === null || adjPrice < lowest) lowest = adjPrice;
   });
   return lowest;
