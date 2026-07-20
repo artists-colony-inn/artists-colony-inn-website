@@ -17,7 +17,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
 
 <div class="header-fixed">
   <div class="header-fixed-cluster">
-    <a href="/en/book.html" class="btn-book">Book</a>
+    <a href="/en/index.html" class="btn-book">Book</a>
     <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
       <span></span><span></span><span></span>
     </button>
@@ -29,7 +29,6 @@ document.currentScript.insertAdjacentHTML('afterend', `
         <li><a href="/en/about.html">About</a></li>
         <li><a href="/en/index.html#contact">Contact</a></li>
         <li><a href="/en/reviews.html">Reviews</a></li>
-        <li><a href="tel:+972586200779" class="nav-phone" dir="ltr">+972-58-620-0779</a></li>
         <li><a href="#" id="lang-toggle" class="nav-phone">עברית</a></li>
       </ul>
     </nav>
