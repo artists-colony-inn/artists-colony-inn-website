@@ -44,7 +44,7 @@
       <div class="form-field" style="margin:0">
         <label>Guests</label>
         <select id="bw-guests">
-          <option value="" selected disabled>Select number of guests</option>
+          <option value="" selected disabled>How many guests?</option>
           <option value="1">1 guest</option>
           <option value="2">2 guests</option>
           <option value="3">3 guests</option>
@@ -71,7 +71,7 @@
     <div class="book-layout">
       <div class="room-list" id="bw-room-grid"></div>
       <aside class="cart-widget">
-        <h3 id="cart-heading">Your Cart: 0 Items</h3>
+        <h3 id="cart-heading">Reservation: 0 Items</h3>
         <div id="cart-empty" class="cart-empty">No rooms selected yet.</div>
         <ul id="cart-items" class="cart-items" style="display:none"></ul>
         <div id="cart-total" class="cart-total" style="display:none"></div>
@@ -90,6 +90,7 @@
       <button type="button" id="dr-prev">&#8592;</button>
       <button type="button" id="dr-next">&#8594;</button>
     </div>
+    <p style="text-align:center;font-family:var(--sans);font-size:0.72rem;color:var(--text-light);margin:0 0 0.75rem">Prices shown are for our lowest available room that night</p>
     <div class="dr-months">
       <div class="cal-wrap" id="dr-cal-0"></div>
       <div class="cal-wrap" id="dr-cal-1"></div>
@@ -112,12 +113,31 @@ const ROOMS = [
 ];
 let priceCache = {};
 let selectedRooms = {};
+ROOMS.forEach(function(r){ fetchRoom(r.id); });
+
+function lowestPriceForDate(dateKey, guests){
+  var lowest = null;
+  ROOMS.forEach(function(room){
+    if (guests && guests > room.maxGuests) return;
+    var data = priceCache[room.id];
+    if (!data || !data.dates) return;
+    var day = null;
+    for (var i=0; i<data.dates.length; i++){ if (data.dates[i].date === dateKey){ day = data.dates[i]; break; } }
+    if (!day || day.blocked || !day.price) return;
+    var sr = (data.surcharge && data.surcharge[guests]) || 0;
+    var adjPrice = Math.round(day.price * (1 + sr));
+    if (lowest === null || adjPrice < lowest) lowest = adjPrice;
+  });
+  return lowest;
+}
 
 // ── DATE RANGE PICKER (popup, this month + next) ────────────
 let drYear, drMonth;
 let drStart = null, drEnd = null;
 
 function openDatePicker(){
+  var guests = document.getElementById('bw-guests').value;
+  if (!guests){ alert('Please select the number of guests first, so we can show accurate pricing.'); return; }
   const today = new Date();
   if (drYear === undefined){ drYear = today.getFullYear(); drMonth = today.getMonth(); }
   document.getElementById('dr-popup-overlay').classList.add('open');
@@ -168,6 +188,17 @@ function renderMonthGrid(container, year, month){
     cell.className = 'cal-day ' + state;
     const dn = document.createElement('span'); dn.textContent = d;
     cell.appendChild(dn);
+
+    if (state !== 'past'){
+      const guests = parseInt(document.getElementById('bw-guests').value);
+      const price = lowestPriceForDate(key, guests);
+      if (price !== null){
+        const pr = document.createElement('span');
+        pr.className = 'cal-price';
+        pr.textContent = '\u20aa' + price;
+        cell.appendChild(pr);
+      }
+    }
 
     if (drStart){
       if (key === drKey(drStart)) cell.classList.add('selected');
@@ -287,7 +318,7 @@ function calcPrice(data,checkin,checkout,guests){
     if(!day||day.blocked||!day.price)return null;
     base+=day.price;
   }
-  var sr=guests===3?0.25:guests>=4?0.50:0;
+  var sr=(data.surcharge && data.surcharge[guests])||0;
   var surcharge=Math.round(base*sr),beforeVAT=base+surcharge,vat=Math.round(beforeVAT*0.18),total=beforeVAT+vat;
   var nights=Math.round((end-start)/86400000);
   return{total,nights,available:true,beforeVAT,vat};
