@@ -34,7 +34,7 @@
   <div class="container" style="max-width:760px;text-align:center">
     <h1 class="section-title" style="margin-bottom:0.25rem">Book Your Stay</h1>
     <div class="section-rule"></div>
-    <p style="font-family:var(--sans);color:var(--text-light);font-weight:300;max-width:520px;margin:0 auto">Select your dates and number of guests to see which rooms are available.</p>
+    <p style="font-family:var(--sans);color:var(--text-light);font-weight:300;max-width:520px;margin:0 auto">Select number of guests and dates for your stay</p>
   </div>
 </section>
 
@@ -198,17 +198,19 @@ function renderMonthGrid(container, year, month){
     const dn = document.createElement('span'); dn.textContent = d;
     cell.appendChild(dn);
 
+    const guests = parseInt(document.getElementById('bw-guests').value);
     const isCheckoutDay = drEnd && key === drKey(drEnd);
-    if (state !== 'past' && !isCheckoutDay){
-      const guests = parseInt(document.getElementById('bw-guests').value);
-      const price = lowestPriceForDate(key, guests);
-      if (price !== null){
-        const pr = document.createElement('span');
-        pr.className = 'cal-price';
-        pr.textContent = '\u20aa' + price;
-        cell.appendChild(pr);
-      }
+    const price = (state !== 'past') ? lowestPriceForDate(key, guests) : null;
+    if (price !== null && !isCheckoutDay){
+      const pr = document.createElement('span');
+      pr.className = 'cal-price';
+      pr.textContent = '\u20aa' + price;
+      cell.appendChild(pr);
     }
+    // A day can look like a normal available day but have no room actually
+    // bookable that night - treat it like Saturday for clicking (valid as a
+    // checkout, not as a new check-in), without changing how it looks.
+    const interactionState = (state === 'available' && price === null) ? 'checkout-only' : state;
 
     if (drStart){
       if (key === drKey(drStart)) cell.classList.add('selected');
@@ -217,9 +219,9 @@ function renderMonthGrid(container, year, month){
         if (date > drStart && date < drEnd) cell.classList.add('in-range');
       }
     }
-    if (state === 'available' || (state === 'checkout-only' && drStart)){
+    if (interactionState === 'available' || (interactionState === 'checkout-only' && drStart)){
       cell.style.cursor = 'pointer';
-      cell.onclick = (function(dt, st){ return function(){ drHandleClick(dt, st); }; })(date, state);
+      cell.onclick = (function(dt, st){ return function(){ drHandleClick(dt, st); }; })(date, interactionState);
     }
     grid.appendChild(cell);
   }
