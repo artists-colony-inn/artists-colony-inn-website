@@ -71,7 +71,7 @@
     <div class="book-layout">
       <div class="room-list" id="bw-room-grid"></div>
       <aside class="cart-widget">
-        <h3 id="cart-heading">Reservation: 0 Items</h3>
+        <h3 id="cart-heading">Your Cart: 0 Items</h3>
         <div id="cart-empty" class="cart-empty">No rooms selected yet.</div>
         <ul id="cart-items" class="cart-items" style="display:none"></ul>
         <div id="cart-total" class="cart-total" style="display:none"></div>
@@ -446,9 +446,9 @@ function renderResults(results,checkin,checkout,guests){
       rateRow.appendChild(rateLabel);
 
       var ratePrice=document.createElement('div');ratePrice.className='room-list-rate-price';
-      var amount=document.createElement('div');amount.className='price-amount';amount.textContent=fmt(priceInfo.total);
+      var amount=document.createElement('div');amount.className='price-amount';amount.textContent=fmt(Math.round(priceInfo.total/priceInfo.nights));
       var caption=document.createElement('div');caption.className='price-caption';
-      caption.textContent=priceInfo.nights+' night'+(priceInfo.nights>1?'s':'')+' total \u00b7 VAT included';
+      caption.textContent='Per night';
       var btn=document.createElement('button');
       btn.type='button';
       btn.className='btn btn-gold btn-select'+(selectedRooms[room.id]?' selected':'');
