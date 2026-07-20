@@ -62,7 +62,6 @@ a:hover { color: var(--gold-light); }
 }
 
 .header-top-inner {
-  direction: ltr;
   padding: 1.25rem 1rem;
   padding-inline-end: 11rem;
   display: flex;
@@ -111,7 +110,6 @@ a:hover { color: var(--gold-light); }
   z-index: 200;
   padding: 1.25rem 1rem;
   display: flex;
-  direction: ltr;
   justify-content: flex-end;
   pointer-events: none;
 }
@@ -188,9 +186,6 @@ nav ul {
 }
 
 nav ul.open { display: flex; }
-
-:lang(he) nav ul { direction: rtl; text-align: right; }
-:lang(en) nav ul { direction: ltr; text-align: left; }
 
 nav a {
   font-family: var(--sans);
