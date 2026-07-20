@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your Stay &mdash; Artists' Colony Inn</title>
+  <meta name="description" content="Check availability and book your stay at the Artists' Colony Inn, a boutique guesthouse in the Old City of Tzfat.">
+  <link rel="stylesheet" href="/css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H5ZXBGVT4Q"></script>
+  <script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-H5ZXBGVT4Q');
+  </script>
+
+  <!-- Meta Pixel -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '983698949964438');
+  fbq('track', 'PageView');
+  </script>
+</head>
+<body>
+<script src="/en/components/header.js"></script>
+<main>
+
+<section style="padding:6.5rem 0 2rem">
+  <div class="container" style="max-width:760px;text-align:center">
+    <h1 class="section-title" style="margin-bottom:0.25rem">Book Your Stay</h1>
+    <div class="section-rule"></div>
+    <p style="font-family:var(--sans);color:var(--text-light);font-weight:300;max-width:520px;margin:0 auto">Select your dates and number of guests to see which rooms are available.</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="container" style="max-width:760px">
+    <div class="avail-form" style="background:var(--bg-warm);padding:1.25rem;border-radius:3px;border-top:2px solid var(--gold)">
+      <div class="form-field" style="margin:0">
+        <label>Dates</label>
+        <button type="button" class="dr-trigger" id="dr-trigger" onclick="openDatePicker()">Select dates</button>
+        <input type="hidden" id="bw-checkin">
+        <input type="hidden" id="bw-checkout">
+      </div>
+      <div class="form-field" style="margin:0">
+        <label>Guests</label>
+        <select id="bw-guests">
+          <option value="1">1 guest</option>
+          <option value="2" selected>2 guests</option>
+          <option value="3">3 guests</option>
+          <option value="4">4 guests</option>
+        </select>
+      </div>
+      <button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap">Search</button>
+    </div>
+  </div>
+</section>
+
+<div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>Checking availability...</div>
+<div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Unable to check availability right now. Please try again or contact us by phone.</div>
+<div id="bw-results" style="display:none;padding-bottom:6rem">
+  <div class="container">
+    <h2 class="section-title">Available Rooms</h2>
+    <div class="section-rule"></div>
+    <p style="text-align:center;font-family:var(--sans);font-size:0.85rem;color:var(--text-light);font-weight:300;margin-top:-1.5rem;margin-bottom:2rem">You can select more than one room to book together.</p>
+    <div class="room-results" id="bw-room-grid"></div>
+  </div>
+</div>
+
+<!-- Room popup -->
+<div class="room-popup-overlay" id="room-popup-overlay" onclick="closePopup(event)">
+  <div class="room-popup" id="room-popup">
+    <button class="room-popup-close" onclick="closePopup(null)">✕</button>
+    <div class="room-popup-gallery" id="popup-gallery"></div>
+    <div class="room-popup-body">
+      <h2 id="popup-name"></h2>
+      <div id="popup-desc"></div>
+      <div class="amenity-list" id="popup-amenities"></div>
+      <button type="button" id="popup-select-btn" class="btn btn-gold btn-select" style="padding:0.9rem"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Date range picker popup -->
+<div class="dr-popup-overlay" id="dr-popup-overlay" onclick="closeDatePicker(event)">
+  <div class="dr-popup" id="dr-popup">
+    <button class="dr-popup-close" onclick="closeDatePicker(null)">✕</button>
+    <div class="dr-nav">
+      <button type="button" id="dr-prev">&#8592;</button>
+      <button type="button" id="dr-next">&#8594;</button>
+    </div>
+    <div class="dr-months">
+      <div class="cal-wrap" id="dr-cal-0"></div>
+      <div class="cal-wrap" id="dr-cal-1"></div>
+    </div>
+    <div class="dr-summary" id="dr-summary"></div>
+    <a class="btn btn-gold" id="dr-apply" style="display:none;width:100%;text-align:center;margin-top:0.75rem;cursor:pointer" onclick="applyDatePicker()">Apply</a>
+  </div>
+</div>
+
+<!-- Sticky selection bar -->
+<div class="selection-bar" id="selection-bar">
+  <div class="selection-bar-info" id="selection-bar-info"></div>
+  <a class="btn btn-gold" id="selection-bar-btn" href="#">Continue to Book</a>
+</div>
+
+</main>
+<script src="/en/components/footer.js"></script>
+<script>
+const AVAIL_API = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
+const ROOMS = [
+  { id:'Tzviya', name:'Tzviya', maxGuests:2, images:['tzviya','tzviya-1','tzviya-2','tzviya-3','tzviya-4','tzviya-5'], desc:'<p>A serene room with a vaulted stone ceiling and warm lamplight. Tzviya is an intimate, beautifully appointed room featuring a large shower and a quiet atmosphere perfectly suited to Tzfat\'s meditative character.</p><p>The room\'s graceful ironwork mirror and soft green alcove give it a distinctive character — restful, private, and genuinely beautiful.</p>', amenities:['Private bathroom','Large shower','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
+  { id:'Aryeh', name:'Aryeh', maxGuests:2, images:['aryeh','aryeh-1','aryeh-2','aryeh-3','aryeh-4','aryeh-5'], desc:'<p>Aryeh offers a spacious layout with exposed stone walls and warm wooden tones. The room includes a private jacuzzi and an intimate, relaxed atmosphere that invites complete unwinding.</p><p>Vaulted ceilings and classic furniture complement the ancient character of the building, with every detail chosen for comfort and warmth.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
+  { id:'Liana', name:'Liana', maxGuests:4, images:['liana','liana-1','liana-2','liana-3','liana-4','liana-5'], desc:'<p>Liana is one of the inn\'s central suites, featuring a large jacuzzi and a stunning mountain view over the Galilee. Warm terracotta tones, unique black ironwork and original art on the walls give the room a bold and inviting character.</p><p>A room for guests who want both beauty and comfort in equal measure.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] },
+  { id:'Avital', name:'Avital', maxGuests:4, images:['avital','avital-1','avital-2','avital-3','avital-4','avital-5','avital-6','avital-7'], desc:'<p>Avital is the most private suite at the inn, with a large jacuzzi and access to a private garden. Rich arch details, dark wood furniture and antique accents give the room a sense of depth and distinction.</p><p>Ideal for couples seeking a complete retreat — the private garden makes Avital unlike any other room at the inn.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private garden','Courtesy breakfast'] },
+  { id:'Orly', name:'Orly', maxGuests:2, images:['orly','orly-1','orly-2','orly-3','orly-4','orly-5','orly-6','orly-7'], desc:'<p>Orly offers a large jacuzzi and a view over the Galilee. A terracotta arch headboard and generous proportions create a warm, enveloping atmosphere.</p><p>A suite that balances restful comfort with the distinctive character of Tzfat\'s ancient architecture.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] }
+];
+let priceCache = {};
+let selectedRooms = {};
+
+// ── DATE RANGE PICKER (popup, this month + next) ────────────
+let drYear, drMonth;
+let drStart = null, drEnd = null;
+
+function openDatePicker(){
+  const today = new Date();
+  if (drYear === undefined){ drYear = today.getFullYear(); drMonth = today.getMonth(); }
+  document.getElementById('dr-popup-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderPicker();
+}
+
+function closeDatePicker(e){
+  if (e && e.target !== document.getElementById('dr-popup-overlay')) return;
+  document.getElementById('dr-popup-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function drKey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+function drState(d){
+  const today = new Date(); today.setHours(0,0,0,0);
+  if (d < today) return 'past';
+  if (d.getDay() === 6) return 'checkout-only';
+  return 'available';
+}
+
+function renderMonthGrid(container, year, month){
+  container.innerHTML = '';
+  const title = document.createElement('div');
+  title.style.cssText = 'text-align:center;font-family:var(--sans);font-weight:500;font-size:0.85rem;color:var(--text);margin-bottom:0.5rem;';
+  title.textContent = new Date(year, month, 1).toLocaleDateString('en-IL', { month:'long', year:'numeric' });
+  container.appendChild(title);
+
+  const dlRow = document.createElement('div'); dlRow.className = 'cal-grid';
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(function(l){
+    const d = document.createElement('div'); d.className = 'cal-dow'; d.textContent = l; dlRow.appendChild(d);
+  });
+  container.appendChild(dlRow);
+
+  const grid = document.createElement('div'); grid.className = 'cal-grid';
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++){
+    const e = document.createElement('div'); e.className = 'cal-day empty'; grid.appendChild(e);
+  }
+  for (let d = 1; d <= daysInMonth; d++){
+    const date = new Date(year, month, d);
+    const state = drState(date);
+    const key = drKey(date);
+    const cell = document.createElement('div');
+    cell.className = 'cal-day ' + state;
+    const dn = document.createElement('span'); dn.textContent = d;
+    cell.appendChild(dn);
+
+    if (drStart){
+      if (key === drKey(drStart)) cell.classList.add('selected');
+      if (drEnd){
+        if (key === drKey(drEnd)) cell.classList.add('selected');
+        if (date > drStart && date < drEnd) cell.classList.add('in-range');
+      }
+    }
+    if (state === 'available' || (state === 'checkout-only' && drStart)){
+      cell.style.cursor = 'pointer';
+      cell.onclick = (function(dt, st){ return function(){ drHandleClick(dt, st); }; })(date, state);
+    }
+    grid.appendChild(cell);
+  }
+  container.appendChild(grid);
+}
+
+function renderPicker(){
+  const today = new Date();
+  document.getElementById('dr-prev').disabled = (drYear === today.getFullYear() && drMonth === today.getMonth());
+  renderMonthGrid(document.getElementById('dr-cal-0'), drYear, drMonth);
+  let nextY = drYear, nextM = drMonth + 1;
+  if (nextM > 11){ nextM = 0; nextY++; }
+  renderMonthGrid(document.getElementById('dr-cal-1'), nextY, nextM);
+
+  const summary = document.getElementById('dr-summary');
+  const apply = document.getElementById('dr-apply');
+  if (drStart && drEnd){
+    summary.textContent = 'Check-in: ' + fmtDr(drStart) + '  \u2192  Check-out: ' + fmtDr(drEnd);
+    apply.style.display = 'block';
+  } else if (drStart){
+    summary.textContent = 'Check-in: ' + fmtDr(drStart) + ' \u2014 select check-out date';
+    apply.style.display = 'none';
+  } else {
+    summary.textContent = 'Select your check-in date';
+    apply.style.display = 'none';
+  }
+}
+
+function drHandleClick(date, state){
+  if (drStart && drEnd){
+    drStart = null; drEnd = null;
+    renderPicker();
+    return;
+  }
+  if (!drStart){
+    if (state !== 'available') return;
+    drStart = date; drEnd = null;
+  } else if (date <= drStart){
+    drStart = state === 'available' ? date : null;
+    drEnd = null;
+  } else {
+    drEnd = date;
+  }
+  renderPicker();
+}
+
+function fmtDr(d){ return d.toLocaleDateString('en-IL', { day:'numeric', month:'short', year:'numeric' }); }
+function fmtDrForm(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+function applyDatePicker(){
+  if (!drStart || !drEnd) return;
+  document.getElementById('bw-checkin').value  = fmtDrForm(drStart);
+  document.getElementById('bw-checkout').value = fmtDrForm(drEnd);
+  document.getElementById('dr-trigger').textContent = fmtDr(drStart) + '  \u2192  ' + fmtDr(drEnd);
+  closeDatePicker(null);
+};
+
+document.getElementById('dr-prev').onclick = function(){
+  drMonth--; if (drMonth < 0){ drMonth = 11; drYear--; }
+  renderPicker();
+};
+document.getElementById('dr-next').onclick = function(){
+  drMonth++; if (drMonth > 11){ drMonth = 0; drYear++; }
+  renderPicker();
+};
+
+async function searchRooms(){
+  var checkin=document.getElementById('bw-checkin').value,checkout=document.getElementById('bw-checkout').value,guests=parseInt(document.getElementById('bw-guests').value);
+  if(!checkin||!checkout||checkin>=checkout){alert('Please select valid check-in and check-out dates.');return;}
+  if(!guests){ alert('Please select the number of guests.'); return; }
+  selectedRooms = {};
+  updateSelectionBar();
+  var searchBtn = document.getElementById('bw-search');
+  var origLabel = searchBtn.textContent;
+  searchBtn.disabled = true;
+  searchBtn.textContent = 'Searching...';
+  document.getElementById('bw-results').style.display='none';
+  document.getElementById('bw-error').style.display='none';
+  document.getElementById('bw-loading').style.display='block';
+  try{
+    var results=await Promise.all(ROOMS.map(function(r){return fetchRoom(r.id);}));
+    document.getElementById('bw-loading').style.display='none';
+    renderResults(results,checkin,checkout,guests);
+  }catch(e){
+    document.getElementById('bw-loading').style.display='none';
+    document.getElementById('bw-error').style.display='block';
+  }finally{
+    searchBtn.disabled = false;
+    searchBtn.textContent = origLabel;
+  }
+}
+async function fetchRoom(id){
+  if(priceCache[id])return priceCache[id];
+  var res=await fetch(AVAIL_API+'?room='+encodeURIComponent(id));
+  var data=await res.json();
+  priceCache[id]=data;
+  return data;
+}
+function calcPrice(data,checkin,checkout,guests){
+  if(!data.dates)return null;
+  var lookup={};
+  data.dates.forEach(function(d){lookup[d.date]=d;});
+  var base=0,start=new Date(checkin),end=new Date(checkout);
+  for(var d=new Date(start);d<end;d.setDate(d.getDate()+1)){
+    var iso=d.toISOString().split('T')[0],day=lookup[iso];
+    if(!day||day.blocked||!day.price)return null;
+    base+=day.price;
+  }
+  var sr=guests===3?0.25:guests>=4?0.50:0;
+  var surcharge=Math.round(base*sr),beforeVAT=base+surcharge,vat=Math.round(beforeVAT*0.18),total=beforeVAT+vat;
+  var nights=Math.round((end-start)/86400000);
+  return{total,nights,available:true};
+}
+function fmt(n){return '₪'+n.toLocaleString('en-IL');}
+
+function toggleRoomSelection(room, priceInfo, checkin, checkout, guests, card, btn){
+  if (selectedRooms[room.id]){
+    delete selectedRooms[room.id];
+    card.classList.remove('selected');
+    btn.classList.remove('selected');
+    btn.textContent = 'Add to Selection';
+  } else {
+    selectedRooms[room.id] = { room:room, priceInfo:priceInfo, checkin:checkin, checkout:checkout, guests:guests };
+    card.classList.add('selected');
+    btn.classList.add('selected');
+    btn.textContent = 'Added \u2713 (Remove)';
+  }
+  updateSelectionBar();
+}
+
+function updateSelectionBar(){
+  var bar = document.getElementById('selection-bar');
+  var ids = Object.keys(selectedRooms);
+  if (ids.length === 0){
+    bar.classList.remove('show');
+    return;
+  }
+  var total = 0;
+  ids.forEach(function(id){ total += selectedRooms[id].priceInfo.total; });
+  var info = document.getElementById('selection-bar-info');
+  info.innerHTML = '<strong>' + ids.length + ' room' + (ids.length>1?'s':'') + '</strong> selected \u00b7 ' + fmt(total) + ' total';
+
+  var first = selectedRooms[ids[0]];
+  var btn = document.getElementById('selection-bar-btn');
+  btn.href = '/en/booking.html?rooms=' + ids.map(encodeURIComponent).join(',') + '&checkin=' + first.checkin + '&checkout=' + first.checkout + '&guests=' + first.guests;
+  bar.classList.add('show');
+}
+
+function renderResults(results,checkin,checkout,guests){
+  var grid=document.getElementById('bw-room-grid');
+  grid.innerHTML='';
+  ROOMS.forEach(function(room,i){
+    var data=results[i],guestsExceed=guests>room.maxGuests;
+    var priceInfo=(!guestsExceed&&data)?calcPrice(data,checkin,checkout,guests):null;
+    var available=priceInfo&&priceInfo.available;
+    var card=document.createElement('div');
+    card.className='room-result-card'+(available?'':' unavailable');
+    if (selectedRooms[room.id]) card.classList.add('selected');
+    var img=document.createElement('img');
+    img.src='/images/'+room.images[0]+'.jpg';img.alt=room.name;
+    if(available)img.onclick=function(){openPopup(room,checkin,checkout,guests,priceInfo);};
+    card.appendChild(img);
+    if (selectedRooms[room.id]){
+      var badge=document.createElement('div');badge.className='room-select-badge';badge.textContent='Selected';
+      card.appendChild(badge);
+    }
+    var body=document.createElement('div');body.className='room-result-body';
+    var name=document.createElement('h3');name.textContent=room.name;
+    if(available){name.style.cursor='pointer';name.onclick=function(){openPopup(room,checkin,checkout,guests,priceInfo);};}
+    body.appendChild(name);
+    if(available){
+      var price=document.createElement('div');price.className='room-result-price';
+      price.textContent=fmt(priceInfo.total)+' total · '+priceInfo.nights+' night'+(priceInfo.nights>1?'s':'')+' · VAT included';
+      body.appendChild(price);
+      var btn=document.createElement('button');
+      btn.type='button';
+      btn.className='btn btn-gold btn-select'+(selectedRooms[room.id]?' selected':'');
+      btn.textContent=selectedRooms[room.id]?'Added \u2713 (Remove)':'Add to Selection';
+      btn.onclick=function(){toggleRoomSelection(room,priceInfo,checkin,checkout,guests,card,btn);};
+      body.appendChild(btn);
+    }else{
+      var unavail=document.createElement('div');unavail.className='room-result-unavail';
+      unavail.textContent=guestsExceed?'This room does not accommodate the number of guests selected':'Not available for these dates';
+      body.appendChild(unavail);
+    }
+    card.appendChild(body);grid.appendChild(card);
+  });
+  document.getElementById('bw-results').style.display='block';
+}
+function openPopup(room,checkin,checkout,guests,priceInfo){
+  var gallery=document.getElementById('popup-gallery');gallery.innerHTML='';
+  room.images.forEach(function(img){var el=document.createElement('img');el.src='/images/'+img+'.jpg';el.alt=room.name;gallery.appendChild(el);});
+  document.getElementById('popup-name').textContent=room.name;
+  document.getElementById('popup-desc').innerHTML=room.desc;
+  var am=document.getElementById('popup-amenities');am.innerHTML='';
+  room.amenities.forEach(function(a){var s=document.createElement('span');s.className='amenity';s.textContent=a;am.appendChild(s);});
+  var selectBtn=document.getElementById('popup-select-btn');
+  var isSelected=!!selectedRooms[room.id];
+  selectBtn.className='btn btn-gold btn-select'+(isSelected?' selected':'');
+  selectBtn.textContent=isSelected?'Added \u2713 (Remove)':'Add to Selection';
+  selectBtn.onclick=function(){
+    var card=document.querySelector('.room-result-card:not(.unavailable) h3');
+    var cardEl=null,btnEl=null;
+    Array.prototype.forEach.call(document.querySelectorAll('.room-result-card'),function(c){
+      if(c.querySelector('h3')&&c.querySelector('h3').textContent===room.name){cardEl=c;btnEl=c.querySelector('.btn-select');}
+    });
+    toggleRoomSelection(room,priceInfo,checkin,checkout,guests,cardEl,btnEl);
+    closePopup(null);
+  };
+  document.getElementById('room-popup-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closePopup(event){
+  if(event&&event.target!==document.getElementById('room-popup-overlay'))return;
+  document.getElementById('room-popup-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePopup(null);closeDatePicker(null);}});
+
+// Default the date range to today \u2192 tomorrow and auto-search on load
+(function(){
+  var today=new Date(); today.setHours(0,0,0,0);
+  var tomorrow=new Date(today); tomorrow.setDate(tomorrow.getDate()+1);
+  drStart=today; drEnd=tomorrow;
+  document.getElementById('bw-checkin').value=fmtDrForm(today);
+  document.getElementById('bw-checkout').value=fmtDrForm(tomorrow);
+  document.getElementById('dr-trigger').textContent=fmtDr(today)+'  \u2192  '+fmtDr(tomorrow);
+  searchRooms();
+})();
+</script>
+</body>
+</html>
