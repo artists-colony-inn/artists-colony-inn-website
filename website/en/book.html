@@ -393,7 +393,7 @@ function updateCartWidget(){
   totalEl.style.display = 'block';
   totalEl.innerHTML =
     '<div class="cart-total-line"><span>Subtotal (before VAT)</span><span>' + fmt(subtotal) + '</span></div>' +
-    '<div class="cart-total-line"><span>VAT (18%)</span><span>' + fmt(vatTotal) + '</span></div>' +
+    '<div class="cart-total-line"><span>Taxes (VAT)</span><span>' + fmt(vatTotal) + '</span></div>' +
     '<div class="cart-total-line cart-total-grand"><span>Total</span><span>' + fmt(total) + '</span></div>';
 
   var first = selectedRooms[ids[0]];
