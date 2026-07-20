@@ -61,6 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var path = window.location.pathname;
   document.documentElement.lang = 'en';
+  
+	var btnBook = document.querySelector('.btn-book');
+	if (btnBook && (path === '/book.html' || path === '/en/book.html')) {
+	  btnBook.style.display = 'none';
+	}
 
   // Language toggle — strip /en/ prefix to get Hebrew equivalent
   var langToggle = document.getElementById('lang-toggle');
