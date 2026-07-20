@@ -210,8 +210,7 @@ nav a:hover, nav a.active { color: var(--gold); }
   text-transform: none !important;
 }
 
-nav ul li[dir="ltr"] { display: flex; justify-content: flex-start; }
-nav ul li[dir="rtl"] { display: flex; justify-content: flex-end; }
+nav ul li[dir="ltr"], nav ul li[dir="rtl"] { display: flex; justify-content: flex-start; }
 
 /* ── HERO ── */
 .hero {
