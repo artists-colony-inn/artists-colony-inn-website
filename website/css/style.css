@@ -81,7 +81,7 @@ a:hover { color: var(--gold-light); }
   flex-shrink: 0;
 }
 
-.logo img { height: 58px; width: auto; display: block; }
+.logo img { height: 70px; width: auto; display: block; }
 
 .header-phone {
   display: inline-flex;
