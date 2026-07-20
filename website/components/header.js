@@ -17,7 +17,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
 
 <div class="header-fixed">
   <div class="header-fixed-cluster">
-    <a href="/book.html" class="btn-book">הזמן</a>
+    <a href="/index.html" class="btn-book">הזמן</a>
     <button class="nav-toggle" aria-label="תפריט" id="nav-toggle-btn">
       <span></span><span></span><span></span>
     </button>
