@@ -1,19 +1,23 @@
 document.currentScript.insertAdjacentHTML('afterend', `
-<div style="position:fixed;top:0;right:0;z-index:200;font-family:'David','Times New Roman',serif;font-size:0.7rem;color:var(--text-light);padding:2px 6px;letter-spacing:0.05em;opacity:0.7">בס"ד</div>
-<header>
-  <div class="header-inner">
-    <div style="display:flex;align-items:center;gap:0.75rem;">
-      <a class="logo" href="/index.html">
-        <img src="/images/logo.svg" alt="מלון בוטיק קריית האמנים">
-      </a>
-      <a href="https://g.page/r/CWm_4YA5CjqAEBM" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.35rem;background:var(--white);border:1px solid var(--border);border-radius:3px;padding:0.3rem 0.6rem;text-decoration:none;flex-shrink:0">
-        <span style="font-family:'David','Times New Roman',serif;font-size:0.75rem;font-weight:700;background:linear-gradient(135deg,#4285F4,#EA4335,#FBBC05,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em">Google</span>
-        <span style="display:flex;flex-direction:column;align-items:center;line-height:1.2">
-          <span style="color:#FBBC05;font-size:0.65rem;letter-spacing:0.02em">★★★★★</span>
-          <span style="font-family:var(--sans);font-size:0.65rem;color:var(--text-light)">4.8 (127)</span>
-        </span>
-      </a>
-    </div>
+<div style="position:fixed;top:0;right:0;z-index:260;font-family:'David','Times New Roman',serif;font-size:0.7rem;color:var(--text-light);padding:2px 6px;letter-spacing:0.05em;opacity:0.7">בס"ד</div>
+
+<div class="header-top">
+  <div class="header-top-inner">
+    <a class="logo" href="/index.html">
+      <img src="/images/logo.svg" alt="מלון בוטיק קריית האמנים">
+    </a>
+    <a href="tel:+972586200779" class="header-phone" dir="ltr" aria-label="058-620-0779">
+      <span class="header-phone-text">058-620-0779</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<div class="header-fixed">
+  <div class="header-fixed-cluster">
+    <a href="/book.html" class="btn-book">הזמן</a>
     <button class="nav-toggle" aria-label="תפריט" id="nav-toggle-btn">
       <span></span><span></span><span></span>
     </button>
@@ -25,18 +29,11 @@ document.currentScript.insertAdjacentHTML('afterend', `
         <li><a href="/about.html">אודות</a></li>
         <li><a href="/index.html#contact">צור קשר</a></li>
         <li><a href="/reviews.html">ביקורות</a></li>
-        <li>
-		  <a href="tel:+972586200779" class="nav-phone nav-phone-icon" dir="ltr" data-tooltip="+972-58-620-0779" aria-label="+972-58-620-0779">
-			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-			  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-			</svg>
-		  </a>
-		</li>
         <li><a href="#" id="lang-toggle" class="nav-phone">English</a></li>
       </ul>
     </nav>
   </div>
-</header>
+</div>
 `);
 document.addEventListener('DOMContentLoaded', function() {
   var btn = document.getElementById('nav-toggle-btn');
@@ -46,11 +43,21 @@ document.addEventListener('DOMContentLoaded', function() {
       menu.classList.toggle('open');
     });
     document.addEventListener('click', function(e) {
-      if (!e.target.closest('header')) {
+      if (!e.target.closest('.header-fixed')) {
         menu.classList.remove('open');
       }
     });
   }
+
+  var headerFixed = document.querySelector('.header-fixed');
+  function toggleHeaderScrolled() {
+    if (headerFixed) {
+      headerFixed.classList.toggle('is-scrolled', window.scrollY > 20);
+    }
+  }
+  toggleHeaderScrolled();
+  window.addEventListener('scroll', toggleHeaderScrolled, { passive: true });
+
   var path = window.location.pathname;
   document.documentElement.lang = 'he';
 
