@@ -1129,5 +1129,7 @@ footer a:hover { color: var(--gold-light); }
 .cart-item-price { color:var(--text-light); font-size:0.8rem; }
 .cart-item-remove { background:none; border:none; color:var(--text-light); font-size:0.75rem; text-decoration:underline; cursor:pointer; padding:0; flex-shrink:0; }
 .cart-item-remove:hover { color:var(--gold); }
-.cart-total { display:flex; justify-content:space-between; font-family:var(--sans); font-size:0.95rem; color:var(--text); font-weight:500; padding-top:0.75rem; margin-bottom:1rem; border-top:1px solid var(--border); }
+.cart-total { font-family:var(--sans); padding-top:0.75rem; margin-bottom:1rem; border-top:1px solid var(--border); }
+.cart-total-line { display:flex; justify-content:space-between; font-size:0.82rem; color:var(--text-light); padding:0.2rem 0; }
+.cart-total-grand { font-size:0.98rem; color:var(--text); font-weight:500; margin-top:0.3rem; padding-top:0.5rem; border-top:1px solid var(--border); }
 .cart-widget .btn { width:100%; text-align:center; }
