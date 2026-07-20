@@ -73,16 +73,11 @@ a:hover { color: var(--gold-light); }
 .logo {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 180px;
-  height: 76px;
-  background: var(--bg-warm);
-  border-radius: 50%;
-  box-shadow: var(--shadow);
+  background: var(--white);
   flex-shrink: 0;
 }
 
-.logo img { height: 58px; width: auto; display: block; }
+.logo img { height: 64px; width: auto; display: block; }
 
 .header-phone {
   display: inline-flex;
@@ -942,7 +937,6 @@ footer a:hover { color: var(--gold-light); }
   .hero-text h1 { font-size: 1.8rem; }
   .hero-text p { font-size: 0.95rem; }
   .header-top-inner { padding-inline-end: 12rem; }
-  .logo { width: 110px; height: 48px; }
   .logo img { height: 30px; }
   .hero-host {
   position: static;
@@ -956,7 +950,7 @@ footer a:hover { color: var(--gold-light); }
 @media (min-width: 481px) {
   .hero-host {
     position: absolute;
-    top: 6.5rem;
+    top: 7.5rem;
     left: 1rem;
     margin: 0;
     z-index: 2;
