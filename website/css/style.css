@@ -64,7 +64,7 @@ a:hover { color: var(--gold-light); }
 .header-top-inner {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 1.25rem 2rem;
+  padding: 1.25rem 1.25rem;
   padding-inline-end: 11rem;
   display: flex;
   align-items: center;
@@ -110,7 +110,7 @@ a:hover { color: var(--gold-light); }
   left: 0;
   right: 0;
   z-index: 200;
-  padding: 1.25rem 2rem;
+  padding: 1.25rem 1.25rem;
   display: flex;
   justify-content: flex-end;
   pointer-events: none;
@@ -949,7 +949,7 @@ footer a:hover { color: var(--gold-light); }
   position: static;
   display: block;
   text-align: center;
-  margin: 0 auto 0.75rem;
+  margin: 4.5rem auto 0.75rem;
 }
   .property-gallery-grid {grid-template-columns: 1fr;}
 }
