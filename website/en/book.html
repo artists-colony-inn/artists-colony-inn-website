@@ -57,7 +57,6 @@
         <input type="hidden" id="bw-checkin">
         <input type="hidden" id="bw-checkout">
       </div>
-      <button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap">Search</button>
     </div>
   </div>
 </section>
@@ -266,6 +265,7 @@ function applyDatePicker(){
   document.getElementById('bw-checkout').value = fmtDrForm(drEnd);
   document.getElementById('dr-trigger').textContent = fmtDr(drStart) + '  \u2192  ' + fmtDr(drEnd);
   closeDatePicker(null);
+  searchRooms();
 };
 
 document.getElementById('dr-prev').onclick = function(){
@@ -283,10 +283,6 @@ async function searchRooms(){
   if(!guests){ alert('Please select the number of guests.'); return; }
   selectedRooms = {};
   updateCartWidget();
-  var searchBtn = document.getElementById('bw-search');
-  var origLabel = searchBtn.textContent;
-  searchBtn.disabled = true;
-  searchBtn.textContent = 'Searching...';
   document.getElementById('bw-results').style.display='none';
   document.getElementById('bw-error').style.display='none';
   document.getElementById('bw-loading').style.display='block';
@@ -297,9 +293,6 @@ async function searchRooms(){
   }catch(e){
     document.getElementById('bw-loading').style.display='none';
     document.getElementById('bw-error').style.display='block';
-  }finally{
-    searchBtn.disabled = false;
-    searchBtn.textContent = origLabel;
   }
 }
 async function fetchRoom(id){
