@@ -43,7 +43,7 @@
     <div class="avail-form" style="background:var(--bg-warm);padding:1.25rem;border-radius:3px;border-top:2px solid var(--gold)">
       <div class="form-field" style="margin:0">
         <label>Guests</label>
-        <select id="bw-guests">
+        <select id="bw-guests" onchange="searchRooms()">
           <option value="" selected disabled>How many guests?</option>
           <option value="1">1 guest</option>
           <option value="2">2 guests</option>
@@ -134,6 +134,15 @@ function lowestPriceForDate(dateKey, guests){
 // ── DATE RANGE PICKER (popup, this month + next) ────────────
 let drYear, drMonth;
 let drStart = null, drEnd = null;
+
+(function(){
+  var today=new Date(); today.setHours(0,0,0,0);
+  var tomorrow=new Date(today); tomorrow.setDate(tomorrow.getDate()+1);
+  drStart=today; drEnd=tomorrow;
+  document.getElementById('bw-checkin').value=fmtDrForm(today);
+  document.getElementById('bw-checkout').value=fmtDrForm(tomorrow);
+  document.getElementById('dr-trigger').textContent=fmtDr(today)+'  \u2192  '+fmtDr(tomorrow);
+})();
 
 function openDatePicker(){
   var guests = document.getElementById('bw-guests').value;
