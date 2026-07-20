@@ -41,19 +41,20 @@
   <div class="container" style="max-width:760px">
     <div class="avail-form" style="background:var(--bg-warm);padding:1.25rem;border-radius:3px;border-top:2px solid var(--gold)">
       <div class="form-field" style="margin:0">
+        <label>Guests</label>
+        <select id="bw-guests">
+          <option value="" selected disabled>Select number of guests</option>
+          <option value="1">1 guest</option>
+          <option value="2">2 guests</option>
+          <option value="3">3 guests</option>
+          <option value="4">4 guests</option>
+        </select>
+      </div>
+      <div class="form-field" style="margin:0">
         <label>Dates</label>
         <button type="button" class="dr-trigger" id="dr-trigger" onclick="openDatePicker()">Select dates</button>
         <input type="hidden" id="bw-checkin">
         <input type="hidden" id="bw-checkout">
-      </div>
-      <div class="form-field" style="margin:0">
-        <label>Guests</label>
-        <select id="bw-guests">
-          <option value="1">1 guest</option>
-          <option value="2" selected>2 guests</option>
-          <option value="3">3 guests</option>
-          <option value="4">4 guests</option>
-        </select>
       </div>
       <button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap">Search</button>
     </div>
@@ -62,7 +63,7 @@
 
 <div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>Checking availability...</div>
 <div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Unable to check availability right now. Please try again or contact us by phone.</div>
-<div id="bw-results" style="display:none;padding-bottom:5rem">
+<div id="bw-results" style="display:none;background:var(--bg-warm);padding:3rem 0 5rem">
   <div class="container">
     <h2 class="section-title">Available Rooms</h2>
     <div class="section-rule"></div>
@@ -464,17 +465,6 @@ function closePopup(event){
   document.body.style.overflow='';
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePopup(null);closeDatePicker(null);}});
-
-// Default the date range to today \u2192 tomorrow and auto-search on load
-(function(){
-  var today=new Date(); today.setHours(0,0,0,0);
-  var tomorrow=new Date(today); tomorrow.setDate(tomorrow.getDate()+1);
-  drStart=today; drEnd=tomorrow;
-  document.getElementById('bw-checkin').value=fmtDrForm(today);
-  document.getElementById('bw-checkout').value=fmtDrForm(tomorrow);
-  document.getElementById('dr-trigger').textContent=fmtDr(today)+'  \u2192  '+fmtDr(tomorrow);
-  searchRooms();
-})();
 </script>
 </body>
 </html>
