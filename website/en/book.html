@@ -198,7 +198,8 @@ function renderMonthGrid(container, year, month){
     const dn = document.createElement('span'); dn.textContent = d;
     cell.appendChild(dn);
 
-    if (state !== 'past'){
+    const isCheckoutDay = drEnd && key === drKey(drEnd);
+    if (state !== 'past' && !isCheckoutDay){
       const guests = parseInt(document.getElementById('bw-guests').value);
       const price = lowestPriceForDate(key, guests);
       if (price !== null){
@@ -249,7 +250,11 @@ function renderPicker(){
 
 function drHandleClick(date, state){
   if (drStart && drEnd){
-    drStart = null; drEnd = null;
+    if (state === 'available'){
+      drStart = date; drEnd = null;
+    } else {
+      drStart = null; drEnd = null;
+    }
     renderPicker();
     return;
   }
