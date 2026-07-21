@@ -55,7 +55,7 @@
 <div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Unable to check availability right now. Please try again or contact us by phone.</div>
 <div id="bw-results" style="display:none;background:var(--bg-warm);padding:3rem 0 5rem">
   <div class="container">
-    <h2 class="section-title">Available Rooms</h2>
+    <h2 class="section-title">Available Rooms and Suites</h2>
     <div class="section-rule"></div>
     <div class="book-layout">
       <div class="room-list" id="bw-room-grid"></div>
@@ -64,7 +64,7 @@
         <div id="cart-empty" class="cart-empty">No rooms selected yet.</div>
         <ul id="cart-items" class="cart-items" style="display:none"></ul>
         <div id="cart-total" class="cart-total" style="display:none"></div>
-        <a id="cart-continue-btn" class="btn btn-gold" href="#" style="display:none">Continue to Book</a>
+        <a id="cart-continue-btn" class="btn btn-gold" href="#" style="display:none">Complete Reservation</a>
       </aside>
     </div>
   </div>
@@ -390,7 +390,7 @@ function renderRateActions(room, checkin, checkout){
   var btn=document.createElement('button');
   btn.type='button';
   btn.className='btn btn-gold btn-select';
-  btn.textContent='Book Now';
+  btn.textContent='Select';
   btn.disabled=true;
 
   select.onchange=function(){
