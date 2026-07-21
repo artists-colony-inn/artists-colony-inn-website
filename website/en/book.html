@@ -513,14 +513,6 @@ function renderResults(results,checkin,checkout){
 
       var guestsField=document.createElement('div');guestsField.className='guest-picker';guestsField.id='guests-field-'+room.id;
 
-      var rateLabel=document.createElement('div');rateLabel.className='room-list-rate-label';
-      rateLabel.innerHTML='<strong>Nightly Rate</strong><span>Includes courtesy breakfast</span>';
-
-      var rateLeftCol=document.createElement('div');rateLeftCol.className='room-list-rate-left';
-      rateLeftCol.appendChild(guestsField);
-      rateLeftCol.appendChild(rateLabel);
-      rateRow.appendChild(rateLeftCol);
-
       var ratePrice=document.createElement('div');ratePrice.className='room-list-rate-price';
       var perNight=Math.round(priceInfo.total/priceInfo.nights);
       var compare=document.createElement('div');compare.className='price-compare';compare.id='price-compare-'+room.id;
@@ -532,12 +524,21 @@ function renderResults(results,checkin,checkout){
       caption2.textContent='Includes taxes and fees';
       ratePrice.appendChild(compare);ratePrice.appendChild(amount);ratePrice.appendChild(caption);ratePrice.appendChild(caption2);
 
+      var rateTopRow=document.createElement('div');rateTopRow.className='room-list-rate-top';
+      rateTopRow.appendChild(guestsField);
+      rateTopRow.appendChild(ratePrice);
+      rateRow.appendChild(rateTopRow);
+
+      var rateLabel=document.createElement('div');rateLabel.className='room-list-rate-label';
+      rateLabel.innerHTML='<strong>Nightly Rate</strong><span>Includes courtesy breakfast</span>';
+
       var actions=document.createElement('div');actions.className='rate-actions';actions.id='rate-actions-'+room.id;
 
-      var priceActionGroup=document.createElement('div');priceActionGroup.className='room-list-price-action-group';
-      priceActionGroup.appendChild(ratePrice);priceActionGroup.appendChild(actions);
+      var rateBottomRow=document.createElement('div');rateBottomRow.className='room-list-rate-bottom';
+      rateBottomRow.appendChild(rateLabel);
+      rateBottomRow.appendChild(actions);
+      rateRow.appendChild(rateBottomRow);
 
-      rateRow.appendChild(priceActionGroup);
       details.appendChild(rateRow);
     }else{
       var unavail=document.createElement('div');unavail.className='room-list-unavail';
