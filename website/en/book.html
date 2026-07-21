@@ -344,9 +344,8 @@ function renderRateActions(room, checkin, checkout){
 
   var entry = selectedRooms[room.id];
   if (entry){
-    var gLabel=document.createElement('div');gLabel.className='guest-picker-label';//gLabel.textContent='Guests';
     var gValue=document.createElement('div');gValue.className='guest-picker-value';gValue.textContent=entry.guests+' guest'+(entry.guests>1?'s':'');
-    guestsField.appendChild(gLabel);guestsField.appendChild(gValue);
+    guestsField.appendChild(gValue);
 
     var btn=document.createElement('button');
     btn.type='button';
@@ -365,7 +364,6 @@ function renderRateActions(room, checkin, checkout){
   if (caption) caption.textContent='Per night';
   updateDisplayedPrice(room, checkin, checkout, 2);
 
-  var label=document.createElement('label');label.className='guest-picker-label';label.setAttribute('for','guests-select-'+room.id);label.textContent='Guests';
   var select=document.createElement('select');
   select.id='guests-select-'+room.id;
   select.className='guest-picker-select';
@@ -373,7 +371,7 @@ function renderRateActions(room, checkin, checkout){
   placeholderOpt.value='';
   placeholderOpt.disabled=true;
   placeholderOpt.selected=true;
-  placeholderOpt.textContent='\u2014';
+  placeholderOpt.textContent='How many guests?';
   select.appendChild(placeholderOpt);
   for (var g=1; g<=room.maxGuests; g++){
     var opt=document.createElement('option');
@@ -381,7 +379,7 @@ function renderRateActions(room, checkin, checkout){
     opt.textContent=g+(g>1?' guests':' guest');
     select.appendChild(opt);
   }
-  guestsField.appendChild(label);guestsField.appendChild(select);
+  guestsField.appendChild(select);
 
   var btn=document.createElement('button');
   btn.type='button';
