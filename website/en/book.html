@@ -291,8 +291,14 @@ async function searchRooms(){
   document.getElementById('bw-error').style.display='none';
   document.getElementById('bw-loading').style.display='block';
   try{
-    var results=await Promise.all(ROOMS.map(function(r){return fetchRoom(r.id);}));
+    var settled=await Promise.allSettled(ROOMS.map(function(r){return fetchRoom(r.id);}));
     document.getElementById('bw-loading').style.display='none';
+    var allFailed=settled.every(function(s){return s.status==='rejected';});
+    if(allFailed){
+      document.getElementById('bw-error').style.display='block';
+      return;
+    }
+    var results=settled.map(function(s){return s.status==='fulfilled'?s.value:null;});
     renderResults(results,checkin,checkout);
   }catch(e){
     document.getElementById('bw-loading').style.display='none';
@@ -478,7 +484,8 @@ function renderResults(results,checkin,checkout){
   grid.innerHTML='';
   ROOMS.forEach(function(room,i){
     var data=results[i];
-    var priceInfo=data?calcPrice(data,checkin,checkout,2):null;
+    var fetchFailed=(data===null);
+    var priceInfo=(!fetchFailed)?calcPrice(data,checkin,checkout,2):null;
     var available=priceInfo&&priceInfo.available;
     var roomUrl='/en/rooms/'+room.id.toLowerCase()+'.html';
     var row=document.createElement('div');
@@ -545,7 +552,7 @@ function renderResults(results,checkin,checkout){
       details.appendChild(rateRow);
     }else{
       var unavail=document.createElement('div');unavail.className='room-list-unavail';
-      unavail.textContent='Not available for these dates';
+      unavail.textContent=fetchFailed?'Unable to check availability for this room right now':'Not available for these dates';
       details.appendChild(unavail);
     }
     row.appendChild(details);
