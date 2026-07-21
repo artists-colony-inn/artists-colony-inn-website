@@ -510,9 +510,16 @@ function renderResults(results,checkin,checkout){
 
     if(available){
       var rateRow=document.createElement('div');rateRow.className='room-list-rate-row';
+
+      var guestsField=document.createElement('div');guestsField.className='guest-picker';guestsField.id='guests-field-'+room.id;
+
       var rateLabel=document.createElement('div');rateLabel.className='room-list-rate-label';
       rateLabel.innerHTML='<strong>Nightly Rate</strong><span>Includes courtesy breakfast</span>';
-      rateRow.appendChild(rateLabel);
+
+      var rateLeftCol=document.createElement('div');rateLeftCol.className='room-list-rate-left';
+      rateLeftCol.appendChild(guestsField);
+      rateLeftCol.appendChild(rateLabel);
+      rateRow.appendChild(rateLeftCol);
 
       var ratePrice=document.createElement('div');ratePrice.className='room-list-rate-price';
       var perNight=Math.round(priceInfo.total/priceInfo.nights);
@@ -525,14 +532,11 @@ function renderResults(results,checkin,checkout){
       caption2.textContent='Includes taxes and fees';
       ratePrice.appendChild(compare);ratePrice.appendChild(amount);ratePrice.appendChild(caption);ratePrice.appendChild(caption2);
 
-      var guestsField=document.createElement('div');guestsField.className='guest-picker';guestsField.id='guests-field-'+room.id;
-
       var actions=document.createElement('div');actions.className='rate-actions';actions.id='rate-actions-'+room.id;
 
       var priceActionGroup=document.createElement('div');priceActionGroup.className='room-list-price-action-group';
       priceActionGroup.appendChild(ratePrice);priceActionGroup.appendChild(actions);
 
-      rateRow.appendChild(guestsField);
       rateRow.appendChild(priceActionGroup);
       details.appendChild(rateRow);
     }else{
