@@ -6,12 +6,15 @@ document.currentScript.insertAdjacentHTML('afterend', `
     <a class="logo" href="/index.html">
       <img src="/images/logo.svg" alt="מלון בוטיק קריית האמנים">
     </a>
-    <a href="tel:+972586200779" class="header-phone" dir="ltr" aria-label="058-620-0779">
-      <span class="header-phone-text">058-620-0779</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-      </svg>
-    </a>
+    <div class="header-top-links">
+      <a href="#" id="lang-toggle" class="header-lang" dir="ltr">English</a>
+      <a href="tel:+972586200779" class="header-phone" dir="ltr" aria-label="058-620-0779">
+        <span class="header-phone-text">058-620-0779</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </div>
 
@@ -29,7 +32,6 @@ document.currentScript.insertAdjacentHTML('afterend', `
         <li><a href="/about.html">אודות</a></li>
         <li><a href="/index.html#contact">צור קשר</a></li>
         <li><a href="/reviews.html">ביקורות</a></li>
-        <li dir="ltr"><a href="#" id="lang-toggle" class="nav-phone">English</a></li>
       </ul>
     </nav>
   </div>
@@ -48,16 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-
-  var headerFixed = document.querySelector('.header-fixed');
-  var hasHero = !!document.querySelector('.hero');
-  function toggleHeaderScrolled() {
-    if (headerFixed) {
-	  headerFixed.classList.toggle('is-scrolled', hasHero ? window.scrollY > 20 : true);
-	}
-  }
-  toggleHeaderScrolled();
-  window.addEventListener('scroll', toggleHeaderScrolled, { passive: true });
 
   var path = window.location.pathname;
   document.documentElement.lang = 'he';
@@ -98,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.querySelectorAll('nav a').forEach(function(a) {
     var href = a.getAttribute('href');
-    if (!href || href.startsWith('tel:') || a.id === 'lang-toggle') return;
+    if (!href || href.startsWith('tel:')) return;
     if (
       (href === '/index.html' && (path === '/' || path === '/index.html')) ||
       (href !== '/index.html' && path.startsWith(href.replace('.html', '')))
