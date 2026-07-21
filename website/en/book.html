@@ -336,23 +336,25 @@ function updateDisplayedPrice(room, checkin, checkout, guests){
 }
 
 function renderRateActions(room, checkin, checkout){
+  var guestsField = document.getElementById('guests-field-'+room.id);
   var container = document.getElementById('rate-actions-'+room.id);
-  if (!container) return;
+  if (!guestsField || !container) return;
+  guestsField.innerHTML = '';
   container.innerHTML = '';
 
   var entry = selectedRooms[room.id];
   if (entry){
-    var wrap=document.createElement('div');
+    var gLabel=document.createElement('div');gLabel.className='guest-picker-label';gLabel.textContent='Guests';
+    var gValue=document.createElement('div');gValue.className='guest-picker-value';gValue.textContent=entry.guests+' guest'+(entry.guests>1?'s':'');
+    guestsField.appendChild(gLabel);guestsField.appendChild(gValue);
+
     var btn=document.createElement('button');
     btn.type='button';
     btn.className='btn btn-gold btn-select selected';
     btn.textContent='Added \u2713 (Remove)';
     btn.onclick=function(){ removeFromCart(room.id); };
-    var note=document.createElement('div');
-    note.className='rate-actions-note';
-    note.textContent=entry.guests+' guest'+(entry.guests>1?'s':'');
-    wrap.appendChild(btn);wrap.appendChild(note);
-    container.appendChild(wrap);
+    container.appendChild(btn);
+
     var caption=document.getElementById('price-caption-'+room.id);
     if (caption) caption.textContent='Per night';
     updateDisplayedPrice(room, checkin, checkout, entry.guests);
@@ -363,16 +365,23 @@ function renderRateActions(room, checkin, checkout){
   if (caption) caption.textContent='From, per night';
   updateDisplayedPrice(room, checkin, checkout, 2);
 
-  var pickerWrap=document.createElement('div');pickerWrap.className='guest-picker';
-  var label=document.createElement('label');label.className='guest-picker-label';label.setAttribute('for','guests-input-'+room.id);label.textContent='Guests';
-  var input=document.createElement('input');
-  input.type='number';
-  input.id='guests-input-'+room.id;
-  input.className='guest-picker-input';
-  input.min='1';
-  input.max=String(room.maxGuests);
-  input.placeholder='Guests';
-  input.value='';
+  var label=document.createElement('label');label.className='guest-picker-label';label.setAttribute('for','guests-select-'+room.id);label.textContent='Guests';
+  var select=document.createElement('select');
+  select.id='guests-select-'+room.id;
+  select.className='guest-picker-select';
+  var placeholderOpt=document.createElement('option');
+  placeholderOpt.value='';
+  placeholderOpt.disabled=true;
+  placeholderOpt.selected=true;
+  placeholderOpt.textContent='\u2014';
+  select.appendChild(placeholderOpt);
+  for (var g=1; g<=room.maxGuests; g++){
+    var opt=document.createElement('option');
+    opt.value=g;
+    opt.textContent=g+(g>1?' guests':' guest');
+    select.appendChild(opt);
+  }
+  guestsField.appendChild(label);guestsField.appendChild(select);
 
   var btn=document.createElement('button');
   btn.type='button';
@@ -380,15 +389,15 @@ function renderRateActions(room, checkin, checkout){
   btn.textContent='Book Now';
   btn.disabled=true;
 
-  input.oninput=function(){
-    var guests=parseInt(input.value);
+  select.onchange=function(){
+    var guests=parseInt(select.value);
     var valid=guests>=1 && guests<=room.maxGuests;
     btn.disabled=!valid;
     if (valid) updateDisplayedPrice(room, checkin, checkout, guests);
   };
 
   btn.onclick=function(){
-    var guests=parseInt(input.value);
+    var guests=parseInt(select.value);
     if (!(guests>=1 && guests<=room.maxGuests)) return;
     var priceInfo=updateDisplayedPrice(room, checkin, checkout, guests);
     if (!priceInfo){ alert('Sorry, this room is not available for '+guests+' guests on these dates.'); return; }
@@ -398,8 +407,7 @@ function renderRateActions(room, checkin, checkout){
     updateCartWidget();
   };
 
-  pickerWrap.appendChild(label);pickerWrap.appendChild(input);pickerWrap.appendChild(btn);
-  container.appendChild(pickerWrap);
+  container.appendChild(btn);
 }
 
 function removeFromCart(roomId){
@@ -515,10 +523,17 @@ function renderResults(results,checkin,checkout){
       caption.textContent=selectedRooms[room.id]?'Per night':'From, per night';
       var caption2=document.createElement('div');caption2.className='price-caption-secondary';
       caption2.textContent='Includes taxes and fees';
+      ratePrice.appendChild(compare);ratePrice.appendChild(amount);ratePrice.appendChild(caption);ratePrice.appendChild(caption2);
+
+      var guestsField=document.createElement('div');guestsField.className='guest-picker';guestsField.id='guests-field-'+room.id;
+
       var actions=document.createElement('div');actions.className='rate-actions';actions.id='rate-actions-'+room.id;
 
-      ratePrice.appendChild(compare);ratePrice.appendChild(amount);ratePrice.appendChild(caption);ratePrice.appendChild(caption2);ratePrice.appendChild(actions);
-      rateRow.appendChild(ratePrice);
+      var priceActionGroup=document.createElement('div');priceActionGroup.className='room-list-price-action-group';
+      priceActionGroup.appendChild(ratePrice);priceActionGroup.appendChild(actions);
+
+      rateRow.appendChild(guestsField);
+      rateRow.appendChild(priceActionGroup);
       details.appendChild(rateRow);
     }else{
       var unavail=document.createElement('div');unavail.className='room-list-unavail';
