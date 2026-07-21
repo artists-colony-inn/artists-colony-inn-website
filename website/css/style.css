@@ -1116,13 +1116,15 @@ footer a:hover { color: var(--gold-light); }
 .room-list-rate-price .price-caption-secondary { font-family:var(--sans); font-size:0.72rem; color:var(--text-light); margin-top:0.1rem; margin-bottom:0.6rem; }
 .room-list-rate-price .btn { min-width:140px; }
 
+.room-list-price-action-group { display:flex; align-items:flex-end; gap:1rem; }
+
 .rate-actions .btn { min-width:140px; }
 .rate-actions .btn:disabled { opacity:0.4; cursor:not-allowed; }
-.rate-actions-note { font-family:var(--sans); font-size:0.75rem; color:var(--text-light); margin-top:0.4rem; text-align:right; }
 
-.guest-picker { display:flex; flex-direction:column; align-items:flex-end; gap:0.4rem; }
+.guest-picker { display:flex; flex-direction:column; align-items:flex-start; gap:0.3rem; }
 .guest-picker-label { font-family:var(--sans); font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-light); }
-.guest-picker-input { width:140px; padding:0.5rem 0.6rem; border:1px solid var(--border); border-radius:2px; font-family:var(--sans); font-size:0.85rem; color:var(--text); background:var(--white); text-align:right; }
+.guest-picker-select { width:110px; padding:0.5rem 0.6rem; border:1px solid var(--border); border-radius:2px; font-family:var(--sans); font-size:0.85rem; color:var(--text); background:var(--white); }
+.guest-picker-value { font-family:var(--sans); font-size:0.9rem; color:var(--text); }
 
 .room-list-unavail { font-family:var(--sans); font-size:0.9rem; color:var(--text-light); margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--border); }
 
