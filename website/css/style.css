@@ -1105,9 +1105,9 @@ footer a:hover { color: var(--gold-light); }
 .room-list-tagline { font-family:var(--sans); font-size:0.92rem; color:var(--text-mid); margin-bottom:0.5rem; }
 .room-list-details-link { font-family:var(--sans); font-size:0.8rem; letter-spacing:0.03em; color:var(--gold); text-decoration:underline; cursor:pointer; }
 
-.room-list-rate-row { display:flex; flex-direction:column; gap:0.75rem; margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--border); }
-.room-list-rate-top { display:flex; align-items:flex-start; justify-content:flex-end; gap:1rem; }
-.room-list-rate-bottom { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+.room-list-rate-row { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--border); flex-wrap:wrap; }
+.room-list-rate-left { display:flex; flex-direction:column; align-items:flex-start; gap:0.6rem; }
+.room-list-rate-right { display:flex; flex-direction:column; align-items:flex-start; gap:0.6rem; }
 .room-list-rate-label strong { display:block; font-family:var(--sans); font-size:0.85rem; color:var(--text); margin-bottom:0.2rem; }
 .room-list-rate-label span { font-family:var(--sans); font-size:0.8rem; color:var(--text-light); }
 .room-list-rate-price { display:flex; flex-direction:column; align-items:flex-start; flex-shrink:0; }
