@@ -42,16 +42,6 @@
   <div class="container" style="max-width:760px">
     <div class="avail-form" style="background:var(--bg-warm);padding:1.25rem;border-radius:3px;border-top:2px solid var(--gold);grid-template-columns:1fr;gap:1rem">
       <div class="form-field" style="margin:0">
-        <label>Guests</label>
-        <select id="bw-guests" onchange="searchRooms()">
-          <option value="" selected disabled>How many guests?</option>
-          <option value="1">1 guest</option>
-          <option value="2">2 guests</option>
-          <option value="3">3 guests</option>
-          <option value="4">4 guests</option>
-        </select>
-      </div>
-      <div class="form-field" style="margin:0">
         <label>Dates</label>
         <button type="button" class="dr-trigger" id="dr-trigger" onclick="openDatePicker()">Select dates</button>
         <input type="hidden" id="bw-checkin">
@@ -91,7 +81,7 @@
       <button type="button" id="dr-prev">&#8592;</button>
       <button type="button" id="dr-next">&#8594;</button>
     </div>
-    <p style="text-align:center;font-family:var(--sans);font-size:0.72rem;color:var(--text-light);margin:0 0 0.75rem">Prices shown are for our lowest available room that night, including VAT</p>
+    <p style="text-align:center;font-family:var(--sans);font-size:0.72rem;color:var(--text-light);margin:0 0 0.75rem">Prices shown are for our lowest available room at double occupancy, including VAT</p>
     <div class="dr-months">
       <div class="cal-wrap" id="dr-cal-0"></div>
       <div class="cal-wrap" id="dr-cal-1"></div>
@@ -147,8 +137,6 @@ let drStart = null, drEnd = null;
 })();
 
 function openDatePicker(){
-  var guests = document.getElementById('bw-guests').value;
-  if (!guests){ alert('Please select the number of guests first, so we can show accurate pricing.'); return; }
   const today = new Date();
   if (drYear === undefined){ drYear = today.getFullYear(); drMonth = today.getMonth(); }
   document.getElementById('dr-popup-overlay').classList.add('open');
@@ -200,7 +188,7 @@ function renderMonthGrid(container, year, month){
     const dn = document.createElement('span'); dn.textContent = d;
     cell.appendChild(dn);
 
-    const guests = parseInt(document.getElementById('bw-guests').value);
+    const guests = 2;
     const isCheckoutDay = drEnd && key === drKey(drEnd);
     const price = (state !== 'past') ? lowestPriceForDate(key, guests) : null;
     if (price !== null && !isCheckoutDay){
@@ -296,9 +284,8 @@ document.getElementById('dr-next').onclick = function(){
 };
 
 async function searchRooms(){
-  var checkin=document.getElementById('bw-checkin').value,checkout=document.getElementById('bw-checkout').value,guests=parseInt(document.getElementById('bw-guests').value);
+  var checkin=document.getElementById('bw-checkin').value,checkout=document.getElementById('bw-checkout').value;
   if(!checkin||!checkout||checkin>=checkout){alert('Please select valid check-in and check-out dates.');return;}
-  if(!guests){ alert('Please select the number of guests.'); return; }
   selectedRooms = {};
   updateCartWidget();
   document.getElementById('bw-spacer').style.display='none';
@@ -308,7 +295,7 @@ async function searchRooms(){
   try{
     var results=await Promise.all(ROOMS.map(function(r){return fetchRoom(r.id);}));
     document.getElementById('bw-loading').style.display='none';
-    renderResults(results,checkin,checkout,guests);
+    renderResults(results,checkin,checkout);
   }catch(e){
     document.getElementById('bw-loading').style.display='none';
     document.getElementById('bw-error').style.display='block';
@@ -338,28 +325,105 @@ function calcPrice(data,checkin,checkout,guests){
 }
 function fmt(n){return '₪'+n.toLocaleString('en-IL');}
 
-function toggleRoomSelection(room, priceInfo, checkin, checkout, guests, rowEl, btnEl){
-  if (selectedRooms[room.id]){
-    delete selectedRooms[room.id];
-    rowEl.classList.remove('selected');
-    btnEl.classList.remove('selected');
-    btnEl.textContent = 'Book Now';
-  } else {
-    selectedRooms[room.id] = { room:room, priceInfo:priceInfo, checkin:checkin, checkout:checkout, guests:guests };
-    rowEl.classList.add('selected');
-    btnEl.classList.add('selected');
-    btnEl.textContent = 'Added \u2713 (Remove)';
+function updateDisplayedPrice(room, checkin, checkout, guests){
+  var data = priceCache[room.id];
+  var priceInfo = data ? calcPrice(data, checkin, checkout, guests) : null;
+  if (!priceInfo) return null;
+  var perNight = Math.round(priceInfo.total/priceInfo.nights);
+  var compareEl = document.getElementById('price-compare-'+room.id);
+  var amountEl = document.getElementById('price-amount-'+room.id);
+  if (compareEl) compareEl.innerHTML = 'Booking.com <span class="price-compare-amount">'+fmt(Math.round(perNight*1.2))+'</span>';
+  if (amountEl) amountEl.textContent = fmt(perNight);
+  return priceInfo;
+}
+
+function renderRateActions(room, checkin, checkout){
+  var container = document.getElementById('rate-actions-'+room.id);
+  if (!container) return;
+  container.innerHTML = '';
+
+  var entry = selectedRooms[room.id];
+  if (entry){
+    var wrap=document.createElement('div');
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.className='btn btn-gold btn-select selected';
+    btn.textContent='Added \u2713 (Remove)';
+    btn.onclick=function(){ removeFromCart(room.id); };
+    var note=document.createElement('div');
+    note.className='rate-actions-note';
+    note.textContent=entry.guests+' guest'+(entry.guests>1?'s':'');
+    wrap.appendChild(btn);wrap.appendChild(note);
+    container.appendChild(wrap);
+    var caption=document.getElementById('price-caption-'+room.id);
+    if (caption) caption.textContent='Per night';
+    updateDisplayedPrice(room, checkin, checkout, entry.guests);
+    return;
   }
-  updateCartWidget();
+
+  var caption=document.getElementById('price-caption-'+room.id);
+  if (caption) caption.textContent='From, per night';
+
+  var expanded = container.getAttribute('data-expanded') === 'true';
+  if (!expanded){
+    updateDisplayedPrice(room, checkin, checkout, 2);
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.className='btn btn-gold btn-select';
+    btn.textContent='Book Now';
+    btn.onclick=function(){
+      container.setAttribute('data-expanded','true');
+      renderRateActions(room, checkin, checkout);
+    };
+    container.appendChild(btn);
+  } else {
+    var pickerWrap=document.createElement('div');pickerWrap.className='guest-picker';
+    var label=document.createElement('label');label.className='guest-picker-label';label.textContent='Guests';
+    var select=document.createElement('select');select.className='guest-picker-select';
+    for (var g=1; g<=room.maxGuests; g++){
+      var opt=document.createElement('option');
+      opt.value=g;
+      opt.textContent=g+(g>1?' guests':' guest');
+      select.appendChild(opt);
+    }
+    select.onchange=function(){
+      updateDisplayedPrice(room, checkin, checkout, parseInt(select.value));
+    };
+    var confirmBtn=document.createElement('button');
+    confirmBtn.type='button';
+    confirmBtn.className='btn btn-gold btn-select';
+    confirmBtn.textContent='Add to Cart';
+    confirmBtn.onclick=function(){
+      var guests=parseInt(select.value);
+      var priceInfo=updateDisplayedPrice(room, checkin, checkout, guests);
+      if (!priceInfo){ alert('Sorry, this room is not available for '+guests+' guests on these dates.'); return; }
+      selectedRooms[room.id] = { room:room, priceInfo:priceInfo, checkin:checkin, checkout:checkout, guests:guests };
+      document.querySelector('.room-list-row[data-room-id="'+room.id+'"]').classList.add('selected');
+      renderRateActions(room, checkin, checkout);
+      updateCartWidget();
+    };
+    var cancelLink=document.createElement('a');cancelLink.className='guest-picker-cancel';cancelLink.textContent='Cancel';
+    cancelLink.onclick=function(){
+      container.setAttribute('data-expanded','false');
+      renderRateActions(room, checkin, checkout);
+    };
+    pickerWrap.appendChild(label);pickerWrap.appendChild(select);pickerWrap.appendChild(confirmBtn);pickerWrap.appendChild(cancelLink);
+    container.appendChild(pickerWrap);
+    updateDisplayedPrice(room, checkin, checkout, parseInt(select.value));
+  }
 }
 
 function removeFromCart(roomId){
   delete selectedRooms[roomId];
   var rowEl = document.querySelector('.room-list-row[data-room-id="'+roomId+'"]');
-  if (rowEl){
-    rowEl.classList.remove('selected');
-    var btnEl = rowEl.querySelector('.btn-select');
-    if (btnEl){ btnEl.classList.remove('selected'); btnEl.textContent = 'Book Now'; }
+  if (rowEl) rowEl.classList.remove('selected');
+  var room = ROOMS.filter(function(r){ return r.id === roomId; })[0];
+  var checkin = document.getElementById('bw-checkin').value;
+  var checkout = document.getElementById('bw-checkout').value;
+  if (room){
+    var container = document.getElementById('rate-actions-'+roomId);
+    if (container) container.setAttribute('data-expanded','false');
+    renderRateActions(room, checkin, checkout);
   }
   updateCartWidget();
 }
@@ -394,7 +458,7 @@ function updateCartWidget(){
     li.className = 'cart-item';
     var info = document.createElement('div');
     var name = document.createElement('div'); name.className = 'cart-item-name'; name.textContent = entry.room.name;
-    var price = document.createElement('div'); price.className = 'cart-item-price'; price.textContent = fmt(entry.priceInfo.total) + ' \u00b7 ' + entry.priceInfo.nights + ' night' + (entry.priceInfo.nights>1?'s':'');
+    var price = document.createElement('div'); price.className = 'cart-item-price'; price.textContent = fmt(entry.priceInfo.total) + ' \u00b7 ' + entry.priceInfo.nights + ' night' + (entry.priceInfo.nights>1?'s':'') + ' \u00b7 ' + entry.guests + ' guest' + (entry.guests>1?'s':'');
     info.appendChild(name); info.appendChild(price);
     var remove = document.createElement('button'); remove.type = 'button'; remove.className = 'cart-item-remove'; remove.textContent = 'Remove';
     remove.onclick = function(){ removeFromCart(id); };
@@ -410,15 +474,15 @@ function updateCartWidget(){
 
   var first = selectedRooms[ids[0]];
   continueBtn.style.display = 'block';
-  continueBtn.href = '/en/booking.html?rooms=' + ids.map(encodeURIComponent).join(',') + '&checkin=' + first.checkin + '&checkout=' + first.checkout + '&guests=' + first.guests;
+  continueBtn.href = '/en/booking.html?rooms=' + ids.map(function(id){ return encodeURIComponent(id) + ':' + selectedRooms[id].guests; }).join(',') + '&checkin=' + first.checkin + '&checkout=' + first.checkout;
 }
 
-function renderResults(results,checkin,checkout,guests){
+function renderResults(results,checkin,checkout){
   var grid=document.getElementById('bw-room-grid');
   grid.innerHTML='';
   ROOMS.forEach(function(room,i){
-    var data=results[i],guestsExceed=guests>room.maxGuests;
-    var priceInfo=(!guestsExceed&&data)?calcPrice(data,checkin,checkout,guests):null;
+    var data=results[i];
+    var priceInfo=data?calcPrice(data,checkin,checkout,2):null;
     var available=priceInfo&&priceInfo.available;
     var roomUrl='/en/rooms/'+room.id.toLowerCase()+'.html';
     var row=document.createElement('div');
@@ -459,30 +523,32 @@ function renderResults(results,checkin,checkout,guests){
 
       var ratePrice=document.createElement('div');ratePrice.className='room-list-rate-price';
       var perNight=Math.round(priceInfo.total/priceInfo.nights);
-      var compare=document.createElement('div');compare.className='price-compare';
+      var compare=document.createElement('div');compare.className='price-compare';compare.id='price-compare-'+room.id;
       compare.innerHTML='Booking.com <span class="price-compare-amount">'+fmt(Math.round(perNight*1.2))+'</span>';
-      var amount=document.createElement('div');amount.className='price-amount';amount.textContent=fmt(perNight);
-      var caption=document.createElement('div');caption.className='price-caption';
-      caption.textContent='Per night';
+      var amount=document.createElement('div');amount.className='price-amount';amount.id='price-amount-'+room.id;amount.textContent=fmt(perNight);
+      var caption=document.createElement('div');caption.className='price-caption';caption.id='price-caption-'+room.id;
+      caption.textContent=selectedRooms[room.id]?'Per night':'From, per night';
       var caption2=document.createElement('div');caption2.className='price-caption-secondary';
       caption2.textContent='Includes taxes and fees';
-      var btn=document.createElement('button');
-      btn.type='button';
-      btn.className='btn btn-gold btn-select'+(selectedRooms[room.id]?' selected':'');
-      btn.textContent=selectedRooms[room.id]?'Added \u2713 (Remove)':'Book Now';
-      btn.onclick=function(){toggleRoomSelection(room,priceInfo,checkin,checkout,guests,row,btn);};
-      ratePrice.appendChild(compare);ratePrice.appendChild(amount);ratePrice.appendChild(caption);ratePrice.appendChild(caption2);ratePrice.appendChild(btn);
+      var actions=document.createElement('div');actions.className='rate-actions';actions.id='rate-actions-'+room.id;
+
+      ratePrice.appendChild(compare);ratePrice.appendChild(amount);ratePrice.appendChild(caption);ratePrice.appendChild(caption2);ratePrice.appendChild(actions);
       rateRow.appendChild(ratePrice);
       details.appendChild(rateRow);
     }else{
       var unavail=document.createElement('div');unavail.className='room-list-unavail';
-      unavail.textContent=guestsExceed?'This room does not accommodate the number of guests selected':'Not available for these dates';
+      unavail.textContent='Not available for these dates';
       details.appendChild(unavail);
     }
     row.appendChild(details);
     grid.appendChild(row);
   });
   document.getElementById('bw-results').style.display='block';
+  ROOMS.forEach(function(room){
+    if (document.getElementById('rate-actions-'+room.id)){
+      renderRateActions(room, checkin, checkout);
+    }
+  });
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeDatePicker(null);}});
 </script>
