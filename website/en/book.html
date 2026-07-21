@@ -51,8 +51,6 @@
   </div>
 </section>
 
-<div id="bw-spacer" style="height:55vh"></div>
-
 <div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>Checking availability...</div>
 <div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Unable to check availability right now. Please try again or contact us by phone.</div>
 <div id="bw-results" style="display:none;background:var(--bg-warm);padding:3rem 0 5rem">
@@ -134,6 +132,7 @@ let drStart = null, drEnd = null;
   document.getElementById('bw-checkin').value=fmtDrForm(today);
   document.getElementById('bw-checkout').value=fmtDrForm(tomorrow);
   document.getElementById('dr-trigger').textContent=fmtDr(today)+'  \u2192  '+fmtDr(tomorrow);
+  searchRooms();
 })();
 
 function openDatePicker(){
@@ -288,7 +287,6 @@ async function searchRooms(){
   if(!checkin||!checkout||checkin>=checkout){alert('Please select valid check-in and check-out dates.');return;}
   selectedRooms = {};
   updateCartWidget();
-  document.getElementById('bw-spacer').style.display='none';
   document.getElementById('bw-results').style.display='none';
   document.getElementById('bw-error').style.display='none';
   document.getElementById('bw-loading').style.display='block';
@@ -363,54 +361,45 @@ function renderRateActions(room, checkin, checkout){
 
   var caption=document.getElementById('price-caption-'+room.id);
   if (caption) caption.textContent='From, per night';
+  updateDisplayedPrice(room, checkin, checkout, 2);
 
-  var expanded = container.getAttribute('data-expanded') === 'true';
-  if (!expanded){
-    updateDisplayedPrice(room, checkin, checkout, 2);
-    var btn=document.createElement('button');
-    btn.type='button';
-    btn.className='btn btn-gold btn-select';
-    btn.textContent='Book Now';
-    btn.onclick=function(){
-      container.setAttribute('data-expanded','true');
-      renderRateActions(room, checkin, checkout);
-    };
-    container.appendChild(btn);
-  } else {
-    var pickerWrap=document.createElement('div');pickerWrap.className='guest-picker';
-    var label=document.createElement('label');label.className='guest-picker-label';label.textContent='Guests';
-    var select=document.createElement('select');select.className='guest-picker-select';
-    for (var g=1; g<=room.maxGuests; g++){
-      var opt=document.createElement('option');
-      opt.value=g;
-      opt.textContent=g+(g>1?' guests':' guest');
-      select.appendChild(opt);
-    }
-    select.onchange=function(){
-      updateDisplayedPrice(room, checkin, checkout, parseInt(select.value));
-    };
-    var confirmBtn=document.createElement('button');
-    confirmBtn.type='button';
-    confirmBtn.className='btn btn-gold btn-select';
-    confirmBtn.textContent='Add to Cart';
-    confirmBtn.onclick=function(){
-      var guests=parseInt(select.value);
-      var priceInfo=updateDisplayedPrice(room, checkin, checkout, guests);
-      if (!priceInfo){ alert('Sorry, this room is not available for '+guests+' guests on these dates.'); return; }
-      selectedRooms[room.id] = { room:room, priceInfo:priceInfo, checkin:checkin, checkout:checkout, guests:guests };
-      document.querySelector('.room-list-row[data-room-id="'+room.id+'"]').classList.add('selected');
-      renderRateActions(room, checkin, checkout);
-      updateCartWidget();
-    };
-    var cancelLink=document.createElement('a');cancelLink.className='guest-picker-cancel';cancelLink.textContent='Cancel';
-    cancelLink.onclick=function(){
-      container.setAttribute('data-expanded','false');
-      renderRateActions(room, checkin, checkout);
-    };
-    pickerWrap.appendChild(label);pickerWrap.appendChild(select);pickerWrap.appendChild(confirmBtn);pickerWrap.appendChild(cancelLink);
-    container.appendChild(pickerWrap);
-    updateDisplayedPrice(room, checkin, checkout, parseInt(select.value));
-  }
+  var pickerWrap=document.createElement('div');pickerWrap.className='guest-picker';
+  var label=document.createElement('label');label.className='guest-picker-label';label.setAttribute('for','guests-input-'+room.id);label.textContent='Guests';
+  var input=document.createElement('input');
+  input.type='number';
+  input.id='guests-input-'+room.id;
+  input.className='guest-picker-input';
+  input.min='1';
+  input.max=String(room.maxGuests);
+  input.placeholder='Guests';
+  input.value='';
+
+  var btn=document.createElement('button');
+  btn.type='button';
+  btn.className='btn btn-gold btn-select';
+  btn.textContent='Book Now';
+  btn.disabled=true;
+
+  input.oninput=function(){
+    var guests=parseInt(input.value);
+    var valid=guests>=1 && guests<=room.maxGuests;
+    btn.disabled=!valid;
+    if (valid) updateDisplayedPrice(room, checkin, checkout, guests);
+  };
+
+  btn.onclick=function(){
+    var guests=parseInt(input.value);
+    if (!(guests>=1 && guests<=room.maxGuests)) return;
+    var priceInfo=updateDisplayedPrice(room, checkin, checkout, guests);
+    if (!priceInfo){ alert('Sorry, this room is not available for '+guests+' guests on these dates.'); return; }
+    selectedRooms[room.id] = { room:room, priceInfo:priceInfo, checkin:checkin, checkout:checkout, guests:guests };
+    document.querySelector('.room-list-row[data-room-id="'+room.id+'"]').classList.add('selected');
+    renderRateActions(room, checkin, checkout);
+    updateCartWidget();
+  };
+
+  pickerWrap.appendChild(label);pickerWrap.appendChild(input);pickerWrap.appendChild(btn);
+  container.appendChild(pickerWrap);
 }
 
 function removeFromCart(roomId){
@@ -420,11 +409,7 @@ function removeFromCart(roomId){
   var room = ROOMS.filter(function(r){ return r.id === roomId; })[0];
   var checkin = document.getElementById('bw-checkin').value;
   var checkout = document.getElementById('bw-checkout').value;
-  if (room){
-    var container = document.getElementById('rate-actions-'+roomId);
-    if (container) container.setAttribute('data-expanded','false');
-    renderRateActions(room, checkin, checkout);
-  }
+  if (room) renderRateActions(room, checkin, checkout);
   updateCartWidget();
 }
 
