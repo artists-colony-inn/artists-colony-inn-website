@@ -465,7 +465,12 @@ function updateCartWidget(){
 
   var first = selectedRooms[ids[0]];
   continueBtn.style.display = 'block';
-  continueBtn.href = '/en/booking.html?rooms=' + ids.map(function(id){ return encodeURIComponent(id) + ':' + selectedRooms[id].guests; }).join(',') + '&checkin=' + first.checkin + '&checkout=' + first.checkout;
+  continueBtn.href = '/en/booking.html'
+    + '?rooms=' + ids.map(encodeURIComponent).join(',')
+    + '&guests=' + ids.map(function(id){ return selectedRooms[id].guests; }).join(',')
+    + '&prices=' + ids.map(function(id){ return selectedRooms[id].priceInfo.total; }).join(',')
+    + '&checkin=' + first.checkin
+    + '&checkout=' + first.checkout;
 }
 
 function renderResults(results,checkin,checkout){
