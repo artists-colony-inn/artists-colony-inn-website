@@ -362,7 +362,7 @@ function renderRateActions(room, checkin, checkout){
   }
 
   var caption=document.getElementById('price-caption-'+room.id);
-  if (caption) caption.textContent='From, per night';
+  if (caption) caption.textContent='Per night';
   updateDisplayedPrice(room, checkin, checkout, 2);
 
   var label=document.createElement('label');label.className='guest-picker-label';label.setAttribute('for','guests-select-'+room.id);label.textContent='Guests';
@@ -513,31 +513,31 @@ function renderResults(results,checkin,checkout){
 
       var guestsField=document.createElement('div');guestsField.className='guest-picker';guestsField.id='guests-field-'+room.id;
 
+      var rateLabel=document.createElement('div');rateLabel.className='room-list-rate-label';
+      rateLabel.innerHTML='<strong>Nightly Rate</strong><span>Includes courtesy breakfast</span>';
+
+      var rateLeftCol=document.createElement('div');rateLeftCol.className='room-list-rate-left';
+      rateLeftCol.appendChild(guestsField);
+      rateLeftCol.appendChild(rateLabel);
+      rateRow.appendChild(rateLeftCol);
+
       var ratePrice=document.createElement('div');ratePrice.className='room-list-rate-price';
       var perNight=Math.round(priceInfo.total/priceInfo.nights);
       var compare=document.createElement('div');compare.className='price-compare';compare.id='price-compare-'+room.id;
       compare.innerHTML='Booking.com <span class="price-compare-amount">'+fmt(Math.round(perNight*1.2))+'</span>';
       var amount=document.createElement('div');amount.className='price-amount';amount.id='price-amount-'+room.id;amount.textContent=fmt(perNight);
       var caption=document.createElement('div');caption.className='price-caption';caption.id='price-caption-'+room.id;
-      caption.textContent=selectedRooms[room.id]?'Per night':'From, per night';
+      caption.textContent='Per night';
       var caption2=document.createElement('div');caption2.className='price-caption-secondary';
       caption2.textContent='Includes taxes and fees';
       ratePrice.appendChild(compare);ratePrice.appendChild(amount);ratePrice.appendChild(caption);ratePrice.appendChild(caption2);
 
-      var rateTopRow=document.createElement('div');rateTopRow.className='room-list-rate-top';
-      rateTopRow.appendChild(guestsField);
-      rateTopRow.appendChild(ratePrice);
-      rateRow.appendChild(rateTopRow);
-
-      var rateLabel=document.createElement('div');rateLabel.className='room-list-rate-label';
-      rateLabel.innerHTML='<strong>Nightly Rate</strong><span>Includes courtesy breakfast</span>';
-
       var actions=document.createElement('div');actions.className='rate-actions';actions.id='rate-actions-'+room.id;
 
-      var rateBottomRow=document.createElement('div');rateBottomRow.className='room-list-rate-bottom';
-      rateBottomRow.appendChild(rateLabel);
-      rateBottomRow.appendChild(actions);
-      rateRow.appendChild(rateBottomRow);
+      var rateRightCol=document.createElement('div');rateRightCol.className='room-list-rate-right';
+      rateRightCol.appendChild(ratePrice);
+      rateRightCol.appendChild(actions);
+      rateRow.appendChild(rateRightCol);
 
       details.appendChild(rateRow);
     }else{
