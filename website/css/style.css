@@ -76,6 +76,21 @@ a:hover { color: var(--gold-light); }
 
 .logo img { height: 64px; width: auto; display: block; }
 
+.header-top-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-lang {
+  color: var(--gold) !important;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+.header-lang:hover { color: var(--gold-light) !important; }
+
 .header-phone {
   display: inline-flex;
   align-items: center;
