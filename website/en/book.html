@@ -344,7 +344,7 @@ function renderRateActions(room, checkin, checkout){
 
   var entry = selectedRooms[room.id];
   if (entry){
-    var gLabel=document.createElement('div');gLabel.className='guest-picker-label';gLabel.textContent='Guests';
+    var gLabel=document.createElement('div');gLabel.className='guest-picker-label';//gLabel.textContent='Guests';
     var gValue=document.createElement('div');gValue.className='guest-picker-value';gValue.textContent=entry.guests+' guest'+(entry.guests>1?'s':'');
     guestsField.appendChild(gLabel);guestsField.appendChild(gValue);
 
