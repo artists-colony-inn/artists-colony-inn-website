@@ -1039,7 +1039,7 @@ footer a:hover { color: var(--gold-light); }
 .emotion-row-media { flex: 0 0 420px; height: 340px; position: relative; z-index: 1; }
 .emotion-row-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.emotion-row-content { flex: 1; min-width: 0; margin-left: -140px; position: relative; z-index: 2; }
+.emotion-row-content { flex: 0 0 480px; margin-left: -140px; position: relative; z-index: 2; }
 .emotion-row:nth-child(even) .emotion-row-content { margin-left: 0; margin-right: -140px; }
 
 .emotion-row-text {
