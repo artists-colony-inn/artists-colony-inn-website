@@ -43,6 +43,7 @@
               <input type="hidden" id="room">
               <input type="hidden" id="guests">
             </div>
+            <div id="extra-rooms-rows"></div>
             <div class="form-row">
               <div class="form-field"><label>Check-in</label><input type="text" id="checkin-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
               <div class="form-field"><label>Check-out</label><input type="text" id="checkout-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
@@ -53,7 +54,7 @@
             <div class="form-field"><label>Full name <span class="req">*</span></label><input type="text" id="name" placeholder="As it appears on your ID or passport" autocomplete="name"></div>
             <div class="form-row">
               <div class="form-field"><label>Email</label><input type="email" id="email" placeholder="your@email.com" autocomplete="email"></div>
-              <div class="form-field"><label>Phone <span class="req">*</span></label><input type="text" id="phone" placeholder="+972..." autocomplete="off"></div>
+              <div class="form-field"><label>Phone <span class="req">*</span></label><input type="text" id="phone" placeholder="Phone number with country code" autocomplete="off"></div>
             </div>
             <div class="form-row" id="meals-field" style="display:none">
               <div class="form-field"><label>Shabbat meals (₪100 per meal, VAT not included)</label><input type="number" id="meals" min="0" max="20" value="0"></div>
@@ -79,6 +80,7 @@
             <!-- Price summary -->
             <div id="price-box" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.88rem;color:var(--text-mid);line-height:2">
               <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">Price Summary</div>
+              <div id="price-rooms-rows"></div>
               <div id="price-base-row"></div>
               <div id="price-surcharge-row"></div>
               <div id="price-meals-row"></div>
@@ -188,30 +190,70 @@ function updateSubmitBtn() {
 
 window.addEventListener('DOMContentLoaded', function() {
   var p = new URLSearchParams(window.location.search);
-  var room     = p.get('room');
   var checkin  = p.get('checkin');
   var checkout = p.get('checkout');
-  var guests   = p.get('guests');
 
-  if (!room || !checkin || !checkout || !guests) {
+  var bookingRooms = [];
+  var isMultiRoom = !!p.get('prices');
+
+  if (isMultiRoom) {
+    var roomsArr  = p.get('rooms').split(',');
+    var guestsArr = (p.get('guests') || '').split(',');
+    var pricesArr = (p.get('prices') || '').split(',');
+    roomsArr.forEach(function(r, i) {
+      bookingRooms.push({
+        room:   decodeURIComponent(r),
+        guests: parseInt(guestsArr[i]) || 0,
+        price:  parseInt(pricesArr[i]) || 0
+      });
+    });
+  } else {
+    var room   = p.get('room');
+    var guests = p.get('guests');
+    if (room) bookingRooms.push({ room: room, guests: parseInt(guests) || 0, price: null });
+  }
+
+  if (!bookingRooms.length || !checkin || !checkout) {
     window.location.replace('/en/index.html');
     return;
   }
+  window.bookingRooms = bookingRooms;
+  window.isMultiRoom = isMultiRoom;
+
+  var first = bookingRooms[0];
+  var room = first.room, guests = String(first.guests);
 
   document.getElementById('room').value     = room;
   document.getElementById('checkin').value  = checkin;
   document.getElementById('checkout').value = checkout;
   document.getElementById('guests').value   = guests;
 
-  var guestLabel = guests === '1' ? '1 guest' : guests + ' guests';
+  var guestLabel = function(g) { return g === 1 ? '1 guest' : g + ' guests'; };
   var fmtDate = function(iso) {
     var d = new Date(iso + 'T00:00:00');
     return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
   };
   document.getElementById('room-display').value     = room;
-  document.getElementById('guests-display').value   = guestLabel;
+  document.getElementById('guests-display').value   = guestLabel(first.guests);
   document.getElementById('checkin-display').value  = fmtDate(checkin);
   document.getElementById('checkout-display').value = fmtDate(checkout);
+
+  var extraRows = document.getElementById('extra-rooms-rows');
+  for (var i = 1; i < bookingRooms.length; i++) {
+    (function(r) {
+      var row = document.createElement('div');
+      row.className = 'form-row';
+      var roomField = document.createElement('div');
+      roomField.className = 'form-field';
+      roomField.innerHTML = '<label>Room</label><input type="text" readonly value="' + r.room + '" style="background:var(--bg-stone);color:var(--text-light);cursor:default">';
+      var guestsField = document.createElement('div');
+      guestsField.className = 'form-field';
+      guestsField.innerHTML = '<label>Guests</label><input type="text" readonly value="' + guestLabel(r.guests) + '" style="background:var(--bg-stone);color:var(--text-light);cursor:default">';
+      row.appendChild(roomField);
+      row.appendChild(guestsField);
+      extraRows.appendChild(row);
+    })(bookingRooms[i]);
+  }
 
   updateMealsVisibility(checkin, checkout);
   updatePrice();
@@ -385,6 +427,7 @@ function luhn(value) {
 }
 
 async function updatePrice() {
+  if (window.isMultiRoom) return updatePriceMultiRoom();
   const room     = document.getElementById('room').value;
   const checkin  = document.getElementById('checkin').value;
   const checkout = document.getElementById('checkout').value;
@@ -446,9 +489,66 @@ async function updatePrice() {
     return '₪' + n.toLocaleString('en-IL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
   };
 
+  document.getElementById('price-rooms-rows').innerHTML       = '';
+  document.getElementById('price-base-row').style.display     = '';
   document.getElementById('price-base-row').textContent        = nights + ' night' + (nights > 1 ? 's' : '') + ' (base price): ' + fmt(base);
   document.getElementById('price-surcharge-row').style.display = surcharge ? '' : 'none';
   document.getElementById('price-surcharge-row').textContent   = 'Guest surcharge (' + (surchargeRate * 100) + '%): ' + fmt(surcharge);
+  document.getElementById('price-meals-row').style.display     = mealsBase ? '' : 'none';
+  document.getElementById('price-meals-row').textContent       = 'Shabbat meals (' + mealsCount + '): ' + fmt(mealsBase);
+  document.getElementById('price-vat-row').style.display       = 'none';
+  document.getElementById('price-total-row').textContent       = 'Total' + (isIsraeli ? ' (VAT included)' : '') + ': ' + fmt(total);
+  box.style.display = 'block';
+
+  var cancelNote = document.getElementById('cancel-policy-note');
+  if (cancelNote) cancelNote.style.display = 'block';
+
+  paySection.style.display = 'block';
+  var bitTotal = document.getElementById('bit-total');
+  if (bitTotal) bitTotal.textContent = fmt(total);
+}
+
+function updatePriceMultiRoom() {
+  const checkin  = document.getElementById('checkin').value;
+  const checkout = document.getElementById('checkout').value;
+  const box        = document.getElementById('price-box');
+  const paySection = document.getElementById('payment-method-section');
+  const bookingRooms = window.bookingRooms;
+
+  if (!checkin || !checkout || checkin >= checkout || !bookingRooms.length) {
+    box.style.display = 'none';
+    paySection.style.display = 'none';
+    return;
+  }
+
+  const fmt = function(n) {
+    return '₪' + n.toLocaleString('en-IL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  };
+
+  // Each room's price already has VAT baked in at a flat 18% (computed by book.html).
+  // For an Israeli guest that's correct as-is. For a non-Israeli guest (VAT-exempt),
+  // we back the VAT back out of the combined total, same relationship as the
+  // single-room path, just applied to the sum rather than one room's base price.
+  const roomsInclusive = bookingRooms.reduce(function(sum, r) { return sum + r.price; }, 0);
+  const roomsBeforeVAT = Math.round(roomsInclusive / 1.18);
+
+  const mealsCount = parseInt(document.getElementById('meals').value) || 0;
+  const mealsBase  = mealsCount * 100;
+  const beforeVAT  = roomsBeforeVAT + mealsBase;
+  const isIsraeli  = document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
+  const vat        = isIsraeli ? Math.round(beforeVAT * 0.18) : 0;
+  const total       = beforeVAT + vat;
+
+  var roomsRowsEl = document.getElementById('price-rooms-rows');
+  roomsRowsEl.innerHTML = '';
+  bookingRooms.forEach(function(r) {
+    var line = document.createElement('div');
+    line.textContent = r.room + ' (' + (r.guests === 1 ? '1 guest' : r.guests + ' guests') + '): ' + fmt(r.price);
+    roomsRowsEl.appendChild(line);
+  });
+
+  document.getElementById('price-base-row').style.display      = 'none';
+  document.getElementById('price-surcharge-row').style.display = 'none';
   document.getElementById('price-meals-row').style.display     = mealsBase ? '' : 'none';
   document.getElementById('price-meals-row').textContent       = 'Shabbat meals (' + mealsCount + '): ' + fmt(mealsBase);
   document.getElementById('price-vat-row').style.display       = 'none';
@@ -479,13 +579,28 @@ async function checkAvailability(room, checkin, checkout) {
   return true;
 }
 
+async function postBooking(payload) {
+  const r = await fetch(BOOKING_API, {
+    method:   'POST',
+    redirect: 'follow',
+    headers:  { 'Content-Type': 'text/plain;charset=utf-8' },
+    body:     JSON.stringify(payload)
+  });
+  const text = await r.text();
+  return JSON.parse(text);
+}
+
 async function submitBooking() {
-  var room      = document.getElementById('room').value.trim(),
-      checkin   = document.getElementById('checkin').value,
+  var checkin   = document.getElementById('checkin').value,
       checkout  = document.getElementById('checkout').value,
       name      = document.getElementById('name').value.trim(),
       email     = document.getElementById('email').value.trim(),
       phone     = document.getElementById('phone').value.trim();
+
+  var bookingRooms = window.isMultiRoom ? window.bookingRooms : [{
+    room: document.getElementById('room').value.trim(),
+    guests: parseInt(document.getElementById('guests').value) || 0
+  }];
 
   var isIsraeli = document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
   var payMethod = document.querySelector('input[name="payment_method"]:checked').value;
@@ -499,7 +614,7 @@ async function submitBooking() {
     id_number = document.getElementById('id_number').value.trim();
   }
 
-  if (!room||!checkin||!checkout||!name||!phone) { alert('Please fill in all required fields.'); return; }
+  if (!bookingRooms.length || bookingRooms.some(function(r){return !r.room;}) || !checkin||!checkout||!name||!phone) { alert('Please fill in all required fields.'); return; }
   if (payMethod === 'credit_card') {
     if (!cc_number||!cc_expiry||!cc_cvv||!cc_name||(isIsraeli && !id_number)) { alert('Please fill in all credit card fields.'); return; }
     if (detectCard(cc_number.replace(/\D/g,'')) === 'diners') { alert('We do not accept Diners Club cards.'); return; }
@@ -512,16 +627,14 @@ async function submitBooking() {
   var btn = document.getElementById('submit-btn');
   btn.disabled = true;
   btn.style.opacity = '0.45';
-  btn.textContent = 'Checking availability...';
+  btn.textContent = bookingRooms.length > 1 ? 'Checking availability for all rooms...' : 'Checking availability...';
 
+  // Validate every room before submitting or charging anything.
+  var unavailableRooms = [];
   try {
-    const available = await checkAvailability(room, checkin, checkout);
-    if (!available) {
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      btn.textContent = 'Submit Booking Request';
-      alert('Sorry, one or more of the selected dates are not available for ' + room + '. Please choose different dates or check the room calendar.');
-      return;
+    for (var i = 0; i < bookingRooms.length; i++) {
+      var ok = await checkAvailability(bookingRooms[i].room, checkin, checkout);
+      if (!ok) unavailableRooms.push(bookingRooms[i].room);
     }
   } catch(e) {
     btn.disabled = false;
@@ -530,55 +643,76 @@ async function submitBooking() {
     alert('Unable to verify availability. Please try again or contact us directly.');
     return;
   }
+  if (unavailableRooms.length) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.textContent = 'Submit Booking Request';
+    if (bookingRooms.length === 1) {
+      alert('Sorry, one or more of the selected dates are not available for ' + unavailableRooms[0] + '. Please choose different dates or check the room calendar.');
+    } else {
+      alert('Sorry, the following room(s) are no longer available for these dates: ' + unavailableRooms.join(', ') + '. Please choose different dates or rooms.');
+    }
+    return;
+  }
 
-  btn.textContent = 'Sending...';
-  var payload = {
-    name:           name,
-    email:          email,
-    phone:          phone,
-    room:           room,
-    checkin:        checkin,
-    checkout:       checkout,
-    guests:         document.getElementById('guests').value,
-    meals:          document.getElementById('meals').value,
-    nationality:    document.getElementById('nationality').value.trim(),
-    id_number:      id_number,
-    is_israeli:     isIsraeli ? 'yes' : 'no',
-    payment_method: payMethod,
-    cc_number:      cc_number,
-    cc_expiry:      cc_expiry,
-    cc_cvv:         cc_cvv,
-    cc_name:        cc_name,
-    requests:       document.getElementById('requests').value.trim(),
-    website:        document.getElementById('website').value
-  };
-
-  fetch(BOOKING_API, {
-    method:   'POST',
-    redirect: 'follow',
-    headers:  { 'Content-Type': 'text/plain;charset=utf-8' },
-    body:     JSON.stringify(payload)
-  })
-    .then(function(r) { return r.text(); })
-    .then(function(text) { return JSON.parse(text); })
-    .then(function(data) {
+  var resnums = [];
+  var failedAfter = -1;
+  for (var i = 0; i < bookingRooms.length; i++) {
+    btn.textContent = bookingRooms.length > 1
+      ? 'Sending room ' + (i+1) + ' of ' + bookingRooms.length + '...'
+      : 'Sending...';
+    var payload = {
+      name:           name,
+      email:          email,
+      phone:          phone,
+      room:           bookingRooms[i].room,
+      checkin:        checkin,
+      checkout:       checkout,
+      guests:         String(bookingRooms[i].guests),
+      meals:          i === 0 ? document.getElementById('meals').value : 0,
+      nationality:    document.getElementById('nationality').value.trim(),
+      id_number:      id_number,
+      is_israeli:     isIsraeli ? 'yes' : 'no',
+      payment_method: payMethod,
+      cc_number:      cc_number,
+      cc_expiry:      cc_expiry,
+      cc_cvv:         cc_cvv,
+      cc_name:        cc_name,
+      requests:       document.getElementById('requests').value.trim(),
+      website:        document.getElementById('website').value
+    };
+    try {
+      var data = await postBooking(payload);
       if (data.success) {
-        var qs = 'resnum=' + encodeURIComponent(data.resnum || '');
-        if (payMethod === 'bit') qs += '&pay=bit';
-        window.location.replace('/en/thankyou.html?' + qs);
+        resnums.push(data.resnum || '');
       } else {
-        btn.disabled = false;
-        btn.style.opacity = '1';
-        btn.textContent = 'Submit Booking Request';
-        document.getElementById('msg-err').style.display = 'block';
+        failedAfter = i;
+        break;
       }
-    })
-    .catch(function() {
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      btn.textContent = 'Submit Booking Request';
-      document.getElementById('msg-err').style.display = 'block';
-    });
+    } catch(e) {
+      failedAfter = i;
+      break;
+    }
+  }
+
+  if (failedAfter !== -1) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.textContent = 'Submit Booking Request';
+    var errEl = document.getElementById('msg-err');
+    if (resnums.length) {
+      errEl.innerHTML = resnums.length + ' of ' + bookingRooms.length + ' room(s) were booked successfully, but something went wrong with the rest. Please contact us at <strong>+972-58-620-0779</strong> to complete the remaining room(s), your confirmed reservation(s) are safe.';
+    } else {
+      errEl.innerHTML = 'Something went wrong. Please try again or contact us at <strong>+972-58-620-0779</strong>.';
+    }
+    errEl.style.display = 'block';
+    return;
+  }
+
+  var qs = 'resnum=' + encodeURIComponent(resnums[0] || '');
+  if (resnums.length > 1) qs = 'resnums=' + encodeURIComponent(resnums.join(','));
+  if (payMethod === 'bit') qs += '&pay=bit';
+  window.location.replace('/en/thankyou.html?' + qs);
 }
 </script>
 </body>
