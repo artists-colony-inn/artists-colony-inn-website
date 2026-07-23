@@ -44,6 +44,18 @@
       line-height: 1.9;
       margin-bottom: 1rem;
     }
+    .confirmation-numbers {
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.85rem 1.1rem;
+      margin: 1.25rem 0;
+      display: none;
+    }
     .bit-note {
       background: var(--bg-warm);
       border: 1px solid var(--gold);
@@ -73,8 +85,9 @@
       <span class="thankyou-icon">✓</span>
       <h1>תודה על בקשת ההזמנה שלכם</h1>
       <div class="divider"></div>
-      <p>קיבלנו את פרטי הזמנתכם ונחזור אליכם בהקדם לאישור.</p>
+      <p id="intro-line">קיבלנו את פרטי הזמנתכם ונחזור אליכם בהקדם לאישור.</p>
       <p>אם יש לכם שאלות, אתם מוזמנים ליצור איתנו קשר בטלפון או בוואטסאפ.</p>
+      <div class="confirmation-numbers" id="confirmation-numbers"></div>
       <div class="bit-note" id="bit-note">
         שילמתם בביט? אנא שלחו אישור תשלום תוך 24 שעות למספר
         <strong dir="ltr">+972-58-620-0779</strong> בוואטסאפ כדי לאשר את ההזמנה.
@@ -88,7 +101,29 @@
 
 <script src="/components/footer.js"></script>
 <script>
-  if (new URLSearchParams(window.location.search).get('pay') === 'bit') {
+  var params  = new URLSearchParams(window.location.search);
+  var resnumsParam = params.get('resnums');
+  var resnumParam  = params.get('resnum');
+  var resnums = [];
+  if (resnumsParam) {
+    resnums = resnumsParam.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+  } else if (resnumParam) {
+    resnums = [resnumParam];
+  }
+
+  if (resnums.length > 1) {
+    document.getElementById('intro-line').textContent =
+      'קיבלנו את פרטי הזמנותיכם ונחזור אליכם בהקדם לאישור.';
+  }
+
+  if (resnums.length) {
+    var el = document.getElementById('confirmation-numbers');
+    var label = resnums.length > 1 ? 'מספרי אישור: ' : 'מספר אישור: ';
+    el.textContent = label + resnums.join(', ');
+    el.style.display = 'block';
+  }
+
+  if (params.get('pay') === 'bit') {
     document.getElementById('bit-note').style.display = 'block';
   }
 </script>
