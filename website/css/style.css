@@ -1015,6 +1015,21 @@ footer a:hover { color: var(--gold-light); }
   font-style: italic;
   display: none;
 }
+
+.hero-cards { padding: 2rem 0 1rem; }
+.hero-cards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.hero-card { position: relative; display: block; border-radius: 4px; overflow: hidden; aspect-ratio: 4/3; text-decoration: none; }
+.hero-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.hero-card:hover img { transform: scale(1.05); }
+.hero-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0) 60%); }
+.hero-card-title { position: absolute; bottom: 1rem; left: 1rem; right: 1rem; z-index: 2; color: #fff; font-family: var(--serif); font-size: 1.15rem; letter-spacing: 0.02em; }
+@media (max-width: 768px) { .hero-cards-grid { grid-template-columns: 1fr; } }
+
+.emotion-tiles { padding: 4rem 0; }
+.emotion-tiles .container { display: flex; flex-direction: column; gap: 2rem; }
+.emotion-tile { background: var(--white); border-radius: 6px; box-shadow: var(--shadow); padding: 3rem 2.5rem; text-align: center; max-width: 760px; margin: 0 auto; }
+.emotion-tile p { font-family: var(--sans); font-weight: 300; color: var(--text-mid); line-height: 1.7; margin-top: 1rem; }
+
 /* ── Room search results (index.html) ─────────────────────── */
 .room-results { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.25rem; margin-top:2rem; }
 .room-result-card { border:1px solid var(--border); border-radius:4px; overflow:hidden; background:var(--white); transition:box-shadow 0.2s, border-color 0.2s; position:relative; }
