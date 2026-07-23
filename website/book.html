@@ -151,10 +151,15 @@ function closeDatePicker(e){
 
 function drKey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
+// Chag dates (no check-in, same rule as Shabbat) - populated from the API's
+// chagim field (read live from the Pricing Reference sheet), not hardcoded.
+let CHAGIM = new Set();
+
 function drState(d){
   const today = new Date(); today.setHours(0,0,0,0);
   if (d < today) return 'past';
   if (d.getDay() === 6) return 'checkout-only';
+  if (CHAGIM.has(drKey(d))) return 'checkout-only';
   return 'available';
 }
 
@@ -310,6 +315,9 @@ async function fetchRoom(id){
   var res=await fetch(AVAIL_API+'?room='+encodeURIComponent(id));
   var data=await res.json();
   priceCache[id]=data;
+  if(Array.isArray(data.chagim)){
+    data.chagim.forEach(function(d){ CHAGIM.add(d); });
+  }
   return data;
 }
 function calcPrice(data,checkin,checkout,guests){
