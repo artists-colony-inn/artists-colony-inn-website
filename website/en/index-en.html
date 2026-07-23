@@ -39,26 +39,6 @@
 	</a>
 	<h1>Artists' Colony Inn<br><span style="font-weight:400;font-size:0.85em;">A magical five-star home carved from ancient stone.</span></h1>
     <p>Boutique comfort in Tzfat's Old City, in the Artists' Quarter.</p>
-    <div class="hero-actions">
-	  <div class="avail-form" style="background:rgba(26,22,16,0.55);padding:1.25rem 1rem 1rem;border-radius:3px;margin-bottom:1rem;border-top:2px solid var(--gold)">
-		<div class="form-field" style="margin:0">
-		  <label style="color:var(--white)">Dates</label>
-		  <button type="button" class="dr-trigger" id="dr-trigger" onclick="openDatePicker()">Select dates</button>
-		  <input type="hidden" id="bw-checkin">
-		  <input type="hidden" id="bw-checkout">
-		</div>
-		<div class="form-field" style="margin:0">
-		  <label style="color:var(--white)">Guests</label>
-		  <select id="bw-guests">
-			<option value="" selected disabled>Select number of guests</option>
-			<option value="1">1 guest</option>
-			<option value="2">2 guests</option>
-			<option value="3">3 guests</option>
-			<option value="4">4 guests</option>
-		  </select>
-		</div>
-		<button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap">Search</button>
-	  </div>
 	</div>
   </div>
 </div>
@@ -79,16 +59,6 @@
     </div>
   </div>
 </section>
-
-<div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>Checking availability...</div>
-<div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Unable to check availability right now. Please try again or contact us by phone.</div>
-<div id="bw-results" style="display:none">
-  <div class="container">
-    <h2 class="section-title">Available Rooms</h2>
-    <div class="section-rule"></div>
-    <div class="room-results" id="bw-room-grid"></div>
-  </div>
-</div>
 
 <section>
   <div class="container" style="max-width:760px;text-align:center">
