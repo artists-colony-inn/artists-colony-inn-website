@@ -39,528 +39,96 @@
 	</a>
 	<h1>Artists' Colony Inn<br><span style="font-weight:400;font-size:0.85em;">A magical five-star home carved from ancient stone.</span></h1>
     <p>Boutique comfort in Tzfat's Old City, in the Artists' Quarter.</p>
-    <div class="hero-actions">
-	  <div class="avail-form" style="background:rgba(26,22,16,0.55);padding:1.25rem 1rem 1rem;border-radius:3px;margin-bottom:1rem;border-top:2px solid var(--gold)">
-		<div class="form-field" style="margin:0">
-		  <label style="color:var(--white)">Dates</label>
-		  <button type="button" class="dr-trigger" id="dr-trigger" onclick="openDatePicker()">Select dates</button>
-		  <input type="hidden" id="bw-checkin">
-		  <input type="hidden" id="bw-checkout">
-		</div>
-		<div class="form-field" style="margin:0">
-		  <label style="color:var(--white)">Guests</label>
-		  <select id="bw-guests">
-			<option value="" selected disabled>Select number of guests</option>
-			<option value="1">1 guest</option>
-			<option value="2">2 guests</option>
-			<option value="3">3 guests</option>
-			<option value="4">4 guests</option>
-		  </select>
-		</div>
-		<button class="btn btn-gold" id="bw-search" onclick="searchRooms()" style="white-space:nowrap">Search</button>
-	  </div>
 	</div>
   </div>
 </div>
 
 <div class="hero-divider"><span></span><i></i><span></span></div>
 
-<style>
-.property-gallery .property-gallery-grid{grid-template-columns:repeat(3,1fr)}
-@media(max-width:768px){.property-gallery .property-gallery-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.property-gallery .property-gallery-grid{grid-template-columns:1fr}}
-</style>
-<section class="property-gallery">
+<section class="hero-cards">
   <div class="container">
-    <div class="property-gallery-grid">
-      <img src="/images/aci-1.jpg" alt="View of Mount Meron and the Galilee from Artists' Colony Inn" loading="lazy">
-      <img src="/images/aci-2.jpg" alt="Artists' Colony Inn gardens and courtyards" loading="lazy">
-      <img src="/images/aci-3.jpg" alt="Courtesy breakfast at Artists' Colony Inn" loading="lazy">
+    <div class="hero-cards-grid">
+      <a href="/en/about.html" class="hero-card">
+        <img src="/images/aci-2.jpg" alt="The story of the Artists' Colony Inn" loading="lazy">
+        <span class="hero-card-title">Our Story</span>
+      </a>
+      <a href="/en/shabbat.html" class="hero-card">
+        <img src="/images/shabbat.jpg" alt="Shabbat at the Artists' Colony Inn" loading="lazy">
+        <span class="hero-card-title">Shabbat</span>
+      </a>
+      <a href="/en/gallery.html" class="hero-card">
+        <img src="/images/aci-5.jpg" alt="Gallery of the Artists' Colony Inn" loading="lazy">
+        <span class="hero-card-title">Gallery</span>
+      </a>
     </div>
   </div>
 </section>
 
-<div class="tagline-strip">
-	<h2>Rest, beauty, and the spirit of Tzfat.</h2>
-	<p>Located in Tzfat's Old City Artists' Quarter, the Artists' Colony Inn is just steps from galleries, ancient synagogues, and restaurants. Breathtaking views of Mount Meron and the Galilee open from the terraces and courtyards, a quiet, singular atmosphere carved from ancient Jerusalem stone.</p>
-</div>
-
-<section>
-  <div class="container" style="max-width:760px;text-align:center">
-    <h2 class="section-title">A Building That Remembers</h2>
-    <div class="section-rule"></div>
-    <p style="font-family:var(--sans);font-weight:300;color:var(--text-mid);line-height:1.7">The walls of this building are close to 350 years old, and some of the stones may be older still. A local tour guide and retired archaeologist once pointed out that certain stones carry marks belonging to Crusader, Mamluk, and Ottoman times alike, all present in the same walls. Somewhere beneath the building, a buried arch in the basement hints at rooms still hidden below.</p>
-    <a href="/en/about.html#history" class="btn btn-outline" style="margin-top:1rem">Read the full story</a>
-  </div>
-</section>
-
-<div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>Checking availability...</div>
-<div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Unable to check availability right now. Please try again or contact us by phone.</div>
-<div id="bw-results" style="display:none">
+<section class="emotion-tiles bg-warm">
   <div class="container">
-    <h2 class="section-title">Available Rooms</h2>
-    <div class="section-rule"></div>
-    <div class="room-results" id="bw-room-grid"></div>
-  </div>
-</div>
+    <div class="emotion-row">
+      <div class="emotion-row-media">
+        <img src="/images/aci-1.jpg" alt="Guests relaxing at the Artists' Colony Inn" loading="lazy">
+      </div>
+      <div class="emotion-row-content">
+        <div class="emotion-row-text">
+          <h2 class="section-title">A Different Rhythm</h2>
+          <div class="section-rule"></div>
+          <p>"The quiet around here simply heals the soul... I warmly recommend it to anyone looking to take real time off, disconnect from routine, and just rest. A perfect place for body and soul." — Shlomit</p>
+          <p>"I entered a calm, soothing, beautiful aesthetic." — Lisa</p>
+          <p>"Enjoying peace, breathtaking views and crisp mountain air." — Eyal</p>
+        </div>
+      </div>
+    </div>
 
-<section id="rooms">
-  <div class="container">
-    <h2 class="section-title">Five Distinct Suites</h2>
-    <div class="section-rule"></div>
-    <p style="text-align:center;font-family:var(--sans);font-size:1rem;color:var(--text-light);font-weight:300;margin-bottom:0.25rem">Summer from ₪800<br>Winter from ₪600<br><span style="font-size:0.82rem">per room per night for a couple, before VAT</span></p>
-    <p style="text-align:center;font-family:var(--sans);font-size:1rem;color:var(--text-light);font-weight:300;margin-bottom:2.5rem">Free cancellation up to 7 days before check-in</p>
-	<div class="room-group">
-	  <h3 class="room-group-title">Rooms</h3>
-	  <div class="rooms-grid rooms-grid-pair" style="max-width:700px;margin:0 auto">
-		<div class="room-card">
-		  <a href="/en/rooms/tzviya.html"><img src="/images/tzviya.jpg" alt="Tzviya Suite"></a>
-		  <div class="room-card-body">
-			<a href="/en/rooms/tzviya.html">
-			  <div style="display:flex;align-items:center;justify-content:space-between">
-				<h3 style="margin:0">Tzviya</h3>
-				<img src="/images/breakfast-icon.svg" alt="Courtesy breakfast" style="width:80px;height:80px;margin:-20px">
-			  </div>
-			</a>
-			<p class="tagline">A refuge carved from ancient stone.</p>
-			<a href="/en/rooms/tzviya.html" class="btn btn-gold">Check Availability</a>
-		  </div>
-		</div>
-		<div class="room-card">
-		  <a href="/en/rooms/aryeh.html"><img src="/images/aryeh.jpg" alt="Aryeh Suite"></a>
-		  <div class="room-card-body">
-			<a href="/en/rooms/aryeh.html">
-			  <div style="display:flex;align-items:center;justify-content:space-between">
-				<h3 style="margin:0">Aryeh</h3>
-				<img src="/images/breakfast-icon.svg" alt="Courtesy breakfast" style="width:80px;height:80px;margin:-20px">
-			  </div>
-			</a>
-			<p class="tagline">Warmth that wraps around both of you.</p>
-			<a href="/en/rooms/aryeh.html" class="btn btn-gold">Check Availability</a>
-		  </div>
-		</div>
-	  </div>
-	</div>
+    <div class="emotion-row">
+      <div class="emotion-row-media">
+        <img src="/images/aci-6.jpg" alt="A personal welcome at the Artists' Colony Inn" loading="lazy">
+      </div>
+      <div class="emotion-row-content">
+        <div class="emotion-row-text">
+          <h2 class="section-title">A Welcome, Not a Check-In</h2>
+          <div class="section-rule"></div>
+          <p>"What truly made my stay unforgettable were the hosts... they made me feel like family." — Oshi</p>
+          <p>"Staying with Leah and Shlomo feels like a five-star getaway while still feeling at home." — Yahel</p>
+          <p>"You can tell Leah and Shlomo love hosting — always available for anything you need." — Avital</p>
+        </div>
+      </div>
+    </div>
 
-	<div class="room-group">
-	  <h3 class="room-group-title">Suites</h3>
-	  <div class="rooms-grid rooms-grid-pair" style="max-width:700px;margin:0 auto">
-		<div class="room-card">
-		  <a href="/en/rooms/liana.html"><img src="/images/liana.jpg" alt="Liana Suite"></a>
-		  <div class="room-card-body">
-			<a href="/en/rooms/liana.html">
-			  <div style="display:flex;align-items:center;justify-content:space-between">
-				<h3 style="margin:0">Liana</h3>
-				<img src="/images/breakfast-icon.svg" alt="Courtesy breakfast" style="width:80px;height:80px;margin:-20px">
-			  </div>
-			</a>
-			<p class="tagline">Comfort and beauty, made for the whole family.</p>
-			<a href="/en/rooms/liana.html" class="btn btn-gold">Check Availability</a>
-		  </div>
-		</div>
-		<div class="room-card">
-		  <a href="/en/rooms/orly.html"><img src="/images/orly.jpg" alt="Orly Suite"></a>
-		  <div class="room-card-body">
-			<a href="/en/rooms/orly.html">
-			  <div style="display:flex;align-items:center;justify-content:space-between">
-				<h3 style="margin:0">Orly</h3>
-				<img src="/images/breakfast-icon.svg" alt="Courtesy breakfast" style="width:80px;height:80px;margin:-20px">
-			  </div>
-			</a>
-			<p class="tagline">Your own private world, with a glimpse of the Galilee beyond.</p>
-			<a href="/en/rooms/orly.html" class="btn btn-gold">Check Availability</a>
-		  </div>
-		</div>
-	  </div>
-	</div>
+    <div class="emotion-row">
+      <div class="emotion-row-media">
+        <img src="/images/aci-7.jpg" alt="The stone architecture of Tzfat's Old City" loading="lazy">
+      </div>
+      <div class="emotion-row-content">
+        <div class="emotion-row-text">
+          <h2 class="section-title">Rooted in Tzfat</h2>
+          <div class="section-rule"></div>
+          <p>Some of these walls are around 350 years old. Stones from Crusader, Mamluk, and Ottoman times sit side by side in the same wall, and somewhere beneath the building, a buried arch hints at rooms still unopened.</p>
+          <p>This inn was built to be different from the start: not just a hotel, not just a family guesthouse, but rooms gathered around a shared space, giving guests the opportunity to interact if they want to.</p>
+          <p>This is Tzfat's Artists' Quarter, home to painters and mystics for centuries, still shaping the alleys just outside the door.</p>
+        </div>
+      </div>
+    </div>
 
-	<div class="room-group">
-	  <h3 class="room-group-title">Premium Suite</h3>
-	  <div class="rooms-grid rooms-grid-single" style="max-width:360px;margin:0 auto">
-		<div class="room-card">
-		  <a href="/en/rooms/avital.html"><img src="/images/avital.jpg" alt="Avital Suite"></a>
-		  <div class="room-card-body">
-			<a href="/en/rooms/avital.html">
-			  <div style="display:flex;align-items:center;justify-content:space-between">
-				<h3 style="margin:0">Avital</h3>
-				<img src="/images/breakfast-icon.svg" alt="Courtesy breakfast" style="width:80px;height:80px;margin:-20px">
-			  </div>
-			</a>
-			<p class="tagline">For the moments you'll always remember.</p>
-			<a href="/en/rooms/avital.html" class="btn btn-gold">Check Availability</a>
-		  </div>
-		</div>
-	  </div>
-	</div>
-  </div>
-</section>
-
-<!-- Room popup -->
-<div class="room-popup-overlay" id="room-popup-overlay" onclick="closePopup(event)">
-  <div class="room-popup" id="room-popup">
-    <button class="room-popup-close" onclick="closePopup(null)">✕</button>
-    <div class="room-popup-gallery" id="popup-gallery"></div>
-    <div class="room-popup-body">
-      <h2 id="popup-name"></h2>
-      <div id="popup-desc"></div>
-      <div class="amenity-list" id="popup-amenities"></div>
-      <a id="popup-book-btn" class="btn btn-gold" style="display:inline-block;width:100%;text-align:center;padding:0.9rem">Book this room</a>
+    <div class="emotion-row">
+      <div class="emotion-row-media">
+        <img src="/images/aci-3.jpg" alt="A meal at the Artists' Colony Inn" loading="lazy">
+      </div>
+      <div class="emotion-row-content">
+        <div class="emotion-row-text">
+          <h2 class="section-title">Our Meals</h2>
+          <div class="section-rule"></div>
+          <p>We offer our guests a courtesy breakfast and the option of hosted meals for Shabbat and Chagim.</p>
+          <p>We are Shabbat observant, and kashrut is something we take seriously. Every meal we serve is prepared by us, in our own home, under our own supervision.</p>
+          <p>As one guest put it, sitting with us in the succah: "This is your home, isn't it? I would eat at your home." That's the trust we hope every guest who sits at our table comes to feel.</p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- Date range picker popup -->
-<div class="dr-popup-overlay" id="dr-popup-overlay" onclick="closeDatePicker(event)">
-  <div class="dr-popup" id="dr-popup">
-    <button class="dr-popup-close" onclick="closeDatePicker(null)">✕</button>
-    <div class="dr-nav">
-      <button type="button" id="dr-prev">&#8592;</button>
-      <button type="button" id="dr-next">&#8594;</button>
-    </div>
-    <div class="dr-months">
-      <div class="cal-wrap" id="dr-cal-0"></div>
-      <div class="cal-wrap" id="dr-cal-1"></div>
-    </div>
-    <div class="dr-summary" id="dr-summary"></div>
-    <a class="btn btn-gold" id="dr-apply" style="display:none;width:100%;text-align:center;margin-top:0.75rem;cursor:pointer" onclick="applyDatePicker()">Apply</a>
-  </div>
-</div>
-
-<section id="contact" style="padding:4rem 0">
-  <div class="container" style="max-width:640px">
-    <span class="section-label" style="text-align:center">Get in Touch</span>
-	<h2 class="section-title">Contact Us</h2>
-    <div class="section-rule"></div>
-
-    <form id="contact-form" class="booking-form" novalidate>
-      <div class="form-field">
-        <label for="cf-name">Name <span class="req">*</span></label>
-        <input type="text" id="cf-name" name="name" required maxlength="100" autocomplete="name">
-      </div>
-      <div class="form-field">
-        <label for="cf-email">Email <span class="req">*</span></label>
-        <input type="email" id="cf-email" name="email" required maxlength="200" autocomplete="email">
-      </div>
-      <div class="form-field">
-        <label for="cf-phone">Phone</label>
-        <input type="tel" id="cf-phone" name="phone" maxlength="30" autocomplete="tel">
-      </div>
-      <div class="form-field">
-        <label for="cf-message">Message <span class="req">*</span></label>
-        <textarea id="cf-message" name="message" rows="5" required maxlength="2000"></textarea>
-      </div>
-      <div class="hp"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
-      <button type="submit" id="cf-submit" class="btn btn-gold" style="width:100%;padding:0.9rem">Send Message</button>
-      <div class="form-msg" id="cf-msg"></div>
-    </form>
-  </div>
-</section>
-
-<script>
-  const API_URL = 'https://script.google.com/macros/s/AKfycbwsmf5HBXhZ6qgCCnjk0q_kvU-__XjI0A8k44Lkh_zg1jI2cTrPbYDDrJQsXYxZPOBYew/exec';
-
-  const form    = document.getElementById('contact-form');
-  const btn     = document.getElementById('cf-submit');
-  const msgBox  = document.getElementById('cf-msg');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (form.elements['website'].value) return;
-
-    const name    = document.getElementById('cf-name').value.trim();
-    const email   = document.getElementById('cf-email').value.trim();
-    const phone   = document.getElementById('cf-phone').value.trim();
-    const message = document.getElementById('cf-message').value.trim();
-
-    if (!name || !email || !message) {
-      showMsg('Please fill in all required fields.', 'error');
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
-    hideMsg();
-
-    try {
-      const params = new URLSearchParams({ action:'contact', name, email, phone, message });
-      const res  = await fetch(API_URL + '?' + params.toString());
-      const data = await res.json();
-      if (data.ok) {
-        showMsg('Thank you! We will get back to you shortly.', 'success');
-        form.reset();
-      } else {
-        showMsg('Something went wrong. Please try again or contact us by phone.', 'error');
-      }
-    } catch(err) {
-      showMsg('Unable to send at this time. Please contact us by phone or WhatsApp.', 'error');
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Send Message';
-    }
-  });
-
-  function showMsg(text, type) {
-    msgBox.textContent = text;
-    msgBox.className = 'form-msg ' + type;
-    msgBox.style.display = 'block';
-  }
-  function hideMsg() {
-    msgBox.className = 'form-msg';
-    msgBox.style.display = 'none';
-  }
-</script>
-
-<section class="bg-warm">
-  <div class="container" style="text-align:center;max-width:640px">
-    <h2>Shabbat & Chagim at the Artists' Colony Inn</h2>
-    <div class="section-rule"></div>
-		<p style="color:var(--text-mid);font-weight:300;font-size:1rem">The Artists' Colony Inn offers a restful atmosphere throughout Shabbat and Chagim, with late checkout after Havdalah.</p>
-		<a href="/en/shabbat.html" class="btn btn-gold" style="margin-top:1.5rem">Shabbat & Chagim</a>
-	</div>
 </section>
 
 </main>
 <script src="/en/components/footer.js"></script>
-<script>
-const AVAIL_API = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
-const ROOMS = [
-  { id:'Tzviya', name:'Tzviya', maxGuests:2, images:['tzviya','tzviya-1','tzviya-2','tzviya-3','tzviya-4','tzviya-5'], desc:'<p>A serene room with a vaulted stone ceiling and warm lamplight. Tzviya is an intimate, beautifully appointed room featuring a large shower and a quiet atmosphere perfectly suited to Tzfat\'s meditative character.</p><p>The room\'s graceful ironwork mirror and soft green alcove give it a distinctive character — restful, private, and genuinely beautiful.</p>', amenities:['Private bathroom','Large shower','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
-  { id:'Aryeh', name:'Aryeh', maxGuests:2, images:['aryeh','aryeh-1','aryeh-2','aryeh-3','aryeh-4','aryeh-5'], desc:'<p>Aryeh offers a spacious layout with exposed stone walls and warm wooden tones. The room includes a private jacuzzi and an intimate, relaxed atmosphere that invites complete unwinding.</p><p>Vaulted ceilings and classic furniture complement the ancient character of the building, with every detail chosen for comfort and warmth.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
-  { id:'Liana', name:'Liana', maxGuests:4, images:['liana','liana-1','liana-2','liana-3','liana-4','liana-5'], desc:'<p>Liana is one of the inn\'s central suites, featuring a large jacuzzi and a stunning mountain view over the Galilee. Warm terracotta tones, unique black ironwork and original art on the walls give the room a bold and inviting character.</p><p>A room for guests who want both beauty and comfort in equal measure.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] },
-  { id:'Avital', name:'Avital', maxGuests:4, images:['avital','avital-1','avital-2','avital-3','avital-4','avital-5','avital-6','avital-7'], desc:'<p>Avital is the most private suite at the inn, with a large jacuzzi and access to a private garden. Rich arch details, dark wood furniture and antique accents give the room a sense of depth and distinction.</p><p>Ideal for couples seeking a complete retreat — the private garden makes Avital unlike any other room at the inn.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private garden','Courtesy breakfast'] },
-  { id:'Orly', name:'Orly', maxGuests:2, images:['orly','orly-1','orly-2','orly-3','orly-4','orly-5','orly-6','orly-7'], desc:'<p>Orly offers a large jacuzzi and a view over the Galilee. A terracotta arch headboard and generous proportions create a warm, enveloping atmosphere.</p><p>A suite that balances restful comfort with the distinctive character of Tzfat\'s ancient architecture.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] }
-];
-let priceCache = {};
-
-// ── DATE RANGE PICKER (popup, this month + next) ────────────
-let drYear, drMonth;
-let drStart = null, drEnd = null;
-
-function openDatePicker(){
-  const today = new Date();
-  if (drYear === undefined){ drYear = today.getFullYear(); drMonth = today.getMonth(); }
-  document.getElementById('dr-popup-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  renderPicker();
-}
-
-function closeDatePicker(e){
-  if (e && e.target !== document.getElementById('dr-popup-overlay')) return;
-  document.getElementById('dr-popup-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function drKey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
-
-function drState(d){
-  const today = new Date(); today.setHours(0,0,0,0);
-  if (d < today) return 'past';
-  if (d.getDay() === 6) return 'checkout-only';
-  return 'available';
-}
-
-function renderMonthGrid(container, year, month){
-  container.innerHTML = '';
-  const title = document.createElement('div');
-  title.style.cssText = 'text-align:center;font-family:var(--sans);font-weight:500;font-size:0.85rem;color:var(--text);margin-bottom:0.5rem;';
-  title.textContent = new Date(year, month, 1).toLocaleDateString('en-IL', { month:'long', year:'numeric' });
-  container.appendChild(title);
-
-  const dlRow = document.createElement('div'); dlRow.className = 'cal-grid';
-  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(function(l){
-    const d = document.createElement('div'); d.className = 'cal-dow'; d.textContent = l; dlRow.appendChild(d);
-  });
-  container.appendChild(dlRow);
-
-  const grid = document.createElement('div'); grid.className = 'cal-grid';
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month+1, 0).getDate();
-
-  for (let i = 0; i < firstDay; i++){
-    const e = document.createElement('div'); e.className = 'cal-day empty'; grid.appendChild(e);
-  }
-  for (let d = 1; d <= daysInMonth; d++){
-    const date = new Date(year, month, d);
-    const state = drState(date);
-    const key = drKey(date);
-    const cell = document.createElement('div');
-    cell.className = 'cal-day ' + state;
-    const dn = document.createElement('span'); dn.textContent = d;
-    cell.appendChild(dn);
-
-    if (drStart){
-      if (key === drKey(drStart)) cell.classList.add('selected');
-      if (drEnd){
-        if (key === drKey(drEnd)) cell.classList.add('selected');
-        if (date > drStart && date < drEnd) cell.classList.add('in-range');
-      }
-    }
-    if (state === 'available' || (state === 'checkout-only' && drStart)){
-      cell.style.cursor = 'pointer';
-      cell.onclick = (function(dt, st){ return function(){ drHandleClick(dt, st); }; })(date, state);
-    }
-    grid.appendChild(cell);
-  }
-  container.appendChild(grid);
-}
-
-function renderPicker(){
-  const today = new Date();
-  document.getElementById('dr-prev').disabled = (drYear === today.getFullYear() && drMonth === today.getMonth());
-  renderMonthGrid(document.getElementById('dr-cal-0'), drYear, drMonth);
-  let nextY = drYear, nextM = drMonth + 1;
-  if (nextM > 11){ nextM = 0; nextY++; }
-  renderMonthGrid(document.getElementById('dr-cal-1'), nextY, nextM);
-
-  const summary = document.getElementById('dr-summary');
-  const apply = document.getElementById('dr-apply');
-  if (drStart && drEnd){
-    summary.textContent = 'Check-in: ' + fmtDr(drStart) + '  \u2192  Check-out: ' + fmtDr(drEnd);
-    apply.style.display = 'block';
-  } else if (drStart){
-    summary.textContent = 'Check-in: ' + fmtDr(drStart) + ' \u2014 select check-out date';
-    apply.style.display = 'none';
-  } else {
-    summary.textContent = 'Select your check-in date';
-    apply.style.display = 'none';
-  }
-}
-
-function drHandleClick(date, state){
-  if (drStart && drEnd){
-    drStart = null; drEnd = null;
-    renderPicker();
-    return;
-  }
-  if (!drStart){
-    if (state !== 'available') return;
-    drStart = date; drEnd = null;
-  } else if (date <= drStart){
-    drStart = state === 'available' ? date : null;
-    drEnd = null;
-  } else {
-    drEnd = date;
-  }
-  renderPicker();
-}
-
-function fmtDr(d){ return d.toLocaleDateString('en-IL', { day:'numeric', month:'short', year:'numeric' }); }
-function fmtDrForm(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
-
-function applyDatePicker(){
-  if (!drStart || !drEnd) return;
-  document.getElementById('bw-checkin').value  = fmtDrForm(drStart);
-  document.getElementById('bw-checkout').value = fmtDrForm(drEnd);
-  document.getElementById('dr-trigger').textContent = fmtDr(drStart) + '  \u2192  ' + fmtDr(drEnd);
-  closeDatePicker(null);
-};
-
-document.getElementById('dr-prev').onclick = function(){
-  drMonth--; if (drMonth < 0){ drMonth = 11; drYear--; }
-  renderPicker();
-};
-document.getElementById('dr-next').onclick = function(){
-  drMonth++; if (drMonth > 11){ drMonth = 0; drYear++; }
-  renderPicker();
-};
-
-async function searchRooms(){
-  var checkin=document.getElementById('bw-checkin').value,checkout=document.getElementById('bw-checkout').value,guests=parseInt(document.getElementById('bw-guests').value);
-  if(!checkin||!checkout||checkin>=checkout){alert('Please select valid check-in and check-out dates.');return;}
-  if(!guests){ alert('Please select the number of guests.'); return; }
-  var searchBtn = document.getElementById('bw-search');
-  var origLabel = searchBtn.textContent;
-  searchBtn.disabled = true;
-  searchBtn.textContent = 'Searching...';
-  document.getElementById('bw-results').style.display='none';
-  document.getElementById('bw-error').style.display='none';
-  document.getElementById('bw-loading').style.display='block';
-  try{
-    var results=await Promise.all(ROOMS.map(function(r){return fetchRoom(r.id);}));
-    document.getElementById('bw-loading').style.display='none';
-    renderResults(results,checkin,checkout,guests);
-  }catch(e){
-    document.getElementById('bw-loading').style.display='none';
-    document.getElementById('bw-error').style.display='block';
-  }finally{
-    searchBtn.disabled = false;
-    searchBtn.textContent = origLabel;
-  }
-}
-async function fetchRoom(id){
-  if(priceCache[id])return priceCache[id];
-  var res=await fetch(AVAIL_API+'?room='+encodeURIComponent(id));
-  var data=await res.json();
-  priceCache[id]=data;
-  return data;
-}
-function calcPrice(data,checkin,checkout,guests){
-  if(!data.dates)return null;
-  var lookup={};
-  data.dates.forEach(function(d){lookup[d.date]=d;});
-  var base=0,start=new Date(checkin),end=new Date(checkout);
-  for(var d=new Date(start);d<end;d.setDate(d.getDate()+1)){
-    var iso=d.toISOString().split('T')[0],day=lookup[iso];
-    if(!day||day.blocked||!day.price)return null;
-    base+=day.price;
-  }
-  var sr=guests===3?0.25:guests>=4?0.50:0;
-  var surcharge=Math.round(base*sr),beforeVAT=base+surcharge,vat=Math.round(beforeVAT*0.18),total=beforeVAT+vat;
-  var nights=Math.round((end-start)/86400000);
-  return{total,nights,available:true};
-}
-function fmt(n){return '₪'+n.toLocaleString('en-IL');}
-function renderResults(results,checkin,checkout,guests){
-  var grid=document.getElementById('bw-room-grid');
-  grid.innerHTML='';
-  ROOMS.forEach(function(room,i){
-    var data=results[i],guestsExceed=guests>room.maxGuests;
-    var priceInfo=(!guestsExceed&&data)?calcPrice(data,checkin,checkout,guests):null;
-    var available=priceInfo&&priceInfo.available;
-    var card=document.createElement('div');
-    card.className='room-result-card'+(available?'':' unavailable');
-    var img=document.createElement('img');
-    img.src='/images/'+room.images[0]+'.jpg';img.alt=room.name;
-    if(available)img.onclick=function(){openPopup(room,checkin,checkout,guests,priceInfo);};
-    card.appendChild(img);
-    var body=document.createElement('div');body.className='room-result-body';
-    var name=document.createElement('h3');name.textContent=room.name;
-    if(available){name.style.cursor='pointer';name.onclick=function(){openPopup(room,checkin,checkout,guests,priceInfo);};}
-    body.appendChild(name);
-    if(available){
-      var price=document.createElement('div');price.className='room-result-price';
-      price.textContent=fmt(priceInfo.total)+' total · '+priceInfo.nights+' night'+(priceInfo.nights>1?'s':'')+' · VAT included';
-      body.appendChild(price);
-      var btn=document.createElement('a');btn.className='btn btn-gold';btn.style.cssText='display:block;text-align:center;';
-      btn.href='/en/booking.html?room='+encodeURIComponent(room.id)+'&checkin='+checkin+'&checkout='+checkout+'&guests='+guests;
-      btn.textContent='Book';body.appendChild(btn);
-    }else{
-      var unavail=document.createElement('div');unavail.className='room-result-unavail';
-      unavail.textContent=guestsExceed?'This room does not accommodate the number of guests selected':'Not available for these dates';
-      body.appendChild(unavail);
-    }
-    card.appendChild(body);grid.appendChild(card);
-  });
-  document.getElementById('bw-results').style.display='block';
-  document.getElementById('bw-results').scrollIntoView({behavior:'smooth',block:'start'});
-}
-function openPopup(room,checkin,checkout,guests,priceInfo){
-  var gallery=document.getElementById('popup-gallery');gallery.innerHTML='';
-  room.images.forEach(function(img){var el=document.createElement('img');el.src='/images/'+img+'.jpg';el.alt=room.name;gallery.appendChild(el);});
-  document.getElementById('popup-name').textContent=room.name;
-  document.getElementById('popup-desc').innerHTML=room.desc;
-  var am=document.getElementById('popup-amenities');am.innerHTML='';
-  room.amenities.forEach(function(a){var s=document.createElement('span');s.className='amenity';s.textContent=a;am.appendChild(s);});
-  document.getElementById('popup-book-btn').href='/en/booking.html?room='+encodeURIComponent(room.id)+'&checkin='+checkin+'&checkout='+checkout+'&guests='+guests;
-  document.getElementById('room-popup-overlay').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closePopup(event){
-  if(event&&event.target!==document.getElementById('room-popup-overlay'))return;
-  document.getElementById('room-popup-overlay').classList.remove('open');
-  document.body.style.overflow='';
-}
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closePopup(null);});
-</script>
 </body>
 </html>
