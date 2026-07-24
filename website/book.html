@@ -224,7 +224,7 @@ function renderMonthGrid(container, year, month){
 
 function renderPicker(){
   const today = new Date();
-  document.getElementById('dr-prev').disabled = (drYear === today.getFullYear() && drMonth === today.getMonth());
+  document.getElementById('dr-next').disabled = (drYear === today.getFullYear() && drMonth === today.getMonth());
   renderMonthGrid(document.getElementById('dr-cal-0'), drYear, drMonth);
   let nextY = drYear, nextM = drMonth + 1;
   if (nextM > 11){ nextM = 0; nextY++; }
@@ -279,11 +279,11 @@ function applyDatePicker(){
 };
 
 document.getElementById('dr-prev').onclick = function(){
-  drMonth--; if (drMonth < 0){ drMonth = 11; drYear--; }
+  drMonth++; if (drMonth > 11){ drMonth = 0; drYear++; }
   renderPicker();
 };
 document.getElementById('dr-next').onclick = function(){
-  drMonth++; if (drMonth > 11){ drMonth = 0; drYear++; }
+  drMonth--; if (drMonth < 0){ drMonth = 11; drYear--; }
   renderPicker();
 };
 
