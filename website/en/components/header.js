@@ -20,7 +20,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
 
 <div class="header-fixed">
   <div class="header-fixed-cluster">
-    <a href="/en/index.html" class="btn-book">Book</a>
+    <a href="/en/book.html" class="btn-book">Book</a>
     <button class="nav-toggle" aria-label="Menu" id="nav-toggle-btn">
       <span></span><span></span><span></span>
     </button>
