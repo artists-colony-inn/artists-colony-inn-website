@@ -30,7 +30,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
         <li><a href="/shabbat.html">שבת</a></li>
         <li><a href="/gallery.html">גלריה</a></li>
         <li><a href="/about.html">אודות</a></li>
-        <li><a href="/index.html#contact">צור קשר</a></li>
+        <li><a href="/contact.html">צור קשר</a></li>
         <li><a href="/reviews.html">ביקורות</a></li>
       </ul>
     </nav>
