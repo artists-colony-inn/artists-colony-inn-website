@@ -53,7 +53,7 @@
 	  </div>
 
 	  <!-- honeypot -->
-	  <div class="hp"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+	  <div class="hp"><input type="text" name="how_did_you_hear" tabindex="-1" autocomplete="off"></div>
 
 	  <button type="submit" id="cf-submit" class="btn btn-gold" style="width:100%;padding:0.9rem">Send Message</button>
 	  <div class="form-msg" id="cf-msg"></div>
@@ -85,7 +85,7 @@
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (form.elements['website'].value) return;
+    if (form.elements['how_did_you_hear'].value) return;
 
     const name    = document.getElementById('cf-name').value.trim();
     const email   = document.getElementById('cf-email').value.trim();
