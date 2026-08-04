@@ -807,7 +807,6 @@ footer a:hover { color: var(--gold-light); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
 .req { color: var(--gold); }
-.hp { display: none; }
 
 .pay-note {
   background: var(--bg-stone);
