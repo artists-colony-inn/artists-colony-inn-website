@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your Stay Directly &mdash; Artists' Colony Inn</title>
+  <meta name="description" content="Check availability and book your stay at the Artists' Colony Inn, a boutique guesthouse in the Old City of Tzfat.">
+  <link rel="stylesheet" href="/css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H5ZXBGVT4Q"></script>
+  <script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-H5ZXBGVT4Q');
+  </script>
+
+  <!-- Meta Pixel -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '983698949964438');
+  fbq('track', 'PageView');
+  </script>
+</head>
+<body>
+<script>window.IS_BOOK_PAGE = true;</script>
+<script src="/en/components/header.js"></script>
+<main>
+
+<section style="padding:6.5rem 0 2rem">
+  <div class="container" style="max-width:760px;text-align:center">
+    <h1 class="section-title" style="margin-bottom:0.25rem">Book Your Stay Directly</h1>
+    <div class="section-rule"></div>
+    <p style="font-family:var(--sans);color:var(--text-light);font-weight:300;max-width:520px;margin:0 auto"><strong style="color:var(--text)">Book direct and talk to us personally</strong> &mdash; before your stay, we'll know your dates, your needs, and how to make your visit feel right. Direct bookings also get our best rate.</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="container" style="max-width:760px">
+    <div class="avail-form" style="background:var(--bg-warm);padding:1.25rem;border-radius:3px;border-top:2px solid var(--gold);grid-template-columns:1fr;gap:1rem">
+      <div class="form-field" style="margin:0">
+        <label>Dates</label>
+        <button type="button" class="dr-trigger" id="dr-trigger" onclick="openDatePicker()">Select dates</button>
+        <input type="hidden" id="bw-checkin">
+        <input type="hidden" id="bw-checkout">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="bw-loading" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>Checking availability...</div>
+<div id="bw-error" style="display:none;text-align:center;padding:3rem 1rem;font-family:var(--sans);color:var(--text-mid)">Unable to check availability right now. Please try again or contact us by phone.</div>
+<div id="bw-results" style="display:none;background:var(--bg-warm);padding:3rem 0 5rem">
+  <div class="container">
+    <h2 class="section-title">Available Rooms and Suites</h2>
+    <div class="section-rule"></div>
+    <div class="book-layout">
+      <div class="room-list" id="bw-room-grid"></div>
+      <aside class="cart-widget">
+        <h3 id="cart-heading">Your Cart: 0 Items</h3>
+        <div id="cart-empty" class="cart-empty">No rooms selected yet.</div>
+        <ul id="cart-items" class="cart-items" style="display:none"></ul>
+        <div id="cart-total" class="cart-total" style="display:none"></div>
+        <a id="cart-continue-btn" class="btn btn-gold" href="#" style="display:none">Complete Reservation</a>
+      </aside>
+    </div>
+  </div>
+</div>
+
+
+<!-- Date range picker popup -->
+<div class="dr-popup-overlay" id="dr-popup-overlay" onclick="closeDatePicker(event)">
+  <div class="dr-popup" id="dr-popup">
+    <button class="dr-popup-close" onclick="closeDatePicker(null)">✕</button>
+    <div class="dr-nav">
+      <button type="button" id="dr-prev">&#8592;</button>
+      <button type="button" id="dr-next">&#8594;</button>
+    </div>
+    <p style="text-align:center;font-family:var(--sans);font-size:0.72rem;color:var(--text-light);margin:0 0 0.75rem">Prices shown are for our lowest available room at double occupancy, including VAT</p>
+    <div class="dr-months">
+      <div class="cal-wrap" id="dr-cal-0"></div>
+      <div class="cal-wrap" id="dr-cal-1"></div>
+    </div>
+    <div class="dr-summary" id="dr-summary"></div>
+    <a class="btn btn-gold" id="dr-apply" style="display:none;width:100%;text-align:center;margin-top:0.75rem;cursor:pointer" onclick="applyDatePicker()">Apply</a>
+  </div>
+</div>
+
+</main>
+<script src="/en/components/footer.js"></script>
+<script>
+const AVAIL_API = 'https://script.google.com/macros/s/AKfycbx0HmXiBpQtJPm4CUuxVrmIWXKJCmA7zzJkq2tWCPvP2n439v5MobUPEQxorBDb4XR1Xw/exec';
+const ROOMS = [
+  { id:'Tzviya', name:'Tzviya', maxGuests:2, tagline:'A refuge carved from ancient stone.', images:['tzviya','tzviya-1','tzviya-2','tzviya-3','tzviya-4','tzviya-5'], desc:'<p>A serene room with a vaulted stone ceiling and warm lamplight. Tzviya is an intimate, beautifully appointed room featuring a large shower and a quiet atmosphere perfectly suited to Tzfat\'s meditative character.</p><p>The room\'s graceful ironwork mirror and soft green alcove give it a distinctive character — restful, private, and genuinely beautiful.</p>', amenities:['Private bathroom','Large shower','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
+  { id:'Aryeh', name:'Aryeh', maxGuests:2, tagline:'Warmth that wraps around both of you.', images:['aryeh','aryeh-1','aryeh-2','aryeh-3','aryeh-4','aryeh-5'], desc:'<p>Aryeh offers a spacious layout with exposed stone walls and warm wooden tones. The room includes a private jacuzzi and an intimate, relaxed atmosphere that invites complete unwinding.</p><p>Vaulted ceilings and classic furniture complement the ancient character of the building, with every detail chosen for comfort and warmth.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Courtesy breakfast'] },
+  { id:'Liana', name:'Liana', maxGuests:4, tagline:'Comfort and beauty, made for the whole family.', images:['liana','liana-1','liana-2','liana-3','liana-4','liana-5'], desc:'<p>Liana is one of the inn\'s central suites, featuring a large jacuzzi and a stunning mountain view over the Galilee. Warm terracotta tones, unique black ironwork and original art on the walls give the room a bold and inviting character.</p><p>A room for guests who want both beauty and comfort in equal measure.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] },
+  { id:'Avital', name:'Avital', maxGuests:4, tagline:'For the moments you\'ll always remember.', images:['avital','avital-1','avital-2','avital-3','avital-4','avital-5','avital-6','avital-7'], desc:'<p>Avital is the most private suite at the inn, with a large jacuzzi and access to a private garden. Rich arch details, dark wood furniture and antique accents give the room a sense of depth and distinction.</p><p>Ideal for couples seeking a complete retreat — the private garden makes Avital unlike any other room at the inn.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private garden','Courtesy breakfast'] },
+  { id:'Orly', name:'Orly', maxGuests:2, tagline:'Your own private world, with a glimpse of the Galilee beyond.', images:['orly','orly-1','orly-2','orly-3','orly-4','orly-5','orly-6','orly-7'], desc:'<p>Orly offers a large jacuzzi and a view over the Galilee. A terracotta arch headboard and generous proportions create a warm, enveloping atmosphere.</p><p>A suite that balances restful comfort with the distinctive character of Tzfat\'s ancient architecture.</p>', amenities:['Private bathroom','Jacuzzi','Air conditioning','Heating','Free Wi-Fi','Private balcony','Courtesy breakfast'] }
+];
+let priceCache = {};
+let selectedRooms = {};
+// Tracks, per room, the ISO date (exclusive) that room's cached data reaches.
+// Lets us fetch only the date range we actually need instead of the full
+// availability history on every load.
+let roomCachedThrough = {};
+const INITIAL_RANGE_MONTHS = 6;
+
+function lowestPriceForDate(dateKey, guests){
+  var lowest = null;
+  ROOMS.forEach(function(room){
+    if (guests && guests > room.maxGuests) return;
+    var data = priceCache[room.id];
+    if (!data || !data.dates) return;
+    var day = null;
+    for (var i=0; i<data.dates.length; i++){ if (data.dates[i].date === dateKey){ day = data.dates[i]; break; } }
+    if (!day || day.blocked || !day.price) return;
+    var sr = (data.surcharge && data.surcharge[guests]) || 0;
+    var beforeVAT = Math.round(day.price * (1 + sr));
+    var adjPrice = beforeVAT + Math.round(beforeVAT * 0.18);
+    if (lowest === null || adjPrice < lowest) lowest = adjPrice;
+  });
+  return lowest;
+}
+
+// ── DATE RANGE PICKER (popup, this month + next) ────────────
+let drYear, drMonth;
+let drStart = null, drEnd = null;
+
+(function(){
+  var today=new Date(); today.setHours(0,0,0,0);
+  var tomorrow=new Date(today); tomorrow.setDate(tomorrow.getDate()+1);
+  drStart=today; drEnd=tomorrow;
+  document.getElementById('bw-checkin').value=fmtDrForm(today);
+  document.getElementById('bw-checkout').value=fmtDrForm(tomorrow);
+  document.getElementById('dr-trigger').textContent=fmtDr(today)+'  \u2192  '+fmtDr(tomorrow);
+  var initialEnd=new Date(today); initialEnd.setMonth(initialEnd.getMonth()+INITIAL_RANGE_MONTHS);
+  ensureRoomDataThrough(fmtDrForm(initialEnd)).then(searchRooms);
+})();
+
+function openDatePicker(){
+  const today = new Date();
+  if (drYear === undefined){ drYear = today.getFullYear(); drMonth = today.getMonth(); }
+  document.getElementById('dr-popup-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderPicker();
+}
+
+function closeDatePicker(e){
+  if (e && e.target !== document.getElementById('dr-popup-overlay')) return;
+  document.getElementById('dr-popup-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function drKey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+// Chag dates (no check-in, same rule as Shabbat) - populated from the API's
+// chagim field (read live from the Pricing Reference sheet), not hardcoded.
+let CHAGIM = new Set();
+
+function drState(d){
+  const today = new Date(); today.setHours(0,0,0,0);
+  if (d < today) return 'past';
+  if (d.getDay() === 6) return 'checkout-only';
+  if (CHAGIM.has(drKey(d))) return 'checkout-only';
+  return 'available';
+}
+
+function renderMonthGrid(container, year, month){
+  container.innerHTML = '';
+  const title = document.createElement('div');
+  title.style.cssText = 'text-align:center;font-family:var(--sans);font-weight:500;font-size:0.85rem;color:var(--text);margin-bottom:0.5rem;';
+  title.textContent = new Date(year, month, 1).toLocaleDateString('en-IL', { month:'long', year:'numeric' });
+  container.appendChild(title);
+
+  const dlRow = document.createElement('div'); dlRow.className = 'cal-grid';
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(function(l){
+    const d = document.createElement('div'); d.className = 'cal-dow'; d.textContent = l; dlRow.appendChild(d);
+  });
+  container.appendChild(dlRow);
+
+  const grid = document.createElement('div'); grid.className = 'cal-grid';
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++){
+    const e = document.createElement('div'); e.className = 'cal-day empty'; grid.appendChild(e);
+  }
+  for (let d = 1; d <= daysInMonth; d++){
+    const date = new Date(year, month, d);
+    const state = drState(date);
+    const key = drKey(date);
+    const cell = document.createElement('div');
+    cell.className = 'cal-day ' + state;
+    const dn = document.createElement('span'); dn.textContent = d;
+    cell.appendChild(dn);
+
+    const guests = 2;
+    const isCheckoutDay = drEnd && key === drKey(drEnd);
+    const price = (state !== 'past') ? lowestPriceForDate(key, guests) : null;
+    if (price !== null && !isCheckoutDay){
+      const pr = document.createElement('span');
+      pr.className = 'cal-price';
+      pr.textContent = '\u20aa' + price;
+      cell.appendChild(pr);
+    }
+    // A day can look like a normal available day but have no room actually
+    // bookable that night - treat it like Saturday for clicking (valid as a
+    // checkout, not as a new check-in), without changing how it looks.
+    const interactionState = (state === 'available' && price === null) ? 'checkout-only' : state;
+
+    if (drStart){
+      if (key === drKey(drStart)) cell.classList.add('selected');
+      if (drEnd){
+        if (key === drKey(drEnd)) cell.classList.add('selected');
+        if (date > drStart && date < drEnd) cell.classList.add('in-range');
+      }
+    }
+    if (interactionState === 'available' || (interactionState === 'checkout-only' && drStart)){
+      cell.style.cursor = 'pointer';
+      cell.onclick = (function(dt, st){ return function(){ drHandleClick(dt, st); }; })(date, interactionState);
+    }
+    grid.appendChild(cell);
+  }
+  container.appendChild(grid);
+}
+
+function renderPicker(){
+  const today = new Date();
+  document.getElementById('dr-prev').disabled = (drYear === today.getFullYear() && drMonth === today.getMonth());
+  renderMonthGrid(document.getElementById('dr-cal-0'), drYear, drMonth);
+  let nextY = drYear, nextM = drMonth + 1;
+  if (nextM > 11){ nextM = 0; nextY++; }
+  renderMonthGrid(document.getElementById('dr-cal-1'), nextY, nextM);
+
+  const summary = document.getElementById('dr-summary');
+  const apply = document.getElementById('dr-apply');
+  if (drStart && drEnd){
+    summary.textContent = 'Check-in: ' + fmtDr(drStart) + '  \u2192  Check-out: ' + fmtDr(drEnd);
+    apply.style.display = 'block';
+  } else if (drStart){
+    summary.textContent = 'Check-in: ' + fmtDr(drStart) + ' \u2014 select check-out date';
+    apply.style.display = 'none';
+  } else {
+    summary.textContent = 'Select your check-in date';
+    apply.style.display = 'none';
+  }
+}
+
+function drHandleClick(date, state){
+  if (drStart && drEnd){
+    if (state === 'available'){
+      drStart = date; drEnd = null;
+    } else {
+      drStart = null; drEnd = null;
+    }
+    renderPicker();
+    return;
+  }
+  if (!drStart){
+    if (state !== 'available') return;
+    drStart = date; drEnd = null;
+  } else if (date <= drStart){
+    drStart = state === 'available' ? date : null;
+    drEnd = null;
+  } else {
+    drEnd = date;
+  }
+  renderPicker();
+}
+
+function fmtDr(d){ return d.toLocaleDateString('en-IL', { day:'numeric', month:'short', year:'numeric' }); }
+function fmtDrForm(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+function applyDatePicker(){
+  if (!drStart || !drEnd) return;
+  document.getElementById('bw-checkin').value  = fmtDrForm(drStart);
+  document.getElementById('bw-checkout').value = fmtDrForm(drEnd);
+  document.getElementById('dr-trigger').textContent = fmtDr(drStart) + '  \u2192  ' + fmtDr(drEnd);
+  closeDatePicker(null);
+  searchRooms();
+};
+
+document.getElementById('dr-prev').onclick = function(){
+  drMonth--; if (drMonth < 0){ drMonth = 11; drYear--; }
+  renderPicker();
+};
+document.getElementById('dr-next').onclick = async function(){
+  drMonth++; if (drMonth > 11){ drMonth = 0; drYear++; }
+  // Two months are visible at once (drYear/drMonth and the one after it),
+  // so make sure the cache reaches the end of that second month before
+  // rendering prices for it.
+  var neededEnd = new Date(drYear, drMonth + 2, 1);
+  var neededEndStr = fmtDrForm(neededEnd);
+  if (ROOMS.some(function(r){ return !roomCachedThrough[r.id] || roomCachedThrough[r.id] < neededEndStr; })){
+    document.getElementById('dr-prev').disabled = true;
+    document.getElementById('dr-next').disabled = true;
+    await ensureRoomDataThrough(neededEndStr);
+    document.getElementById('dr-next').disabled = false;
+  }
+  renderPicker();
+};
+
+async function searchRooms(){
+  var checkin=document.getElementById('bw-checkin').value,checkout=document.getElementById('bw-checkout').value;
+  if(!checkin||!checkout||checkin>=checkout){alert('Please select valid check-in and check-out dates.');return;}
+  selectedRooms = {};
+  updateCartWidget();
+  document.getElementById('bw-results').style.display='none';
+  document.getElementById('bw-error').style.display='none';
+  document.getElementById('bw-loading').style.display='block';
+  try{
+    await ensureRoomDataThrough(checkout);
+    document.getElementById('bw-loading').style.display='none';
+    var results=ROOMS.map(function(r){return priceCache[r.id]||null;});
+    var allFailed=results.every(function(r){return r===null;});
+    if(allFailed){
+      document.getElementById('bw-error').style.display='block';
+      return;
+    }
+    renderResults(results,checkin,checkout);
+  }catch(e){
+    document.getElementById('bw-loading').style.display='none';
+    document.getElementById('bw-error').style.display='block';
+  }
+}
+// Fetches only the rooms/date-ranges not already cached, and merges the
+// result into priceCache instead of replacing it, so earlier-fetched dates
+// stay available. `endDateStr` is exclusive, matching checkin/checkout.
+async function ensureRoomDataThrough(endDateStr){
+  var todayStr=fmtDrForm(new Date());
+  var needed=ROOMS.filter(function(r){
+    return !roomCachedThrough[r.id] || roomCachedThrough[r.id] < endDateStr;
+  });
+  if(needed.length===0)return;
+  await Promise.allSettled(needed.map(function(r){
+    var start=roomCachedThrough[r.id]||todayStr;
+    return fetchRoomRange(r.id, start, endDateStr);
+  }));
+}
+async function fetchRoomRange(id, start, end){
+  var res=await fetch(AVAIL_API+'?room='+encodeURIComponent(id)+'&start='+start+'&end='+end);
+  var data=await res.json();
+  if(!priceCache[id]){
+    priceCache[id]=data;
+  }else{
+    priceCache[id].dates=priceCache[id].dates.concat(data.dates||[]);
+    priceCache[id].maxGuests=data.maxGuests||priceCache[id].maxGuests;
+    priceCache[id].surcharge=data.surcharge||priceCache[id].surcharge;
+  }
+  if(Array.isArray(data.chagim)){
+    data.chagim.forEach(function(d){ CHAGIM.add(d); });
+  }
+  roomCachedThrough[id]=end;
+  return priceCache[id];
+}
+function calcPrice(data,checkin,checkout,guests){
+  if(!data.dates)return null;
+  var lookup={};
+  data.dates.forEach(function(d){lookup[d.date]=d;});
+  var base=0,start=new Date(checkin),end=new Date(checkout);
+  for(var d=new Date(start);d<end;d.setDate(d.getDate()+1)){
+    var iso=d.toISOString().split('T')[0],day=lookup[iso];
+    if(!day||day.blocked||!day.price)return null;
+    base+=day.price;
+  }
+  var sr=(data.surcharge && data.surcharge[guests])||0;
+  var surcharge=Math.round(base*sr),beforeVAT=base+surcharge,vat=Math.round(beforeVAT*0.18),total=beforeVAT+vat;
+  var nights=Math.round((end-start)/86400000);
+  return{total,nights,available:true,beforeVAT,vat};
+}
+function fmt(n){return '₪'+n.toLocaleString('en-IL');}
+
+function updateDisplayedPrice(room, checkin, checkout, guests){
+  var data = priceCache[room.id];
+  var priceInfo = data ? calcPrice(data, checkin, checkout, guests) : null;
+  if (!priceInfo) return null;
+  var perNight = Math.round(priceInfo.total/priceInfo.nights);
+  var compareEl = document.getElementById('price-compare-'+room.id);
+  var amountEl = document.getElementById('price-amount-'+room.id);
+  if (compareEl) compareEl.innerHTML = 'Booking.com <span class="price-compare-amount">'+fmt(Math.round(perNight*1.2))+'</span>';
+  if (amountEl) amountEl.textContent = fmt(perNight);
+  return priceInfo;
+}
+
+function renderRateActions(room, checkin, checkout){
+  var guestsField = document.getElementById('guests-field-'+room.id);
+  var container = document.getElementById('rate-actions-'+room.id);
+  if (!guestsField || !container) return;
+  guestsField.innerHTML = '';
+  container.innerHTML = '';
+
+  var entry = selectedRooms[room.id];
+  if (entry){
+    var gValue=document.createElement('div');gValue.className='guest-picker-value';gValue.textContent=entry.guests+' guest'+(entry.guests>1?'s':'');
+    guestsField.appendChild(gValue);
+
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.className='btn btn-gold btn-select selected';
+    btn.textContent='Selected \u2713 (Remove)';
+    btn.onclick=function(){ removeFromCart(room.id); };
+    container.appendChild(btn);
+
+    var caption=document.getElementById('price-caption-'+room.id);
+    if (caption) caption.textContent='Per night';
+    updateDisplayedPrice(room, checkin, checkout, entry.guests);
+    return;
+  }
+
+  var caption=document.getElementById('price-caption-'+room.id);
+  if (caption) caption.textContent='Per night';
+  updateDisplayedPrice(room, checkin, checkout, 2);
+
+  var select=document.createElement('select');
+  select.id='guests-select-'+room.id;
+  select.className='guest-picker-select';
+  var placeholderOpt=document.createElement('option');
+  placeholderOpt.value='';
+  placeholderOpt.disabled=true;
+  placeholderOpt.selected=true;
+  placeholderOpt.textContent='How many guests?';
+  select.appendChild(placeholderOpt);
+  for (var g=1; g<=room.maxGuests; g++){
+    var opt=document.createElement('option');
+    opt.value=g;
+    opt.textContent=g+(g>1?' guests':' guest');
+    select.appendChild(opt);
+  }
+  guestsField.appendChild(select);
+
+  var btn=document.createElement('button');
+  btn.type='button';
+  btn.className='btn btn-gold btn-select';
+  btn.textContent='Select';
+  btn.disabled=true;
+
+  select.onchange=function(){
+    var guests=parseInt(select.value);
+    var valid=guests>=1 && guests<=room.maxGuests;
+    btn.disabled=!valid;
+    if (valid) updateDisplayedPrice(room, checkin, checkout, guests);
+  };
+
+  btn.onclick=function(){
+    var guests=parseInt(select.value);
+    if (!(guests>=1 && guests<=room.maxGuests)) return;
+    var priceInfo=updateDisplayedPrice(room, checkin, checkout, guests);
+    if (!priceInfo){ alert('Sorry, this room is not available for '+guests+' guests on these dates.'); return; }
+    selectedRooms[room.id] = { room:room, priceInfo:priceInfo, checkin:checkin, checkout:checkout, guests:guests };
+    document.querySelector('.room-list-row[data-room-id="'+room.id+'"]').classList.add('selected');
+    renderRateActions(room, checkin, checkout);
+    updateCartWidget();
+  };
+
+  container.appendChild(btn);
+}
+
+function removeFromCart(roomId){
+  delete selectedRooms[roomId];
+  var rowEl = document.querySelector('.room-list-row[data-room-id="'+roomId+'"]');
+  if (rowEl) rowEl.classList.remove('selected');
+  var room = ROOMS.filter(function(r){ return r.id === roomId; })[0];
+  var checkin = document.getElementById('bw-checkin').value;
+  var checkout = document.getElementById('bw-checkout').value;
+  if (room) renderRateActions(room, checkin, checkout);
+  updateCartWidget();
+}
+
+function updateCartWidget(){
+  var ids = Object.keys(selectedRooms);
+  document.getElementById('cart-heading').textContent = 'Your Cart: ' + ids.length + ' Item' + (ids.length===1?'':'s');
+
+  var emptyEl = document.getElementById('cart-empty');
+  var listEl = document.getElementById('cart-items');
+  var totalEl = document.getElementById('cart-total');
+  var continueBtn = document.getElementById('cart-continue-btn');
+
+  if (ids.length === 0){
+    emptyEl.style.display = 'block';
+    listEl.style.display = 'none';
+    totalEl.style.display = 'none';
+    continueBtn.style.display = 'none';
+    return;
+  }
+
+  emptyEl.style.display = 'none';
+  listEl.style.display = 'block';
+  listEl.innerHTML = '';
+  var total = 0, subtotal = 0, vatTotal = 0;
+  ids.forEach(function(id){
+    var entry = selectedRooms[id];
+    total += entry.priceInfo.total;
+    subtotal += entry.priceInfo.beforeVAT;
+    vatTotal += entry.priceInfo.vat;
+    var li = document.createElement('li');
+    li.className = 'cart-item';
+    var info = document.createElement('div');
+    var name = document.createElement('div'); name.className = 'cart-item-name'; name.textContent = entry.room.name;
+    var price = document.createElement('div'); price.className = 'cart-item-price'; price.textContent = fmt(entry.priceInfo.total) + ' \u00b7 ' + entry.priceInfo.nights + ' night' + (entry.priceInfo.nights>1?'s':'') + ' \u00b7 ' + entry.guests + ' guest' + (entry.guests>1?'s':'');
+    info.appendChild(name); info.appendChild(price);
+    var remove = document.createElement('button'); remove.type = 'button'; remove.className = 'cart-item-remove'; remove.textContent = 'Remove';
+    remove.onclick = function(){ removeFromCart(id); };
+    li.appendChild(info); li.appendChild(remove);
+    listEl.appendChild(li);
+  });
+
+  totalEl.style.display = 'block';
+  totalEl.innerHTML =
+    '<div class="cart-total-line"><span>Subtotal (before VAT)</span><span>' + fmt(subtotal) + '</span></div>' +
+    '<div class="cart-total-line"><span>Taxes (VAT)</span><span>' + fmt(vatTotal) + '</span></div>' +
+    '<div class="cart-total-line cart-total-grand"><span>Total</span><span>' + fmt(total) + '</span></div>';
+
+  var first = selectedRooms[ids[0]];
+  continueBtn.style.display = 'block';
+  continueBtn.href = '/en/booking.html'
+    + '?rooms=' + ids.map(encodeURIComponent).join(',')
+    + '&guests=' + ids.map(function(id){ return selectedRooms[id].guests; }).join(',')
+    + '&prices=' + ids.map(function(id){ return selectedRooms[id].priceInfo.total; }).join(',')
+    + '&checkin=' + first.checkin
+    + '&checkout=' + first.checkout;
+}
+
+function renderResults(results,checkin,checkout){
+  var grid=document.getElementById('bw-room-grid');
+  grid.innerHTML='';
+  ROOMS.forEach(function(room,i){
+    var data=results[i];
+    var fetchFailed=(data===null);
+    var priceInfo=(!fetchFailed)?calcPrice(data,checkin,checkout,2):null;
+    var available=priceInfo&&priceInfo.available;
+    var roomUrl='/en/rooms/'+room.id.toLowerCase()+'.html';
+    var row=document.createElement('div');
+    row.className='room-list-row'+(available?'':' unavailable');
+    row.setAttribute('data-room-id', room.id);
+    if (selectedRooms[room.id]) row.classList.add('selected');
+
+    var imgWrap=document.createElement('div');imgWrap.className='room-list-image-wrap';
+    var imgLink=document.createElement('a');imgLink.href=roomUrl;imgLink.target='_blank';imgLink.rel='noopener';
+    var img=document.createElement('img');
+    img.src='/images/'+room.images[0]+'.jpg';img.alt=room.name;
+    imgLink.appendChild(img);
+    imgWrap.appendChild(imgLink);
+    row.appendChild(imgWrap);
+
+    var details=document.createElement('div');details.className='room-list-details';
+    var name=document.createElement('h3');
+    var nameLink=document.createElement('a');nameLink.href=roomUrl;nameLink.target='_blank';nameLink.rel='noopener';nameLink.textContent=room.name;
+    name.appendChild(nameLink);
+    details.appendChild(name);
+
+    var meta=document.createElement('div');meta.className='room-list-meta';
+    meta.textContent='Sleeps '+room.maxGuests;
+    details.appendChild(meta);
+
+    var tagline=document.createElement('p');tagline.className='room-list-tagline';tagline.textContent=room.tagline;
+    details.appendChild(tagline);
+
+    var detailsLink=document.createElement('a');detailsLink.className='room-list-details-link';detailsLink.textContent='Room Details';
+    detailsLink.href=roomUrl;detailsLink.target='_blank';detailsLink.rel='noopener';
+    details.appendChild(detailsLink);
+
+    if(available){
+      var rateRow=document.createElement('div');rateRow.className='room-list-rate-row';
+
+      var guestsField=document.createElement('div');guestsField.className='guest-picker';guestsField.id='guests-field-'+room.id;
+
+      var rateLabel=document.createElement('div');rateLabel.className='room-list-rate-label';
+      rateLabel.innerHTML='<strong>Nightly Rate</strong><span>Includes courtesy breakfast</span>';
+
+      var rateLeftCol=document.createElement('div');rateLeftCol.className='room-list-rate-left';
+      rateLeftCol.appendChild(guestsField);
+      rateLeftCol.appendChild(rateLabel);
+      rateRow.appendChild(rateLeftCol);
+
+      var ratePrice=document.createElement('div');ratePrice.className='room-list-rate-price';
+      var perNight=Math.round(priceInfo.total/priceInfo.nights);
+      var compare=document.createElement('div');compare.className='price-compare';compare.id='price-compare-'+room.id;
+      compare.innerHTML='Booking.com <span class="price-compare-amount">'+fmt(Math.round(perNight*1.2))+'</span>';
+      var amount=document.createElement('div');amount.className='price-amount';amount.id='price-amount-'+room.id;amount.textContent=fmt(perNight);
+      var caption=document.createElement('div');caption.className='price-caption';caption.id='price-caption-'+room.id;
+      caption.textContent='Per night';
+      var caption2=document.createElement('div');caption2.className='price-caption-secondary';
+      caption2.textContent='Includes taxes and fees';
+      ratePrice.appendChild(compare);ratePrice.appendChild(amount);ratePrice.appendChild(caption);ratePrice.appendChild(caption2);
+
+      var actions=document.createElement('div');actions.className='rate-actions';actions.id='rate-actions-'+room.id;
+
+      var rateRightCol=document.createElement('div');rateRightCol.className='room-list-rate-right';
+      rateRightCol.appendChild(ratePrice);
+      rateRightCol.appendChild(actions);
+      rateRow.appendChild(rateRightCol);
+
+      details.appendChild(rateRow);
+    }else{
+      var unavail=document.createElement('div');unavail.className='room-list-unavail';
+      unavail.textContent=fetchFailed?'Unable to check availability for this room right now':'Not available for these dates';
+      details.appendChild(unavail);
+    }
+    row.appendChild(details);
+    grid.appendChild(row);
+  });
+  document.getElementById('bw-results').style.display='block';
+  ROOMS.forEach(function(room){
+    if (document.getElementById('rate-actions-'+room.id)){
+      renderRateActions(room, checkin, checkout);
+    }
+  });
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeDatePicker(null);}});
+</script>
+</body>
+</html>
