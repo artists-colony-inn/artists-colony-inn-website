@@ -102,7 +102,11 @@ const ROOMS = [
 ];
 let priceCache = {};
 let selectedRooms = {};
-//ROOMS.forEach(function(r){ fetchRoom(r.id); });
+// One combined request now covers all rooms, so caching tracks a single
+// shared range instead of per-room ranges.
+let cachedThrough = null;
+let fetchInFlight = null;
+const INITIAL_RANGE_MONTHS = 6;
 
 function lowestPriceForDate(dateKey, guests){
   var lowest = null;
@@ -133,13 +137,20 @@ let drStart = null, drEnd = null;
   document.getElementById('bw-checkout').value=fmtDrForm(tomorrow);
   document.getElementById('dr-trigger').textContent=fmtDr(today)+'  \u2192  '+fmtDr(tomorrow);
   searchRooms();
+  // Separately, warm the calendar's 6-month window in the background.
+  // Not awaited: the visible search above only needs 1 day and should
+  // stay fast, this just gets ahead of the popup being opened later.
+  var initialEnd=new Date(today); initialEnd.setMonth(initialEnd.getMonth()+INITIAL_RANGE_MONTHS);
+  ensureRoomDataThrough(fmtDrForm(initialEnd));
 })();
 
-function openDatePicker(){
+async function openDatePicker(){
   const today = new Date();
   if (drYear === undefined){ drYear = today.getFullYear(); drMonth = today.getMonth(); }
   document.getElementById('dr-popup-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+  var neededEnd = fmtDrForm(new Date(drYear, drMonth + 2, 1));
+  await ensureRoomDataThrough(neededEnd);
   renderPicker();
 }
 
@@ -278,8 +289,15 @@ function applyDatePicker(){
   searchRooms();
 };
 
-document.getElementById('dr-prev').onclick = function(){
+document.getElementById('dr-prev').onclick = async function(){
   drMonth++; if (drMonth > 11){ drMonth = 0; drYear++; }
+  // Two months are visible at once (drYear/drMonth and the one after it),
+  // so make sure the cache reaches the end of that second month before
+  // rendering prices for it. Resolves immediately if already cached.
+  document.getElementById('dr-prev').disabled = true;
+  document.getElementById('dr-next').disabled = true;
+  await ensureRoomDataThrough(fmtDrForm(new Date(drYear, drMonth + 2, 1)));
+  document.getElementById('dr-prev').disabled = false;
   renderPicker();
 };
 document.getElementById('dr-next').onclick = function(){
@@ -296,29 +314,56 @@ async function searchRooms(){
   document.getElementById('bw-error').style.display='none';
   document.getElementById('bw-loading').style.display='block';
   try{
-    var settled=await Promise.allSettled(ROOMS.map(function(r){return fetchRoom(r.id);}));
+    await ensureRoomDataThrough(checkout);
     document.getElementById('bw-loading').style.display='none';
-    var allFailed=settled.every(function(s){return s.status==='rejected';});
+    var results=ROOMS.map(function(r){return priceCache[r.id]||null;});
+    var allFailed=results.every(function(r){return r===null;});
     if(allFailed){
       document.getElementById('bw-error').style.display='block';
       return;
     }
-    var results=settled.map(function(s){return s.status==='fulfilled'?s.value:null;});
     renderResults(results,checkin,checkout);
   }catch(e){
     document.getElementById('bw-loading').style.display='none';
     document.getElementById('bw-error').style.display='block';
   }
 }
-async function fetchRoom(id){
-  if(priceCache[id])return priceCache[id];
-  var res=await fetch(AVAIL_API+'?room='+encodeURIComponent(id));
+// Fetches all rooms in one combined request if the cache doesn't already
+// reach endDateStr. A second overlapping call joins the in-flight request
+// instead of firing a duplicate one. `endDateStr` is exclusive, matching
+// checkin/checkout.
+async function ensureRoomDataThrough(endDateStr){
+  if (cachedThrough && cachedThrough >= endDateStr) return;
+  if (fetchInFlight && fetchInFlight.end >= endDateStr) return fetchInFlight.promise;
+  var todayStr=fmtDrForm(new Date());
+  var start=cachedThrough||todayStr;
+  var entry={ end: endDateStr, promise: null };
+  entry.promise=fetchAllRooms(start, endDateStr).finally(function(){
+    if (fetchInFlight===entry) fetchInFlight=null;
+  });
+  fetchInFlight=entry;
+  return entry.promise;
+}
+async function fetchAllRooms(start, end){
+  var res=await fetch(AVAIL_API+'?all=1&start='+start+'&end='+end);
   var data=await res.json();
-  priceCache[id]=data;
+  if(data.rooms){
+    ROOMS.forEach(function(r){
+      var roomData=data.rooms[r.id];
+      if(!roomData||roomData.error)return;
+      if(!priceCache[r.id]){
+        priceCache[r.id]=roomData;
+      }else{
+        priceCache[r.id].dates=priceCache[r.id].dates.concat(roomData.dates||[]);
+        priceCache[r.id].maxGuests=roomData.maxGuests||priceCache[r.id].maxGuests;
+        priceCache[r.id].surcharge=roomData.surcharge||priceCache[r.id].surcharge;
+      }
+    });
+  }
   if(Array.isArray(data.chagim)){
     data.chagim.forEach(function(d){ CHAGIM.add(d); });
   }
-  return data;
+  cachedThrough=end;
 }
 function calcPrice(data,checkin,checkout,guests){
   if(!data.dates)return null;
