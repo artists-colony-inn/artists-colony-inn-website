@@ -36,114 +36,136 @@
 
           <div class="booking-form" id="booking-form" style="max-width:100%">
 
-            <div class="form-row">
-              <div class="form-field"><label>חדר</label><input type="text" id="room-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <div class="form-field"><label>אורחים</label><input type="text" id="guests-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <input type="hidden" id="room">
-              <input type="hidden" id="guests">
-            </div>
-            <div id="extra-rooms-rows"></div>
-            <div class="form-row">
-              <div class="form-field"><label>צ'ק-אין</label><input type="text" id="checkin-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <div class="form-field"><label>צ'ק-אאוט</label><input type="text" id="checkout-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <input type="hidden" id="checkin">
-              <input type="hidden" id="checkout">
-            </div>
-
-            <div class="form-field"><label>שם מלא <span class="req">*</span></label><input type="text" id="name" placeholder="כפי שמופיע בתעודת הזהות או הדרכון" autocomplete="name"></div>
-            <div class="form-row">
-              <div class="form-field"><label>אימייל</label><input type="email" id="email" placeholder="your@email.com" autocomplete="email"></div>
-              <div class="form-field"><label>טלפון <span class="req">*</span></label><input type="text" id="phone" placeholder="מספר טלפון עם קידומת מדינה" autocomplete="off"></div>
-			  <div class="form-row" id="meals-field" style="display:none">
-                <div class="form-field"><label>ארוחות שבת (₪100 לארוחה,לא כולל מע"מ)</label><input type="number" id="meals" min="0" max="20" value="0"></div>
+            <div id="booking-summary-fields">
+              <div class="form-row">
+                <div class="form-field"><label>חדר</label><input type="text" id="room-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+                <div class="form-field"><label>אורחים</label><input type="text" id="guests-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+                <input type="hidden" id="room">
+                <input type="hidden" id="guests">
+              </div>
+              <div id="extra-rooms-rows"></div>
+              <div class="form-row">
+                <div class="form-field"><label>צ'ק-אין</label><input type="text" id="checkin-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+                <div class="form-field"><label>צ'ק-אאוט</label><input type="text" id="checkout-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+                <input type="hidden" id="checkin">
+                <input type="hidden" id="checkout">
               </div>
             </div>
-            <div class="form-row">
-              <div class="form-field"><label>לאום</label><input type="text" id="nationality" placeholder="למשל: ישראלי, אמריקאי, צרפתי"></div>
-              <div class="form-field">
-                <label>אזרח או תושב ישראל? <span class="req">*</span></label>
-                <div style="display:flex;gap:1rem;margin-top:0.4rem">
-                  <label style="display:flex;align-items:center;gap:0.4rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400">
-                    <input type="radio" name="is_israeli" value="yes" id="israeli_yes" checked style="accent-color:var(--gold)"> כן
-                  </label>
-                  <label style="display:flex;align-items:center;gap:0.4rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400">
-                    <input type="radio" name="is_israeli" value="no" id="israeli_no" style="accent-color:var(--gold)"> לא
-                  </label>
+
+            <div id="step1-fields">
+              <div class="form-field"><label>שם מלא <span class="req">*</span></label><input type="text" id="name" placeholder="כפי שמופיע בתעודת הזהות או הדרכון" autocomplete="name"></div>
+              <div class="form-row">
+                <div class="form-field"><label>אימייל</label><input type="email" id="email" placeholder="your@email.com" autocomplete="email"></div>
+                <div class="form-field"><label>טלפון <span class="req">*</span></label><input type="text" id="phone" placeholder="מספר טלפון עם קידומת מדינה" autocomplete="off"></div>
+				  <div class="form-row" id="meals-field" style="display:none">
+                  <div class="form-field"><label>ארוחות שבת (₪100 לארוחה,לא כולל מע"מ)</label><input type="number" id="meals" min="0" max="20" value="0"></div>
                 </div>
               </div>
-            </div>
-            <div id="vat-exempt-note" style="display:none;background:#fff8e1;border:1px solid #f9a825;border-radius:4px;padding:0.75rem 1rem;font-family:var(--sans);font-size:0.82rem;color:#7a5c00;line-height:1.6;margin-bottom:1.25rem;direction:rtl;text-align:right">
-              ⚠️ מחיר זה אינו כולל מע"מ. יש להציג דרכון תקף ויזת תייר B2 בעת הצ'ק-אין כדי לקבל את הפטור ממע"מ. אם לא תוכלו להציגם, יחויב מע"מ (18%) בעת ההגעה.
-            </div>
-
-            <!-- Price summary -->
-            <div id="price-box" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.88rem;color:var(--text-mid);line-height:2">
-              <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">סיכום מחיר</div>
-              <div id="price-rooms-rows"></div>
-              <div id="price-base-row"></div>
-              <div id="price-surcharge-row"></div>
-              <div id="price-meals-row"></div>
-              <div id="price-vat-row" style="display:none"></div>
-              <div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
-            </div>
-
-            <!-- Cancellation policy note -->
-            <div id="cancel-policy-note" style="display:none;background:#f0f7f0;border:1px solid #7aab7a;border-radius:4px;padding:0.75rem 1rem;font-family:var(--sans);font-size:0.82rem;color:#2e5c2e;line-height:1.6;margin-bottom:1.25rem;direction:rtl;text-align:right">
-              ✓ ביטול חינם עד 7 ימים לפני הצ'ק-אין. הכרטיס יחויב 7 ימים לפני ההגעה.
-            </div>
-
-            <!-- Payment method (only shown once total is available) -->
-            <div id="payment-method-section" style="display:none;margin-bottom:1.25rem">
-              <label style="display:block;font-family:var(--sans);font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.6rem">אמצעי תשלום <span class="req">*</span></label>
-              <label style="display:flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400;margin-bottom:0.5rem">
-                <input type="radio" name="payment_method" value="credit_card" id="pay_cc" checked style="accent-color:var(--gold)"> כרטיס אשראי
-              </label>
-              <label style="display:flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400;margin-bottom:0.5rem">
-                <input type="radio" name="payment_method" value="bit" id="pay_bit" style="accent-color:var(--gold)"> ביט
-              </label>
-
-            </div>
-
-            <!-- Credit card section -->
-            <div id="cc-section" style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
-              <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem">פרטי כרטיס אשראי</div>
               <div class="form-row">
+                <div class="form-field"><label>לאום</label><input type="text" id="nationality" placeholder="למשל: ישראלי, אמריקאי, צרפתי"></div>
                 <div class="form-field">
-                  <label>מספר כרטיס <span class="req">*</span></label>
-                  <input type="text" id="cc_number" placeholder="0000 0000 0000 0000" autocomplete="off" inputmode="numeric" maxlength="19"  style="text-align:right">
-                  <span id="cc_type" style="font-size:0.78rem;font-weight:600;margin-top:4px;display:block"></span>
+                  <label>אזרח או תושב ישראל? <span class="req">*</span></label>
+                  <div style="display:flex;gap:1rem;margin-top:0.4rem">
+                    <label style="display:flex;align-items:center;gap:0.4rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400">
+                      <input type="radio" name="is_israeli" value="yes" id="israeli_yes" checked style="accent-color:var(--gold)"> כן
+                    </label>
+                    <label style="display:flex;align-items:center;gap:0.4rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400">
+                      <input type="radio" name="is_israeli" value="no" id="israeli_no" style="accent-color:var(--gold)"> לא
+                    </label>
+                  </div>
                 </div>
-                <div class="form-field"><label>תוקף <span class="req">*</span></label><input type="text" id="cc_expiry" placeholder="MM/YY" autocomplete="off" maxlength="5"  style="text-align:right"></div>
               </div>
-              <div class="form-row">
-                <div class="form-field"><label>CVV <span class="req">*</span></label><input type="password" id="cc_cvv" placeholder="000" autocomplete="new-password" maxlength="4" inputmode="numeric"  style="text-align:right"></div>
-                <div class="form-field"><label>שם בעל הכרטיס <span class="req">*</span></label><input type="text" id="cc_name" placeholder="כפי שמופיע על הכרטיס" autocomplete="off"></div>
-              </div>
-              <div class="form-field" id="id-number-field">
-                <label>תעודת זהות של בעל הכרטיס <span class="req">*</span></label>
-                <input type="text" id="id_number" placeholder="מספר תעודת זהות" inputmode="numeric" autocomplete="off">
+              <div id="vat-exempt-note" style="display:none;background:#fff8e1;border:1px solid #f9a825;border-radius:4px;padding:0.75rem 1rem;font-family:var(--sans);font-size:0.82rem;color:#7a5c00;line-height:1.6;margin-bottom:1.25rem;direction:rtl;text-align:right">
+                ⚠️ מחיר זה אינו כולל מע"מ. יש להציג דרכון תקף ויזת תייר B2 בעת הצ'ק-אין כדי לקבל את הפטור ממע"מ. אם לא תוכלו להציגם, יחויב מע"מ (18%) בעת ההגעה.
               </div>
 
-            </div>
-
-            <!-- Bit section -->
-            <div id="bit-section" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
-              <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.5rem">תשלום בביט</div>
-              <div style="font-family:var(--sans);font-size:0.9rem;color:var(--text-mid);line-height:1.8">
-                שלחו <strong id="bit-total"></strong> למספר <strong dir="ltr">+972-58-620-0779</strong> בביט.
+              <div class="form-field"><label>בקשות מיוחדות</label><textarea id="requests" rows="3" placeholder="צרכים תזונתיים, נגישות, שעת הגעה וכו'"></textarea></div>
+              <div class="hp"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
+              <div style="display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1.25rem">
+                <input type="checkbox" id="agree-policies" style="margin-top:0.35rem;flex-shrink:0;width:16px;height:16px;accent-color:var(--gold);cursor:pointer">
+                <label for="agree-policies" style="font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:0.95rem;font-weight:400;color:var(--text-mid);cursor:pointer">
+                  קראתי ואני מסכים/ה ל<a href="/policies.html" target="_blank">תקנון, מדיניות ביטול ומדיניות פרטיות</a>.
+                </label>
               </div>
+              <button type="button" class="btn btn-gold" id="continue-btn" onclick="continueToPayment()" style="width:100%;opacity:0.45;cursor:not-allowed" disabled>המשך לתשלום</button>
             </div>
 
-            <div class="form-field"><label>בקשות מיוחדות</label><textarea id="requests" rows="3" placeholder="צרכים תזונתיים, נגישות, שעת הגעה וכו'"></textarea></div>
-            <div class="hp"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
-            <div style="display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1.25rem">
-              <input type="checkbox" id="agree-policies" style="margin-top:0.35rem;flex-shrink:0;width:16px;height:16px;accent-color:var(--gold);cursor:pointer">
-              <label for="agree-policies" style="font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:0.95rem;font-weight:400;color:var(--text-mid);cursor:pointer">
-                קראתי ואני מסכים/ה ל<a href="/policies.html" target="_blank">תקנון, מדיניות ביטול ומדיניות פרטיות</a>.
-              </label>
+            <div id="step2-fields" style="display:none">
+              <div id="step2-summary" style="position:relative;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 2.6rem 1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.92rem;color:var(--text);line-height:1.9;direction:rtl;text-align:right">
+                <button type="button" onclick="editStep1()" title="עריכת הפרטים" aria-label="עריכת הפרטים" style="position:absolute;top:0.75rem;left:0.75rem;width:1.9rem;height:1.9rem;padding:0;border:none;background:transparent;cursor:pointer;color:var(--text-light);display:flex;align-items:center;justify-content:center">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(-45deg)">
+                    <path d="M12 20h9"></path>
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                  </svg>
+                </button>
+                <div id="step2-summary-text"></div>
+              </div>
+
+              <!-- Price summary -->
+              <div id="price-box" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.88rem;color:var(--text-mid);line-height:2">
+                <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">סיכום מחיר</div>
+                <div id="price-rooms-rows"></div>
+                <div id="price-base-row"></div>
+                <div id="price-surcharge-row"></div>
+                <div id="price-meals-row"></div>
+                <div id="price-vat-row" style="display:none"></div>
+                <div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
+                <div id="price-vat-exempt-note" style="display:none;font-weight:400;font-size:0.82rem;color:var(--text-mid);line-height:1.6;margin-top:0.5rem">
+                  ⚠️ יש להציג דרכון תקף ויזת תייר B2 בעת הצ'ק-אין כדי לקבל את הפטור ממע"מ. אם לא תוכלו להציגם, יחויב מע"מ (18%) בעת ההגעה.
+                </div>
+              </div>
+
+
+              <!-- Cancellation policy note -->
+              <div id="cancel-policy-note" style="display:none;background:#f0f7f0;border:1px solid #7aab7a;border-radius:4px;padding:0.75rem 1rem;font-family:var(--sans);font-size:0.82rem;color:#2e5c2e;line-height:1.6;margin-bottom:1.25rem;direction:rtl;text-align:right">
+                ✓ ביטול חינם עד 7 ימים לפני הצ'ק-אין. הכרטיס יחויב 7 ימים לפני ההגעה.
+              </div>
+
+              <!-- Payment method (only shown once total is available) -->
+              <div id="payment-method-section" style="display:none;margin-bottom:1.25rem">
+                <label style="display:block;font-family:var(--sans);font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.6rem">אמצעי תשלום <span class="req">*</span></label>
+                <label style="display:flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400;margin-bottom:0.5rem">
+                  <input type="radio" name="payment_method" value="credit_card" id="pay_cc" checked style="accent-color:var(--gold)"> כרטיס אשראי
+                </label>
+                <label style="display:flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.92rem;text-transform:none;letter-spacing:0;color:var(--text-mid);cursor:pointer;font-weight:400;margin-bottom:0.5rem">
+                  <input type="radio" name="payment_method" value="bit" id="pay_bit" style="accent-color:var(--gold)"> ביט
+                </label>
+
+              </div>
+
+              <!-- Credit card section -->
+              <div id="cc-section" style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
+                <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem">פרטי כרטיס אשראי</div>
+                <div class="form-row">
+                  <div class="form-field">
+                    <label>מספר כרטיס <span class="req">*</span></label>
+                    <input type="text" id="cc_number" placeholder="0000 0000 0000 0000" autocomplete="off" inputmode="numeric" maxlength="19"  style="text-align:right">
+                    <span id="cc_type" style="font-size:0.78rem;font-weight:600;margin-top:4px;display:block"></span>
+                  </div>
+                  <div class="form-field"><label>תוקף <span class="req">*</span></label><input type="text" id="cc_expiry" placeholder="MM/YY" autocomplete="off" maxlength="5"  style="text-align:right"></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-field"><label>CVV <span class="req">*</span></label><input type="password" id="cc_cvv" placeholder="000" autocomplete="new-password" maxlength="4" inputmode="numeric"  style="text-align:right"></div>
+                  <div class="form-field"><label>שם בעל הכרטיס <span class="req">*</span></label><input type="text" id="cc_name" placeholder="כפי שמופיע על הכרטיס" autocomplete="off"></div>
+                </div>
+                <div class="form-field" id="id-number-field">
+                  <label>תעודת זהות של בעל הכרטיס <span class="req">*</span></label>
+                  <input type="text" id="id_number" placeholder="מספר תעודת זהות" inputmode="numeric" autocomplete="off" maxlength="9">
+                </div>
+
+              </div>
+
+              <!-- Bit section -->
+              <div id="bit-section" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
+                <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.5rem">תשלום בביט</div>
+                <div style="font-family:var(--sans);font-size:0.9rem;color:var(--text-mid);line-height:1.8">
+                  שלחו <strong id="bit-total"></strong> למספר <strong dir="ltr">+972-58-620-0779</strong> בביט.
+                </div>
+              </div>
+
+              <button class="btn btn-gold" id="submit-btn" onclick="submitBooking()" style="width:100%;opacity:0.45;cursor:not-allowed" disabled>שליחת בקשת הזמנה</button>
+              <div class="form-msg error" id="msg-err">משהו השתבש. נסו שוב או צרו קשר בטלפון <strong>+972-58-620-0779</strong>.</div>
             </div>
-            <button class="btn btn-gold" id="submit-btn" onclick="submitBooking()" style="width:100%;opacity:0.45;cursor:not-allowed" disabled>שליחת בקשת הזמנה</button>
-            <div class="form-msg error" id="msg-err">משהו השתבש. נסו שוב או צרו קשר בטלפון <strong>+972-58-620-0779</strong>.</div>
           </div>
         </div>
 
@@ -184,6 +206,59 @@ function updateSubmitBtn() {
   btn.disabled      = !enabled;
   btn.style.opacity = enabled ? '1' : '0.45';
   btn.style.cursor  = enabled ? 'pointer' : 'not-allowed';
+}
+
+function updateContinueBtn() {
+  var btn        = document.getElementById('continue-btn');
+  var agreed     = document.getElementById('agree-policies').checked;
+  var name       = document.getElementById('name').value.trim();
+  var phone      = document.getElementById('phone').value.trim();
+  var cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
+  var phoneOk    = /^\+?[0-9]{7,15}$/.test(cleanPhone);
+  var enabled    = agreed && name.length > 0 && phoneOk;
+  btn.disabled      = !enabled;
+  btn.style.opacity = enabled ? '1' : '0.45';
+  btn.style.cursor  = enabled ? 'pointer' : 'not-allowed';
+}
+
+function buildStep2Summary() {
+  var bookingRooms = window.bookingRooms || [];
+  var roomLabels   = window.roomLabels || {};
+  var guestLabel   = window.guestLabel || function(g) { return g + ' אורחים'; };
+  var fmtDate      = window.fmtDate || function(iso) { return iso; };
+
+  var checkin  = document.getElementById('checkin').value;
+  var checkout = document.getElementById('checkout').value;
+
+  var roomsLine = bookingRooms.map(function(r) {
+    return (roomLabels[r.room] || r.room) + ' (' + guestLabel(r.guests) + ')';
+  }).join(', ');
+
+  var name  = document.getElementById('name').value.trim();
+  var phone = document.getElementById('phone').value.trim();
+  var email = document.getElementById('email').value.trim();
+
+  var contactLine = name + ' · ' + phone + (email ? ' · ' + email : '');
+
+  document.getElementById('step2-summary-text').innerHTML =
+    '<div>' + roomsLine + '</div>' +
+    '<div>' + fmtDate(checkin) + ' &larr; ' + fmtDate(checkout) + '</div>' +
+    '<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--gold)">' + contactLine + '</div>';
+}
+
+function continueToPayment() {
+  buildStep2Summary();
+  document.getElementById('booking-summary-fields').style.display = 'none';
+  document.getElementById('step1-fields').style.display = 'none';
+  document.getElementById('step2-fields').style.display = '';
+  document.getElementById('step2-fields').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function editStep1() {
+  document.getElementById('step2-fields').style.display = 'none';
+  document.getElementById('booking-summary-fields').style.display = '';
+  document.getElementById('step1-fields').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -234,6 +309,8 @@ window.addEventListener('DOMContentLoaded', function() {
     var d = new Date(iso + 'T00:00:00');
     return d.toLocaleDateString('he-IL', { day:'numeric', month:'numeric', year:'numeric' });
   };
+  window.guestLabel = guestLabel;
+  window.fmtDate = fmtDate;
   document.getElementById('room-display').value     = roomLabels[room] || room;
   document.getElementById('guests-display').value   = guestLabel(first.guests);
   document.getElementById('checkin-display').value  = fmtDate(checkin);
@@ -291,6 +368,14 @@ window.addEventListener('DOMContentLoaded', function() {
 
   updateSubmitBtn();
 
+  // Continue button state watchers
+  document.getElementById('agree-policies').addEventListener('change', updateContinueBtn);
+  ['name','phone'].forEach(function(id) {
+    document.getElementById(id).addEventListener('input', updateContinueBtn);
+  });
+
+  updateContinueBtn();
+
   // CC number formatting
   document.getElementById('cc_number').addEventListener('input', function() {
     var digits = this.value.replace(/\D/g, '');
@@ -339,6 +424,16 @@ window.addEventListener('DOMContentLoaded', function() {
     var v = this.value.replace(/\D/g, '').substring(0, 4);
     if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2);
     this.value = v;
+  });
+
+  // ID number: digits only, and auto-pad a leading zero on blur if only
+  // 8 were entered, since IDs starting with 0 are commonly typed without it.
+  document.getElementById('id_number').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '').substring(0, 9);
+  });
+  document.getElementById('id_number').addEventListener('blur', function() {
+    var digits = this.value.replace(/\D/g, '');
+    if (digits.length === 8) this.value = '0' + digits;
   });
 
   // Load reviews sidebar
@@ -407,6 +502,19 @@ function luhn(value) {
     if (shouldDouble) { digit *= 2; if (digit > 9) digit -= 9; }
     sum += digit;
     shouldDouble = !shouldDouble;
+  }
+  return sum % 10 === 0;
+}
+
+function validTeudatZehut(value) {
+  var digits = value.replace(/\D/g, '');
+  if (digits.length === 8) digits = '0' + digits;
+  if (digits.length !== 9) return false;
+  var sum = 0;
+  for (var i = 0; i < 9; i++) {
+    var num = Number(digits[i]) * ((i % 2) + 1);
+    if (num > 9) num -= 9;
+    sum += num;
   }
   return sum % 10 === 0;
 }
@@ -499,6 +607,7 @@ async function updatePrice() {
   document.getElementById('price-meals-row').textContent       = 'ארוחות שבת (' + mealsCount + '): ' + fmt(mealsBase);
   document.getElementById('price-vat-row').style.display       = 'none';
   document.getElementById('price-total-row').textContent       = 'סה"כ לתשלום' + (isIsraeli ? ' (כולל מע"מ)' : '') + ': ' + fmt(total);
+  document.getElementById('price-vat-exempt-note').style.display = isIsraeli ? 'none' : 'block';
   box.style.display = 'block';
 
   var cancelNote = document.getElementById('cancel-policy-note');
@@ -556,6 +665,7 @@ function updatePriceMultiRoom() {
   document.getElementById('price-meals-row').textContent       = 'ארוחות שבת (' + mealsCount + '): ' + fmt(mealsBase);
   document.getElementById('price-vat-row').style.display       = 'none';
   document.getElementById('price-total-row').textContent       = 'סה"כ לתשלום' + (isIsraeli ? ' (כולל מע"מ)' : '') + ': ' + fmt(total);
+  document.getElementById('price-vat-exempt-note').style.display = isIsraeli ? 'none' : 'block';
   box.style.display = 'block';
 
   var cancelNote = document.getElementById('cancel-policy-note');
@@ -616,6 +726,7 @@ async function submitBooking() {
     cc_cvv    = document.getElementById('cc_cvv').value.trim();
     cc_name   = document.getElementById('cc_name').value.trim();
     id_number = document.getElementById('id_number').value.trim();
+    if (isIsraeli && id_number.replace(/\D/g,'').length === 8) id_number = '0' + id_number;
   }
 
   if (!bookingRooms.length || bookingRooms.some(function(r){return !r.room;}) || !checkin||!checkout||!name||!phone) { alert('נא למלא את כל השדות הנדרשים.'); return; }
@@ -623,6 +734,7 @@ async function submitBooking() {
     if (!cc_number||!cc_expiry||!cc_cvv||!cc_name||(isIsraeli && !id_number)) { alert('נא למלא את כל פרטי כרטיס האשראי.'); return; }
     if (detectCard(cc_number.replace(/\D/g,'')) === 'diners') { alert('אנו אינם מקבלים כרטיסי דיינרס.'); return; }
     if (!luhn(cc_number)) { alert('נא להזין מספר כרטיס אשראי תקין.'); return; }
+    if (isIsraeli && !validTeudatZehut(id_number)) { alert('נא להזין מספר תעודת זהות תקין.'); return; }
   }
   var cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
   if (!/^\+?[0-9]{7,15}$/.test(cleanPhone)) { alert('נא להזין מספר טלפון תקין.'); return; }
