@@ -24,6 +24,19 @@
   fbq('init', '983698949964438');
   fbq('track', 'PageView');
   </script>
+	<style>
+	  .bw-spinner {
+		display:inline-block;
+		width:1.1rem;height:1.1rem;
+		border:2px solid var(--border,#ccc);
+		border-top-color:var(--gold,#A59C00);
+		border-radius:50%;
+		animation:bw-spin 0.8s linear infinite;
+		vertical-align:middle;
+		margin-inline-end:0.5rem;
+	  }
+	  @keyframes bw-spin { to { transform:rotate(360deg); } }
+	</style>
 </head>
 <body>
 <script>window.IS_BOOK_PAGE = true;</script>
@@ -80,6 +93,7 @@
       <button type="button" id="dr-next">&#8594;</button>
     </div>
     <p style="text-align:center;font-family:var(--sans);font-size:0.72rem;color:var(--text-light);margin:0 0 0.75rem">Prices shown are for our lowest available room at double occupancy, including VAT</p>
+	<div id="dr-popup-loading" style="display:none;text-align:center;padding:2.5rem 1rem;font-family:var(--sans);color:var(--text-mid)"><span class="bw-spinner"></span>Loading available dates...</div>
     <div class="dr-months">
       <div class="cal-wrap" id="dr-cal-0"></div>
       <div class="cal-wrap" id="dr-cal-1"></div>
@@ -149,8 +163,24 @@ async function openDatePicker(){
   if (drYear === undefined){ drYear = today.getFullYear(); drMonth = today.getMonth(); }
   document.getElementById('dr-popup-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  var loading = document.getElementById('dr-popup-loading');
+  var months  = document.querySelector('#dr-popup .dr-months');
+  var nav     = document.querySelector('#dr-popup .dr-nav');
+  loading.style.display = 'block';
+  months.style.display = 'none';
+  nav.style.display = 'none';
+  document.getElementById('dr-next').disabled = true;
+  document.getElementById('dr-prev').disabled = true;
+
   var neededEnd = fmtDrForm(new Date(drYear, drMonth + 2, 1));
-  await ensureRoomDataThrough(neededEnd);
+  try {
+    await ensureRoomDataThrough(neededEnd);
+  } finally {
+    loading.style.display = 'none';
+    months.style.display = '';
+    nav.style.display = '';
+  }
   renderPicker();
 }
 
