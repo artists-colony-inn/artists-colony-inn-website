@@ -85,7 +85,7 @@
                   קראתי ואני מסכים/ה ל<a href="/policies.html" target="_blank">תקנון, מדיניות ביטול ומדיניות פרטיות</a>.
                 </label>
               </div>
-              <button type="button" class="btn btn-gold" id="continue-btn" onclick="continueToPayment()" style="width:100%">המשך לתשלום</button>
+              <button type="button" class="btn btn-gold" id="continue-btn" onclick="continueToPayment()" style="width:100%;opacity:0.45;cursor:not-allowed" disabled>המשך לתשלום</button>
             </div>
 
             <!-- Price summary -->
@@ -194,15 +194,20 @@ function updateSubmitBtn() {
   btn.style.cursor  = enabled ? 'pointer' : 'not-allowed';
 }
 
-function continueToPayment() {
+function updateContinueBtn() {
+  var btn        = document.getElementById('continue-btn');
+  var agreed     = document.getElementById('agree-policies').checked;
   var name       = document.getElementById('name').value.trim();
   var phone      = document.getElementById('phone').value.trim();
   var cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
+  var phoneOk    = /^\+?[0-9]{7,15}$/.test(cleanPhone);
+  var enabled    = agreed && name.length > 0 && phoneOk;
+  btn.disabled      = !enabled;
+  btn.style.opacity = enabled ? '1' : '0.45';
+  btn.style.cursor  = enabled ? 'pointer' : 'not-allowed';
+}
 
-  if (!name || !phone) { alert('נא למלא שם וטלפון.'); return; }
-  if (!/^\+?[0-9]{7,15}$/.test(cleanPhone)) { alert('נא להזין מספר טלפון תקין.'); return; }
-  if (!document.getElementById('agree-policies').checked) { alert('נא לקרוא ולאשר את התקנון לפני ההמשך.'); return; }
-
+function continueToPayment() {
   document.getElementById('step1-fields').style.display = 'none';
   document.getElementById('step2-fields').style.display = '';
   document.getElementById('step2-fields').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -317,6 +322,14 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 
   updateSubmitBtn();
+
+  // Continue button state watchers
+  document.getElementById('agree-policies').addEventListener('change', updateContinueBtn);
+  ['name','phone'].forEach(function(id) {
+    document.getElementById(id).addEventListener('input', updateContinueBtn);
+  });
+
+  updateContinueBtn();
 
   // CC number formatting
   document.getElementById('cc_number').addEventListener('input', function() {
