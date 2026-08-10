@@ -36,18 +36,20 @@
 
           <div class="booking-form" id="booking-form" style="max-width:100%">
 
-            <div class="form-row">
-              <div class="form-field"><label>חדר</label><input type="text" id="room-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <div class="form-field"><label>אורחים</label><input type="text" id="guests-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <input type="hidden" id="room">
-              <input type="hidden" id="guests">
-            </div>
-            <div id="extra-rooms-rows"></div>
-            <div class="form-row">
-              <div class="form-field"><label>צ'ק-אין</label><input type="text" id="checkin-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <div class="form-field"><label>צ'ק-אאוט</label><input type="text" id="checkout-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
-              <input type="hidden" id="checkin">
-              <input type="hidden" id="checkout">
+            <div id="booking-summary-fields">
+              <div class="form-row">
+                <div class="form-field"><label>חדר</label><input type="text" id="room-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+                <div class="form-field"><label>אורחים</label><input type="text" id="guests-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+                <input type="hidden" id="room">
+                <input type="hidden" id="guests">
+              </div>
+              <div id="extra-rooms-rows"></div>
+              <div class="form-row">
+                <div class="form-field"><label>צ'ק-אין</label><input type="text" id="checkin-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+                <div class="form-field"><label>צ'ק-אאוט</label><input type="text" id="checkout-display" readonly style="background:var(--bg-stone);color:var(--text-light);cursor:default"></div>
+                <input type="hidden" id="checkin">
+                <input type="hidden" id="checkout">
+              </div>
             </div>
 
             <div id="step1-fields">
@@ -100,6 +102,7 @@
             </div>
 
             <div id="step2-fields" style="display:none">
+              <div id="step2-summary" style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.92rem;color:var(--text);line-height:1.9"></div>
               <a href="#" onclick="editStep1(); return false;" style="display:inline-block;font-family:var(--sans);font-size:0.8rem;color:var(--text-light);margin-bottom:1rem">&larr; עריכת הפרטים</a>
 
               <!-- Cancellation policy note -->
@@ -136,7 +139,7 @@
                 </div>
                 <div class="form-field" id="id-number-field">
                   <label>תעודת זהות של בעל הכרטיס <span class="req">*</span></label>
-                  <input type="text" id="id_number" placeholder="מספר תעודת זהות" inputmode="numeric" autocomplete="off">
+                  <input type="text" id="id_number" placeholder="מספר תעודת זהות" inputmode="numeric" autocomplete="off" maxlength="9">
                 </div>
 
               </div>
@@ -207,7 +210,34 @@ function updateContinueBtn() {
   btn.style.cursor  = enabled ? 'pointer' : 'not-allowed';
 }
 
+function buildStep2Summary() {
+  var bookingRooms = window.bookingRooms || [];
+  var roomLabels   = window.roomLabels || {};
+  var guestLabel   = window.guestLabel || function(g) { return g + ' אורחים'; };
+  var fmtDate      = window.fmtDate || function(iso) { return iso; };
+
+  var checkin  = document.getElementById('checkin').value;
+  var checkout = document.getElementById('checkout').value;
+
+  var roomsLine = bookingRooms.map(function(r) {
+    return (roomLabels[r.room] || r.room) + ' (' + guestLabel(r.guests) + ')';
+  }).join(', ');
+
+  var name  = document.getElementById('name').value.trim();
+  var phone = document.getElementById('phone').value.trim();
+  var email = document.getElementById('email').value.trim();
+
+  var contactLine = name + ' · ' + phone + (email ? ' · ' + email : '');
+
+  document.getElementById('step2-summary').innerHTML =
+    '<div>' + roomsLine + '</div>' +
+    '<div>' + fmtDate(checkin) + ' &rarr; ' + fmtDate(checkout) + '</div>' +
+    '<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--gold)">' + contactLine + '</div>';
+}
+
 function continueToPayment() {
+  buildStep2Summary();
+  document.getElementById('booking-summary-fields').style.display = 'none';
   document.getElementById('step1-fields').style.display = 'none';
   document.getElementById('step2-fields').style.display = '';
   document.getElementById('step2-fields').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -215,7 +245,9 @@ function continueToPayment() {
 
 function editStep1() {
   document.getElementById('step2-fields').style.display = 'none';
+  document.getElementById('booking-summary-fields').style.display = '';
   document.getElementById('step1-fields').style.display = '';
+  document.getElementById('step1-fields').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -266,6 +298,8 @@ window.addEventListener('DOMContentLoaded', function() {
     var d = new Date(iso + 'T00:00:00');
     return d.toLocaleDateString('he-IL', { day:'numeric', month:'numeric', year:'numeric' });
   };
+  window.guestLabel = guestLabel;
+  window.fmtDate = fmtDate;
   document.getElementById('room-display').value     = roomLabels[room] || room;
   document.getElementById('guests-display').value   = guestLabel(first.guests);
   document.getElementById('checkin-display').value  = fmtDate(checkin);
@@ -381,6 +415,16 @@ window.addEventListener('DOMContentLoaded', function() {
     this.value = v;
   });
 
+  // ID number: digits only, and auto-pad a leading zero on blur if only
+  // 8 were entered, since IDs starting with 0 are commonly typed without it.
+  document.getElementById('id_number').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '').substring(0, 9);
+  });
+  document.getElementById('id_number').addEventListener('blur', function() {
+    var digits = this.value.replace(/\D/g, '');
+    if (digits.length === 8) this.value = '0' + digits;
+  });
+
   // Load reviews sidebar
   fetch(REVIEWS_API)
     .then(function(r) { return r.json(); })
@@ -447,6 +491,19 @@ function luhn(value) {
     if (shouldDouble) { digit *= 2; if (digit > 9) digit -= 9; }
     sum += digit;
     shouldDouble = !shouldDouble;
+  }
+  return sum % 10 === 0;
+}
+
+function validTeudatZehut(value) {
+  var digits = value.replace(/\D/g, '');
+  if (digits.length === 8) digits = '0' + digits;
+  if (digits.length !== 9) return false;
+  var sum = 0;
+  for (var i = 0; i < 9; i++) {
+    var num = Number(digits[i]) * ((i % 2) + 1);
+    if (num > 9) num -= 9;
+    sum += num;
   }
   return sum % 10 === 0;
 }
@@ -656,6 +713,7 @@ async function submitBooking() {
     cc_cvv    = document.getElementById('cc_cvv').value.trim();
     cc_name   = document.getElementById('cc_name').value.trim();
     id_number = document.getElementById('id_number').value.trim();
+    if (isIsraeli && id_number.replace(/\D/g,'').length === 8) id_number = '0' + id_number;
   }
 
   if (!bookingRooms.length || bookingRooms.some(function(r){return !r.room;}) || !checkin||!checkout||!name||!phone) { alert('נא למלא את כל השדות הנדרשים.'); return; }
@@ -663,6 +721,7 @@ async function submitBooking() {
     if (!cc_number||!cc_expiry||!cc_cvv||!cc_name||(isIsraeli && !id_number)) { alert('נא למלא את כל פרטי כרטיס האשראי.'); return; }
     if (detectCard(cc_number.replace(/\D/g,'')) === 'diners') { alert('אנו אינם מקבלים כרטיסי דיינרס.'); return; }
     if (!luhn(cc_number)) { alert('נא להזין מספר כרטיס אשראי תקין.'); return; }
+    if (isIsraeli && !validTeudatZehut(id_number)) { alert('נא להזין מספר תעודת זהות תקין.'); return; }
   }
   var cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
   if (!/^\+?[0-9]{7,15}$/.test(cleanPhone)) { alert('נא להזין מספר טלפון תקין.'); return; }
