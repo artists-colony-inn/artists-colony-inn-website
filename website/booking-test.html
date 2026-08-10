@@ -90,19 +90,20 @@
               <button type="button" class="btn btn-gold" id="continue-btn" onclick="continueToPayment()" style="width:100%;opacity:0.45;cursor:not-allowed" disabled>המשך לתשלום</button>
             </div>
 
-            <!-- Price summary -->
-            <div id="price-box" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.88rem;color:var(--text-mid);line-height:2">
-              <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">סיכום מחיר</div>
-              <div id="price-rooms-rows"></div>
-              <div id="price-base-row"></div>
-              <div id="price-surcharge-row"></div>
-              <div id="price-meals-row"></div>
-              <div id="price-vat-row" style="display:none"></div>
-              <div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
-            </div>
-
             <div id="step2-fields" style="display:none">
-              <div id="step2-summary" style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.92rem;color:var(--text);line-height:1.9"></div>
+              <div id="step2-summary" style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.92rem;color:var(--text);line-height:1.9;direction:rtl;text-align:right"></div>
+
+              <!-- Price summary -->
+              <div id="price-box" style="display:none;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem;font-family:var(--sans);font-size:0.88rem;color:var(--text-mid);line-height:2">
+                <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.4rem">סיכום מחיר</div>
+                <div id="price-rooms-rows"></div>
+                <div id="price-base-row"></div>
+                <div id="price-surcharge-row"></div>
+                <div id="price-meals-row"></div>
+                <div id="price-vat-row" style="display:none"></div>
+                <div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
+              </div>
+
               <a href="#" onclick="editStep1(); return false;" style="display:inline-block;font-family:var(--sans);font-size:0.8rem;color:var(--text-light);margin-bottom:1rem">&larr; עריכת הפרטים</a>
 
               <!-- Cancellation policy note -->
@@ -231,7 +232,7 @@ function buildStep2Summary() {
 
   document.getElementById('step2-summary').innerHTML =
     '<div>' + roomsLine + '</div>' +
-    '<div>' + fmtDate(checkin) + ' &rarr; ' + fmtDate(checkout) + '</div>' +
+    '<div>' + fmtDate(checkin) + ' &larr; ' + fmtDate(checkout) + '</div>' +
     '<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--gold)">' + contactLine + '</div>';
 }
 
