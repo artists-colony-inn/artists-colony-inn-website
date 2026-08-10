@@ -134,9 +134,15 @@
               </div>
 
               <!-- Credit card section -->
-              <div id="cc-section" style="background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
-                <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem">Credit Card Details</div>
-                <div class="form-row">
+              <div id="cc-section" style="position:relative;background:var(--bg-alt,#f9f6f0);border:1px solid var(--gold);border-radius:6px;padding:1.1rem 1.4rem;margin-bottom:1.25rem">
+				  <div style="position:absolute;top:0.75rem;right:0.75rem;color:#6B7381" aria-hidden="true">
+					<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					  <rect x="5" y="11" width="14" height="9" rx="2"></rect>
+					  <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+					</svg>
+				  </div>
+				  <div style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem">Credit Card Details</div>
+				  <div class="form-row">
                   <div class="form-field">
                     <label>Card number <span class="req">*</span></label>
                     <input type="text" id="cc_number" placeholder="0000 0000 0000 0000" autocomplete="off" inputmode="numeric" maxlength="19">
