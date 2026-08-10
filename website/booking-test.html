@@ -110,6 +110,9 @@
                 <div id="price-meals-row"></div>
                 <div id="price-vat-row" style="display:none"></div>
                 <div id="price-total-row" style="font-weight:700;color:var(--text);border-top:1px solid var(--gold);margin-top:0.4rem;padding-top:0.4rem"></div>
+                <div id="price-vat-exempt-note" style="display:none;font-weight:400;font-size:0.82rem;color:var(--text-mid);line-height:1.6;margin-top:0.5rem">
+                  ⚠️ יש להציג דרכון תקף ויזת תייר B2 בעת הצ'ק-אין כדי לקבל את הפטור ממע"מ. אם לא תוכלו להציגם, יחויב מע"מ (18%) בעת ההגעה.
+                </div>
               </div>
 
 
@@ -255,7 +258,7 @@ function editStep1() {
   document.getElementById('step2-fields').style.display = 'none';
   document.getElementById('booking-summary-fields').style.display = '';
   document.getElementById('step1-fields').style.display = '';
-  document.getElementById('step1-fields').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -604,6 +607,7 @@ async function updatePrice() {
   document.getElementById('price-meals-row').textContent       = 'ארוחות שבת (' + mealsCount + '): ' + fmt(mealsBase);
   document.getElementById('price-vat-row').style.display       = 'none';
   document.getElementById('price-total-row').textContent       = 'סה"כ לתשלום' + (isIsraeli ? ' (כולל מע"מ)' : '') + ': ' + fmt(total);
+  document.getElementById('price-vat-exempt-note').style.display = isIsraeli ? 'none' : 'block';
   box.style.display = 'block';
 
   var cancelNote = document.getElementById('cancel-policy-note');
@@ -661,6 +665,7 @@ function updatePriceMultiRoom() {
   document.getElementById('price-meals-row').textContent       = 'ארוחות שבת (' + mealsCount + '): ' + fmt(mealsBase);
   document.getElementById('price-vat-row').style.display       = 'none';
   document.getElementById('price-total-row').textContent       = 'סה"כ לתשלום' + (isIsraeli ? ' (כולל מע"מ)' : '') + ': ' + fmt(total);
+  document.getElementById('price-vat-exempt-note').style.display = isIsraeli ? 'none' : 'block';
   box.style.display = 'block';
 
   var cancelNote = document.getElementById('cancel-policy-note');
