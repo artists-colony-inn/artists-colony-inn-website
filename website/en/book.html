@@ -492,6 +492,9 @@ function renderRateActions(room, checkin, checkout){
     document.querySelector('.room-list-row[data-room-id="'+room.id+'"]').classList.add('selected');
     renderRateActions(room, checkin, checkout);
     updateCartWidget();
+	if (window.innerWidth <= 768) {
+      document.querySelector('.cart-widget').scrollIntoView({ behavior:'smooth', block:'start' });
+    }
   };
 
   container.appendChild(btn);
