@@ -340,6 +340,7 @@ async function updatePrice() {
   document.getElementById('price-vat-row').style.display       = 'none';
   document.getElementById('price-total-row').textContent       = 'סה"כ לתשלום' + (isIsraeli ? ' (כולל מע"מ)' : '') + ': ' + fmt(total);
   box.style.display = 'block';
+  window.computedTotal = total;
 
   var cancelNote = document.getElementById('cancel-policy-note');
   if (cancelNote) cancelNote.style.display = 'block';
@@ -387,6 +388,7 @@ function updatePriceMultiRoom() {
   document.getElementById('price-vat-row').style.display       = 'none';
   document.getElementById('price-total-row').textContent       = 'סה"כ לתשלום' + (isIsraeli ? ' (כולל מע"מ)' : '') + ': ' + fmt(total);
   box.style.display = 'block';
+  window.computedTotal = total;
 
   var cancelNote = document.getElementById('cancel-policy-note');
   if (cancelNote) cancelNote.style.display = 'block';
@@ -459,6 +461,14 @@ async function submitBooking() {
     return;
   }
 
+  if (!window.computedTotal) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.textContent = 'המשך לתשלום';
+    alert('לא ניתן לחשב מחיר עבור התאריכים שנבחרו. נסו שוב או צרו קשר ישירות.');
+    return;
+  }
+
   btn.textContent = 'מעביר לתשלום...';
 
   var params = new URLSearchParams(window.location.search);
@@ -470,6 +480,7 @@ async function submitBooking() {
   params.set('is_israeli', isIsraeli ? 'yes' : 'no');
   params.set('requests', document.getElementById('requests').value.trim());
   params.set('website', document.getElementById('website').value);
+  params.set('total', String(window.computedTotal));
 
   window.location.replace('/payment.html?' + params.toString());
 }
