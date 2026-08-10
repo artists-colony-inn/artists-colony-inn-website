@@ -180,6 +180,8 @@ async function openDatePicker(){
     loading.style.display = 'none';
     months.style.display = '';
     nav.style.display = '';
+    document.getElementById('dr-next').disabled = false;
+    document.getElementById('dr-prev').disabled = false;
   }
   renderPicker();
 }
