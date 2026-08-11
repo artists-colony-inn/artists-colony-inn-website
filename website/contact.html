@@ -24,6 +24,8 @@
   fbq('init', '983698949964438');
   fbq('track', 'PageView');
   </script>
+  
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <script src="/components/header.js"></script>
@@ -54,6 +56,8 @@
 
 	  <!-- honeypot -->
 	  <div class="hp"><input type="text" name="how_did_you_hear" tabindex="-1" autocomplete="off"></div>
+
+	  <div class="cf-turnstile" data-sitekey="0x4AAAAAAENR8ZO8IgowXwD8" data-size="flexible"></div>
 
 	  <button type="submit" id="cf-submit" class="btn btn-gold" style="width:100%;padding:0.9rem">שלח הודעה</button>
 	  <div class="form-msg" id="cf-msg"></div>
@@ -97,6 +101,12 @@
       return;
     }
 
+	const turnstileToken = (typeof turnstile !== 'undefined') ? turnstile.getResponse() : '';
+    if (!turnstileToken) {
+      showMsg('אנא אשרו שאתם לא רובוט.', 'error');
+      return;
+    }
+	
     btn.disabled = true;
     btn.textContent = 'שולח...';
     hideMsg();
@@ -107,7 +117,8 @@
         name,
         email,
         phone,
-        message
+        message,
+        cf_turnstile_response: turnstileToken
       });
       const res  = await fetch(API_URL + '?' + params.toString());
       const data = await res.json();
@@ -122,6 +133,7 @@
     } finally {
       btn.disabled = false;
       btn.textContent = 'שלח הודעה';
+	  if (typeof turnstile !== 'undefined') turnstile.reset();
     }
   });
 
