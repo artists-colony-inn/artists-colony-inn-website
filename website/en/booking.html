@@ -60,7 +60,7 @@
                 <div class="form-field"><label>Phone <span class="req">*</span></label><input type="text" id="phone" placeholder="Phone number with country code" autocomplete="off"></div>
               </div>
               <div class="form-row" id="meals-field" style="display:none">
-                <div class="form-field"><label>Shabbat meals (₪100 per meal, VAT not included)</label><input type="number" id="meals" min="0" max="20" value="0"></div>
+                <div class="form-field"><label>Shabbat meals (₪150 per meal, VAT not included)</label><input type="number" id="meals" min="0" max="20" value="0"></div>
               </div>
               <div class="form-row">
                 <div class="form-field"><label>Nationality</label><input type="text" id="nationality" placeholder="e.g. Israeli, US, French"></div>
@@ -591,7 +591,7 @@ async function updatePrice() {
   if (guests >= 4)  surchargeRate = 0.50;
   const surcharge  = Math.round(base * surchargeRate);
   const mealsCount = parseInt(document.getElementById('meals').value) || 0;
-  const mealsBase  = mealsCount * 100;
+  const mealsBase  = mealsCount * 150;
   const beforeVAT  = base + surcharge + mealsBase;
   const isIsraeli  = document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
   const vat        = isIsraeli ? Math.round(beforeVAT * 0.18) : 0;
@@ -605,7 +605,7 @@ async function updatePrice() {
   document.getElementById('price-base-row').style.display     = '';
   document.getElementById('price-base-row').textContent        = nights + ' night' + (nights > 1 ? 's' : '') + ' (base price): ' + fmt(base);
   document.getElementById('price-surcharge-row').style.display = surcharge ? '' : 'none';
-  document.getElementById('price-surcharge-row').textContent   = 'Guest surcharge (' + (surchargeRate * 100) + '%): ' + fmt(surcharge);
+  document.getElementById('price-surcharge-row').textContent   = 'Guest surcharge (' + (surchargeRate * 150) + '%): ' + fmt(surcharge);
   document.getElementById('price-meals-row').style.display     = mealsBase ? '' : 'none';
   document.getElementById('price-meals-row').textContent       = 'Shabbat meals (' + mealsCount + '): ' + fmt(mealsBase);
   document.getElementById('price-vat-row').style.display       = 'none';
@@ -646,7 +646,7 @@ function updatePriceMultiRoom() {
   const roomsBeforeVAT = Math.round(roomsInclusive / 1.18);
 
   const mealsCount = parseInt(document.getElementById('meals').value) || 0;
-  const mealsBase  = mealsCount * 100;
+  const mealsBase  = mealsCount * 150;
   const beforeVAT  = roomsBeforeVAT + mealsBase;
   const isIsraeli  = document.querySelector('input[name="is_israeli"]:checked').value === 'yes';
   const vat        = isIsraeli ? Math.round(beforeVAT * 0.18) : 0;
