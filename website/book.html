@@ -149,7 +149,7 @@ let drStart = null, drEnd = null;
   drStart=today; drEnd=tomorrow;
   document.getElementById('bw-checkin').value=fmtDrForm(today);
   document.getElementById('bw-checkout').value=fmtDrForm(tomorrow);
-  document.getElementById('dr-trigger').textContent=fmtDr(today)+'  \u2192  '+fmtDr(tomorrow);
+  document.getElementById('dr-trigger').textContent=fmtDr(today)+'  \u2190  '+fmtDr(tomorrow);
   searchRooms();
   // Separately, warm the calendar's 6-month window in the background.
   // Not awaited: the visible search above only needs 1 day and should
@@ -316,7 +316,7 @@ function applyDatePicker(){
   if (!drStart || !drEnd) return;
   document.getElementById('bw-checkin').value  = fmtDrForm(drStart);
   document.getElementById('bw-checkout').value = fmtDrForm(drEnd);
-  document.getElementById('dr-trigger').textContent = fmtDr(drStart) + '  \u2192  ' + fmtDr(drEnd);
+  document.getElementById('dr-trigger').textContent = fmtDr(drStart) + '  \u2190  ' + fmtDr(drEnd);
   closeDatePicker(null);
   searchRooms();
 };
