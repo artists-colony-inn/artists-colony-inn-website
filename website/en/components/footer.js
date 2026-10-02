@@ -19,10 +19,20 @@ document.currentScript.insertAdjacentHTML('afterend', `
       <ul>
         <li><a href="/en/index.html">Home</a></li>
         <li><a href="/en/about.html">About</a></li>
-        <li><a href="/en/booking.html">Book a Room</a></li>
+        <li><a href="/en/book.html">Book a Room</a></li>
         <li><a href="/en/contact.html">Contact</a></li>
       </ul>
     </div>
+    <div>
+      <h4>Our Rooms</h4>
+      <ul>
+        <li><a href="/en/rooms/tzviya">Tzviya Room</a></li>
+        <li><a href="/en/rooms/aryeh">Aryeh Room</a></li>
+        <li><a href="/en/rooms/liana">Liana Suite</a></li>
+        <li><a href="/en/rooms/avital">Avital Suite</a></li>
+        <li><a href="/en/rooms/orly">Orly Suite</a></li>
+      </ul>
+    </div>	
     <div>
       <h4>Contact</h4>
       <ul>
