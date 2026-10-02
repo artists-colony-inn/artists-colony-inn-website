@@ -97,4 +97,64 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/policies"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/policies"/>
   </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/rooms/tzviya</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/rooms/tzviya"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/rooms/tzviya"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/rooms/tzviya"/>
+  </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/en/rooms/tzviya</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/rooms/tzviya"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/rooms/tzviya"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/rooms/tzviya"/>
+  </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/rooms/aryeh</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/rooms/aryeh"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/rooms/aryeh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/rooms/aryeh"/>
+  </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/en/rooms/aryeh</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/rooms/aryeh"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/rooms/aryeh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/rooms/aryeh"/>
+  </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/rooms/liana</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/rooms/liana"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/rooms/liana"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/rooms/liana"/>
+  </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/en/rooms/liana</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/rooms/liana"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/rooms/liana"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/rooms/liana"/>
+  </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/rooms/avital</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/rooms/avital"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/rooms/avital"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/rooms/avital"/>
+  </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/en/rooms/avital</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/rooms/avital"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/rooms/avital"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/rooms/avital"/>
+  </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/rooms/orly</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/rooms/orly"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/rooms/orly"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/rooms/orly"/>
+  </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/en/rooms/orly</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/rooms/orly"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/rooms/orly"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/rooms/orly"/>
+  </url>
 </urlset>
