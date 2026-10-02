@@ -19,10 +19,20 @@ document.currentScript.insertAdjacentHTML('afterend', `
       <ul>
         <li><a href="/index.html">ראשי</a></li>
         <li><a href="/about.html">אודות</a></li>
-        <li><a href="/booking.html">הזמנת חדר</a></li>
+        <li><a href="/book.html">הזמנת חדר</a></li>
         <li><a href="/contact.html">צור קשר</a></li>
       </ul>
     </div>
+    <div>
+      <h4>החדרים שלנו</h4>
+      <ul>
+        <li><a href="/rooms/tzviya">חדר צביה</a></li>
+        <li><a href="/rooms/aryeh">חדר אריה</a></li>
+        <li><a href="/rooms/liana">סוויטת ליאנה</a></li>
+        <li><a href="/rooms/avital">סוויטת אביטל</a></li>
+        <li><a href="/rooms/orly">סוויטת אורלי</a></li>
+      </ul>
+    </div>	
     <div>
       <h4>יצירת קשר</h4>
       <ul>
