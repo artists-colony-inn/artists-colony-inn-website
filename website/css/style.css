@@ -479,7 +479,7 @@ footer {
   margin: 0 auto;
   padding: 0 2rem 2rem;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 3rem;
   border-bottom: 1px solid #2e2a20;
   margin-bottom: 1.5rem;
