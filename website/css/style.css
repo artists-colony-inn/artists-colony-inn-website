@@ -230,7 +230,7 @@ nav ul li[dir="ltr"], nav ul li[dir="rtl"] { display: flex; justify-content: fle
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(26,22,16,0.15) 0%, rgba(26,22,16,0.55) 100%);
+  background: linear-gradient(to top, rgba(26,22,16,0) 0%, rgba(26,22,16,0) 40%, rgba(26,22,16,0.45) 100%);
 }
 
 .hero-text {
