@@ -7,7 +7,7 @@ document.currentScript.insertAdjacentHTML('afterend', `
       <img src="/images/logo.svg" alt="Artists' Colony Inn">
     </a>
     <div class="header-top-links">
-      <a href="#" id="lang-toggle" class="header-lang" dir="rtl">עברית</a>
+      <a href="#" id="lang-toggle" class="header-lang" aria-label="עברית"><img src="/images/flag-il.png" alt="עברית" style="height:24px;width:24px;border-radius:50%;display:block"></a>
       <a href="tel:+972586200779" class="header-phone" dir="ltr" aria-label="+972-58-620-0779">
         <span class="header-phone-text">+972-58-620-0779</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
