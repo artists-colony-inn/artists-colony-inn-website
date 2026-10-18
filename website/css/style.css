@@ -1083,6 +1083,9 @@ footer a:hover { color: var(--gold-light); }
 .emotion-row-text p { font-family: var(--sans); font-weight: 300; font-size: 0.92rem; color: var(--text-mid); line-height: 1.45; margin-top: 0.6rem; }
 .emotion-row-text .section-title { text-align: left; font-size: 1.5rem; }
 .emotion-row-text .section-rule { margin-left: 0; }
+:lang(he) .emotion-row-text,
+:lang(he) .emotion-row-text .section-title { text-align: right; }
+:lang(he) .emotion-row-text .section-rule { margin-left: auto; margin-right: 0; }
 
 @media (max-width: 768px) {
   .emotion-row { height: auto; }
