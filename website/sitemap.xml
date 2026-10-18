@@ -157,4 +157,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/rooms/orly"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/rooms/orly"/>
   </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/faq</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/faq"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/faq"/>
+  </url>
+  <url>
+    <loc>https://theartistscolonyinn.com/en/faq</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://theartistscolonyinn.com/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://theartistscolonyinn.com/en/faq"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://theartistscolonyinn.com/en/faq"/>
+  </url>
 </urlset>
