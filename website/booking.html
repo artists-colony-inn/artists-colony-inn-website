@@ -118,7 +118,7 @@
 
               <!-- Cancellation policy note -->
               <div id="cancel-policy-note" style="display:none;background:#f0f7f0;border:1px solid #7aab7a;border-radius:4px;padding:0.75rem 1rem;font-family:var(--sans);font-size:0.82rem;color:#2e5c2e;line-height:1.6;margin-bottom:1.25rem;direction:rtl;text-align:right">
-                ✓ ביטול חינם עד 7 ימים לפני הצ'ק-אין. הכרטיס יחויב 7 ימים לפני ההגעה.
+                ✓ ביטול חינם עד 3 ימים לפני הצ'ק-אין. הכרטיס יחויב 3 ימים לפני ההגעה.
               </div>
 
               <!-- Payment method (only shown once total is available) -->
@@ -482,9 +482,9 @@ function updateChargeNote(checkin) {
   today.setHours(0,0,0,0);
   var daysUntil = Math.round((checkinDate - today) / 86400000);
   if (daysUntil <= 7) {
-    note.textContent = 'מכיוון שתאריך הצ\'ק-אין הוא בתוך 7 ימים, הכרטיס יחויב תוך 24 שעות.';
+    note.textContent = 'מכיוון שתאריך הצ\'ק-אין הוא בתוך 3 ימים, הכרטיס יחויב תוך 24 שעות.';
   } else {
-    note.textContent = 'הכרטיס יחויב 7 ימים לפני תאריך הצ\'ק-אין, בהתאם למדיניות הביטול שלנו. ניתן לבטל את ההזמנה ללא חיוב עד אותו מועד.';
+    note.textContent = 'הכרטיס יחויב 3 ימים לפני תאריך הצ\'ק-אין, בהתאם למדיניות הביטול שלנו. ניתן לבטל את ההזמנה ללא חיוב עד אותו מועד.';
   }
   note.style.display = 'block';
 }
