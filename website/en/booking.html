@@ -118,7 +118,7 @@
 
               <!-- Cancellation policy note -->
               <div id="cancel-policy-note" style="display:none;background:#f0f7f0;border:1px solid #7aab7a;border-radius:4px;padding:0.75rem 1rem;font-family:var(--sans);font-size:0.82rem;color:#2e5c2e;line-height:1.6;margin-bottom:1.25rem">
-                ✓ Free cancellation until 7 days before check-in. Your card will be charged 7 days before arrival.
+                ✓ Free cancellation until 3 days before check-in. Your card will be charged 3 days before arrival.
               </div>
 
               <!-- Payment method (only shown once total is available) -->
@@ -495,9 +495,9 @@ function updateChargeNote(checkin) {
   today.setHours(0,0,0,0);
   var daysUntil = Math.round((checkinDate - today) / 86400000);
   if (daysUntil <= 7) {
-    note.textContent = 'As your check-in date is within 7 days, your card will be charged within the next 24 hours.';
+    note.textContent = 'As your check-in date is within 3 days, your card will be charged within the next 24 hours.';
   } else {
-    note.textContent = 'Your card will be charged 7 days before your check-in date, in accordance with our cancellation policy. You may cancel free of charge until that date.';
+    note.textContent = 'Your card will be charged 3 days before your check-in date, in accordance with our cancellation policy. You may cancel free of charge until that date.';
   }
   note.style.display = 'block';
 }
